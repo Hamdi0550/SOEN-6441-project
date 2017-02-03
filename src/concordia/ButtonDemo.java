@@ -39,8 +39,11 @@ if (actionCommand.equals("Sunny"))
 contentPane.setBackground(Color.BLUE);
 else if (actionCommand.equals("Cloudy"))
 contentPane.setBackground(Color.GRAY);
-else if (actionCommand.equals("Cloudy2"))
-contentPane.setBackground(Color.RED);
+else if (actionCommand.equals("Cloudy2")){
+	contentPane.setBackground(Color.RED);
+	System.out.println("£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡");	
+}
+
 else
 System.out.println("Error in button interface.");
 }
