@@ -11,9 +11,15 @@ package model;
  */
 public class ShowButtonDemo
 {
+
+	public static void libo(){
+		System.out.println("!!!!!!!! 2017Äê2ÔÂ2ÈÕ21:22:58");
+	}
+	
 public static void main(String[] args)
 {
-ButtonDemo gui = new ButtonDemo();
-gui.setVisible(true);
+	ButtonDemo gui = new ButtonDemo();
+	gui.setVisible(true);
+	libo();
 }
 }
