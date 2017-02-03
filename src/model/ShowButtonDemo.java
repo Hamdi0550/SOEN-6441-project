@@ -15,5 +15,11 @@ public static void main(String[] args)
 {
 ButtonDemo gui = new ButtonDemo();
 gui.setVisible(true);
+
+
+}
+public void feiyu(int i)
+{
+    System.out.println("20170202 21:22");
 }
 }
