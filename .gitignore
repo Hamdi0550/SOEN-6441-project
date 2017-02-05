@@ -11,4 +11,5 @@ Debug
 #.project
 .DS_Store
 .idea/
+out/
 /Release/
