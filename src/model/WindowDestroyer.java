@@ -13,10 +13,8 @@ import java.awt.event.WindowEvent;
  *
  * @author yufei
  */
-public class WindowDestroyer extends WindowAdapter
-{
-    public void windowClosing(WindowEvent e)
-    {
-        System.exit(0);
-    }
+public class WindowDestroyer extends WindowAdapter {
+	public void windowClosing(WindowEvent e) {
+		System.exit(0);
+	}
 }
