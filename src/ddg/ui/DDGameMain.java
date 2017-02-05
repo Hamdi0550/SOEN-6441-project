@@ -9,9 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import ddg.Config;
-import ddg.framework.IObserver;
-import ddg.model.MapModel;
-import ddg.model.Model;
 import ddg.view.CampaignEditor;
 import ddg.view.CharactorEditor;
 import ddg.view.ItemEditor;
