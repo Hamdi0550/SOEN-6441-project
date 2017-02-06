@@ -33,10 +33,31 @@ public class CampaignEditor extends JPanel implements ActionListener {
 		ddg.setEditable(false);
 		contentPanel.add(ddg);
 	    add(contentPanel, BorderLayout.CENTER);
-	    
+	    addNewLevel(contentPanel);
 	    addOption();
 	}
+	int i = 1;
+	private void addNewLevel(JPanel contentPanel) {
+		OButton addBtn = new OButton("ADD", this);
+		contentPanel.add(addBtn);
+		ActionListener l = new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(i==21)
+					return;
+//			    addNewLevel(contentPanel);
+				JTextArea map = new JTextArea("MAP-"+i);
+				contentPanel.add(map);
+			    contentPanel.doLayout();
+			    i++;
+			}
+			
+		}; 
+		addBtn.removeActionListener(this);
+		addBtn.addActionListener(l);
+	}
+	
 	private void addOption() {
 		JPanel optionPanel = new JPanel();
 	    optionPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));
