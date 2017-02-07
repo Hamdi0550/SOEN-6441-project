@@ -39,4 +39,7 @@ public class Config {
 	public static final String ITEM_FILE = "./item.json";
 	
 	public static final String GAME_FILE = "./game.json";
+	
+	// set the size of map. it could be changed if click the S/M/L button  
+	public static int  MAP_SIZE = 10;
 }
