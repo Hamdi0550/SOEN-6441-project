@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 
 import ddg.Config;
+import ddg.utils.Utils;
 
 
 /**
@@ -20,13 +21,16 @@ public class Map {
 	
 	
 	// recording the status of player.
-//	private Charactor player;
+//	private Character player;
 	// recording the status of all monsters
 //	private List<Charactor> monster;
 	
 	public Map(){
 		this.location = new char[Config.MAP_SIZE][Config.MAP_SIZE];
-		
+	}
+	public Map(char[][] loca){
+		this.location = new char[Config.MAP_SIZE][Config.MAP_SIZE];
+		this.location = loca;
 	}
 	
 	
@@ -36,5 +40,9 @@ public class Map {
 
 	public void setLocation(char[][] location) {
 		this.location = location;
+	}
+	
+	static public void savemap(Map m){
+		Utils.save2File(Config.MAP_FILE, Utils.toJson(m));
 	}
 }
