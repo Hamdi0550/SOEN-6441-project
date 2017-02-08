@@ -57,13 +57,22 @@ public class MapEditor extends JPanel implements ActionListener {
 		contentPanel = new JPanel();
 		
 		initView();
+		
 	}
 
 	private void initView() {
 	    setLayout(new BorderLayout());
 	    System.out.println(MAP_SIZE);
 	    
-	    maplocation = new char[MAP_SIZE][MAP_SIZE];
+	    addContentPanel();
+	    addOption();
+	}
+	/**
+	 * This method is used for add Content panel
+	 * 
+	 */
+	private void addContentPanel(){
+		maplocation = new char[MAP_SIZE][MAP_SIZE];
 		for (int i = 0;i<MAP_SIZE; i++){
 			for (int j = 0;j<MAP_SIZE; j++)
 				maplocation[i][j] = 'f';
@@ -93,6 +102,7 @@ public class MapEditor extends JPanel implements ActionListener {
 			}
 		};
 		mapPanel.setPreferredSize(new Dimension(50*MAP_SIZE, 50*MAP_SIZE));
+//		mapPanel.setBorder(Config.border);
 		
 //		for (int i = 0; i < MAP_SIZE*MAP_SIZE; i++) {
 //			ImageIcon icon0 = new ImageIcon("002.png");
@@ -129,7 +139,7 @@ public class MapEditor extends JPanel implements ActionListener {
 		jspanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); 
 		jspanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jspanel.setPreferredSize(new Dimension(500, 500));
-//		jspanel.setBorder(Config.border);
+		jspanel.setBorder(Config.border);
 		
 		JPanel iconpanel = new JPanel();
 		iconpanel.setPreferredSize(new Dimension(90, 500));
@@ -140,14 +150,12 @@ public class MapEditor extends JPanel implements ActionListener {
 		options_of_element_on_cell.addItem(new ImageIcon("indoor.png"));
 		options_of_element_on_cell.setLocation(0, 0);
 		iconpanel.add(options_of_element_on_cell, BorderLayout.NORTH);
-//		iconpanel.setBorder(Config.border);
+		iconpanel.setBorder(Config.border);
 		
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.add(jspanel);
 		contentPanel.add(iconpanel);
 		add(contentPanel, BorderLayout.WEST);
-
-		addOption();
 	}
 	/**
 	 * This method is used for add option panel
@@ -183,18 +191,17 @@ public class MapEditor extends JPanel implements ActionListener {
 		if(e.getActionCommand().equals("BACK")) {
 			e = new ActionEvent(e.getSource(), e.getID(), "MAP-BACK");
 		}
-//		if(e.getActionCommand().equals("S/M/L")){
-//			if(MAP_SIZE >= 50){
-//				MAP_SIZE = 10;
-//			}
-//			else
-//				MAP_SIZE += 20;
-//			//this.removeAll();
-//			mapPanel.removeAll();
-//			initView();
-//			mapPanel.repaint();
-//			
-//		}
+		if(e.getActionCommand().equals("S/M/L")){
+			if(MAP_SIZE >= 50){
+				MAP_SIZE = 10;
+			}
+			else
+				MAP_SIZE += 20;
+			//this.removeAll();
+			contentPanel.removeAll();
+			contentPanel.revalidate();
+			addContentPanel();			
+		}
 		if(e.getActionCommand().equals("SAVE")){
 			Map map = new Map(maplocation);
 			Map.savemap(map);
