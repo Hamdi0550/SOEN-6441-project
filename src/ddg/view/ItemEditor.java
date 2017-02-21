@@ -28,15 +28,23 @@ public class ItemEditor extends JPanel implements ActionListener {
 	private void initView() {
 		BorderLayout l = new BorderLayout();
 	    setLayout(l);
-		JPanel contentPanel = new JPanel();
-		JTextArea ddg = new JTextArea("ITEM");
-		ddg.setEditable(false);
-		contentPanel.add(ddg);
-	    add(contentPanel, BorderLayout.CENTER);
-	    
+		
+	    addEditor();
 	    addOption();
 	}
 
+	private void addEditor() {
+		JPanel contentPanel = new JPanel();
+		JTextArea ddg = new JTextArea("ITEM NAME");
+//		ddg.setEditable(false);
+		contentPanel.add(ddg);
+		
+		JTextArea ability = new JTextArea("ITEM");
+//		ddg.setEditable(false);
+		contentPanel.add(ability);
+	    add(contentPanel, BorderLayout.CENTER);
+	}
+	
 	private void addOption() {
 		JPanel optionPanel = new JPanel();
 	    optionPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));
