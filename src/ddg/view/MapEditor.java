@@ -179,7 +179,7 @@ public class MapEditor extends JPanel implements ActionListener {
 	    saveBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton backBtn = new DButton("BACK", this);
 	    backBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton createBtn = new OButton("CREATE", this);
+	    DButton createBtn = new DButton("CREATE", this);
 	    createBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    optionPanel.add(optionTitle);
 	    optionPanel.add(createBtn);
