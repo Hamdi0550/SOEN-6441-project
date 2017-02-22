@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import ddg.Config;
-import ddg.view.component.OButton;
+import ddg.view.component.DButton;
 /**
  * This class is show charactor editor view
  * 
@@ -44,9 +44,9 @@ public class CharactorEditor extends JPanel implements ActionListener {
 	    JTextArea optionTitle = new JTextArea("OPTION");
 	    optionTitle.setEditable(false);
 
-	    OButton saveBtn = new OButton("SAVE", this);
+	    DButton saveBtn = new DButton("SAVE", this);
 	    saveBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton backBtn = new OButton("BACK", this);
+	    DButton backBtn = new DButton("BACK", this);
 	    backBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    optionPanel.add(optionTitle);
 	    optionPanel.add(saveBtn);

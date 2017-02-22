@@ -2,12 +2,12 @@ package ddg.item.entity;
 
 /**
  * 
- * @author jenkin
- *
+ * This class
+ * 
+ * @author Zhen Du
+ * @date Feb 22, 2017
  */
 public class Ability {
-	//STRENGTH, DEXTERITY, CONSTITUTION, INTELLIGENCE, WISDOM, CHARISMA,
-//	ARMOR_CLASS, ATTACK_BONUS, DAMAGE_BONUS
 	public static final String STRENGTH = "Strength";
 	public static final String DEXTERITY = "Dexterity";
 	public static final String CONSTITUTION = "Constitution";
@@ -17,13 +17,4 @@ public class Ability {
 	public static final String ARMOR_CLASS = "armor";
 	public static final String ATTACK_BONUS = "attack";
 	public static final String DAMAGE_BONUS = "damage";
-	
-	private EAbility type;
-	private String name;
-	
-	public Ability(EAbility type, String name) {
-		super();
-		this.type = type;
-		this.name = name;
-	}
 }

@@ -9,13 +9,13 @@ import javax.swing.JButton;
  * @author Zhen Du
  * @date Feb 5, 2017
  */
-public class OButton extends JButton {
+public class DButton extends JButton {
 
-	public OButton() {
+	public DButton() {
 		super();
 	}
 
-	public OButton(String text, ActionListener a) {
+	public DButton(String text, ActionListener a) {
 		super(text);
 		addActionListener(a);
 	}

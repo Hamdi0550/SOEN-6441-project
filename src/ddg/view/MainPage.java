@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import ddg.Config;
-import ddg.view.component.OButton;
+import ddg.view.component.DButton;
 /**
  * This class is show main page
  * 
@@ -43,17 +43,17 @@ public class MainPage extends JPanel implements ActionListener {
 	    optionPanel.setBorder(Config.border);
 	    JTextArea optionTitle = new JTextArea("OPTION");
 	    optionTitle.setEditable(false);
-	    OButton charactorBtn = new OButton("CHARACTOR", this);
+	    DButton charactorBtn = new DButton("CHARACTOR", this);
 	    charactorBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton campaignBtn = new OButton("CAMPAIGN", this);
+	    DButton campaignBtn = new DButton("CAMPAIGN", this);
 	    campaignBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton mapBtn = new OButton("MAP", this);
+	    DButton mapBtn = new DButton("MAP", this);
 	    mapBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton itemBtn = new OButton("ITEM", this);
+	    DButton itemBtn = new DButton("ITEM", this);
 	    itemBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton continueBtn = new OButton("CONTINUE", this);
+	    DButton continueBtn = new DButton("CONTINUE", this);
 	    continueBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton startBtn = new OButton("START", this);
+	    DButton startBtn = new DButton("START", this);
 	    startBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    optionPanel.add(optionTitle);
 	    optionPanel.add(charactorBtn);

@@ -1,11 +1,15 @@
 package ddg.item.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
- * @author jenkin
- *
+ * 
+ * This class
+ * 
+ * @author Zhen Du
+ * @date Feb 22, 2017
  */
 public class BaseItem {
-//	protected EItem type;HELMET, ARMOR, SHIELD, RING, BELT, BOOTS, WEAPON
 	public static final String HELMET = "Helmet";
 	public static final String ARMOR = "Armor";
 	public static final String SHIELD = "Shield";
@@ -13,16 +17,23 @@ public class BaseItem {
 	public static final String BELT = "Belt";
 	public static final String BOOTS = "Boots";
 	public static final String WEAPON = "Weapon";
+	public static final String[] NAME = {HELMET, ARMOR, SHIELD, RING, BELT, BOOTS, WEAPON};
 	
-	protected int id;
-	protected String name;
-	protected int bonus;
-	protected String[] ability;
-	protected String increate;
+	@SerializedName(value = "id")
+	public int id;
+	@SerializedName(value = "name")
+	public String name;
+	@SerializedName(value = "bonus")
+	public int bonus;
+	@SerializedName(value = "ability")
+	public String[] ability;
+	@SerializedName(value = "increate")
+	public String increate;
 	
 	public BaseItem(String name) {
 		this.name = name;
 		this.ability = getAbility(name);
+		this.increate = this.ability[0];
 	}
 	
 	public BaseItem(String name, int bonus, String increate) {
@@ -30,6 +41,7 @@ public class BaseItem {
 		this.bonus = bonus;
 		this.increate = increate;
 		this.ability = getAbility(name);
+		this.increate = this.ability[0];
 	}
 	
 	
@@ -44,10 +56,10 @@ public class BaseItem {
 	public String getName() {
 		return name;
 	}
-//
-//	public void setName(String name) {
-//		this.name = name;
-//	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public int getBonus() {
 		return bonus;
@@ -60,7 +72,7 @@ public class BaseItem {
 	public String[] getAbility() {
 		return ability;
 	}
-//
+
 //	public void setAbility(String[] ability) {
 //		this.ability = ability;
 //	}

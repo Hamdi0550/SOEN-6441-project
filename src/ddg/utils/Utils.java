@@ -21,16 +21,16 @@ public class Utils {
 		return gson.toJson(o);
 	}
 	
-	public static <T> Object fromJson(String g, T t) {
+	public static <T> T fromJson(String g, Class<T> type) {
 		Gson gson = new Gson();
-		return gson.fromJson(g, t.getClass());
+		return gson.fromJson(g, type);
 	}
 	
-	public static void save2File(String f, String json) {
+	public static void save2File(String f, String g) {
 		FileWriter fw;
 		try {
 			fw = new FileWriter(f, false);
-			fw.write(json);
+			fw.write(g);
 			fw.flush();
 			fw.close();
 		} catch (IOException e) {
@@ -38,7 +38,7 @@ public class Utils {
 		}
 	}
 	
-	public static String readFileLines(String f) {
+	public static String readFile(String f) {
 		String lines = "";
 		try {
 			File file = new File(f);

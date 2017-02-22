@@ -26,7 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import ddg.Config;
-import ddg.view.component.OButton;
+import ddg.view.component.DButton;
 import model.Map;
 /**
  * This class is show map editor view
@@ -167,15 +167,15 @@ public class MapEditor extends JPanel implements ActionListener {
 	    optionPanel.setBorder(Config.border);
 	    JTextArea optionTitle = new JTextArea("OPTION");
 	    optionTitle.setEditable(false);
-	    OButton sizeBtn = new OButton("S/M/L", this);
+	    DButton sizeBtn = new DButton("S/M/L", this);
 	    sizeBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton clearBtn = new OButton("CLEAR", this);
+	    DButton clearBtn = new DButton("CLEAR", this);
 	    clearBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton validateBtn = new OButton("VALIDATE", this);
+	    DButton validateBtn = new DButton("VALIDATE", this);
 	    validateBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton saveBtn = new OButton("SAVE", this);
+	    DButton saveBtn = new DButton("SAVE", this);
 	    saveBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    OButton backBtn = new OButton("BACK", this);
+	    DButton backBtn = new DButton("BACK", this);
 	    backBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    optionPanel.add(optionTitle);
 	    optionPanel.add(sizeBtn);
