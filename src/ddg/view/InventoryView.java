@@ -1,3 +1,5 @@
+package ddg.view;
+
 import java.util.*;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
