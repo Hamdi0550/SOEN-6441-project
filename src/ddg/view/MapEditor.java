@@ -13,11 +13,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.DebugGraphics;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -177,7 +179,10 @@ public class MapEditor extends JPanel implements ActionListener {
 	    saveBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton backBtn = new DButton("BACK", this);
 	    backBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
+	    OButton createBtn = new OButton("CREATE", this);
+	    createBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    optionPanel.add(optionTitle);
+	    optionPanel.add(createBtn);
 	    optionPanel.add(sizeBtn);
 	    optionPanel.add(clearBtn);
 	    optionPanel.add(validateBtn);
@@ -188,6 +193,19 @@ public class MapEditor extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().equals("CREATE")){
+			JFileChooser addChooser = new JFileChooser(".");
+			addChooser.setApproveButtonText("OK");
+			addChooser.setDialogTitle("OPEN a current map");
+			int result = addChooser.showOpenDialog(mapPanel);
+			if (result == JFileChooser.APPROVE_OPTION){
+				File file = addChooser.getSelectedFile();
+			}else if(result == JFileChooser.CANCEL_OPTION){
+				JLabel label = new JLabel();
+				label.setText("No file be choosed");
+				//
+			}
+		}
 		if(e.getActionCommand().equals("BACK")) {
 			e = new ActionEvent(e.getSource(), e.getID(), "MAP-BACK");
 		}
@@ -204,6 +222,13 @@ public class MapEditor extends JPanel implements ActionListener {
 		}
 		if(e.getActionCommand().equals("SAVE")){
 			Map map = new Map(maplocation);
+			JFileChooser addChooser = new JFileChooser();
+			addChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			int returnval = addChooser.showDialog(mapPanel, "selection of file");
+//			{
+//				String str = addChooser.getSelectedFile().getPath();
+//				targetfolder.setText(str);
+//			}
 			Map.savemap(map);
 		}
 		if(e.getActionCommand().equals("CLEAR")){

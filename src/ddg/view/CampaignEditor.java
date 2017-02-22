@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -19,12 +20,23 @@ import ddg.view.component.DButton;
 public class CampaignEditor extends JPanel implements ActionListener {
 
 	private ActionListener listener;
+	private ArrayList<MapModel> mapData; 
 	
 	public CampaignEditor(ActionListener a) {
 		this.listener = a;
+		initData();
 		initView();
 	}
-
+	
+	private void initData() {
+		MapModel data = null;//new MapModel();
+		mapData = new ArrayList<MapModel>(); 
+		for (int i=0; i<20; i++){
+			data = new MapModel("map"+i);
+			mapData.add(data);
+		}
+	}
+	
 	private void initView() {
 		BorderLayout l = new BorderLayout();
 	    setLayout(l);
@@ -36,7 +48,7 @@ public class CampaignEditor extends JPanel implements ActionListener {
 	    addNewLevel(contentPanel);
 	    addOption();
 	}
-	int i = 1;
+	int i = 0;
 	private void addNewLevel(JPanel contentPanel) {
 		DButton addBtn = new DButton("ADD", this);
 		contentPanel.add(addBtn);
@@ -44,10 +56,10 @@ public class CampaignEditor extends JPanel implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(i==21)
+				if(i==20)
 					return;
 //			    addNewLevel(contentPanel);
-				JTextArea map = new JTextArea("MAP-"+i);
+				JTextArea map = new JTextArea(mapData.get(i).mapName);
 				contentPanel.add(map);
 			    contentPanel.doLayout();
 			    i++;
@@ -81,5 +93,15 @@ public class CampaignEditor extends JPanel implements ActionListener {
 			e = new ActionEvent(e.getSource(), e.getID(), "CAMPAIGN-BACK");
 		}
 		listener.actionPerformed(e);
+	}
+	
+	public class MapModel {
+		public String mapName;
+
+		public MapModel(String mapName) {
+			super();
+			this.mapName = mapName;
+		}
+		
 	}
 }
