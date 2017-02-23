@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.DebugGraphics;
@@ -46,6 +47,8 @@ public class MapEditor extends JPanel implements ActionListener {
 	char[][] maplocation;
 	ImageIcon[][] mapicons;
 	Cell[][] mapcells;
+	java.util.Map<String, String> usedcell = new HashMap<>();
+	
 	
 	JPanel optionPanel;
 	JPanel contentPanel;
@@ -154,9 +157,10 @@ public class MapEditor extends JPanel implements ActionListener {
 		iconpanel.setPreferredSize(new Dimension(90, 500));
 		options_of_element_on_cell = new JComboBox<ImageIcon>();  
 		options_of_element_on_cell.addItem(new ImageIcon("floor.png"));  
-		options_of_element_on_cell.addItem(new ImageIcon("tree.png"));  
-		options_of_element_on_cell.addItem(new ImageIcon("chest1.png"));
+		options_of_element_on_cell.addItem(new ImageIcon("tree.png"));
 		options_of_element_on_cell.addItem(new ImageIcon("indoor.png"));
+		options_of_element_on_cell.addItem(new ImageIcon("chest1.png"));
+		options_of_element_on_cell.addItem(new ImageIcon("outdoor.png"));
 		options_of_element_on_cell.setLocation(0, 0);
 		iconpanel.add(options_of_element_on_cell, BorderLayout.NORTH);
 		iconpanel.setBorder(Config.border);
@@ -241,6 +245,14 @@ public class MapEditor extends JPanel implements ActionListener {
 			contentPanel.revalidate();
 			addContentPanel();			
 		}
+		if(e.getActionCommand().equals("VALIDATE")){
+			if(checkValidation()){
+				System.out.println("----------------------------------------------------------check true");
+			}
+			else
+				System.out.println("----------------------------------------------------------check False");
+		}
+		
 		if(e.getActionCommand().equals("SAVE")){
 			Map map = new Map(maplocation, mapcells);
 			JFileChooser addChooser = new JFileChooser();
@@ -263,4 +275,66 @@ public class MapEditor extends JPanel implements ActionListener {
 		
 		listener.actionPerformed(e);
 	}
+
+	public boolean checkValidation(){
+		if(hasEntryDoor() && hasExitDoor()){
+			return true;
+		}
+		return false;
+	}
+
+	public boolean hasValidPath(int i, int j) {
+		if(maplocation[i][j] == 'o')
+			return true;
+		else{
+			usedcell.put(i+","+j, "i*j");
+			if( j>0 && maplocation[i][j-1]!='t'){
+				if(usedcell.get(i+","+ (j-1) )== null)
+					return hasValidPath(i, j-1);
+			}
+			
+			if(i>0 && maplocation[i-1][j]!='t'){
+				if(usedcell.get(i-1 +","+ j)== null)
+					return hasValidPath(i-1, j);
+			}
+			
+			if(j<Config.MAP_SIZE-1 && maplocation[i][j+1]!='t'){
+				if(usedcell.get(i +","+ (j+1))== null)
+					return hasValidPath(i, j+1);
+			}
+			
+			if(i<Config.MAP_SIZE-1 && maplocation[i+1][j]!='t'){
+				if(usedcell.get((i+1) +","+ j)== null)
+					return hasValidPath(i+1, j);
+			}
+		}
+		return false;
+	}
+	/**
+	 * 
+	 * @param maplocation detail location of map.
+	 * @return true if there is a indoor(Entry door) in the location of map 
+	 */
+	public boolean hasEntryDoor() {
+		for(int i=0;i<Config.MAP_SIZE;i++){
+			for(int j=0;j<Config.MAP_SIZE;j++){
+				if(maplocation[i][j] == 'i'){
+					usedcell.clear();
+					return hasValidPath(i,j);
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param maplocation detail location of map.
+	 * @return true if there is a outdoor(Exit door) in the location of map 
+	 */
+	public  static boolean hasExitDoor() {
+		
+		return true;
+	}
+
 }

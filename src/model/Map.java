@@ -44,7 +44,13 @@ public class Map {
 	public void setLocation(char[][] location) {
 		this.location = location;
 	}
+	/**
+	 * 
+	 * @param maplocation detail location of map.
+	 * @return true if the map have indoor, outdoor and can find a valid path to success.
+	 */
 	
+
 	static public void savemap(Map m){
 		Utils.save2File(Config.MAP_FILE, Utils.toJson(m));
 	}
