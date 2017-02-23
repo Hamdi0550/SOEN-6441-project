@@ -14,7 +14,7 @@ public class Ability {
 	public static final String INTELLIGENCE = "Intelligence";
 	public static final String WISDOM = "Wisdom";
 	public static final String CHARISMA = "Charisma";
-	public static final String ARMOR_CLASS = "armor";
-	public static final String ATTACK_BONUS = "attack";
-	public static final String DAMAGE_BONUS = "damage";
+	public static final String ARMOR_CLASS = "Armor class";
+	public static final String ATTACK_BONUS = "Attack bonus";
+	public static final String DAMAGE_BONUS = "Damage bonus";
 }

@@ -10,6 +10,10 @@ import com.google.gson.annotations.SerializedName;
  * @date Feb 22, 2017
  */
 public class BaseItem {
+	public static final String TYPE = "type";
+	public static final String ABILITY = "ability";
+	public static final String BONUS = "bonus";
+	
 	public static final String HELMET = "Helmet";
 	public static final String ARMOR = "Armor";
 	public static final String SHIELD = "Shield";
@@ -20,17 +24,18 @@ public class BaseItem {
 	public static final String[] NAME = {HELMET, ARMOR, SHIELD, RING, BELT, BOOTS, WEAPON};
 	
 	@SerializedName(value = "id")
-	public int id;
+	private String id;
 	@SerializedName(value = "name")
-	public String name;
+	private String name;
 	@SerializedName(value = "bonus")
-	public int bonus;
+	private int bonus;
 	@SerializedName(value = "ability")
-	public String[] ability;
+	private String[] ability;
 	@SerializedName(value = "increate")
-	public String increate;
+	private String increate;
 	
 	public BaseItem(String name) {
+		this.bonus = 1;
 		this.name = name;
 		this.ability = getAbility(name);
 		this.increate = this.ability[0];
@@ -44,12 +49,11 @@ public class BaseItem {
 		this.increate = this.ability[0];
 	}
 	
-	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -85,7 +89,7 @@ public class BaseItem {
 		this.increate = increate;
 	}
 
-	public String[] getAbility(String name) {
+	private String[] getAbility(String name) {
 		if(BaseItem.HELMET.equals(name)) {
 			return new String[]{Ability.INTELLIGENCE, Ability.WISDOM, Ability.ARMOR_CLASS};
 		} else if(BaseItem.ARMOR.equals(name)) {

@@ -2,18 +2,22 @@ package ddg.model;
 
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+
 import ddg.item.entity.BaseItem;
+import ddg.item.entity.ListEntry;
 
 /**
  * 
- * This class
+ * This is Item model to restore all items
  * 
  * @author Zhen Du
  * @date Feb 22, 2017
  */
 public class ItemEditorModel {
 	
-	public ArrayList<BaseItem> items;
+	private ArrayList<BaseItem> items;
 
 	public ItemEditorModel() {
 		super();
@@ -25,11 +29,28 @@ public class ItemEditorModel {
 		this.items = items;
 	}
 
-	public ArrayList<BaseItem> getItems() {
-		return items;
+	public void addItem(BaseItem item) {
+		int size = 0;
+		for(int i = 0; i < this.items.size(); i++) {
+			if(items.get(i).getName().equals(item.getName())) {
+				size++;
+			}
+		}
+		item.setId(item.getName()+"_"+(size+1));
+		this.items.add(item);
 	}
-
-	public void setItems(ArrayList<BaseItem> items) {
-		this.items = items;
+	
+	public DefaultListModel getListModel() {
+		DefaultListModel l = new DefaultListModel();
+		for(BaseItem i : items) {
+			l.addElement(new ListEntry(i.getId(), new ImageIcon("res/"+i.getName()+".jpg")));
+		}
+		return l;
+	}
+	
+	public BaseItem getItemByIndex(int index) {
+		if(index < 0 || index > items.size()-1)
+			return null;
+		return items.get(index);
 	}
 }
