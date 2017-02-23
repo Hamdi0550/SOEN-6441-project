@@ -17,7 +17,7 @@ import ddg.utils.Utils;
 public class Map {
 	// record the location of things in the map
 	private char[][] location;
-
+	private Cell[][] cellsinthemap;
 	
 	
 	// recording the status of player.
@@ -27,10 +27,13 @@ public class Map {
 	
 	public Map(){
 		this.location = new char[Config.MAP_SIZE][Config.MAP_SIZE];
+		this.cellsinthemap = new Cell[Config.MAP_SIZE][Config.MAP_SIZE];
 	}
-	public Map(char[][] loca){
+	public Map(char[][] loca, Cell[][] cells){
 		this.location = new char[Config.MAP_SIZE][Config.MAP_SIZE];
 		this.location = loca;
+		this.cellsinthemap = new Cell[Config.MAP_SIZE][Config.MAP_SIZE];
+		this.cellsinthemap = cells;
 	}
 	
 	
