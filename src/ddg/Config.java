@@ -21,6 +21,9 @@ public class Config {
 	public static final int OPTION_WIDTH = WIDTH/5;
 	public static final int OPTION_HEIGHT = HEIGHT;
 	
+	public static final int CENTER_WIDTH = WIDTH-2*OPTION_WIDTH;
+	public static final int CENTER_HEIGHT = HEIGHT;
+	
 	public static final int BTN_WIDTH = WIDTH/6;
 	public static final int BTN_HEIGHT = HEIGHT/18;
 	
