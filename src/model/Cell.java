@@ -7,6 +7,10 @@ package model;
 public class Cell {
 	private Object content;
 
+	public Cell(Object content){
+		this.content = content;
+	}
+	
 	public Object getContent() {
 		return content;
 	}

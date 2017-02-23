@@ -28,7 +28,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 import ddg.Config;
+import ddg.item.entity.BaseItem;
 import ddg.view.component.DButton;
+import model.Cell;
 import model.Map;
 /**
  * This class is show map editor view
@@ -41,8 +43,9 @@ public class MapEditor extends JPanel implements ActionListener {
 	private ActionListener listener;
 	// set the size of map. it could be changed if click the S/M/L button  
 	public static int  MAP_SIZE = 10;
-	static char[][] maplocation;
-	static ImageIcon[][] mapicons;
+	char[][] maplocation;
+	ImageIcon[][] mapicons;
+	Cell[][] mapcells;
 	
 	JPanel optionPanel;
 	JPanel contentPanel;
@@ -81,6 +84,8 @@ public class MapEditor extends JPanel implements ActionListener {
 		}
 		
 		mapicons = new ImageIcon[MAP_SIZE][MAP_SIZE];
+		mapcells = new Cell[MAP_SIZE][MAP_SIZE];
+		
 		System.out.println(mapicons.length);
 		mapPanel = new JPanel(){
 			@Override  
@@ -127,6 +132,8 @@ public class MapEditor extends JPanel implements ActionListener {
 				
 				mapicons[y][x] = icon;
 				maplocation[y][x] = num;
+				addInCell(num,y,x);
+				
 				mapPanel.repaint();
 				for (int i = 0;i<MAP_SIZE; i++){
 					for (int j = 0;j<MAP_SIZE; j++)
@@ -191,6 +198,20 @@ public class MapEditor extends JPanel implements ActionListener {
 	    add(optionPanel, BorderLayout.EAST);
 	}
 	
+	/**
+	 * 
+	 * @param charoficon When draw a icon on the map, the char of icon will be recorded in to the Cells array if the icon is character or chest
+	 */
+	public void addInCell(char charoficon, int x, int y){
+		if(charoficon == 'c'){
+			System.out.println("!!!!!!!!!!!!!!!!!!!!!");
+			BaseItem item = new BaseItem("Helmet");
+			mapcells[x][y] = new Cell(item);
+			System.out.println(((BaseItem)mapcells[x][y].getContent()).getName());
+		}
+	}
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("CREATE")){
@@ -221,7 +242,7 @@ public class MapEditor extends JPanel implements ActionListener {
 			addContentPanel();			
 		}
 		if(e.getActionCommand().equals("SAVE")){
-			Map map = new Map(maplocation);
+			Map map = new Map(maplocation, mapcells);
 			JFileChooser addChooser = new JFileChooser();
 			addChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			int returnval = addChooser.showDialog(mapPanel, "selection of file");
