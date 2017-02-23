@@ -221,7 +221,7 @@ public class MapEditor extends JPanel implements ActionListener {
 			addContentPanel();			
 		}
 		if(e.getActionCommand().equals("SAVE")){
-			Map map = new Map(maplocation);
+			Map map = new Map();//maplocation);
 			JFileChooser addChooser = new JFileChooser();
 			addChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			int returnval = addChooser.showDialog(mapPanel, "selection of file");

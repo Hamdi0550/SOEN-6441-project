@@ -1,25 +1,46 @@
 package ddg.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
+import ddg.campaign.entity.BaseCampaign;
+import ddg.model.CampaignEditorModel;
+import ddg.utils.Utils;
 import ddg.view.component.DButton;
+import ddg.view.component.DComboBox;
+import ddg.view.component.DComboBox.DItemListener;
+import ddg.view.component.ListEntryCellRenderer;
+
 /**
+ *
  * This class is show campaign editor view
  * 
  * @author 
  * @date Feb 5, 2017
  */
-public class CampaignEditor extends JPanel implements ActionListener {
+public class CampaignEditor extends JPanel implements ActionListener, ListSelectionListener {
 
 	private ActionListener listener;
+	private CampaignEditorModel model;
+	private JList list;
+	private JPanel contentPanel;
 	private ArrayList<MapModel> mapData; 
 	
 	public CampaignEditor(ActionListener a) {
@@ -29,9 +50,15 @@ public class CampaignEditor extends JPanel implements ActionListener {
 	}
 	
 	private void initData() {
+		String g = Utils.readFile(Config.CAMPAIGN_FILE);
+		this.model = Utils.fromJson(g, CampaignEditorModel.class);
+		if (this.model == null) {
+			this.model = new CampaignEditorModel();
+		}
+		
 		MapModel data = null;//new MapModel();
 		mapData = new ArrayList<MapModel>(); 
-		for (int i=0; i<20; i++){
+		for (int i=1; i<20; i++){
 			data = new MapModel("map"+i);
 			mapData.add(data);
 		}
@@ -40,37 +67,121 @@ public class CampaignEditor extends JPanel implements ActionListener {
 	private void initView() {
 		BorderLayout l = new BorderLayout();
 	    setLayout(l);
-		JPanel contentPanel = new JPanel();
+	    FlowLayout f = new FlowLayout(FlowLayout.LEFT);
+	    this.contentPanel = new JPanel();
+	    this.contentPanel.setPreferredSize(new Dimension(Config.CENTER_WIDTH-26, Config.CENTER_HEIGHT*2));
+	    this.contentPanel.setLayout(f);
+	    
+	    addListView();
+		addEditorView();
+	    addOptionView();
+	    list.setSelectedIndex(0);
+	}
+	
+	private void addListView() {
+		JPanel listPanel = new JPanel();
+		listPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));
+		DefaultListModel l = model.getListModel();
+		list = new JList(l);
+		list.setCellRenderer(new ListEntryCellRenderer());
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.addListSelectionListener(this);
+        list.setVisibleRowCount(15);
+        JScrollPane listScrollPane = new JScrollPane(list);
+        listScrollPane.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT-3*Config.BTN_HEIGHT));
+        listPanel.add(listScrollPane);
+        
+        DButton addBtn = new DButton("ADD", this);
+        listPanel.add(addBtn);
+        
+		add(listPanel, BorderLayout.WEST);
+	}
+	
+	private void addEditorView() {
 		JTextArea ddg = new JTextArea("CAMPAIGN");
 		ddg.setEditable(false);
-		contentPanel.add(ddg);
-	    add(contentPanel, BorderLayout.CENTER);
-	    addNewLevel(contentPanel);
-	    addOption();
-	}
-	int i = 0;
-	private void addNewLevel(JPanel contentPanel) {
-		DButton addBtn = new DButton("ADD", this);
-		contentPanel.add(addBtn);
+		this.contentPanel.add(ddg);//, BorderLayout.AFTER_LINE_ENDS);
+		JPanel centerPanel = new JPanel();
+//		centerPanel.setPreferredSize(new Dimension(Config.CENTER_WIDTH, Config.CENTER_HEIGHT));
+		
+	    DButton addBtn = new DButton("+", this);
+		addBtn.setPreferredSize(new Dimension(Config.CENTER_WIDTH-10, Config.BTN_HEIGHT));
+		add(addBtn, BorderLayout.NORTH);
 		ActionListener l = new ActionListener() {
-
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(i==20)
-					return;
-//			    addNewLevel(contentPanel);
-				JTextArea map = new JTextArea(mapData.get(i).mapName);
-				contentPanel.add(map);
-			    contentPanel.doLayout();
-			    i++;
+				int index = list.getSelectedIndex();
+				if(index >= 0) {
+					BaseCampaign c = model.getItemByIndex(index);
+					DComboBox combo = new DComboBox<String>(c==null?0+"":c.getMaps().size()+"");
+					combo.setPreferredSize(new Dimension(Config.BTN_WIDTH/2, Config.BTN_HEIGHT));
+					for(MapModel m : mapData) {
+						combo.addItem(m.mapName);
+					}
+					c.addMapToCampaign(mapData.get(0).mapName);
+					combo.addDItemListener(new DItemListener() {
+						
+						@Override
+						public void itemChanged(ItemEvent e, String name) {
+							if(e.getStateChange() == ItemEvent.SELECTED) {
+								int index = Integer.valueOf(name);
+								c.setMapByIndex(index, combo.getSelectedItem().toString());
+							}
+						}
+						
+					});
+					contentPanel.add(combo);
+					contentPanel.repaint();
+					contentPanel.doLayout();
+				}
 			}
 			
 		}; 
 		addBtn.removeActionListener(this);
 		addBtn.addActionListener(l);
+		BorderLayout layout = new BorderLayout();
+		centerPanel.setLayout(layout);
+		centerPanel.add(addBtn, BorderLayout.SOUTH);
+		JScrollPane listScrollPane = new JScrollPane(this.contentPanel);
+		listScrollPane.setBorder(null);
+		centerPanel.add(listScrollPane);
+		add(centerPanel, BorderLayout.CENTER);
+	    loadCampaignView();
 	}
 	
-	private void addOption() {
+	private void loadCampaignView() {
+		contentPanel.removeAll();
+		int index = list.getSelectedIndex();
+		if(index >= 0) {
+			BaseCampaign c = this.model.getItemByIndex(index);
+			int i = 0;
+			for(String s : c.getMaps()) {
+				DComboBox combo = new DComboBox<String>((i++)+"");
+				combo.setPreferredSize(new Dimension(Config.BTN_WIDTH/2, Config.BTN_HEIGHT));
+				for(MapModel m : mapData) {
+					combo.addItem(m.mapName);
+				}
+				combo.setSelectedItem(s);
+				combo.addDItemListener(new DItemListener() {
+
+					@Override
+					public void itemChanged(ItemEvent e, String name) {
+						if(e.getStateChange() == ItemEvent.SELECTED) {
+							int index = Integer.valueOf(name);
+							c.setMapByIndex(index, combo.getSelectedItem().toString());
+						}
+					}
+					
+				});
+				this.contentPanel.add(combo);
+			}
+		}
+		contentPanel.repaint();
+		contentPanel.doLayout();
+	}
+	
+	private void addOptionView() {
 		JPanel optionPanel = new JPanel();
 	    optionPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));
 	    optionPanel.setBorder(Config.border);
@@ -78,9 +189,7 @@ public class CampaignEditor extends JPanel implements ActionListener {
 	    optionTitle.setEditable(false);
 	    
 	    DButton saveBtn = new DButton("SAVE", this);
-	    saveBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton backBtn = new DButton("BACK", this);
-	    backBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    optionPanel.add(optionTitle);
 	    optionPanel.add(saveBtn);
 	    optionPanel.add(backBtn);
@@ -91,8 +200,33 @@ public class CampaignEditor extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("BACK")) {
 			e = new ActionEvent(e.getSource(), e.getID(), "CAMPAIGN-BACK");
+		} else if (e.getActionCommand().equals("SAVE")) {
+			String g = Utils.toJson(this.model);
+			Utils.save2File(Config.CAMPAIGN_FILE, g);
+		} else if (e.getActionCommand().equals("ADD")) {
+			BaseCampaign i = new BaseCampaign(BaseCampaign.NAME);
+			model.addCampaign(i);
+			DefaultListModel l = model.getListModel();
+			list.setModel(l);
+			list.setSelectedIndex(l.size()-1);
+			list.ensureIndexIsVisible(l.size()-1);
 		}
 		listener.actionPerformed(e);
+	}
+	
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting() == false) {
+			int index = list.getSelectedIndex();
+			if(index >= 0) {
+				System.out.println("list select:"+index);
+				SwingUtilities.invokeLater(new Runnable() {
+		            public void run() {
+		            	loadCampaignView();
+		            }
+		        });
+			}
+		}
 	}
 	
 	public class MapModel {
@@ -102,6 +236,5 @@ public class CampaignEditor extends JPanel implements ActionListener {
 			super();
 			this.mapName = mapName;
 		}
-		
 	}
 }
