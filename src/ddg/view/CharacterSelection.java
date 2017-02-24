@@ -1,37 +1,38 @@
 package ddg.view;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.*;
 
+import ddg.Config;
+import ddg.model.Fighter;
+import ddg.model.FighterModel;
+import ddg.utils.Utils;
+
 public class CharacterSelection extends JFrame implements ActionListener, ListSelectionListener{
     //define components in the frame
 
-    private final JButton saveBtn = new JButton("      Save      ");
+    private final JButton saveBtn = new JButton("      Select      ");
     private final JButton cancelBtn = new JButton("    Cancel  ");
     private final JButton editBtn = new JButton("    Edit... ");
+    private final JButton deleteBtn = new JButton("    Delete ");
     private JButton createBtn = new JButton("   Create...  ");
+    private final JButton randomBtn = new JButton("    Random ");
 
     private final JButton helmetBtn = new JButton();
-//    private final JButton shoulderBtn = new JButton("  Shoulder  ");
-//    private final JButton beltBtn = new JButton("  Belt ");
-//    private final JButton ringBtn = new JButton("  Ring  ");
-//    private final JButton armorBtn = new JButton("  Armor  ");
-//    private final JButton shieldBtn = new JButton("  Shield  ");
-//    private final JButton bootsBtn = new JButton("    Boots  ");
-//    private final JButton weaponBtn = new JButton("   Weapon  ");
-
     
     //these 3 lines are for upper left jlist of games in a jscrollpanel
-    private final DefaultListModel<String> model = new DefaultListModel<String>(); 
-    private final JList<String> backpackItemList = new JList<String>(model);
-    private final JScrollPane itemListPane = new JScrollPane(backpackItemList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
+    private final DefaultListModel<String> jlistModel = new DefaultListModel<String>(); 
+    private final JList<String> characterList = new JList<String>(jlistModel);
+    private final JScrollPane characterListPane = new JScrollPane(characterList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
     
     
     //Text Fields to show the game results
@@ -44,11 +45,13 @@ public class CharacterSelection extends JFrame implements ActionListener, ListSe
     private final JLabel wisdomTextF = new JLabel(" L ");
     private final JLabel charismaTextF = new JLabel(" L ");
 
-    
+
+	HashMap<String, Fighter> hm1 = new HashMap<>();
     //define 2 colors that are used frequently
     private final Color dustYellow = new Color(211,211,55);
     private final Color lightPink = new Color(255,230,230);
-	public int id;
+	public int id = 100;
+	public String fighterKeyName = "fighter111";
 
     public static void main(String[] args) 
     {
@@ -75,43 +78,25 @@ public class CharacterSelection extends JFrame implements ActionListener, ListSe
         JPanel characterPanel= new JPanel(new BorderLayout());
         JPanel attributesPanel= new JPanel(new GridLayout(10,4,5,5));
         JPanel backpackPanel = new JPanel(new BorderLayout());
-        JPanel buttonsPanel= new JPanel(new GridLayout(6,1,5,5));
+        JPanel buttonsPanel= new JPanel(new GridLayout(8,1,5,5));
         JPanel backpackListPanel = new JPanel(new BorderLayout());
         ImageIcon icon = new ImageIcon("icon1.jpg");  
         icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth(),  
                 icon.getIconHeight(), Image.SCALE_DEFAULT)); 
-        id = 2;
+//        id = 2;
 
-//        JPanel characterLeftPanel= new JPanel(new GridLayout(5,1,5,5));
-//        JPanel characterRightPanel= new JPanel(new GridLayout(5,1,5,5));
-//        JPanel characterImagePanel= new EmbeddedPanel();
-//        JPanel characterButtomPanel= new JPanel(new FlowLayout());
         add(backPanel, BorderLayout.NORTH);
         backPanel.add(characterPanel, BorderLayout.WEST);
         backPanel.add(attributesPanel, BorderLayout.CENTER);
         backPanel.add(backpackPanel, BorderLayout.EAST);
         backpackPanel.add(buttonsPanel, BorderLayout.SOUTH);
 //        backpackPanel.add(backpackListPanel, BorderLayout.CENTER);
-        backpackItemList.setPreferredSize(new Dimension(200,560));
-//        characterPanel.add(characterLeftPanel, BorderLayout.WEST);
-//        characterPanel.add(characterImagePanel, BorderLayout.CENTER);
-//        characterPanel.add(characterRightPanel, BorderLayout.EAST);
+        characterList.setPreferredSize(new Dimension(200,560));
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
-        backpackListPanel.add(itemListPane, BorderLayout.CENTER);
+        backpackListPanel.add(characterListPane, BorderLayout.CENTER);
 //        characterButtomPanel.add(removeBtn);
         helmetBtn.setIcon(icon);
-//        characterLeftPanel.add(helmetBtn);
-//        characterLeftPanel.add(shoulderBtn);
-//        characterLeftPanel.add(armorBtn);
-//        characterLeftPanel.add(beltBtn);
-//        characterRightPanel.add(ringBtn);
-//        characterRightPanel.add(bootsBtn);
-//        characterRightPanel.add(weaponBtn);
-//        characterRightPanel.add(shieldBtn);
-//        characterImagePanel.setSize(300, 500);
-//        characterImagePanel.setBackground(Color.YELLOW);
-//        characterImagePanel.setBounds(0, 0, 500, 500);
-//        characterImagePanel.add(new JLabel("                                                                 "));
+        
         backpackListPanel.setPreferredSize(new Dimension(200,260));
 //        buttonsPanel.setPreferredSize(new Dimension(100,320));
 //        characterLeftPanel.setPreferredSize(new Dimension(60,320));
@@ -161,7 +146,7 @@ public class CharacterSelection extends JFrame implements ActionListener, ListSe
         attributesPanel.add(new JLabel(" Dexterity "));
         attributesPanel.add(dexterityTextF);
         attributesPanel.add(dexModiferL);
-        attributesPanel.add(new JLabel("     "));
+        attributesPanel.add(randomBtn);
         attributesPanel.add(new JLabel(" Constitution "));
         attributesPanel.add(constitutionTextF);
         attributesPanel.add(conModiferL);
@@ -186,18 +171,31 @@ public class CharacterSelection extends JFrame implements ActionListener, ListSe
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.add(createBtn);        
         buttonsPanel.add(editBtn);
+        buttonsPanel.add(deleteBtn);
         buttonsPanel.add(saveBtn);
         buttonsPanel.add(cancelBtn);
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.setSize(300,500);
         
+        characterList.addListSelectionListener(this);
 
     	createBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
 //               CharacterEditLayout ce1 = new CharacterEditLayout();
 //               CharacterEditLayout ceFrame = new CharacterEditLayout();
-               CharacterEditLayout.createAndShowGUI(getThisFrame());
+    			CharacterEditLayout.createAndShowGUI(getThisFrame());
                setEnabled(false);
+               
+            }
+        });
+    	
+    	editBtn.addActionListener(new ActionListener(){ 
+    		public void actionPerformed(ActionEvent e){
+
+               CharacterEditLayout ceFrame = new CharacterEditLayout();
+               ceFrame.createAndShowGUI(getThisFrame());
+               setEnabled(false);
+               
             }
         });
 
@@ -212,10 +210,19 @@ public class CharacterSelection extends JFrame implements ActionListener, ListSe
 	@Override
     public void valueChanged(ListSelectionEvent e)
     {
-
-    }//end of valueChanged
+        if (!characterList.isSelectionEmpty())
+        {
+            String key = (String) characterList.getSelectedValue();
+            Fighter f1 = hm1.get(key);
+            nameTextF.setText(f1.getName());
+            levelTextF.setText(Integer.toString(f1.getLevel()));
+            strengthTextF.setText(Integer.toString(f1.getStrength()));
+            dexterityTextF.setText(Integer.toString(f1.getDexterity()));
+        }
+        System.out.println("value changed");
+    }
 	
-	public JFrame getThisFrame(){
+	public CharacterSelection getThisFrame(){
 		return this;
 	}
 	
@@ -230,7 +237,42 @@ public class CharacterSelection extends JFrame implements ActionListener, ListSe
             @Override  
             public void windowGainedFocus(WindowEvent e) {  
                 // TODO Auto-generated method stub  
+            	jlistModel.clear();
                 System.out.println("The CS window is focused.");  
+                FighterModel fm = new FighterModel();
+
+        		String g = Utils.readFile(Config.CHARACTOR_FILE);
+        		fm = Utils.fromJson(g, FighterModel.class);
+        		if(fm != null){
+            		System.out.println(fm);
+            		
+            		
+            		
+            		try{
+
+                		System.out.println("2"+fm);
+                		if( null!=fm.getFighters() ){
+                            hm1 = fm.getFighters();
+                            Set<String> keySet1 = hm1.keySet();
+                            Iterator<String> it1 = keySet1.iterator();
+                            
+                            while(it1.hasNext()){
+                            	String listItem1 = it1.next();
+                                jlistModel.addElement(listItem1);
+                            }
+                		}        			
+            		}
+            		catch (NullPointerException ex){
+            			System.out.println("there is a NullPointerException");
+            		}
+        			
+        		}
+        		System.out.println("continue");
+        		System.out.println("character list: " + characterList);
+//                for (String key: hm1.keySet()){
+//                    jlistModel.addElement(key);
+//                }
+                
                 //刷新列表，reload文件。
             }  
   

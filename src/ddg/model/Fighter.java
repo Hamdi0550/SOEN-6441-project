@@ -1,8 +1,12 @@
 package ddg.model;
+import java.io.Serializable;
+import java.util.Date;
 
 import ddg.Config;
+import ddg.utils.Dice;
+//import ddg.utils.FileRW;
 import ddg.utils.Utils;
-import java.io.Serializable;
+
 
 /**
  * 
@@ -29,8 +33,9 @@ public class Fighter implements Serializable{
 	private int armorClass;		//based on dexterity modifier and worn armor
 	private int hitPoints; 		//based on constitution modifier and level
 	private int attackBonus; 	//based on level and strength/dexterity modifiers
+	//Your attack roll is 1d20 + your ability modifier + your proficiency bonus(level) if you're proficient with the weapon you’re using.	
 	private int damageBonus; 	//based on strength modifier, only for melee weapons
-	
+	//You roll the damage die or dice, add any modifiers, and apply the damage to your target. With a penalty, it is possible to deal 0 damage, but never negative damage.
 	private boolean armorIsOn = false;
 	private boolean shieldIsOn = false;
 	private boolean weaponIsOn = false;
@@ -43,11 +48,29 @@ public class Fighter implements Serializable{
 		this.level = level;
 		this.strength = strength;
 		this.dexterity = dexterity;
+//		hitPoints = Dice.d10Roll() + (constitution * this.level);
+		armorClass = this.dexterity + 0;
 		
 	}
 	public static void saveFighter(Fighter fighter){
-//		Utils.save2File(fighter, "Fighter");
+//		FileRW.save2File(fighter, "Fighter");
+		FighterModel fModel = new FighterModel();
+//		this.model = Utils.fromJson(g, FighterModel.class);
+		
+		
+		
+		
+		String dateString = new Date().toLocaleString();
+		dateString = dateString + fighter.name;
+		fModel.fightersHM.put(dateString, fighter);
+//		Utils.saveToFile(fightersHM, Config.CHARACTOR_FILE);
 //		Utils.save2File(f, json);
+	}
+	public static void deleteFighter(Fighter fighter){
+//		Utils.deleteFromFile(fighter, Config.CHARACTOR_FILE);
+	}
+	public String getName(){
+		return name;
 	}
 	public int getLevel(){
 		return level;
@@ -57,5 +80,17 @@ public class Fighter implements Serializable{
 	}
 	public int getDexterity(){
 		return dexterity;
+	}
+	public void setName(String name){
+		this.name = name;
+	}
+	public void setLevel(int level){
+		this.level = level;
+	}
+	public void setStrength(int strength){
+		this.level = strength;
+	}
+	public void setDexterity(int dexterity){
+		this.level = dexterity;
 	}
 }

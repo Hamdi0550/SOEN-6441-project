@@ -2,14 +2,17 @@ package ddg.view;
 
 import java.util.*;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
+
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.event.*;
 
+import ddg.Config;
 import ddg.model.Fighter;
+import ddg.model.FighterModel;
+import ddg.utils.Utils;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +38,8 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
     //these 3 lines are for upper left jlist of games in a jscrollpanel
     private final DefaultListModel<String> model = new DefaultListModel<String>(); 
     
+    //these 2 lines are for lower right output area showing a round played
+    private final JTextArea roundResultsTA = new JTextArea(15, 43);
     
     //Text Fields to show the game results
     private final JTextField nameTextF = new JTextField();
@@ -55,7 +60,8 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
     private final JTextField modifier8TextF = new JTextField();
     private final JTextField modifier9TextF = new JTextField();
     
-    private static JFrame owner;
+//    private CharacterSelection owner;
+    private static CharacterSelection owner;
 
     //define 2 colors that are used frequently
     private final Color dustYellow = new Color(211,211,55);
@@ -64,11 +70,13 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
     public static void main(String[] args) 
     {
         //call the method to build the frame
-    	JFrame f1 = new JFrame("owner");
-        createAndShowGUI(f1);
+//    	JFrame f1 = new JFrame("owner");
+    	CharacterSelection f1 = new CharacterSelection();
+    	CharacterEditLayout f2 = new CharacterEditLayout();
+        f2.createAndShowGUI(f1);
     }//end of main()
     ///////////////////////////////////////////////////////////////////////////
-    public static void createAndShowGUI(JFrame ownerFrame) 
+    public static void createAndShowGUI(CharacterSelection ownerFrame) 
     {
         //new up  this class, & call constructor, --due to extends, it is a frame
         CharacterEditLayout frame1 = new CharacterEditLayout(); 
@@ -76,9 +84,11 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
         frame1.pack();
 //        frame1.setResizable(false);
         frame1.setVisible(true);
-        if (ownerFrame != null){
-            owner = ownerFrame;        	
-        }
+//        if (ownerFrame != null){
+            owner = ownerFrame;
+            
+            System.out.println(owner);
+//        }
         	
 //        this.owner = getOwner(ownerFrame);
         
@@ -219,6 +229,7 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
 				dispose();
 				owner.setEnabled(true);
 				owner.setVisible(true);
+				
 	        }
 	    });
 		saveBtn.addActionListener(new ActionListener(){
@@ -228,10 +239,60 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
 				//放到ArrayList里，新建character对象，getJTextField，赋值
 				//把character对象add到ArrayList里，把ArrayList保存到文件。
 				Fighter fighter1 = new Fighter(1, 10, 10);
-				Fighter.saveFighter(fighter1);
+				fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
+				fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
+				fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
+				fighter1.setName("Chris");
+                FighterModel fm = new FighterModel();
+        		String g = Utils.readFile(Config.CHARACTOR_FILE);
+        		fm = Utils.fromJson(g, FighterModel.class);
+        		if(fm != null){
+            		System.out.println(fm);
+            		HashMap<String, Fighter> hm1 = new HashMap<>();
+            		try{
+
+                		System.out.println("2"+fm);
+                		if( null!=fm.getFighters() ){
+                            hm1 = fm.getFighters();
+                            Set<String> keySet1 = hm1.keySet();
+                            Iterator<String> it1 = keySet1.iterator();
+                            
+                            while(it1.hasNext()){
+                            	String listItem1 = it1.next();
+//                                jlistModel.addElement(listItem1);
+                            }
+                		}        			
+            		}
+            		catch (NullPointerException ex){
+            			System.out.println("there is a NullPointerException");
+            		}
+        			
+        		}
+
+				Fighter fighter2 = new Fighter(1, 10, 10);
+				fighter2.setName("Jack");
+                FighterModel fm2 = new FighterModel();
+        		HashMap<String, Fighter> hm2 = new HashMap<>();
+        		hm2.put((new Date().toLocaleString() + fighter1.getName()), fighter1);        		
+        		hm2.put((new Date().toLocaleString() + fighter2.getName()), fighter2);
+        		fm2.setFighters(hm2);
+        		
+
+    			String gSave = Utils.toJson(fm2);
+    			Utils.save2File(Config.CHARACTOR_FILE, gSave);
+        		
+//				Fighter.saveFighter(fighter1);
+    			owner.hm1 = hm2;
 				dispose();
 				owner.setEnabled(true);
 				owner.setVisible(true);
+	        }
+	    });
+		randomBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				
+				System.out.println("I get the owner's id " + owner.id);
+				System.out.println("I get the figher " + owner.fighterKeyName);
 	        }
 	    });
 	}
@@ -323,7 +384,6 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
 	    }  
 	    public void paintComponent(Graphics g) {  
 	        super.paintComponent(g);  
-//	        setBackground(Color.WHITE);
 	        g.drawImage(img, 0, 0,300, 300, this);  
 //	        g.drawRect(5, 0, 30, 50);
 //		    }  
