@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ddg.Config;
@@ -16,6 +17,7 @@ import ddg.utils.Utils;
  */
 public class Map {
 	// record the location of things in the map
+	private String name;
 	private char[][] location;
 	private Cell[][] cellsinthemap;
 	
@@ -49,9 +51,14 @@ public class Map {
 	 * @param maplocation detail location of map.
 	 * @return true if the map have indoor, outdoor and can find a valid path to success.
 	 */
+	static public void savemap(ArrayList<Map> listforsavemap){
+		Utils.save2File(Config.MAP_FILE, Utils.toJson(listforsavemap));
+	}
 	
-
-	static public void savemap(Map m){
-		Utils.save2File(Config.MAP_FILE, Utils.toJson(m));
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }

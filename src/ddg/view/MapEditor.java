@@ -1,35 +1,35 @@
 package ddg.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.ImageCapabilities;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.BorderFactory;
-import javax.swing.DebugGraphics;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.EtchedBorder;
+import javax.swing.SwingUtilities;
 
 import ddg.Config;
 import ddg.item.entity.BaseItem;
+import ddg.model.ItemEditorModel;
+import ddg.model.MapEditorModel;
+import ddg.utils.Utils;
 import ddg.view.component.DButton;
 import model.Cell;
 import model.Map;
@@ -42,6 +42,7 @@ import model.Map;
 public class MapEditor extends JPanel implements ActionListener {
 
 	private ActionListener listener;
+	private MapEditorModel mapsmodel;
 	// set the size of map. it could be changed if click the S/M/L button  
 	public static int  MAP_SIZE = 10;
 	char[][] maplocation;
@@ -49,6 +50,8 @@ public class MapEditor extends JPanel implements ActionListener {
 	Cell[][] mapcells;
 	java.util.Map<String, String> usedcell = new HashMap<>();
 	
+	ArrayList<Map> listforsavemap = new ArrayList<Map>();
+	boolean hasvaildpath;
 	
 	JPanel optionPanel;
 	JPanel contentPanel;
@@ -59,7 +62,7 @@ public class MapEditor extends JPanel implements ActionListener {
 	
 	public MapEditor(ActionListener a) {
 		this.listener = a;
-		
+		this.hasvaildpath = false;
 		
 		optionPanel = new JPanel();
 		contentPanel = new JPanel();
@@ -68,6 +71,14 @@ public class MapEditor extends JPanel implements ActionListener {
 		
 	}
 
+	private void initData(){
+		String g = Utils.readFile(Config.MAP_FILE);
+		this.mapsmodel = Utils.fromJson(g, MapEditorModel.class);
+		if (this.mapsmodel == null) {
+			this.mapsmodel = new MapEditorModel();
+		}
+	}
+	
 	private void initView() {
 	    setLayout(new BorderLayout());
 	    System.out.println(MAP_SIZE);
@@ -125,13 +136,31 @@ public class MapEditor extends JPanel implements ActionListener {
 			public void mouseClicked(MouseEvent e){
 				int x = e.getX()/50;
 				int y = e.getY()/50;
-				
+//				JOptionPane.showinput
 				
 				ImageIcon icon = (ImageIcon)options_of_element_on_cell.getSelectedItem();
 				char num = icon.toString().charAt(0);
 				System.out.println(x+"<>"+y);
 				System.out.println(num);
 				
+				if(num == 'c'){
+//					itemPopUp();
+//					JPopupMenu popup = new JPopupMenu();
+//					JMenuItem item;
+//					popup.add(item = new JMenuItem("!!!!!\n\n"+"22222",new ImageIcon("floor.png")));
+//					item.setHorizontalTextPosition(JMenuItem.RIGHT);
+//					popup.add(item = new JMenuItem("!!!!!\n\n"+"22222",new ImageIcon("tree.png")));
+//					item.setHorizontalTextPosition(JMenuItem.RIGHT);
+//					popup.show(mapPanel, e.getX(), e.getY());
+					String bigList[] = new String[30];
+
+				    for (int i = 0; i < bigList.length; i++) {
+				      bigList[i] = Integer.toString(i);
+				    }
+//				    JOptionPane.showinput
+				    JOptionPane.showInputDialog(mapPanel, "Pick a printer", "Input", JOptionPane.QUESTION_MESSAGE,
+				        null, bigList, "Titan");
+				}
 				
 				mapicons[y][x] = icon;
 				maplocation[y][x] = num;
@@ -170,6 +199,14 @@ public class MapEditor extends JPanel implements ActionListener {
 		contentPanel.add(iconpanel);
 		add(contentPanel, BorderLayout.WEST);
 	}
+	public void itemPopUp() {
+		// TODO Auto-generated method stub
+		JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
+		PopUpForItem itempopup = new PopUpForItem(rootframe);
+		itempopup.setVisible(true);
+		rootframe.setEnabled(false);
+	}
+
 	/**
 	 * This method is used for add option panel
 	 * 
@@ -243,26 +280,34 @@ public class MapEditor extends JPanel implements ActionListener {
 			//this.removeAll();
 			contentPanel.removeAll();
 			contentPanel.revalidate();
-			addContentPanel();			
+			addContentPanel();		
 		}
 		if(e.getActionCommand().equals("VALIDATE")){
 			if(checkValidation()){
-				System.out.println("----------------------------------------------------------check true");
+				JOptionPane.showMessageDialog(null, "<html>Vaild Success!!!</html>");
+
 			}
 			else
-				System.out.println("----------------------------------------------------------check False");
+				JOptionPane.showMessageDialog(null, "<html>The map is invalid <br> it must have a indoor, a outdoor and Feasiable Path</html>","Invalid",JOptionPane.ERROR_MESSAGE);
 		}
 		
 		if(e.getActionCommand().equals("SAVE")){
-			Map map = new Map(maplocation, mapcells);
-			JFileChooser addChooser = new JFileChooser();
-			addChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-			int returnval = addChooser.showDialog(mapPanel, "selection of file");
+			if(checkValidation()){
+				Map map = new Map(maplocation, mapcells);
+				listforsavemap.add(map);
+				listforsavemap.add(map);
+				Map.savemap(listforsavemap);
+			}
+			else
+				JOptionPane.showMessageDialog(null, "<html>The map is invalid <br> it must have a indoor, a outdoor and Feasiable Path</html>","Invalid",JOptionPane.ERROR_MESSAGE);
+//			JFileChooser addChooser = new JFileChooser();
+//			addChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+//			int returnval = addChooser.showDialog(mapPanel, "selection of file");
 //			{
 //				String str = addChooser.getSelectedFile().getPath();
 //				targetfolder.setText(str);
 //			}
-			Map.savemap(map);
+			
 		}
 		if(e.getActionCommand().equals("CLEAR")){
 			for (int i = 0;i<MAP_SIZE; i++){
@@ -283,32 +328,31 @@ public class MapEditor extends JPanel implements ActionListener {
 		return false;
 	}
 
-	public boolean hasValidPath(int i, int j) {
+	public void hasValidPath(int i, int j) {
 		if(maplocation[i][j] == 'o')
-			return true;
+			hasvaildpath=true;
 		else{
 			usedcell.put(i+","+j, "i*j");
 			if( j>0 && maplocation[i][j-1]!='t'){
 				if(usedcell.get(i+","+ (j-1) )== null)
-					return hasValidPath(i, j-1);
+					hasValidPath(i, j-1);
 			}
 			
 			if(i>0 && maplocation[i-1][j]!='t'){
 				if(usedcell.get(i-1 +","+ j)== null)
-					return hasValidPath(i-1, j);
+					hasValidPath(i-1, j);
 			}
 			
 			if(j<Config.MAP_SIZE-1 && maplocation[i][j+1]!='t'){
 				if(usedcell.get(i +","+ (j+1))== null)
-					return hasValidPath(i, j+1);
+					hasValidPath(i, j+1);
 			}
 			
 			if(i<Config.MAP_SIZE-1 && maplocation[i+1][j]!='t'){
 				if(usedcell.get((i+1) +","+ j)== null)
-					return hasValidPath(i+1, j);
+					hasValidPath(i+1, j);
 			}
 		}
-		return false;
 	}
 	/**
 	 * 
@@ -320,10 +364,15 @@ public class MapEditor extends JPanel implements ActionListener {
 			for(int j=0;j<Config.MAP_SIZE;j++){
 				if(maplocation[i][j] == 'i'){
 					usedcell.clear();
-					return hasValidPath(i,j);
+					hasValidPath(i,j);
 				}
 			}
 		}
+		
+		if(hasvaildpath){
+			return true;
+		}
+		
 		return false;
 	}
 	
