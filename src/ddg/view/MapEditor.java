@@ -57,7 +57,7 @@ public class MapEditor extends JPanel implements ActionListener {
 	JPanel contentPanel;
 	JPanel mapPanel;
 	JPanel mapiconPanel;
-	JComboBox<ImageIcon> options_of_element_on_cell;
+	JComboBox<ImageIcon> optionsofelementoncell;
 	ImageIcon floor = new ImageIcon("floor.png");
 	
 	public MapEditor(ActionListener a) {
@@ -138,7 +138,7 @@ public class MapEditor extends JPanel implements ActionListener {
 				int y = e.getY()/50;
 //				JOptionPane.showinput
 				
-				ImageIcon icon = (ImageIcon)options_of_element_on_cell.getSelectedItem();
+				ImageIcon icon = (ImageIcon)optionsofelementoncell.getSelectedItem();
 				char num = icon.toString().charAt(0);
 				System.out.println(x+"<>"+y);
 				System.out.println(num);
@@ -169,6 +169,10 @@ public class MapEditor extends JPanel implements ActionListener {
 //				    JOptionPane.showInputDialog(mapPanel, "Pick a printer", "Input", JOptionPane.QUESTION_MESSAGE,
 //				        null, bigList, "Titan");
 				}
+				else if(num =='o'){
+					JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(mapPanel);
+					PopUpForFighter fighterpopup = new PopUpForFighter(rootframe,"Select Character!");
+				}
 				else{
 					mapicons[y][x] = icon;
 					maplocation[y][x] = num;
@@ -192,14 +196,14 @@ public class MapEditor extends JPanel implements ActionListener {
 		
 		JPanel iconpanel = new JPanel();
 		iconpanel.setPreferredSize(new Dimension(90, 500));
-		options_of_element_on_cell = new JComboBox<ImageIcon>();  
-		options_of_element_on_cell.addItem(new ImageIcon("floor.png"));  
-		options_of_element_on_cell.addItem(new ImageIcon("tree.png"));
-		options_of_element_on_cell.addItem(new ImageIcon("indoor.png"));
-		options_of_element_on_cell.addItem(new ImageIcon("chest1.png"));
-		options_of_element_on_cell.addItem(new ImageIcon("outdoor.png"));
-		options_of_element_on_cell.setLocation(0, 0);
-		iconpanel.add(options_of_element_on_cell, BorderLayout.NORTH);
+		optionsofelementoncell = new JComboBox<ImageIcon>();  
+		optionsofelementoncell.addItem(new ImageIcon("floor.png"));  
+		optionsofelementoncell.addItem(new ImageIcon("tree.png"));
+		optionsofelementoncell.addItem(new ImageIcon("indoor.png"));
+		optionsofelementoncell.addItem(new ImageIcon("chest1.png"));
+		optionsofelementoncell.addItem(new ImageIcon("outdoor.png"));
+		optionsofelementoncell.setLocation(0, 0);
+		iconpanel.add(optionsofelementoncell, BorderLayout.NORTH);
 		iconpanel.setBorder(Config.border);
 		
 		contentPanel.setLayout(new FlowLayout());

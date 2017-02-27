@@ -83,11 +83,10 @@ public class PopUpForItem extends JDialog implements ActionListener{
 	private void addListView(){
 		JPanel listPanel = new JPanel();
 		listPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));
-		itemslist = new JList<>(itemsmodel.getListModel());
+		itemslist = new JList(itemsmodel.getListModel());
 		itemslist.setCellRenderer(new ListEntryCellRenderer());
 		itemslist.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		itemslist.addListSelectionListener(slsnr);
-		itemslist.setVisibleRowCount(6);
         JScrollPane listScrollPane = new JScrollPane(itemslist);
         listScrollPane.setPreferredSize(new Dimension(Config.OPTION_WIDTH, 400));
         listPanel.add(listScrollPane);
