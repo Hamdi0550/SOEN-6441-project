@@ -152,19 +152,27 @@ public class MapEditor extends JPanel implements ActionListener {
 //					popup.add(item = new JMenuItem("!!!!!\n\n"+"22222",new ImageIcon("tree.png")));
 //					item.setHorizontalTextPosition(JMenuItem.RIGHT);
 //					popup.show(mapPanel, e.getX(), e.getY());
-					String bigList[] = new String[30];
-
-				    for (int i = 0; i < bigList.length; i++) {
-				      bigList[i] = Integer.toString(i);
-				    }
-//				    JOptionPane.showinput
-				    JOptionPane.showInputDialog(mapPanel, "Pick a printer", "Input", JOptionPane.QUESTION_MESSAGE,
-				        null, bigList, "Titan");
+					JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(mapPanel);
+					PopUpForItem itempopup = new PopUpForItem(rootframe,"Select Item for Chect!");
+//					itempopup.setVisible(true);
+					if(itempopup.getSelecteditem() != null){
+						addItemInCell(itempopup.getSelecteditem(), y, x);
+						mapicons[y][x] = icon;
+						maplocation[y][x] = num;
+					}
+//					String bigList[] = new String[30];
+//
+//				    for (int i = 0; i < bigList.length; i++) {
+//				      bigList[i] = Integer.toString(i);
+//				    }
+////				    JOptionPane.showinput
+//				    JOptionPane.showInputDialog(mapPanel, "Pick a printer", "Input", JOptionPane.QUESTION_MESSAGE,
+//				        null, bigList, "Titan");
 				}
-				
-				mapicons[y][x] = icon;
-				maplocation[y][x] = num;
-				addInCell(num,y,x);
+				else{
+					mapicons[y][x] = icon;
+					maplocation[y][x] = num;
+				}
 				
 				mapPanel.repaint();
 				for (int i = 0;i<MAP_SIZE; i++){
@@ -202,9 +210,12 @@ public class MapEditor extends JPanel implements ActionListener {
 	public void itemPopUp() {
 		// TODO Auto-generated method stub
 		JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
-		PopUpForItem itempopup = new PopUpForItem(rootframe);
-		itempopup.setVisible(true);
-		rootframe.setEnabled(false);
+		PopUpForItem itempopup = new PopUpForItem(rootframe,"Select Item for Chect!");
+//		itempopup.setVisible(true);
+		if(itempopup.getSelecteditem() != null){
+			
+		}
+		
 	}
 
 	/**
@@ -243,13 +254,10 @@ public class MapEditor extends JPanel implements ActionListener {
 	 * 
 	 * @param charoficon When draw a icon on the map, the char of icon will be recorded in to the Cells array if the icon is character or chest
 	 */
-	public void addInCell(char charoficon, int x, int y){
-		if(charoficon == 'c'){
-			System.out.println("!!!!!!!!!!!!!!!!!!!!!");
-			BaseItem item = new BaseItem("Helmet");
-			mapcells[x][y] = new Cell(item);
-			System.out.println(((BaseItem)mapcells[x][y].getContent()).getName());
-		}
+	public void addItemInCell(BaseItem item, int x, int y){
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!");
+		mapcells[x][y] = new Cell(item);
+		System.out.println(((BaseItem)mapcells[x][y].getContent()).getId() + ((BaseItem)mapcells[x][y].getContent()).getBonus());
 	}
 	
 	
