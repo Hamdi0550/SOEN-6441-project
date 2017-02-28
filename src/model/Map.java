@@ -53,6 +53,9 @@ public class Map {
 	public void setLocation(char[][] location) {
 		this.location = location;
 	}
+	public void changeLocation(int x,int y, char c){
+		location[x][y] = c;
+	}
 	/**
 	 * 
 	 * @param mapEditorModel detail location of map.
@@ -68,6 +71,9 @@ public class Map {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	public void changeCellsinthemap(int x,int y, Cell cell){
+		cellsinthemap[x][y] = cell;
 	}
 
 }
