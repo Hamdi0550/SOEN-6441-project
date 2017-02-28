@@ -74,13 +74,13 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
         list.addListSelectionListener(this);
         list.setVisibleRowCount(15);
         JScrollPane listScrollPane = new JScrollPane(list);
-        listScrollPane.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT-3*Config.BTN_HEIGHT));
+        listScrollPane.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT-3 * Config.BTN_HEIGHT));
         listPanel.add(listScrollPane);
         
         typeComboBox = new DComboBox<String>(BaseItem.TYPE);
         typeComboBox.addItem("ADD ITEM");
         for(String i : BaseItem.NAME) {
-        	typeComboBox.addItem("  +  "+i);
+        	typeComboBox.addItem("  +  " + i);
         }
         typeComboBox.addDItemListener(this);
         listPanel.add(typeComboBox);
