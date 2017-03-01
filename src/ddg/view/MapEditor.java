@@ -250,7 +250,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	
 	/**
 	 * 
-	 * @param charoficon When draw a icon on the map, the char of icon will be recorded in to the Cells array if the icon is character or chest
+	 * @param item When draw a icon on the map, the char of icon will be recorded in to the Cells array if the icon is character or chest
 	 */
 	public void addItemInCell(BaseItem item, int x, int y){
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!");
