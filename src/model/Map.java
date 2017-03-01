@@ -36,6 +36,11 @@ public class Map {
 		this.location = new char[row][column];
 		this.cellsinthemap = new Cell[row][column];
 		
+		for(int i=0;i<row;i++){
+			for(int j=0;j<column;j++)
+				this.location[i][j] = 'f';
+		}
+		
 	}
 
 //	public Map(char[][] loca, Cell[][] cells){
@@ -62,6 +67,11 @@ public class Map {
 		this.column = width;
 		this.location = new char[height][width];
 		this.cellsinthemap = new Cell[height][width];
+		
+		for(int i=0;i<row;i++){
+			for(int j=0;j<column;j++)
+				this.location[i][j] = 'f';
+		}
 		
 	}
 	

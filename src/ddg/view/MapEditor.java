@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -19,7 +17,6 @@ import javax.swing.event.ListSelectionListener;
 import ddg.Config;
 import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
-import ddg.model.ItemEditorModel;
 import ddg.model.MapEditorModel;
 import ddg.ui.DDGameMain;
 import ddg.utils.Utils;
@@ -40,7 +37,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	private Map selectedmap;
 	// set the size of map. it could be changed if click the S/M/L button
 	private JList list;
-	public static int  MAP_SIZE = 10;
 	java.util.Map<String, String> usedcell = new HashMap<>();
 
 	boolean hasvaildpath;
@@ -216,10 +212,9 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 
 
 	public void itemPopUp() {
-		// TODO Auto-generated method stub
+		
 		JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
 		PopUpForItem itempopup = new PopUpForItem(rootframe,"Select Item for Chect!");
-//		itempopup.setVisible(true);
 		if(itempopup.getSelecteditem() != null){
 			
 		}
@@ -319,8 +314,8 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		}
 		if(e.getActionCommand().equals("CLEAR")){
 			char maplocation[][] = selectedmap.getLocation();
-			for (int i = 0;i<MAP_SIZE; i++){
-				for (int j = 0;j<MAP_SIZE; j++)
+			for (int i = 0;i<selectedmap.getRow(); i++){
+				for (int j = 0;j<selectedmap.getColumn(); j++)
 					maplocation[i][j] = 'f';
 			}
 			mapPanel.repaint();
@@ -352,12 +347,12 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 					hasValidPath(i-1, j);
 			}
 			
-			if(j<Config.MAP_SIZE-1 && maplocation[i][j+1]!='t'){
+			if(j<selectedmap.getColumn()-1 && maplocation[i][j+1]!='t'){
 				if(usedcell.get(i +","+ (j+1))== null)
 					hasValidPath(i, j+1);
 			}
 			
-			if(i<Config.MAP_SIZE-1 && maplocation[i+1][j]!='t'){
+			if(i<selectedmap.getRow()-1 && maplocation[i+1][j]!='t'){
 				if(usedcell.get((i+1) +","+ j)== null)
 					hasValidPath(i+1, j);
 			}
@@ -370,8 +365,8 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	 */
 	public boolean hasEntryDoor() {
 		hasvaildpath = false;
-		for(int i=0;i<Config.MAP_SIZE;i++){
-			for(int j=0;j<Config.MAP_SIZE;j++){
+		for(int i=0;i<selectedmap.getRow();i++){
+			for(int j=0;j<selectedmap.getColumn();j++){
 				if(selectedmap.getLocation()[i][j] == 'i'){
 					usedcell.clear();
 					hasValidPath(i,j);
@@ -392,8 +387,8 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	 * @return true if there is a outdoor(Exit door) in the location of map 
 	 */
 	public boolean hasExitDoor() {
-		for(int i=0;i<Config.MAP_SIZE;i++){
-			for(int j=0;j<Config.MAP_SIZE;j++){
+		for(int i=0;i<selectedmap.getRow();i++){
+			for(int j=0;j<selectedmap.getColumn();j++){
 				if(selectedmap.getLocation()[i][j] == 'o'){
 					return true;
 				}
