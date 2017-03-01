@@ -223,8 +223,14 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	public void mapCreatePopUp(){
 		JFrame mapSizeFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		PopUpForCreateNewMap popUpForCreateNewMap = new PopUpForCreateNewMap(mapSizeFrame, "Select Map Size");
-		popUpForCreateNewMap.setVisible(true);
-		selectedmap = popUpForCreateNewMap.getSelectedMap();
+		if(popUpForCreateNewMap.getRow()>=10 && popUpForCreateNewMap.getColumn()>=10)
+		{
+			mapsmodel.add(new Map("Map"+(mapsmodel.getMaps().size() + 1),popUpForCreateNewMap.getHeight(),popUpForCreateNewMap.getWidth()));
+			DefaultListModel l = mapsmodel.getMapListModel();
+			list.setModel(l);
+			list.setSelectedIndex(l.size()-1);
+			list.ensureIndexIsVisible(l.size()-1);
+		}
 	}
 
 	/**
