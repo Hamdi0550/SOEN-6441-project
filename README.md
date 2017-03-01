@@ -38,5 +38,5 @@ Window->preferences->Code Style->Code Templates->comments
  */
 ```
 /**
-*test
+*testtest
 */
