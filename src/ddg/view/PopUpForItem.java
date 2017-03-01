@@ -47,7 +47,6 @@ public class PopUpForItem extends JDialog implements ActionListener{
 		if (this.itemsmodel == null) {
 			this.itemsmodel = new ItemEditorModel();
 		}
-		
 	}
 	
 	ListSelectionListener slsnr = new ListSelectionListener() {
@@ -75,9 +74,8 @@ public class PopUpForItem extends JDialog implements ActionListener{
 		addContentView();
 		
 		setLocationRelativeTo(null);
-        setVisible(true);
-		
-		
+		setVisible(true);
+
 	}
 	
 	private void addListView(){
