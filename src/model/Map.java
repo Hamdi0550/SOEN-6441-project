@@ -21,6 +21,8 @@ public class Map {
 	private String name;
 	private char[][] location;
 	private Cell[][] cellsinthemap;
+	private int height;
+	private int width;
 	
 	
 	// recording the status of player.
@@ -29,21 +31,46 @@ public class Map {
 //	private List<Charactor> monster;
 	
 	public Map(){
-		this.location = new char[Config.MAP_SIZE][Config.MAP_SIZE];
-		this.cellsinthemap = new Cell[Config.MAP_SIZE][Config.MAP_SIZE];
+		this.height = 10;
+		this.width = 10;
+		this.location = new char[height][width];
+		this.cellsinthemap = new Cell[height][width];
+		
 	}
 
-	public Map(char[][] loca, Cell[][] cells){
-		this.location = new char[Config.MAP_SIZE][Config.MAP_SIZE];
-		this.location = loca;
-		this.cellsinthemap = new Cell[Config.MAP_SIZE][Config.MAP_SIZE];
-		this.cellsinthemap = cells;
-	}
+//	public Map(char[][] loca, Cell[][] cells){
+//		this.height = 10;
+//		this.width = 10;
+//		this.location = new char[Config.MAP_SIZE][Config.MAP_SIZE];
+//		this.location = loca;
+//		this.cellsinthemap = new Cell[Config.MAP_SIZE][Config.MAP_SIZE];
+//		this.cellsinthemap = cells;
+//		
+//	}
 
-	public Map(String name, char[][] location, Cell[][] cellsinthemap) {
+//	public Map(String name, char[][] location, Cell[][] cellsinthemap) {
+//		this.name = name;
+//		this.location = location;
+//		this.cellsinthemap = cellsinthemap;
+//		this.height = 10;
+//		this.width = 10;
+//	}
+	
+	public Map(String name, int height, int width){
 		this.name = name;
-		this.location = location;
-		this.cellsinthemap = cellsinthemap;
+		this.height = height;
+		this.width = width;
+		this.location = new char[height][width];
+		this.cellsinthemap = new Cell[height][width];
+		
+	}
+	
+	public int getHeight(){
+		return this.height;
+	}
+	
+	public int getWidth(){
+		return this.width;
 	}
 
 	public char[][] getLocation() {
