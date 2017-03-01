@@ -37,7 +37,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	private Map selectedmap;
 	// set the size of map. it could be changed if click the S/M/L button
 	private JList list;
-	java.util.Map<String, String> usedcell = new HashMap<>();
 
 	boolean hasvaildpath;
 	
@@ -211,6 +210,10 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	}
 
 
+	/**
+	 * this function create a popup dialog which allow user to chose the item. 
+	 * It may be used with add chest on the map.
+	 */
 	public void itemPopUp() {
 		
 		JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -221,6 +224,9 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		
 	}
 	
+	/**
+	 * create a dialog to ask the map's size when user create a new map
+	 */
 	public void mapCreatePopUp(){
 		JFrame mapSizeFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
 		PopUpForCreateNewMap popUpForCreateNewMap = new PopUpForCreateNewMap(mapSizeFrame, "Select Map Size");
@@ -269,9 +275,11 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	/**
 	 * 
 	 * @param item When draw a icon on the map, the char of icon will be recorded in to the Cells array if the icon is character or chest
+	 * @param x the row-coordinate on the map, ensure the location of the cell
+	 * @param y the column-coordinate on the map, ensure the location of the cell
+	 * 
 	 */
 	public void addItemInCell(BaseItem item, int x, int y){
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!");
 		selectedmap.changeCellsinthemap(x, y, new Cell(item));
 	}
 	
@@ -297,7 +305,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 // 			addContentPanel();
 // 		}
 		if(e.getActionCommand().equals("VALIDATE")){
-			if(checkValidation()){
+			if(selectedmap.checkValidation(selectedmap)){
 				JOptionPane.showMessageDialog(null, "<html>Vaild Success!!!</html>");
 
 			}
@@ -306,7 +314,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		}
 		
 		if(e.getActionCommand().equals("SAVE")){
-			if(checkValidation()){
+			if(selectedmap.checkValidation(selectedmap)){
 				Map.savemap(mapsmodel);
 			}
 			else
@@ -324,78 +332,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		listener.actionPerformed(e);
 	}
 
-	public boolean checkValidation(){
-		if(hasEntryDoor() && hasExitDoor()){
-			return true;
-		}
-		return false;
-	}
-
-	public void hasValidPath(int i, int j) {
-		char maplocation[][] = selectedmap.getLocation();
-		if(maplocation[i][j] == 'o')
-			hasvaildpath=true;
-		else{
-			usedcell.put(i+","+j, "i*j");
-			if( j>0 && maplocation[i][j-1]!='t'){
-				if(usedcell.get(i+","+ (j-1) )== null)
-					hasValidPath(i, j-1);
-			}
-			
-			if(i>0 && maplocation[i-1][j]!='t'){
-				if(usedcell.get(i-1 +","+ j)== null)
-					hasValidPath(i-1, j);
-			}
-			
-			if(j<selectedmap.getColumn()-1 && maplocation[i][j+1]!='t'){
-				if(usedcell.get(i +","+ (j+1))== null)
-					hasValidPath(i, j+1);
-			}
-			
-			if(i<selectedmap.getRow()-1 && maplocation[i+1][j]!='t'){
-				if(usedcell.get((i+1) +","+ j)== null)
-					hasValidPath(i+1, j);
-			}
-		}
-	}
-	/**
-	 * 
-	 *  maplocation detail location of map.
-	 * @return true if there is a indoor(Entry door) in the location of map 
-	 */
-	public boolean hasEntryDoor() {
-		hasvaildpath = false;
-		for(int i=0;i<selectedmap.getRow();i++){
-			for(int j=0;j<selectedmap.getColumn();j++){
-				if(selectedmap.getLocation()[i][j] == 'i'){
-					usedcell.clear();
-					hasValidPath(i,j);
-				}
-			}
-		}
-		
-		if(hasvaildpath){
-			return true;
-		}
-		
-		return false;
-	}
 	
-	/**
-	 * 
-	 *  maplocation detail location of map.
-	 * @return true if there is a outdoor(Exit door) in the location of map 
-	 */
-	public boolean hasExitDoor() {
-		for(int i=0;i<selectedmap.getRow();i++){
-			for(int j=0;j<selectedmap.getColumn();j++){
-				if(selectedmap.getLocation()[i][j] == 'o'){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {

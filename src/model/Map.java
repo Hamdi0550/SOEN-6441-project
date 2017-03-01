@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ddg.Config;
 import ddg.model.MapEditorModel;
 import ddg.utils.Utils;
@@ -111,6 +108,10 @@ public class Map {
 	}
 	public void changeCellsinthemap(int x,int y, Cell cell){
 		this.cellsinthemap[x][y] = cell;
+	}
+	
+	public boolean checkValidation(Map map){
+		return new ValidationTool(map).checkValidation();
 	}
 
 }
