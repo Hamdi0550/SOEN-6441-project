@@ -18,12 +18,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.border.*;
 
-public class CharacterEditLayout extends JFrame implements ActionListener {
+public class CharacterEditLayout extends JDialog implements ActionListener {
     //define components in the frame
 
     private final JButton saveBtn = new JButton("      Save      ");
     private final JButton cancelBtn = new JButton("      Cancel      ");
     private final JButton randomBtn = new JButton("      Random      ");
+    private final JButton inventoryBtn = new JButton(" Inventory ");
 
     private final JButton helmetBtn = new JButton();
     private final JButton shoulderBtn = new JButton("  Shoulder  ");
@@ -71,9 +72,9 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
     {
         //call the method to build the frame
 //    	JFrame f1 = new JFrame("owner");
-    	CharacterSelection f1 = new CharacterSelection();
+//    	CharacterSelection f1 = new CharacterSelection();
     	CharacterEditLayout f2 = new CharacterEditLayout();
-        f2.createAndShowGUI(f1);
+//        f2.createAndShowGUI(f1);
     }//end of main()
     ///////////////////////////////////////////////////////////////////////////
     public static void createAndShowGUI(CharacterSelection ownerFrame) 
@@ -85,7 +86,7 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
 //        frame1.setResizable(false);
         frame1.setVisible(true);
 //        if (ownerFrame != null){
-            owner = ownerFrame;
+            owner = (CharacterSelection) ownerFrame;
             
             System.out.println(owner);
 //        }
@@ -97,7 +98,9 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
     CharacterEditLayout()
     {
         //build the frame with a title and define layout
-        super("Character Editor");
+        super();
+        setTitle("Character Editor");
+        setModal(true);
         setLayout(new BorderLayout());
         JPanel backPanel= new JPanel(new BorderLayout());
         JPanel characterPanel= new JPanel(new BorderLayout());
@@ -206,7 +209,7 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.add(new JLabel("    "));
-        buttonsPanel.add(new JLabel("    "));
+        buttonsPanel.add(inventoryBtn);
         buttonsPanel.add(randomBtn);
         buttonsPanel.add(saveBtn);
         buttonsPanel.add(cancelBtn);
@@ -227,8 +230,8 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e){
 				System.out.println("cancel clicked");
 				dispose();
-				owner.setEnabled(true);
-				owner.setVisible(true);
+//				owner.setEnabled(true);
+//				owner.setVisible(true);
 				
 	        }
 	    });
@@ -295,6 +298,23 @@ public class CharacterEditLayout extends JFrame implements ActionListener {
 				System.out.println("I get the figher " + owner.fighterKeyName);
 	        }
 	    });
+		helmetBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				ItemSelection itemSelection = new ItemSelection();
+				itemSelection.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				itemSelection.pack();
+				itemSelection.setVisible(true);
+//				itemSelection.setPreferredSize(new Dimension(600,300));
+			}
+		});
+		inventoryBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				InventoryView inventoryWindow = new InventoryView();
+				inventoryWindow.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				inventoryWindow.pack();
+				inventoryWindow.setVisible(true);
+			}
+		});
 	}
 	
 //	void setDefaultCloseOperation(){

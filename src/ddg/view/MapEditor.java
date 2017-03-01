@@ -18,8 +18,10 @@ import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.item.entity.BaseItem;
+import ddg.model.Fighter;
 import ddg.model.ItemEditorModel;
 import ddg.model.MapEditorModel;
+import ddg.ui.DDGameMain;
 import ddg.utils.Utils;
 import ddg.view.component.DButton;
 import ddg.view.component.ListEntryCellRenderer;
@@ -156,8 +158,17 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 					}
 				}
 				else if(num =='o'){
-					JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(mapPanel);
-					PopUpForFighter fighterpopup = new PopUpForFighter(rootframe,"Select Character!");
+					DDGameMain rootframe = (DDGameMain) SwingUtilities.getWindowAncestor(mapPanel);
+//					PopUpForFighter fighterpopup = new PopUpForFighter(rootframe,"Select Character!");
+					CharacterSelection fighterpopup = new CharacterSelection(rootframe, "CS from map editor");
+					fighterpopup.pack();
+					fighterpopup.setVisible(true);
+					System.out.println();
+					
+					//Here you got the character to put on the map
+					Fighter obtainedFighter = rootframe.getSelectedFighter();
+					System.out.println("Got a fighter with level: " + obtainedFighter.getLevel() + " strength: " + obtainedFighter.getStrength() + " dexterity: " + obtainedFighter.getDexterity());
+					
 				}
 				else{
 					selectedmap.changeLocation(y, x, num);

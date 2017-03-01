@@ -1,4 +1,5 @@
 package ddg.view;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,20 +16,14 @@ import javax.swing.event.*;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
-import ddg.ui.DDGameMain;
 import ddg.utils.Utils;
 
-public class CharacterSelection extends JDialog implements ActionListener, ListSelectionListener{
-    //define components in the frame
-
+public class ItemSelection extends JDialog implements ActionListener, ListSelectionListener{
     private final JButton selectBtn = new JButton("      Select      ");
     private final JButton cancelBtn = new JButton("    Cancel  ");
-    private final JButton editBtn = new JButton("    Edit... ");
-    private final JButton deleteBtn = new JButton("    Delete ");
-    private JButton createBtn = new JButton("   Create...  ");
-    private final JButton randomBtn = new JButton("    Random ");
-
-    private final JButton helmetBtn = new JButton();
+//    private final JButton editBtn = new JButton("    Edit... ");
+//    private final JButton deleteBtn = new JButton("    Delete ");
+//    private JButton createBtn = new JButton("   Create...  ");
     
     //these 3 lines are for upper left jlist of games in a jscrollpanel
     private final DefaultListModel<String> jlistModel = new DefaultListModel<String>(); 
@@ -41,10 +36,6 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     private final JLabel levelTextF = new JLabel(" L ");
     private final JLabel strengthTextF = new JLabel(" L ");
     private final JLabel dexterityTextF = new JLabel(" L ");
-    private final JLabel constitutionTextF = new JLabel(" L ");
-    private final JLabel intelligenceTextF = new JLabel(" L ");
-    private final JLabel wisdomTextF = new JLabel(" L ");
-    private final JLabel charismaTextF = new JLabel(" L ");
 
 
 	HashMap<String, Fighter> hm1 = new HashMap<>();
@@ -53,8 +44,6 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     private final Color lightPink = new Color(255,230,230);
 	public int id = 100;
 	public String fighterKeyName = "fighter111";
-	
-	private DDGameMain owner = null;
 
     public static void main(String[] args) 
     {
@@ -65,20 +54,18 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     public static void createAndShowGUI() 
     {
         //new up  this class, & call constructor, --due to extends, it is a frame
-    	CharacterSelection frame1 = new CharacterSelection(null, "CS main"); 
+    	ItemSelection frame1 = new ItemSelection(); 
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        frame1.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame1.pack();
 //        frame1.setResizable(false);
         frame1.setVisible(true);
     }//end of createAndShowGUI()
     ///////////////////////////////////////////////////////////////////////////
-	CharacterSelection(JFrame owner, String title)
+    ItemSelection()
     {
         //build the frame with a title and define layout
-        super(owner, title);
-        this.owner = (DDGameMain)owner;
-//        setTitle("Select Character");
+        super();
+        setTitle("Select Item 2");
         setModal(true);
         setLayout(new BorderLayout());
         JPanel backPanel= new JPanel(new BorderLayout());
@@ -93,6 +80,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 //        id = 2;
 
         add(backPanel, BorderLayout.NORTH);
+        backPanel.setPreferredSize(new Dimension(600,300));
         backPanel.add(characterPanel, BorderLayout.WEST);
         backPanel.add(attributesPanel, BorderLayout.CENTER);
         backPanel.add(backpackPanel, BorderLayout.EAST);
@@ -101,35 +89,15 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         characterList.setPreferredSize(new Dimension(200,560));
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
         backpackListPanel.add(characterListPane, BorderLayout.CENTER);
-//        characterButtomPanel.add(removeBtn);
-        helmetBtn.setIcon(icon);
-        
-        backpackListPanel.setPreferredSize(new Dimension(200,260));
-//        buttonsPanel.setPreferredSize(new Dimension(100,320));
-//        characterLeftPanel.setPreferredSize(new Dimension(60,320));
-//        characterRightPanel.setPreferredSize(new Dimension(60,320));
         attributesPanel.setPreferredSize(new Dimension(600,320));
-//        characterImagePanel.setPreferredSize(new Dimension(350,320));
-
-//        characterImagePanel.setPreferredSize(new Dimension(350,320));
         JLabel lb1 = new JLabel(" ");
         JLabel nameModiferL = new JLabel(" L ");
         JLabel levelModiferL = new JLabel(" L ");
         JLabel strengthModiferL = new JLabel(" L ");
-        JLabel dexModiferL = new JLabel(" L ");
-        JLabel conModiferL = new JLabel(" L ");
-        JLabel intelliModiferL = new JLabel(" L ");
-        JLabel wisModiferL = new JLabel(" L ");
-        JLabel chaModiferL = new JLabel(" L ");
         lb1.setBorder(new LineBorder(Color.BLACK));
         nameModiferL.setBorder(new LineBorder(Color.BLACK));
         levelModiferL.setBorder(new LineBorder(Color.BLACK));
         strengthModiferL.setBorder(new LineBorder(Color.BLACK));
-        dexModiferL.setBorder(new LineBorder(Color.BLACK));
-        conModiferL.setBorder(new LineBorder(Color.BLACK));
-        intelliModiferL.setBorder(new LineBorder(Color.BLACK));
-        wisModiferL.setBorder(new LineBorder(Color.BLACK));
-        chaModiferL.setBorder(new LineBorder(Color.BLACK));
         lb1.setPreferredSize(new Dimension(20,15));
         lb1.setBounds(0, 0, 20, 15);
         lb1.setIcon(icon);
@@ -152,67 +120,22 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Dexterity "));
         attributesPanel.add(dexterityTextF);
-        attributesPanel.add(dexModiferL);
-        attributesPanel.add(randomBtn);
-        attributesPanel.add(new JLabel(" Constitution "));
-        attributesPanel.add(constitutionTextF);
-        attributesPanel.add(conModiferL);
-        attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel(" Intelligence "));
-        attributesPanel.add(intelligenceTextF);
-        attributesPanel.add(intelliModiferL);
-        attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel(" Wisdom "));
-        attributesPanel.add(wisdomTextF);
-        attributesPanel.add(wisModiferL);
-        attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel(" Charisma "));
-        attributesPanel.add(charismaTextF);
-        attributesPanel.add(chaModiferL);
-        attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(new JLabel("   1  "));
         
         buttonsPanel.add(new JLabel("    "));
-        buttonsPanel.add(createBtn);        
-        buttonsPanel.add(editBtn);
-        buttonsPanel.add(deleteBtn);
         buttonsPanel.add(selectBtn);
         buttonsPanel.add(cancelBtn);
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.setSize(300,500);
+
+//		setPreferredSize(new Dimension(600,300));
         
         characterList.addListSelectionListener(this);
 
-    	createBtn.addActionListener(new ActionListener(){ 
-    		public void actionPerformed(ActionEvent e){
-//               CharacterEditLayout ce1 = new CharacterEditLayout();
-//               CharacterEditLayout ceFrame = new CharacterEditLayout();
-    			CharacterSelection rootframe = (CharacterSelection) SwingUtilities.getWindowAncestor(createBtn);
-//    			CharacterEditLayout.createAndShowGUI(getThisFrame());
-    			CharacterEditLayout.createAndShowGUI(rootframe);
-               setEnabled(false);
-            }
-        });
-
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
-    			CharacterSelection.this.owner.setSelectedFighter(new Fighter(7,1,1));
-                dispose();
-             }
-         });
-    	
-    	editBtn.addActionListener(new ActionListener(){ 
-    		public void actionPerformed(ActionEvent e){
-
-               CharacterEditLayout ceFrame = new CharacterEditLayout();
-               ceFrame.createAndShowGUI(getThisFrame());
-               setEnabled(false);
-               
             }
         });
+    	
 
         focusManage();
     }//end of constructor
@@ -220,9 +143,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-//		if (e.getSource() == selectBtn){
-//			owner.setSelectedFighter(new Fighter(3,6,6));			
-//        }
+		
 	}
 	@Override
     public void valueChanged(ListSelectionEvent e)
@@ -239,7 +160,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         System.out.println("value changed");
     }
 	
-	public CharacterSelection getThisFrame(){
+	public ItemSelection getThisFrame(){
 		return this;
 	}
 	
@@ -302,5 +223,4 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         });  
         
     }
-
-}
+ }
