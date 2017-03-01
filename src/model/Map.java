@@ -54,7 +54,7 @@ public class Map {
 		this.location = location;
 	}
 	public void changeLocation(int x,int y, char c){
-		location[x][y] = c;
+		this.location[x][y] = c;
 	}
 	/**
 	 * 
@@ -73,7 +73,7 @@ public class Map {
 		this.name = name;
 	}
 	public void changeCellsinthemap(int x,int y, Cell cell){
-		cellsinthemap[x][y] = cell;
+		this.cellsinthemap[x][y] = cell;
 	}
 
 }
