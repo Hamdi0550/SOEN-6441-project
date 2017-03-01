@@ -21,8 +21,8 @@ public class Map {
 	private String name;
 	private char[][] location;
 	private Cell[][] cellsinthemap;
-	private int height;
-	private int width;
+	private int row;
+	private int column;
 	
 	
 	// recording the status of player.
@@ -31,10 +31,10 @@ public class Map {
 //	private List<Charactor> monster;
 	
 	public Map(){
-		this.height = 10;
-		this.width = 10;
-		this.location = new char[height][width];
-		this.cellsinthemap = new Cell[height][width];
+		this.row = 10;
+		this.column = 10;
+		this.location = new char[row][column];
+		this.cellsinthemap = new Cell[row][column];
 		
 	}
 
@@ -58,19 +58,19 @@ public class Map {
 	
 	public Map(String name, int height, int width){
 		this.name = name;
-		this.height = height;
-		this.width = width;
+		this.row = height;
+		this.column = width;
 		this.location = new char[height][width];
 		this.cellsinthemap = new Cell[height][width];
 		
 	}
 	
-	public int getHeight(){
-		return this.height;
+	public int getRow(){
+		return this.row;
 	}
 	
-	public int getWidth(){
-		return this.width;
+	public int getColumn(){
+		return this.column;
 	}
 
 	public char[][] getLocation() {

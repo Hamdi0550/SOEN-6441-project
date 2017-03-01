@@ -51,10 +51,11 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	JPanel mapiconPanel;
 	JComboBox<ImageIcon> optionsofelementoncell;
 	ImageIcon floor = new ImageIcon("floor.png");
-	ImageIcon chest1 = new ImageIcon("chest1.png");
+	ImageIcon chest = new ImageIcon("chest.png");
 	ImageIcon tree = new ImageIcon("tree.png");
 	ImageIcon indoor = new ImageIcon("indoor.png");
-	ImageIcon outdoor = new ImageIcon("outdoor");
+	ImageIcon outdoor = new ImageIcon("outdoor.png");
+	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
 	
 	public MapEditor(ActionListener a) {
 		this.listener = a;
@@ -77,10 +78,9 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	
 	private void initView() {
 	    setLayout(new BorderLayout());
-	    System.out.println(MAP_SIZE);
+	    addListView();
+	    list.setSelectedIndex(0);
 	    addContentPanel();
-		addListView();
-		list.setSelectedIndex(0);
 	    addOption();
 	}
 
@@ -103,12 +103,15 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	 *
 	 */
 	private void addContentPanel(){
+		contentPanel.removeAll();
+		contentPanel.revalidate();
+		System.out.println(selectedmap.getRow()+" "+ selectedmap.getColumn());
 		mapPanel = new JPanel(){
 			@Override  
 	        public void paint(Graphics g) {  
 	            super.paint(g);  
-	            for(int i=0;i< MAP_SIZE;i++){
-	                for(int j=0;j< MAP_SIZE;j++){
+	            for(int i=0;i< selectedmap.getRow();i++){
+	                for(int j=0;j< selectedmap.getColumn();j++){
 	                	//draw background
 	                	g.drawImage(floor.getImage(), j*50, i*50, 50, 50, null);
 	                	
@@ -123,7 +126,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 								g.drawImage(indoor.getImage(), j*50, i*50, 50, 50, null);
 								continue;}
 							if (selectedmap.getLocation()[i][j] == 'c'){
-								g.drawImage(chest1.getImage(), j*50, i*50, 50, 50, null);
+								g.drawImage(chest.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (selectedmap.getLocation()[i][j] == 'o'){
 								g.drawImage(outdoor.getImage(), j*50, i*50, 50, 50, null);
@@ -131,13 +134,15 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	                    }
 	                }
 	            }
-	            for(int i=0; i<MAP_SIZE; i++){
-	            	g.drawLine(i*50, 0, i*50, 50*MAP_SIZE);
-	            	g.drawLine(0, i*50, MAP_SIZE*50, i*50);
+	            for(int i=0; i<selectedmap.getRow(); i++){
+	            	g.drawLine(0, i*50, selectedmap.getColumn()*50, i*50);
+	            }
+	            for(int i=0; i<selectedmap.getColumn(); i++){
+	            	g.drawLine(i*50, 0, i*50, 50*selectedmap.getRow());
 	            }
 			}
 		};
-		mapPanel.setPreferredSize(new Dimension(50*MAP_SIZE, 50*MAP_SIZE));
+		mapPanel.setPreferredSize(new Dimension(50*selectedmap.getColumn(), 50*selectedmap.getRow()));
 		
 		mapPanel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
@@ -157,8 +162,8 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 						selectedmap.changeLocation(y, x, 'c');
 					}
 				}
-				else if(num =='o'){
-					DDGameMain rootframe = (DDGameMain) SwingUtilities.getWindowAncestor(mapPanel);
+				else if(num =='p'){
+					JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(mapPanel);
 //					PopUpForFighter fighterpopup = new PopUpForFighter(rootframe,"Select Character!");
 					CharacterSelection fighterpopup = new CharacterSelection(rootframe, "CS from map editor");
 					fighterpopup.pack();
@@ -166,7 +171,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 					System.out.println();
 					
 					//Here you got the character to put on the map
-					Fighter obtainedFighter = rootframe.getSelectedFighter();
+					Fighter obtainedFighter = ((DDGameMain) rootframe).getSelectedFighter();
 					System.out.println("Got a fighter with level: " + obtainedFighter.getLevel() + " strength: " + obtainedFighter.getStrength() + " dexterity: " + obtainedFighter.getDexterity());
 					
 				}
@@ -175,8 +180,8 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 				}
 				
 				mapPanel.repaint();
-				for (int i = 0;i<MAP_SIZE; i++){
-					for (int j = 0;j<MAP_SIZE; j++)
+				for (int i = 0;i<selectedmap.getRow(); i++){
+					for (int j = 0;j<selectedmap.getColumn(); j++)
 						System.out.print(selectedmap.getLocation()[i][j]);
 					System.out.print("\n");
 				}
@@ -193,11 +198,12 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		JPanel iconpanel = new JPanel();
 		iconpanel.setPreferredSize(new Dimension(90, 500));
 		optionsofelementoncell = new JComboBox<ImageIcon>();  
-		optionsofelementoncell.addItem(new ImageIcon("floor.png"));  
-		optionsofelementoncell.addItem(new ImageIcon("tree.png"));
-		optionsofelementoncell.addItem(new ImageIcon("indoor.png"));
-		optionsofelementoncell.addItem(new ImageIcon("chest1.png"));
-		optionsofelementoncell.addItem(new ImageIcon("outdoor.png"));
+		optionsofelementoncell.addItem(floor);  
+		optionsofelementoncell.addItem(tree);
+		optionsofelementoncell.addItem(indoor);
+		optionsofelementoncell.addItem(chest);
+		optionsofelementoncell.addItem(outdoor);
+		optionsofelementoncell.addItem(playcharacter);
 		optionsofelementoncell.setLocation(0, 0);
 		iconpanel.add(optionsofelementoncell, BorderLayout.NORTH);
 		iconpanel.setBorder(Config.border);
@@ -225,7 +231,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		PopUpForCreateNewMap popUpForCreateNewMap = new PopUpForCreateNewMap(mapSizeFrame, "Select Map Size");
 		if(popUpForCreateNewMap.getRow()>=10 && popUpForCreateNewMap.getColumn()>=10)
 		{
-			mapsmodel.add(new Map("Map"+(mapsmodel.getMaps().size() + 1),popUpForCreateNewMap.getHeight(),popUpForCreateNewMap.getWidth()));
+			mapsmodel.add(new Map("Map"+(mapsmodel.getMaps().size() + 1),popUpForCreateNewMap.getRow(),popUpForCreateNewMap.getColumn()));
 			DefaultListModel l = mapsmodel.getMapListModel();
 			list.setModel(l);
 			list.setSelectedIndex(l.size()-1);
@@ -305,25 +311,11 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		}
 		
 		if(e.getActionCommand().equals("SAVE")){
-//<<<<<<< Updated upstream;
 			if(checkValidation()){
-//				Map map = new Map("Map"+mapsmodel.getMaps().size() + 1 ,maplocation, mapcells);
-//				mapsmodel.add(map);
 				Map.savemap(mapsmodel);
 			}
 			else
 				JOptionPane.showMessageDialog(null, "<html>The map is invalid <br> it must have a indoor, a outdoor and Feasiable Path</html>","Invalid",JOptionPane.ERROR_MESSAGE);
-//=======
-//<<<<<<< Updated upstream;
-			//Map map = new Map(maplocation, mapcells);
-//=======
-		//Map map = new Map();
-//>>>>>>> Stashed changes;
-//>>>>>>> Stashed changes;
-//			{
-//				String str = addChooser.getSelectedFile().getPath();
-//				targetfolder.setText(str);
-//			}
 		}
 		if(e.getActionCommand().equals("CLEAR")){
 			char maplocation[][] = selectedmap.getLocation();
@@ -377,6 +369,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	 * @return true if there is a indoor(Entry door) in the location of map 
 	 */
 	public boolean hasEntryDoor() {
+		hasvaildpath = false;
 		for(int i=0;i<Config.MAP_SIZE;i++){
 			for(int j=0;j<Config.MAP_SIZE;j++){
 				if(selectedmap.getLocation()[i][j] == 'i'){
@@ -398,9 +391,15 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	 *  maplocation detail location of map.
 	 * @return true if there is a outdoor(Exit door) in the location of map 
 	 */
-	public  static boolean hasExitDoor() {
-		
-		return true;
+	public boolean hasExitDoor() {
+		for(int i=0;i<Config.MAP_SIZE;i++){
+			for(int j=0;j<Config.MAP_SIZE;j++){
+				if(selectedmap.getLocation()[i][j] == 'o'){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -412,7 +411,9 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 				Map map = mapsmodel.getMapByIndex(index);
 				
 				selectedmap = map;
-				mapPanel.repaint();
+	 			contentPanel.removeAll();
+	 			contentPanel.revalidate();
+	 			addContentPanel();
 			}
 		}
 	}

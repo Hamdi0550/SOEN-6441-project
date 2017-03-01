@@ -6,9 +6,16 @@ package model;
  */
 public class Cell {
 	private Object content;
+	private boolean isfriendly;
 
 	public Cell(Object content){
 		this.content = content;
+		this.isfriendly = true;
+	}
+	
+	public Cell(Object content, boolean isfriendly){
+		this.content = content;
+		this.isfriendly = isfriendly;
 	}
 	
 	public Object getContent() {
@@ -17,6 +24,10 @@ public class Cell {
 
 	public void setContent(Object content) {
 		this.content = content;
+	}
+	
+	public boolean getIsfriendly(){
+		return isfriendly;
 	}
 	
 }
