@@ -226,8 +226,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	    optionPanel.setBorder(Config.border);
 	    JTextArea optionTitle = new JTextArea("OPTION");
 	    optionTitle.setEditable(false);
-	    DButton sizeBtn = new DButton("S/M/L", this);
-	    sizeBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton clearBtn = new DButton("CLEAR", this);
 	    clearBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton validateBtn = new DButton("VALIDATE", this);
@@ -242,7 +240,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		clearBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    optionPanel.add(optionTitle);
 	    optionPanel.add(createBtn);
-	    optionPanel.add(sizeBtn);
 	    optionPanel.add(clearBtn);
 	    optionPanel.add(validateBtn);
 	    optionPanel.add(saveBtn);
