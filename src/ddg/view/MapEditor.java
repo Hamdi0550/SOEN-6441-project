@@ -208,6 +208,13 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		}
 		
 	}
+	
+	public void mapCreatePopUp(){
+		JFrame mapSizeFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+		PopUpForCreateNewMap popUpForCreateNewMap = new PopUpForCreateNewMap(mapSizeFrame, "Select Map Size");
+		popUpForCreateNewMap.setVisible(true);
+		selectedmap = popUpForCreateNewMap.getSelectedMap();
+	}
 
 	/**
 	 * This method is used for add option panel
@@ -232,8 +239,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	    DButton createBtn = new DButton("CREATE", this);
 	    createBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 		JPanel listPanel = addListView();
-		DButton openNewMapButton = new DButton("OPEN A MAP", this);
-		openNewMapButton.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 		clearBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    optionPanel.add(optionTitle);
 	    optionPanel.add(createBtn);
@@ -242,8 +247,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	    optionPanel.add(validateBtn);
 	    optionPanel.add(saveBtn);
 	    optionPanel.add(backBtn);
-		optionPanel.add(listPanel);
-		optionPanel.add(openNewMapButton);
+	    optionPanel.add(listPanel);
 	    add(optionPanel, BorderLayout.EAST);
 	}
 	
@@ -255,42 +259,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!");
 		selectedmap.changeCellsinthemap(x, y, new Cell(item));
 	}
-
-	/**
-	 * This method is used for draw a map seledtd by user and add contents.
-	 * @param seletedMap a map which is selected by user
-	 */
-//	public void drawMap(Map seletedMap){
-//		mapPanel = new JPanel(){
-//			@Override
-//			public void paint(Graphics g) {
-//				super.paint(g);
-//				for(int i=0;i< MAP_SIZE;i++){
-//					for(int j=0;j< MAP_SIZE;j++){
-//						if(seletedMap.getLocation()[i][j] == 'f' ){
-//						    g.drawImage(floor.getImage(), j*50, i*50, 50, 50, null);
-//						    continue;}
-//						if (seletedMap.getLocation()[i][j] == 't'){
-//							g.drawImage(tree.getImage(), j*50, i*50, 50, 50, null);
-//						    continue;}
-//						if (seletedMap.getLocation()[i][j] == 'i'){
-//							g.drawImage(indoor.getImage(), j*50, i*50, 50, 50, null);
-//							continue;}
-//						if (seletedMap.getLocation()[i][j] == 'c'){
-//							g.drawImage(chest1.getImage(), j*50, i*50, 50, 50, null);
-//						    continue;}
-//						if (seletedMap.getLocation()[i][j] == 'o'){
-//							g.drawImage(outdoor.getImage(), j*50, i*50, 50, 50, null);
-//						    continue;}
-//					}
-//				}
-//				for(int i=0; i<MAP_SIZE; i++){
-//					g.drawLine(i*50, 0, i*50, 50*MAP_SIZE);
-//					g.drawLine(0, i*50, MAP_SIZE*50, i*50);
-//				}
-//			}
-//		};
-//	}
 	
 	
 	@Override
@@ -298,17 +266,21 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		if(e.getActionCommand().equals("BACK")) {
 			e = new ActionEvent(e.getSource(), e.getID(), "MAP-BACK");
 		}
-		if(e.getActionCommand().equals("S/M/L")){
-			if(MAP_SIZE >= 50){
-				MAP_SIZE = 10;
-			}
-			else
-				MAP_SIZE += 20;
-			//this.removeAll();
-			contentPanel.removeAll();
-			contentPanel.revalidate();
-			addContentPanel();
+		if (e.getActionCommand().equals("CREATE")){
+			mapCreatePopUp();
+			mapPanel.repaint();
 		}
+// 		if(e.getActionCommand().equals("S/M/L")){
+// 			if(MAP_SIZE >= 50){
+// 				MAP_SIZE = 10;
+// 			}
+// 			else
+// 				MAP_SIZE += 20;
+// 			//this.removeAll();
+// 			contentPanel.removeAll();
+// 			contentPanel.revalidate();
+// 			addContentPanel();
+// 		}
 		if(e.getActionCommand().equals("VALIDATE")){
 			if(checkValidation()){
 				JOptionPane.showMessageDialog(null, "<html>Vaild Success!!!</html>");
@@ -348,16 +320,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 			mapPanel.repaint();
 		}
 
-		if (e.getActionCommand().equals("OPEN A MAP")){
-			int index = list.getSelectedIndex();
-			if (index >= 0){
-				System.out.println("list select" + index);
-				Map map = mapsmodel.getMapByIndex(index);
-//				drawMap(map);
-			}else {
-				System.out.println("Map not selected");
-			}
-		}
 		listener.actionPerformed(e);
 	}
 
