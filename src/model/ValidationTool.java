@@ -2,6 +2,8 @@ package model;
 
 import java.util.HashMap;
 
+import ddg.item.entity.BaseItem;
+
 /**
  * @author Bo
  * use to check the validation of map
@@ -92,10 +94,19 @@ public class ValidationTool {
 	 * @return true when there is key on the map, otherwise return false.
 	 */
 	public boolean hasKey() {
+//		for(int i=0;i<map.getRow();i++){
+//			for(int j=0;j<map.getColumn();j++){
+//				if(map.getLocation()[i][j] == 'k'){
+//					return true;
+//				}
+//			}
+//		}
 		for(int i=0;i<map.getRow();i++){
 			for(int j=0;j<map.getColumn();j++){
-				if(map.getLocation()[i][j] == 'k'){
-					return true;
+				if(map.getLocation()[i][j] == 'c'){
+					 String id = ((Chest) map.getCellsinthemap()[i][j].getContent()).getItem().getId();
+					 if(id.equals("key"))
+						 return true;
 				}
 			}
 		}

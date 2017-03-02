@@ -23,6 +23,7 @@ import ddg.utils.Utils;
 import ddg.view.component.DButton;
 import ddg.view.component.ListEntryCellRenderer;
 import model.Cell;
+import model.Chest;
 import model.Map;
 /**
  * This class is show map editor view
@@ -157,7 +158,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 					JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(mapPanel);
 					PopUpForItem itempopup = new PopUpForItem(rootframe,"Select Item for Chect!");
 					if(itempopup.getSelecteditem() != null){
-						addItemInCell(itempopup.getSelecteditem(), y, x);
+						addChestInCell(itempopup.getSelecteditem(), y, x);
 						selectedmap.changeLocation(y, x, 'c');
 					}
 				}
@@ -278,13 +279,14 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	
 	/**
 	 * 
-	 * @param item When draw a icon on the map, the char of icon will be recorded in to the Cells array if the icon is character or chest
+	 * @param item item which save in the chest and then put on the map
 	 * @param x the row-coordinate on the map, ensure the location of the cell
 	 * @param y the column-coordinate on the map, ensure the location of the cell
 	 * 
 	 */
-	public void addItemInCell(BaseItem item, int x, int y){
-		selectedmap.changeCellsinthemap(x, y, new Cell(item));
+	public void addChestInCell(BaseItem item, int x, int y){
+		
+		selectedmap.changeCellsinthemap(x, y, new Cell(new Chest(item)));
 	}
 	
 	

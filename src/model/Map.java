@@ -128,6 +128,13 @@ public class Map {
 	public String getName() {
 		return name;
 	}
+	
+	/**
+	 * @return all cells in this map
+	 */
+	public Cell[][] getCellsinthemap() {
+		return cellsinthemap;
+	}
 
 	/**
 	 * @param x row-coordinate of the location
