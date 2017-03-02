@@ -2,11 +2,18 @@ package model;
 
 import java.util.HashMap;
 
+/**
+ * @author Bo
+ * use to check the validation of map
+ */
 public class ValidationTool {
 	private Map map;
 	private boolean hasvaildpath;
 	private java.util.Map<String, String> usedcell = new HashMap<>();
 
+	/**
+	 * @param map the map whose validation you want to check
+	 */
 	public ValidationTool(Map map) {
 		// TODO Auto-generated constructor stub
 		this.map = map;

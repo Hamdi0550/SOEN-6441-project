@@ -8,6 +8,10 @@ import model.Map;
 
 import javax.swing.*;
 
+/**
+ * @author Bo
+ * a model for save and retrieve all the map in the MapFile
+ */
 public class MapEditorModel {
 		private ArrayList<Map> maps;
 	
@@ -16,15 +20,24 @@ public class MapEditorModel {
 			this.maps = new ArrayList<Map>();
 		}
 		
+		/**
+		 * @param maps arraylist of map
+		 */
 		public MapEditorModel(ArrayList<Map> maps) {
 			super();
 			this.maps = maps;
 		}
 
+		/**
+		 * @param map add a new map into the map arraylist
+		 */
 		public void add(Map map) {
 			maps.add(map);
 		}
 
+		/**
+		 * @return defaultListModel include all map's name, used for JList
+		 */
 		public DefaultListModel getMapListModel(){
 			DefaultListModel l = new DefaultListModel();
 			for (Map i : maps) {
@@ -33,17 +46,20 @@ public class MapEditorModel {
 			return l;
 		}
 
+		/**
+		 * @param index	the index which user select
+		 * @return the map of specified index in the map array list
+		 */
 		public Map getMapByIndex(int index){
 			if (index <0 || index > maps.size())
 				return null;
 			return maps.get(index);
 		}
 
+	    /**
+	     * @return whole map array list (all map in the map file).
+	     */
 	    public ArrayList<Map> getMaps() {
 		return maps;
-	    }
-
-	    public void setMaps(ArrayList<Map> maps) {
-		this.maps = maps;
 	    }
 }
