@@ -18,7 +18,11 @@ public class ListEntry
       this.value = value;
       this.icon = icon;
    }
-  
+
+   public ListEntry(String value) {
+      this.value = value;
+   }
+
    public String getValue() {
       return value;
    }

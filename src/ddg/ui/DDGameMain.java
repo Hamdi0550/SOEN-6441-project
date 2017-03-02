@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import ddg.Config;
+import ddg.model.Fighter;
 import ddg.view.CampaignEditor;
 import ddg.view.CharactorEditor;
 import ddg.view.ItemEditor;
@@ -94,5 +95,15 @@ public class DDGameMain extends JFrame implements ActionListener {
 			this.mainPage.setVisible(true);
 			this.itemEditor.setVisible(false);
 		} 
+	}
+	
+	private Fighter selectedFighter = null;
+	
+	public Fighter getSelectedFighter(){
+		return selectedFighter;
+	}
+
+	public void setSelectedFighter(Fighter fighter){
+		selectedFighter = fighter;
 	}
 }
