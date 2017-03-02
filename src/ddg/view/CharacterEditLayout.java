@@ -10,6 +10,7 @@ import java.awt.event.*;
 import javax.swing.event.*;
 
 import ddg.Config;
+import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
 import ddg.utils.Utils;
@@ -36,13 +37,9 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     private final JButton weaponBtn = new JButton("   Weapon  ");
 
     public int id;
-    //these 3 lines are for upper left jlist of games in a jscrollpanel
+    
     private final DefaultListModel<String> model = new DefaultListModel<String>(); 
-    
-    //these 2 lines are for lower right output area showing a round played
-    private final JTextArea roundResultsTA = new JTextArea(15, 43);
-    
-    //Text Fields to show the game results
+        
     private final JTextField nameTextF = new JTextField();
     private final JTextField levelTextF = new JTextField();
     private final JTextField strengthTextF = new JTextField();
@@ -51,22 +48,11 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     private final JTextField intelligenceTextF = new JTextField();
     private final JTextField wisdomTextF = new JTextField();
     private final JTextField charismaTextF = new JTextField();
-    private final JTextField modifier1TextF = new JTextField();
-    private final JTextField modifier2TextF = new JTextField();
-    private final JTextField modifier3TextF = new JTextField();
-    private final JTextField modifier4TextF = new JTextField();
-    private final JTextField modifier5TextF = new JTextField();
-    private final JTextField modifier6TextF = new JTextField();
-    private final JTextField modifier7TextF = new JTextField();
-    private final JTextField modifier8TextF = new JTextField();
-    private final JTextField modifier9TextF = new JTextField();
     
-//    private CharacterSelection owner;
     private static CharacterSelection owner;
+    public BaseItem selectedItem = null;
+    public String wearingType; 
 
-    //define 2 colors that are used frequently
-    private final Color dustYellow = new Color(211,211,55);
-    private final Color lightPink = new Color(255,230,230);
 
     public static void main(String[] args) 
     {
@@ -79,16 +65,15 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     ///////////////////////////////////////////////////////////////////////////
     public static void createAndShowGUI(CharacterSelection ownerFrame) 
     {
-        //new up  this class, & call constructor, --due to extends, it is a frame
+        owner = (CharacterSelection) ownerFrame;
+        
+        System.out.println("========"+owner);
         CharacterEditLayout frame1 = new CharacterEditLayout(); 
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
 //        frame1.setResizable(false);
         frame1.setVisible(true);
 //        if (ownerFrame != null){
-            owner = (CharacterSelection) ownerFrame;
-            
-            System.out.println(owner);
 //        }
         	
 //        this.owner = getOwner(ownerFrame);
@@ -203,6 +188,9 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         attributesPanel.add(new JLabel("   1  "));
         attributesPanel.add(new JLabel("   1  "));
         attributesPanel.add(new JLabel("   1  "));
+        if (owner.isCreatingNew == false){
+        	nameTextF.setEditable(false);
+        }
         
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.add(new JLabel("    "));
@@ -214,12 +202,29 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         buttonsPanel.add(saveBtn);
         buttonsPanel.add(cancelBtn);
         buttonsPanel.setSize(300,500);
+        getOwnerInformation();
         focusManage();
 //        g.drawRect(0, 0, 300, 500);
         buttonsManage();
             
     }//end of constructor
     
+	private void getOwnerInformation() {
+		if(owner == null){
+			System.out.println("No owner===============");
+		}
+		if(owner.isCreatingNew == false){
+			System.out.println(owner.toString());
+			nameTextF.setText(owner.fighter.getName());
+			levelTextF.setText(Integer.toString(owner.fighter.getLevel()));
+			strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
+			dexterityTextF.setText(Integer.toString(owner.fighter.getDexterity()));
+			constitutionTextF.setText(Integer.toString(owner.fighter.getConstitution()));
+			intelligenceTextF.setText(Integer.toString(owner.fighter.getIntelligence()));
+			wisdomTextF.setText(Integer.toString(owner.fighter.getWisdom()));
+			charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));			
+		}		
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -241,17 +246,48 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				//validation, 新建ArrayList， 打开character文件，读取所有character
 				//放到ArrayList里，新建character对象，getJTextField，赋值
 				//把character对象add到ArrayList里，把ArrayList保存到文件。
-				Fighter fighter1 = new Fighter(1, 10, 10);
+				Fighter fighter1 = new Fighter();
+				if (owner.fighter != null){
+					fighter1 = owner.fighter;					
+				}
+				fighter1.setName(nameTextF.getText());
 				fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
 				fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
 				fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
-				fighter1.setName("Chris");
+				fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()));
+				fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
+				fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()));
+				fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()));
+//				fighter1.setName("Chris");
                 FighterModel fm = new FighterModel();
         		String g = Utils.readFile(Config.CHARACTOR_FILE);
         		fm = Utils.fromJson(g, FighterModel.class);
+        		
+//        		if(fm != null){
+//            		System.out.println(fm);
+//            		HashMap<String, Fighter> hm1 = new HashMap<>();
+//            		try{
+//
+//                		System.out.println("2"+fm);
+//                		if( null!=fm.getFighters() ){
+//                            hm1 = fm.getFighters();
+//                            Set<String> keySet1 = hm1.keySet();
+//                            Iterator<String> it1 = keySet1.iterator();
+//                            
+//                            while(it1.hasNext()){
+//                            	String listItem1 = it1.next();
+////                                jlistModel.addElement(listItem1);
+//                            }
+//                		}        			
+//            		}
+//            		catch (NullPointerException ex){
+//            			System.out.println("there is a NullPointerException");
+//            		}
+//        			
+//        		}
+        		HashMap<String, Fighter> hm1 = new HashMap<>();
         		if(fm != null){
             		System.out.println(fm);
-            		HashMap<String, Fighter> hm1 = new HashMap<>();
             		try{
 
                 		System.out.println("2"+fm);
@@ -261,7 +297,11 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
                             Iterator<String> it1 = keySet1.iterator();
                             
                             while(it1.hasNext()){
-                            	String listItem1 = it1.next();
+                            	String keyName = it1.next();
+                            	if (keyName == fighter1.getName()){
+                            		System.out.println("There is a characater with same name==========");
+                            	}
+                            		
 //                                jlistModel.addElement(listItem1);
                             }
                 		}        			
@@ -271,21 +311,20 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
             		}
         			
         		}
-
-				Fighter fighter2 = new Fighter(1, 10, 10);
-				fighter2.setName("Jack");
-                FighterModel fm2 = new FighterModel();
-        		HashMap<String, Fighter> hm2 = new HashMap<>();
-        		hm2.put((new Date().toLocaleString() + fighter1.getName()), fighter1);        		
-        		hm2.put((new Date().toLocaleString() + fighter2.getName()), fighter2);
-        		fm2.setFighters(hm2);
+//				Fighter fighter2 = new Fighter(1, 10, 10);
+//				fighter2.setName("Jack");
+//                FighterModel fm2 = new FighterModel();
+//        		HashMap<String, Fighter> hm2 = new HashMap<>();
+        		hm1.put(fighter1.getName(), fighter1);        		
+//        		hm2.put((new Date().toLocaleString() + fighter2.getName()), fighter2);
+        		fm.setFighters(hm1);
         		
 
-    			String gSave = Utils.toJson(fm2);
+    			String gSave = Utils.toJson(fm);
     			Utils.save2File(Config.CHARACTOR_FILE, gSave);
         		
 //				Fighter.saveFighter(fighter1);
-    			owner.hm1 = hm2;
+    			owner.hm1 = hm1;
 				dispose();
 				owner.setEnabled(true);
 				owner.setVisible(true);
@@ -300,21 +339,29 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	    });
 		helmetBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				ItemSelection itemSelection = new ItemSelection();
-				itemSelection.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				itemSelection.pack();
-				itemSelection.setVisible(true);
+				wearingType = "helmet";
+				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(helmetBtn);
+				ItemSelection.createAndShowGUI(rootFrame);
+				//				ItemSelection rootFrame1 = new ItemSelection();
+//				rootFrame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//				rootFrame1.pack();
+//				rootFrame1.setVisible(true);
 //				itemSelection.setPreferredSize(new Dimension(600,300));
 			}
 		});
 		inventoryBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				InventoryView inventoryWindow = new InventoryView();
-				inventoryWindow.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-				inventoryWindow.pack();
-				inventoryWindow.setVisible(true);
+				System.out.println(getThisFrame());
+				InventoryView.createAndShowGUI(getThisFrame());
 			}
 		});
+	}
+	
+	public CharacterEditLayout getThisFrame() {
+		return this;
+	}
+	public CharacterSelection getOwner(){
+		return owner;
 	}
 	
 //	void setDefaultCloseOperation(){

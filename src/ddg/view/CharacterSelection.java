@@ -46,13 +46,21 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     private final JLabel wisdomTextF = new JLabel(" L ");
     private final JLabel charismaTextF = new JLabel(" L ");
 
+    private final JLabel nameModiferL = new JLabel(" L ");
+    private final JLabel levelModiferL = new JLabel(" L ");
+    private final JLabel strengthModiferL = new JLabel(" L ");
+    private final JLabel dexModiferL = new JLabel(" L ");
+    private final JLabel conModiferL = new JLabel(" L ");
+    private final JLabel intelliModiferL = new JLabel(" L ");
+    private final JLabel wisModiferL = new JLabel(" L ");
+    private final JLabel chaModiferL = new JLabel(" L ");
+
 
 	HashMap<String, Fighter> hm1 = new HashMap<>();
-    //define 2 colors that are used frequently
-    private final Color dustYellow = new Color(211,211,55);
-    private final Color lightPink = new Color(255,230,230);
 	public int id = 100;
 	public String fighterKeyName = "fighter111";
+	public Fighter fighter = null;
+	public boolean isCreatingNew = true;
 	
 	private DDGameMain owner = null;
 
@@ -113,14 +121,6 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 
 //        characterImagePanel.setPreferredSize(new Dimension(350,320));
         JLabel lb1 = new JLabel(" ");
-        JLabel nameModiferL = new JLabel(" L ");
-        JLabel levelModiferL = new JLabel(" L ");
-        JLabel strengthModiferL = new JLabel(" L ");
-        JLabel dexModiferL = new JLabel(" L ");
-        JLabel conModiferL = new JLabel(" L ");
-        JLabel intelliModiferL = new JLabel(" L ");
-        JLabel wisModiferL = new JLabel(" L ");
-        JLabel chaModiferL = new JLabel(" L ");
         lb1.setBorder(new LineBorder(Color.BLACK));
         nameModiferL.setBorder(new LineBorder(Color.BLACK));
         levelModiferL.setBorder(new LineBorder(Color.BLACK));
@@ -183,34 +183,84 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         buttonsPanel.add(cancelBtn);
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.setSize(300,500);
+        deleteBtn.setEnabled(false);
         
         characterList.addListSelectionListener(this);
 
     	createBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
+    			isCreatingNew = true;
 //               CharacterEditLayout ce1 = new CharacterEditLayout();
 //               CharacterEditLayout ceFrame = new CharacterEditLayout();
     			CharacterSelection rootframe = (CharacterSelection) SwingUtilities.getWindowAncestor(createBtn);
 //    			CharacterEditLayout.createAndShowGUI(getThisFrame());
     			CharacterEditLayout.createAndShowGUI(rootframe);
-               setEnabled(false);
+    			setEnabled(false);
             }
         });
 
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
-    			CharacterSelection.this.owner.setSelectedFighter(new Fighter(7,1,1));
-                dispose();
-             }
-         });
+    			if (!characterList.isSelectionEmpty()){
+//        			CharacterSelection.this.owner.setSelectedFighter(new Fighter(7,1,1));
+                    dispose();
+    	        }               
+            }
+        });
     	
     	editBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
+    			if (!characterList.isSelectionEmpty()){
+        			isCreatingNew = false;
+//					CharacterEditLayout ceFrame = new CharacterEditLayout();
+					System.out.println(getThisFrame());
+					CharacterEditLayout.createAndShowGUI(getThisFrame());
+					setEnabled(false);
+    	        }               
+            }
+        });
+    	
+    	deleteBtn.addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent e){
+                String key = (String) characterList.getSelectedValue();
+                FighterModel fm = new FighterModel();
+//        		String g = Utils.readFile(Config.CHARACTOR_FILE);
+//        		fm = Utils.fromJson(g, FighterModel.class);
+//              Fighter f1 = hm1.get(key);
+                hm1.remove(key);
+        		fm.setFighters(hm1);
+        		
+    			String gSave = Utils.toJson(fm);
+    			Utils.save2File(Config.CHARACTOR_FILE, gSave);
 
-               CharacterEditLayout ceFrame = new CharacterEditLayout();
-               ceFrame.createAndShowGUI(getThisFrame());
-               setEnabled(false);
-               
+    			
+            	jlistModel.clear();
+        		String g = Utils.readFile(Config.CHARACTOR_FILE);
+        		fm = Utils.fromJson(g, FighterModel.class);
+
+        		if( null!=fm.getFighters() ){
+                    hm1 = fm.getFighters();
+                    Set<String> keySet1 = hm1.keySet();
+                    Iterator<String> it1 = keySet1.iterator();
+                    
+                    while(it1.hasNext()){
+                    	String keyName = it1.next();
+                        jlistModel.addElement(keyName);
+                    }
+        		}
+//        		if (hm1 == null){
+//            		characterList.setSelectedIndex(0);
+//        		}
+//        		else{
+        			deleteBtn.setEnabled(false);
+//        		}
+        			
+            }
+        });
+    	
+    	cancelBtn.addActionListener(new ActionListener(){ 
+    		public void actionPerformed(ActionEvent e){    			
+                dispose();                
             }
         });
 
@@ -225,16 +275,30 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 //        }
 	}
 	@Override
-    public void valueChanged(ListSelectionEvent e)
-    {
-        if (!characterList.isSelectionEmpty())
-        {
+    public void valueChanged(ListSelectionEvent e){
+        if (!characterList.isSelectionEmpty()){
+        	deleteBtn.setEnabled(true);
             String key = (String) characterList.getSelectedValue();
-            Fighter f1 = hm1.get(key);
-            nameTextF.setText(f1.getName());
-            levelTextF.setText(Integer.toString(f1.getLevel()));
-            strengthTextF.setText(Integer.toString(f1.getStrength()));
-            dexterityTextF.setText(Integer.toString(f1.getDexterity()));
+//            Fighter f1 = hm1.get(key);
+            fighter = hm1.get(key);
+            nameTextF.setText(fighter.getName());
+            levelTextF.setText(Integer.toString(fighter.getLevel()));
+            strengthTextF.setText(Integer.toString(fighter.getStrength()));
+            dexterityTextF.setText(Integer.toString(fighter.getDexterity()));
+    		constitutionTextF.setText(Integer.toString(fighter.getConstitution()));
+    		intelligenceTextF.setText(Integer.toString(fighter.getIntelligence()));
+    		wisdomTextF.setText(Integer.toString(fighter.getWisdom()));
+    		charismaTextF.setText(Integer.toString(fighter.getCharisma()));
+    		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getStrength())));
+    		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getDexterity())));
+    		conModiferL.setText(Integer.toString(fighter.getModifier(fighter.getConstitution())));
+    		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getIntelligence())));
+    		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getWisdom())));
+    		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getCharisma())));
+    		System.out.println("Helmet is on? " + fighter.helmetIsOn);
+    		System.out.println(fighter.getWorn());
+    		System.out.println("backpack now  has " + fighter.getBackpack().size());
+    		System.out.println(fighter.getBackpack());
         }
         System.out.println("value changed");
     }
@@ -262,22 +326,18 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         		fm = Utils.fromJson(g, FighterModel.class);
         		if(fm != null){
             		System.out.println(fm);
-            		
-            		
-            		
             		try{
-
-                		System.out.println("2"+fm);
+            			System.out.println("2"+fm);
                 		if( null!=fm.getFighters() ){
                             hm1 = fm.getFighters();
                             Set<String> keySet1 = hm1.keySet();
                             Iterator<String> it1 = keySet1.iterator();
                             
                             while(it1.hasNext()){
-                            	String listItem1 = it1.next();
-                                jlistModel.addElement(listItem1);
+                            	String keyName = it1.next();
+                                jlistModel.addElement(keyName);
                             }
-                		}        			
+                		}
             		}
             		catch (NullPointerException ex){
             			System.out.println("there is a NullPointerException");

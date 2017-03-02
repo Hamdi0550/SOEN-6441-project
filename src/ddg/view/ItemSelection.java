@@ -5,54 +5,54 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.*;
 
 import ddg.Config;
+import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
+import ddg.model.ItemEditorModel;
+import ddg.utils.UtilityStorage;
 import ddg.utils.Utils;
+import ddg.view.component.DComboBox;
+import ddg.view.component.ListEntryCellRenderer;
 
 public class ItemSelection extends JDialog implements ActionListener, ListSelectionListener{
     private final JButton selectBtn = new JButton("      Select      ");
     private final JButton cancelBtn = new JButton("    Cancel  ");
-//    private final JButton editBtn = new JButton("    Edit... ");
-//    private final JButton deleteBtn = new JButton("    Delete ");
-//    private JButton createBtn = new JButton("   Create...  ");
     
-    //these 3 lines are for upper left jlist of games in a jscrollpanel
-    private final DefaultListModel<String> jlistModel = new DefaultListModel<String>(); 
-    private final JList<String> characterList = new JList<String>(jlistModel);
-    private final JScrollPane characterListPane = new JScrollPane(characterList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
+    private  ItemEditorModel itemListModel = new ItemEditorModel(); 
+    private final JList itemJList = new JList();
+    private final JScrollPane itemListPane = new JScrollPane(itemJList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
     
-    
-    //Text Fields to show the game results
-    private final JLabel nameTextF = new JLabel(" L ");
-    private final JLabel levelTextF = new JLabel(" L ");
-    private final JLabel strengthTextF = new JLabel(" L ");
-    private final JLabel dexterityTextF = new JLabel(" L ");
+    private final JLabel nameLabel = new JLabel(" Equipment name ");
+    private final JLabel typeLabel = new JLabel(" Equipment type ");
+    private final JLabel attributeLabel = new JLabel(" Attribute ");
+    private final JLabel bonusLabel = new JLabel(" Value ");
 
 
-	HashMap<String, Fighter> hm1 = new HashMap<>();
-    //define 2 colors that are used frequently
-    private final Color dustYellow = new Color(211,211,55);
-    private final Color lightPink = new Color(255,230,230);
+	ArrayList<BaseItem> al1 = new ArrayList<>();
 	public int id = 100;
 	public String fighterKeyName = "fighter111";
+    private static CharacterEditLayout owner;
+    public BaseItem selectedItem;
 
     public static void main(String[] args) 
     {
         //call the method to build the frame
-        createAndShowGUI();
+    	ItemSelection frame1 = new ItemSelection();
+//        createAndShowGUI();
     }//end of main()
     ///////////////////////////////////////////////////////////////////////////
-    public static void createAndShowGUI() 
+    public static void createAndShowGUI(CharacterEditLayout ownerFrame) 
     {
+
+        owner = (CharacterEditLayout) ownerFrame;
+        System.out.println("========"+owner);
         //new up  this class, & call constructor, --due to extends, it is a frame
     	ItemSelection frame1 = new ItemSelection(); 
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -67,10 +67,17 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         super();
         setTitle("Select Item 2");
         setModal(true);
+        
+		String g = Utils.readFile(Config.ITEM_FILE);
+		this.itemListModel = Utils.fromJson(g, ItemEditorModel.class);
+		if (this.itemListModel == null) {
+			this.itemListModel = new ItemEditorModel();
+		}
+		
         setLayout(new BorderLayout());
         JPanel backPanel= new JPanel(new BorderLayout());
         JPanel characterPanel= new JPanel(new BorderLayout());
-        JPanel attributesPanel= new JPanel(new GridLayout(10,4,5,5));
+        JPanel attributesPanel= new JPanel(new GridLayout(8,3,5,5));
         JPanel backpackPanel = new JPanel(new BorderLayout());
         JPanel buttonsPanel= new JPanel(new GridLayout(8,1,5,5));
         JPanel backpackListPanel = new JPanel(new BorderLayout());
@@ -80,15 +87,14 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 //        id = 2;
 
         add(backPanel, BorderLayout.NORTH);
-        backPanel.setPreferredSize(new Dimension(600,300));
+//        backPanel.setPreferredSize(new Dimension(600,300));
         backPanel.add(characterPanel, BorderLayout.WEST);
         backPanel.add(attributesPanel, BorderLayout.CENTER);
         backPanel.add(backpackPanel, BorderLayout.EAST);
         backpackPanel.add(buttonsPanel, BorderLayout.SOUTH);
 //        backpackPanel.add(backpackListPanel, BorderLayout.CENTER);
-        characterList.setPreferredSize(new Dimension(200,560));
+        itemJList.setPreferredSize(new Dimension(200,560));
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
-        backpackListPanel.add(characterListPane, BorderLayout.CENTER);
         attributesPanel.setPreferredSize(new Dimension(600,320));
         JLabel lb1 = new JLabel(" ");
         JLabel nameModiferL = new JLabel(" L ");
@@ -104,42 +110,74 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         lb1.setText(" 2 ");
         attributesPanel.add(new JLabel("   1  "));
         attributesPanel.add(lb1);
-        attributesPanel.add(new JLabel(" Modifier "));
-        attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel(" Name "));
-        attributesPanel.add(nameTextF);
-        attributesPanel.add(nameModiferL);
-        attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel(" Level "));
-        attributesPanel.add(levelTextF);
-        attributesPanel.add(levelModiferL);
-        attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel(" Strength "));
-        attributesPanel.add(strengthTextF);
-        attributesPanel.add(strengthModiferL);
-        attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel(" Dexterity "));
-        attributesPanel.add(dexterityTextF);
+        attributesPanel.add(new JLabel("   L  "));
+        attributesPanel.add(new JLabel(" Name: "));
+        attributesPanel.add(nameLabel);
+        attributesPanel.add(new JLabel("   L  "));
+        attributesPanel.add(new JLabel(" Type: "));
+        attributesPanel.add(typeLabel);
+        attributesPanel.add(new JLabel("  L  "));
+        attributesPanel.add(new JLabel(" Attribute: "));
+        attributesPanel.add(attributeLabel);
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel(" Value  "));
+        attributesPanel.add(bonusLabel);
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("  L   "));
         
-        buttonsPanel.add(new JLabel("    "));
+        buttonsPanel.add(new JLabel("  L  "));
         buttonsPanel.add(selectBtn);
         buttonsPanel.add(cancelBtn);
-        buttonsPanel.add(new JLabel("    "));
+        buttonsPanel.add(new JLabel("  L  "));
         buttonsPanel.setSize(300,500);
+//        itemJList.addListSelectionListener(this);
+    	addListView();
 
-//		setPreferredSize(new Dimension(600,300));
         
-        characterList.addListSelectionListener(this);
 
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
+//    			BaseItem tempItem = UtilityStorage.getItem();
+    			BaseItem tempItem = new BaseItem("Helmet");
+    			owner.selectedItem = tempItem;
+    			if (owner.wearingType.equals(tempItem.getName())){
+    				System.out.println("Not correct type=========");
+    			}
+    			owner.getOwner().fighter.helmetIsOn = true;
+//    			owner.getOwner().fighter.getWorn().add(selectedItem); 
+    			owner.getOwner().fighter.getBackpack().add(selectedItem);   			
+    			System.out.println(tempItem.getId() + " " + tempItem.getName() + " " + tempItem.getIncrease() + " " + tempItem.getBonus());
+    			dispose();
             }
         });
-    	
+    	cancelBtn.addActionListener(new ActionListener(){ 
+    		public void actionPerformed(ActionEvent e){
+    			dispose();
+            }
+        });    	
 
-        focusManage();
+        backpackListPanel.add(itemListPane, BorderLayout.CENTER);
+
+//        focusManage();
     }//end of constructor
     
+	private void addListView() {		
+		DefaultListModel l = itemListModel.getListModel();
+		itemJList.setModel(l);
+		itemJList.setCellRenderer(new ListEntryCellRenderer());
+		itemJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		itemJList.addListSelectionListener(this);
+		itemJList.setVisibleRowCount(15);
+		itemListPane.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT-3 * Config.BTN_HEIGHT));
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -148,15 +186,20 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	@Override
     public void valueChanged(ListSelectionEvent e)
     {
-        if (!characterList.isSelectionEmpty())
-        {
-            String key = (String) characterList.getSelectedValue();
-            Fighter f1 = hm1.get(key);
-            nameTextF.setText(f1.getName());
-            levelTextF.setText(Integer.toString(f1.getLevel()));
-            strengthTextF.setText(Integer.toString(f1.getStrength()));
-            dexterityTextF.setText(Integer.toString(f1.getDexterity()));
-        }
+		if (e.getValueIsAdjusting() == false) {
+			int index = itemJList.getSelectedIndex();
+			if(index >= 0) {
+				System.out.println("list select:"+index);
+				BaseItem item = itemListModel.getItemByIndex(index);
+				
+				nameLabel.setText(item.getId());
+				typeLabel.setText(item.getName());
+				attributeLabel.setText(item.getIncrease());
+				bonusLabel.setText(Integer.toString(item.getBonus()));
+				selectedItem = item;
+				UtilityStorage.setItem(item);
+			}
+		}
         System.out.println("value changed");
     }
 	
@@ -167,60 +210,4 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	public int getID(){
 		return id;
 	}
-           
-    public void focusManage() {
-        // TODO Auto-generated constructor stub  
-        this.addWindowFocusListener(new WindowFocusListener() {  
-        	
-            @Override  
-            public void windowGainedFocus(WindowEvent e) {  
-                // TODO Auto-generated method stub  
-            	jlistModel.clear();
-                System.out.println("The CS window is focused.");  
-                FighterModel fm = new FighterModel();
-
-        		String g = Utils.readFile(Config.CHARACTOR_FILE);
-        		fm = Utils.fromJson(g, FighterModel.class);
-        		if(fm != null){
-            		System.out.println(fm);
-            		
-            		
-            		
-            		try{
-
-                		System.out.println("2"+fm);
-                		if( null!=fm.getFighters() ){
-                            hm1 = fm.getFighters();
-                            Set<String> keySet1 = hm1.keySet();
-                            Iterator<String> it1 = keySet1.iterator();
-                            
-                            while(it1.hasNext()){
-                            	String listItem1 = it1.next();
-                                jlistModel.addElement(listItem1);
-                            }
-                		}        			
-            		}
-            		catch (NullPointerException ex){
-            			System.out.println("there is a NullPointerException");
-            		}
-        			
-        		}
-        		System.out.println("continue");
-        		System.out.println("character list: " + characterList);
-//                for (String key: hm1.keySet()){
-//                    jlistModel.addElement(key);
-//                }
-                
-                //刷新列表，reload文件。
-            }  
-  
-            @Override  
-            public void windowLostFocus(WindowEvent e) {  
-                // TODO Auto-generated method stub  
-                System.out.println("The CS window is not focused.");  
-            }  
-              
-        });  
-        
-    }
  }

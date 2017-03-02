@@ -4,7 +4,6 @@ import java.util.*;
 
 import ddg.Config;
 import ddg.utils.Dice;
-import ddg.utils.FileRW;
 import ddg.utils.Utils;
 import ddg.item.entity.*;
 
@@ -75,7 +74,7 @@ public class Fighter implements Serializable{
 //		Utils.save2File(f, json);
 	}
 	public static void deleteFighter(Fighter fighter){
-		Utils.deleteFromFile(fighter, Config.CHARACTOR_FILE);
+//		Utils.deleteFromFile(fighter, Config.CHARACTOR_FILE);
 	}
 	public String getName(){
 		return name;

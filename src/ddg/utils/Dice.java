@@ -14,10 +14,10 @@ public class Dice {
 	public int d6Roll(){
 		int diceNumber = ((int) (Math.random()*100)) % 6;
 //		System.out.println(diceNumber);
-		return diceNumber;
+		return (diceNumber + 1);
 	}
 	
-	public int d10Roll(){
+	public static int d10Roll(){
 		int diceNumber = ((int) (Math.random()*100)) % 10;
 //		System.out.println(diceNumber);
 		return diceNumber;
