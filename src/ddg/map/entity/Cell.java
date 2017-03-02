@@ -1,4 +1,4 @@
-package model;
+package ddg.map.entity;
 /**
  * Cells class which include content on the Map
  * @author Bo

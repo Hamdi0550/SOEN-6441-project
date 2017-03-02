@@ -1,10 +1,10 @@
 package ddg.view;
 
 import ddg.Config;
+import ddg.map.entity.Map;
 import ddg.model.MapEditorModel;
 import ddg.view.component.DButton;
 import ddg.view.component.ListEntryCellRenderer;
-import model.Map;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

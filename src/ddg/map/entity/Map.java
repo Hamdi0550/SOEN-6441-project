@@ -1,4 +1,4 @@
-package model;
+package ddg.map.entity;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import ddg.Config;
 import ddg.model.MapEditorModel;
 import ddg.utils.Utils;
+import ddg.utils.ValidationTool;
 
 
 /**

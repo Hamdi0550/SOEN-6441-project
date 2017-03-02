@@ -1,6 +1,9 @@
-package model;
+package ddg.utils;
 
 import java.util.HashMap;
+
+import ddg.map.entity.Chest;
+import ddg.map.entity.Map;
 
 /**
  * @author Bo

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import ddg.item.entity.BaseItem;
 import ddg.item.entity.ListEntry;
-import model.Map;
+import ddg.map.entity.Map;
 
 import javax.swing.*;
 

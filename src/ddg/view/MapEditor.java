@@ -17,13 +17,13 @@ import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.item.entity.BaseItem;
+import ddg.map.entity.Cell;
+import ddg.map.entity.Chest;
+import ddg.map.entity.Map;
 import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
 import ddg.view.component.DButton;
 import ddg.view.component.ListEntryCellRenderer;
-import model.Cell;
-import model.Chest;
-import model.Map;
 /**
  * This class is show map editor view
  * 

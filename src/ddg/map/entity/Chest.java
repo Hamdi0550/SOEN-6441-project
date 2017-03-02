@@ -1,4 +1,4 @@
-package model;
+package ddg.map.entity;
 
 import ddg.item.entity.BaseItem;
 
