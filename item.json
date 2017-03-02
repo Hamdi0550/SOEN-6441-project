@@ -1,6 +1,15 @@
 {
   "items": [
     {
+      "id": "key",
+      "name": "key",
+      "bonus": 1,
+      "ability": [
+        "Wisdom"
+      ],
+      "increate": "Wisdom"
+    },
+    {
       "id": "Helmet_1",
       "name": "Helmet",
       "bonus": 1,
