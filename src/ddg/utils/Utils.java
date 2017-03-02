@@ -16,16 +16,38 @@ import com.google.gson.Gson;
  */
 public class Utils {
 	
+	/**
+	 * 
+	 * This method convert entity data type to json style
+	 * 
+	 * @param o
+	 * @return String json strong
+	 */
 	public static String toJson(Object o) {
 		Gson gson = new Gson();
 		return gson.toJson(o);
 	}
 	
+	/**
+	 * 
+	 * This method convert json value to Object
+	 * 
+	 * @param g for json value
+	 * @param type Object type
+	 * @return type of Object
+	 */
 	public static <T> T fromJson(String g, Class<T> type) {
 		Gson gson = new Gson();
 		return gson.fromJson(g, type);
 	}
 	
+	/**
+	 * 
+	 * This method save String the file g
+	 * 
+	 * @param f file name
+	 * @param g value for save
+	 */
 	public static void save2File(String f, String g) {
 		FileWriter fw;
 		try {
@@ -38,6 +60,13 @@ public class Utils {
 		}
 	}
 	
+	/**
+	 * 
+	 * This method read the file
+	 * 
+	 * @param f file name
+	 * @return String
+	 */
 	public static String readFile(String f) {
 		String lines = "";
 		try {

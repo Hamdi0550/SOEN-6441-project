@@ -18,17 +18,33 @@ import ddg.item.entity.ListEntry;
 public class ItemEditorModel {
 	
 	private ArrayList<BaseItem> items;
-
+	/**
+	 * 
+	 * Constructors for ItemEditor Data
+	 *
+	 */
 	public ItemEditorModel() {
 		super();
 		this.items = new ArrayList<BaseItem>();
 	}
 	
+	/**
+	 * 
+	 * Constructors for ItemEditor Data
+	 * 
+	 * @param items
+	 */
 	public ItemEditorModel(ArrayList<BaseItem> items) {
 		super();
 		this.items = items;
 	}
 
+	/**
+	 * 
+	 * This method is add item to the model
+	 * 
+	 * @param item
+	 */
 	public void addItem(BaseItem item) {
 		int size = 0;
 		for(int i = 0; i < this.items.size(); i++) {
@@ -44,6 +60,12 @@ public class ItemEditorModel {
 			this.items.add(item);
 	}
 	
+	/**
+	 * 
+	 * Get List model
+	 * 
+	 * @return DefaultListModel
+	 */
 	public DefaultListModel getListModel() {
 		DefaultListModel l = new DefaultListModel();
 		for(BaseItem i : items) {
@@ -52,6 +74,29 @@ public class ItemEditorModel {
 		return l;
 	}
 	
+	/**
+	 * 
+	 * Get List model by type
+	 * 
+	 * @return DefaultListModel
+	 */
+	public DefaultListModel getListModel(String type) {
+		DefaultListModel l = new DefaultListModel();
+		for(BaseItem i : items) {
+			if(i.getName().equals(type)) {
+				l.addElement(new ListEntry(i.getId(), new ImageIcon("res/"+i.getName()+".jpg")));
+			}
+		}
+		return l;
+	}
+	
+	/**
+	 * 
+	 * This method get item in the list by index
+	 * 
+	 * @param index
+	 * @return BaseItem the value on the index
+	 */
 	public BaseItem getItemByIndex(int index) {
 		if(index < 0 || index > items.size()-1)
 			return null;

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * 
- * This class
+ * This class define the variable of an item
  * 
  * @author Zhen Du
  * @date Feb 22, 2017

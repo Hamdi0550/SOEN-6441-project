@@ -2,7 +2,7 @@ package ddg.item.entity;
 
 /**
  * 
- * This class
+ * This class define the name for increase
  * 
  * @author Zhen Du
  * @date Feb 22, 2017

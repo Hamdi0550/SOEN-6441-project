@@ -40,12 +40,23 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 	private DComboBox<String> abilityComboBox;
 	private DComboBox<String> bonusComboBox;
 	
+	/**
+	 * 
+	 * Constructors for eidtor view
+	 * 
+	 * @param a action listener for option button
+	 */
 	public ItemEditor(ActionListener a) {
 		this.listener = a;
 		initData();
 		initView();
 	}
 
+	/**
+	 * 
+	 * This method init view data
+	 *
+	 */
 	private void initData() {
 		String g = Utils.readFile(Config.ITEM_FILE);
 		this.model = Utils.fromJson(g, ItemEditorModel.class);
@@ -54,6 +65,11 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 		}
 	}
 
+	/**
+	 * 
+	 * This method init view show
+	 *
+	 */
 	private void initView() {
 		BorderLayout l = new BorderLayout();
 		setLayout(l);
@@ -64,6 +80,11 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 		list.setSelectedIndex(0);
 	}
 	
+	/**
+	 * 
+	 * This method add list view in the left area
+	 *
+	 */
 	private void addListView() {
 		JPanel listPanel = new JPanel();
 		listPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));
@@ -88,6 +109,11 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 		add(listPanel, BorderLayout.WEST);
 	}
 
+	/**
+	 * 
+	 * This method add editor area
+	 *
+	 */
 	private void addEditorView() {
 		JPanel contentPanel = new JPanel();
 		
@@ -105,6 +131,11 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 		add(contentPanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * 
+	 * This method is add option area
+	 *
+	 */
 	private void addOptionView() {
 		JPanel optionPanel = new JPanel();
 		optionPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));

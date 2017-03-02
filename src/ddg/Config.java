@@ -39,7 +39,7 @@ public class Config {
 	
 	public static final String CHARACTOR_FILE = "./charactor.json";
 	
-	public static final String MAP_FILE = "./map.json";
+	public static final String MAP_FILE = "./map.ser";//"./map.json";
 
 	public static final String CAMPAIGN_FILE = "./campaign.json";
 	
