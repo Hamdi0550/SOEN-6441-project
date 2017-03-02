@@ -24,6 +24,11 @@ import ddg.model.ItemEditorModel;
 import ddg.utils.Utils;
 import ddg.view.component.ListEntryCellRenderer;
 
+/**
+ * @author Bo
+ * dialog for selecting a item put in the chest
+ *
+ */
 public class PopUpForItem extends JDialog implements ActionListener{
 //	private JFrame owner;
 	private ItemEditorModel itemsmodel;
@@ -31,7 +36,10 @@ public class PopUpForItem extends JDialog implements ActionListener{
 	private JTextArea detailofitem;
 	private BaseItem selecteditem;
 	
-	
+	/**
+     * @param owner	the owner frame of this dialog
+     * @param title	the title of this dialog
+     */
 	public PopUpForItem(JFrame owner, String title) {
 		super(owner,title);
 //		this.owner = owner;
@@ -106,6 +114,9 @@ public class PopUpForItem extends JDialog implements ActionListener{
 		getContentPane().add(contentPanel);
 	}
 	
+	/**
+	 * @return the item which selected by user, then put into the chest
+	 */
 	public BaseItem getSelecteditem() {
 		return selecteditem;
 	}

@@ -16,7 +16,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by qinyi on 2017-02-28.
+ * dialog for asking map's size when user create a new map
+ * @author Bo, Yi Qin
+ * @date 2017-02-28.
  */
 public class PopUpForCreateNewMap extends JDialog implements ActionListener,ChangeListener{
 	private int row;
@@ -26,6 +28,10 @@ public class PopUpForCreateNewMap extends JDialog implements ActionListener,Chan
     private JSlider rowslider = new JSlider(10,190,10);
     private JSlider columnslider = new JSlider(10,190,10);
 
+    /**
+     * @param owner	the owner frame of this dialog
+     * @param title	the title of this dialog
+     */
     public PopUpForCreateNewMap(Frame owner, String title) {
         super(owner, title);
         this.row = 0;
@@ -101,10 +107,16 @@ public class PopUpForCreateNewMap extends JDialog implements ActionListener,Chan
         }
     }
 
+	/**
+	 * @return	return the number of the row in the map(decide by user)
+	 */
 	public int getRow() {
 		return row;
 	}
 
+	/**
+	 * @return	return the number of the column in the map(decide by user)
+	 */
 	public int getColumn() {
 		return column;
 	}

@@ -30,7 +30,7 @@ public class Map {
 	public Map(){
 		this.row = 10;
 		this.column = 10;
-		this.location = new char[row][column];
+		this.location = new char[row][column];	// record the inform of location on the map
 		this.cellsinthemap = new Cell[row][column];
 		
 		for(int i=0;i<row;i++){
@@ -58,12 +58,17 @@ public class Map {
 //		this.width = 10;
 //	}
 	
-	public Map(String name, int height, int width){
+	/**
+	 * @param name	name of the map
+	 * @param row	the number of row of the map
+	 * @param column	the number of column of the map
+	 */
+	public Map(String name, int row, int column){
 		this.name = name;
-		this.row = height;
-		this.column = width;
-		this.location = new char[height][width];
-		this.cellsinthemap = new Cell[height][width];
+		this.row = row;
+		this.column = column;
+		this.location = new char[row][column];
+		this.cellsinthemap = new Cell[row][column];
 		
 		for(int i=0;i<row;i++){
 			for(int j=0;j<column;j++)
@@ -72,21 +77,39 @@ public class Map {
 		
 	}
 	
+	/** 
+	 * @return get the number of the row of the map
+	 */
 	public int getRow(){
 		return this.row;
 	}
-	
+	/** 
+	 * @return get the number of the column of the map
+	 */
 	public int getColumn(){
 		return this.column;
 	}
 
+	
+	/**
+	 * @return return the detail location of the map
+	 */
 	public char[][] getLocation() {
 		return location;
 	}
 
+	/**
+	 * @param location 2-dimensional array of all location of the map
+	 */
 	public void setLocation(char[][] location) {
 		this.location = location;
 	}
+	/**
+	 * change content of one of the location on the map
+	 * @param x row-coordinate of the location
+	 * @param y column-coordinate of the location
+	 * @param c the content you would like to change. 'c' = chest,'w'=wall, 'f'=floor, 'i' = indoor, 'o' = outdoor ...
+	 */
 	public void changeLocation(int x,int y, char c){
 		this.location[x][y] = c;
 	}
@@ -99,17 +122,26 @@ public class Map {
 		Utils.save2File(Config.MAP_FILE, Utils.toJson(mapEditorModel));
 	}
 	
+	/**
+	 * @return name of the map
+	 */
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	/**
+	 * @param x row-coordinate of the location
+	 * @param y	column-coordinate of the location
+	 * @param cell	the cell which you would like to put in the map
+	 */
 	public void changeCellsinthemap(int x,int y, Cell cell){
 		this.cellsinthemap[x][y] = cell;
 	}
 	
+	/**
+	 * @param map map whose validation you would like to check
+	 * @return	cell the same function on the ValidationTool, return true if validation is success, else return false.
+	 */
 	public boolean checkValidation(Map map){
 		return new ValidationTool(map).checkValidation();
 	}

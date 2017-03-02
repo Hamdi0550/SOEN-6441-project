@@ -38,6 +38,10 @@ public class PopUpForFighter extends JDialog implements ActionListener{
 	
 	private Fighter selectedfighter;
 	
+	/**
+	 * @param owner	the owner frame of this dialog
+     * @param title	the title of this dialog
+	 */
 	public PopUpForFighter(JFrame owner, String title) {
 		super(owner,title);
 		selectedfighter = null;
@@ -128,6 +132,9 @@ public class PopUpForFighter extends JDialog implements ActionListener{
 		
 		getContentPane().add(contentPanel);
 	}
+	/**
+	 * @return fighter which user select
+	 */
 	public Fighter getSelectedFighter() {
 		return selectedfighter;
 	}
