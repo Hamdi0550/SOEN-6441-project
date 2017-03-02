@@ -46,7 +46,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	JComboBox<ImageIcon> optionsofelementoncell;
 	ImageIcon floor = new ImageIcon("floor.png");
 	ImageIcon chest = new ImageIcon("chest.png");
-	ImageIcon tree = new ImageIcon("tree.png");
+	ImageIcon wall = new ImageIcon("wall.png");
 	ImageIcon indoor = new ImageIcon("indoor.png");
 	ImageIcon outdoor = new ImageIcon("outdoor.png");
 	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
@@ -131,8 +131,8 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	                    	if(selectedmap.getLocation()[i][j] == 'f' ){
 							    g.drawImage(floor.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
-							if (selectedmap.getLocation()[i][j] == 't'){
-								g.drawImage(tree.getImage(), j*50, i*50, 50, 50, null);
+							if (selectedmap.getLocation()[i][j] == 'w'){
+								g.drawImage(wall.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (selectedmap.getLocation()[i][j] == 'i'){
 								g.drawImage(indoor.getImage(), j*50, i*50, 50, 50, null);
@@ -142,6 +142,9 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 							    continue;}
 							if (selectedmap.getLocation()[i][j] == 'o'){
 								g.drawImage(outdoor.getImage(), j*50, i*50, 50, 50, null);
+							    continue;}
+							if (selectedmap.getLocation()[i][j] == 'p'){
+								g.drawImage(playcharacter.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 	                    }
 	                }
@@ -207,7 +210,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		iconpanel.setPreferredSize(new Dimension(90, 500));
 		optionsofelementoncell = new JComboBox<ImageIcon>();  
 		optionsofelementoncell.addItem(floor);  
-		optionsofelementoncell.addItem(tree);
+		optionsofelementoncell.addItem(wall);
 		optionsofelementoncell.addItem(indoor);
 		optionsofelementoncell.addItem(chest);
 		optionsofelementoncell.addItem(outdoor);
