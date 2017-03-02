@@ -26,11 +26,13 @@ public class ValidationTool {
 	 * @return if the map is validation return true, otherwise return false
 	 */
 	public boolean checkValidation(){
-		if(hasEntryDoor() && hasExitDoor()){
+		if(hasEntryDoor() && hasExitDoor()&&hasKey()){
 			return true;
 		}
 		return false;
 	}
+
+	
 
 	/**
 	 * check whether the map has valid path from enter door to exit door.
@@ -65,9 +67,8 @@ public class ValidationTool {
 		}
 	}
 	/**
-	 * 
-	 *  maplocation detail location of map.
-	 * @return true if there is a indoor(Entry door) in the location of map 
+	 *  
+	 * @return true when there is a indoor(Entry door) in the location of map 
 	 */
 	public boolean hasEntryDoor() {
 		hasvaildpath = false;
@@ -88,9 +89,23 @@ public class ValidationTool {
 	}
 	
 	/**
+	 * @return true when there is key on the map, otherwise return false.
+	 */
+	public boolean hasKey() {
+		for(int i=0;i<map.getRow();i++){
+			for(int j=0;j<map.getColumn();j++){
+				if(map.getLocation()[i][j] == 'k'){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * 
 	 *  maplocation detail location of map.
-	 * @return true if there is a outdoor(Exit door) in the location of map 
+	 * @return true when there is a outdoor(Exit door) in the location of map 
 	 */
 	public boolean hasExitDoor() {
 		for(int i=0;i<map.getRow();i++){

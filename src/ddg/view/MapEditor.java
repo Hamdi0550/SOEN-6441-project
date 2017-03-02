@@ -51,6 +51,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	ImageIcon indoor = new ImageIcon("indoor.png");
 	ImageIcon outdoor = new ImageIcon("outdoor.png");
 	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
+	ImageIcon key = new ImageIcon("key.png");
 	
 	public MapEditor(ActionListener a) {
 		this.listener = a;
@@ -126,6 +127,9 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 							if (selectedmap.getLocation()[i][j] == 'o'){
 								g.drawImage(outdoor.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
+							if (selectedmap.getLocation()[i][j] == 'k'){
+								g.drawImage(key.getImage(), j*50, i*50, 50, 50, null);
+							    continue;}
 	                    }
 	                }
 	            }
@@ -168,7 +172,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 					//Here you got the character to put on the map
 					Fighter obtainedFighter = ((DDGameMain) rootframe).getSelectedFighter();
 					System.out.println("Got a fighter with level: " + obtainedFighter.getLevel() + " strength: " + obtainedFighter.getStrength() + " dexterity: " + obtainedFighter.getDexterity());
-					
 				}
 				else{
 					selectedmap.changeLocation(y, x, num);
@@ -199,6 +202,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		optionsofelementoncell.addItem(chest);
 		optionsofelementoncell.addItem(outdoor);
 		optionsofelementoncell.addItem(playcharacter);
+		optionsofelementoncell.addItem(key);
 		optionsofelementoncell.setLocation(0, 0);
 		iconpanel.add(optionsofelementoncell, BorderLayout.NORTH);
 		iconpanel.setBorder(Config.border);
@@ -310,7 +314,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 
 			}
 			else
-				JOptionPane.showMessageDialog(null, "<html>The map is invalid <br> it must have a indoor, a outdoor and Feasiable Path</html>","Invalid",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "<html>The map is invalid <br> it must have:<br> a indoor, a outdoor, a key <br>and Feasiable Path</html>","Invalid",JOptionPane.ERROR_MESSAGE);
 		}
 		
 		if(e.getActionCommand().equals("SAVE")){
@@ -318,7 +322,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 				Map.savemap(mapsmodel);
 			}
 			else
-				JOptionPane.showMessageDialog(null, "<html>The map is invalid <br> it must have a indoor, a outdoor and Feasiable Path</html>","Invalid",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "<html>The map is invalid <br> it must have:<br> a indoor, a outdoor, a key <br>and Feasiable Path</html>","Invalid",JOptionPane.ERROR_MESSAGE);
 		}
 		if(e.getActionCommand().equals("CLEAR")){
 			char maplocation[][] = selectedmap.getLocation();
