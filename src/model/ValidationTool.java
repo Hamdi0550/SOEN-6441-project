@@ -45,22 +45,22 @@ public class ValidationTool {
 			hasvaildpath=true;
 		else{
 			usedcell.put(i+","+j, "i*j");
-			if( j>0 && maplocation[i][j-1]!='t'){
+			if( j>0 && maplocation[i][j-1]!='w'){
 				if(usedcell.get(i+","+ (j-1) )== null)
 					hasValidPath(i, j-1);
 			}
 			
-			if(i>0 && maplocation[i-1][j]!='t'){
+			if(i>0 && maplocation[i-1][j]!='w'){
 				if(usedcell.get(i-1 +","+ j)== null)
 					hasValidPath(i-1, j);
 			}
 			
-			if(j<map.getColumn()-1 && maplocation[i][j+1]!='t'){
+			if(j<map.getColumn()-1 && maplocation[i][j+1]!='w'){
 				if(usedcell.get(i +","+ (j+1))== null)
 					hasValidPath(i, j+1);
 			}
 			
-			if(i<map.getRow()-1 && maplocation[i+1][j]!='t'){
+			if(i<map.getRow()-1 && maplocation[i+1][j]!='w'){
 				if(usedcell.get((i+1) +","+ j)== null)
 					hasValidPath(i+1, j);
 			}
@@ -104,8 +104,8 @@ public class ValidationTool {
 		for(int i=0;i<map.getRow();i++){
 			for(int j=0;j<map.getColumn();j++){
 				if(map.getLocation()[i][j] == 'c'){
-					 String id = ((Chest) map.getCellsinthemap()[i][j].getContent()).getItem().getId();
-					 if(id.equals("key")){
+					 String name = ((Chest) map.getCellsinthemap()[i][j].getContent()).getItem().getName();
+					 if(name.equals("key")){
 						usedcell.clear();
 						hasValidPath(i,j);
 						if(hasvaildpath)

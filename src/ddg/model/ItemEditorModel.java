@@ -37,7 +37,11 @@ public class ItemEditorModel {
 			}
 		}
 		item.setId(item.getName()+"_"+(size+1));
-		this.items.add(item);
+		if(item.getName().equals("key")){
+			this.items.add(0,item);
+		}
+		else
+			this.items.add(item);
 	}
 	
 	public DefaultListModel getListModel() {

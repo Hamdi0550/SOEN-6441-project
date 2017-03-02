@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.item.entity.BaseItem;
+import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
 import ddg.view.component.DButton;
 import ddg.view.component.ListEntryCellRenderer;
@@ -179,11 +180,14 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 				}
 				else if(num =='p'){
 					JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(mapPanel);
-					PopUpForFighter2 fighterpopup = new PopUpForFighter2(rootframe,"Select Character!");
-					fighterpopup.pack();
+					PopUpForFighter fighterpopup = new PopUpForFighter(rootframe,"Select Character!");
 					
-					if(fighterpopup.getSelectedFighter()!=null){
-						selectedmap.changeCellsinthemap(x, y, new Cell(fighterpopup.getSelectedFighter(),fighterpopup.getIsfriendly()));
+					fighterpopup.pack();
+					fighterpopup.setVisible(true);
+					
+					if(fighterpopup.getFighter()!=null){
+						selectedmap.changeCellsinthemap(x, y, new Cell<Fighter>(fighterpopup.getFighter(),fighterpopup.getIsfriendly()));
+						selectedmap.changeLocation(y, x, num);
 					}
 				}
 				else{

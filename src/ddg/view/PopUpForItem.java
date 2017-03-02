@@ -55,6 +55,8 @@ public class PopUpForItem extends JDialog implements ActionListener{
 		if (this.itemsmodel == null) {
 			this.itemsmodel = new ItemEditorModel();
 		}
+		BaseItem key = new BaseItem("key", 1, "wisdom");
+		itemsmodel.addItem(key);
 	}
 	
 	ListSelectionListener slsnr = new ListSelectionListener() {

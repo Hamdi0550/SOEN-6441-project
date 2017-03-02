@@ -104,6 +104,8 @@ public class BaseItem implements java.io.Serializable{
 			return new String[]{Ability.ARMOR_CLASS, Ability.DEXTERITY};
 		} else if(BaseItem.WEAPON.equals(name)) {
 			return new String[]{Ability.ATTACK_BONUS, Ability.DAMAGE_BONUS};
+		}else if("key".equals(name)){
+			return new String[]{Ability.WISDOM};
 		}
 		return null;
 	}

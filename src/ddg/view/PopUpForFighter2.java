@@ -103,10 +103,16 @@ public class PopUpForFighter2 extends JDialog implements ActionListener{
 					levelTextF.setText(""+fighter.getLevel());
 					strengthTextF.setText(""+fighter.getStrength());
 					dexterityTextF.setText(""+fighter.getDexterity());
-//					constitutionTextF.setText(""+fighter.getConstitution());
-//					intelligenceTextF.setText(""+fighter.getIntelligence());
-//					wisdomTextF.setText(""+fighter.getWisdom());
-//					charismaTextF.setText(""+fighter.getCharisma());
+					constitutionTextF.setText(""+fighter.getConstitution());
+					intelligenceTextF.setText(""+fighter.getIntelligence());
+					wisdomTextF.setText(""+fighter.getWisdom());
+					charismaTextF.setText(""+fighter.getCharisma());
+					strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getStrength())));
+		    		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getDexterity())));
+		    		conModiferL.setText(Integer.toString(fighter.getModifier(fighter.getConstitution())));
+		    		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getIntelligence())));
+		    		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getWisdom())));
+		    		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getCharisma())));
 				}
 			}
 		}
