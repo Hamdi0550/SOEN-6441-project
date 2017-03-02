@@ -1,5 +1,9 @@
 package model;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import ddg.Config;
 import ddg.model.MapEditorModel;
 import ddg.utils.Utils;
@@ -13,7 +17,7 @@ import ddg.utils.Utils;
  * model for Map
  *
  */
-public class Map {
+public class Map implements java.io.Serializable{
 	// record the location of things in the map
 	private String name;
 	private char[][] location;
@@ -119,7 +123,19 @@ public class Map {
 	 * @return true if the map have indoor, outdoor and can find a valid path to success.
 	 */
 	static public void savemap(MapEditorModel mapEditorModel){
-		Utils.save2File(Config.MAP_FILE, Utils.toJson(mapEditorModel));
+//		Utils.save2File(Config.MAP_FILE, Utils.toJson(mapEditorModel));
+		try{
+			FileOutputStream fileOut =
+	        new FileOutputStream(Config.MAP_FILE);
+	        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	        out.writeObject(mapEditorModel);
+	        out.close();
+	        fileOut.close();
+	        System.out.printf("Serialized data is saved in /tmp/employee.ser");
+		}catch (IOException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 	
 	/**

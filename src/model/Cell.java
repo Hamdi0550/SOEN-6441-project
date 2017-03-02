@@ -2,17 +2,18 @@ package model;
 /**
  * Cells class which include content on the Map
  * @author Bo
+ * @param <T>
  * @Feb 22,2017
  */
-public class Cell {
-	private Object content;	// content in the cell
+public class Cell<T> implements java.io.Serializable{
+	private T content;	// content in the cell
 	private boolean isfriendly;	//show if the content is friendly to player, mainly used to describe character content
 
 	
 	/**
 	 * @param content content in the cell e.g. character, chest
 	 */
-	public Cell(Object content){
+	public Cell(T content){
 		this.content = content;
 		this.isfriendly = true;
 	}
@@ -21,7 +22,7 @@ public class Cell {
 	 * @param content content content in the cell e.g. character, chest
 	 * @param isfriendly defend the content is friendly to player or not
 	 */
-	public Cell(Object content, boolean isfriendly){
+	public Cell(T content, boolean isfriendly){
 		this.content = content;
 		this.isfriendly = isfriendly;
 	}
@@ -36,7 +37,7 @@ public class Cell {
 	/**
 	 * @param content set the content object in the Cell
 	 */
-	public void setContent(Object content) {
+	public void setContent(T content) {
 		this.content = content;
 	}
 	

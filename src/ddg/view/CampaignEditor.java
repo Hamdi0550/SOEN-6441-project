@@ -6,6 +6,9 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -48,8 +51,26 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 	}
 
 	private void initData() {
-		String m = Utils.readFile(Config.MAP_FILE);
-		this.mapData = Utils.fromJson(m, MapEditorModel.class);
+//		String m = Utils.readFile(Config.MAP_FILE);
+//		this.mapData = Utils.fromJson(m, MapEditorModel.class);
+		try
+	      {
+	         FileInputStream fileIn = new FileInputStream(Config.MAP_FILE);
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         this.mapData = (MapEditorModel) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      }catch(IOException i)
+	      {
+	         i.printStackTrace();
+	         return;
+	      }catch(ClassNotFoundException c)
+	      {
+	         System.out.println("Employee class not found");
+	         c.printStackTrace();
+	         return;
+	      }
+		
 		if (this.mapData == null) {
 			this.mapData = new MapEditorModel();
 		}

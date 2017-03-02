@@ -12,7 +12,7 @@ import javax.swing.*;
  * @author Bo
  * a model for save and retrieve all the map in the MapFile
  */
-public class MapEditorModel {
+public class MapEditorModel implements java.io.Serializable{
 		private ArrayList<Map> maps;
 	
 		public MapEditorModel() {

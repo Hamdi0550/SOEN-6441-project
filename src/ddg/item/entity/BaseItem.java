@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * @author Zhen Du
  * @date Feb 22, 2017
  */
-public class BaseItem {
+public class BaseItem implements java.io.Serializable{
 	public static final String TYPE = "type";
 	public static final String ABILITY = "ability";
 	public static final String BONUS = "bonus";

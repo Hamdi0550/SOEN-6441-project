@@ -8,18 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
-
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.item.entity.BaseItem;
-import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
-import ddg.ui.DDGameMain;
-import ddg.utils.Utils;
 import ddg.view.component.DButton;
 import ddg.view.component.ListEntryCellRenderer;
 import model.Cell;
@@ -52,7 +50,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	ImageIcon indoor = new ImageIcon("indoor.png");
 	ImageIcon outdoor = new ImageIcon("outdoor.png");
 	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
-	ImageIcon key = new ImageIcon("key.png");
 	
 	public MapEditor(ActionListener a) {
 		this.listener = a;
@@ -66,8 +63,26 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	}
 
 	private void initData(){
-		String g = Utils.readFile(Config.MAP_FILE);
-		this.mapsmodel = Utils.fromJson(g, MapEditorModel.class);
+//		String g = Utils.readFile(Config.MAP_FILE);
+//		this.mapsmodel = Utils.fromJson(g, MapEditorModel.class);
+		try
+	      {
+	         FileInputStream fileIn = new FileInputStream(Config.MAP_FILE);
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         mapsmodel = (MapEditorModel) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      }catch(IOException i)
+	      {
+	         i.printStackTrace();
+	         return;
+	      }catch(ClassNotFoundException c)
+	      {
+	         System.out.println("Employee class not found");
+	         c.printStackTrace();
+	         return;
+	      }
+		
 		if (this.mapsmodel == null) {
 			this.mapsmodel = new MapEditorModel();
 		}
@@ -128,9 +143,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 							if (selectedmap.getLocation()[i][j] == 'o'){
 								g.drawImage(outdoor.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
-							if (selectedmap.getLocation()[i][j] == 'k'){
-								g.drawImage(key.getImage(), j*50, i*50, 50, 50, null);
-							    continue;}
 	                    }
 	                }
 	            }
@@ -168,7 +180,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 					fighterpopup.pack();
 					
 					if(fighterpopup.getSelectedFighter()!=null){
-						selectedmap.changeCellsinthemap(x, y, new Cell<Fighter>(fighterpopup.getSelectedFighter(),fighterpopup.getIsfriendly()));
+						selectedmap.changeCellsinthemap(x, y, new Cell(fighterpopup.getSelectedFighter(),fighterpopup.getIsfriendly()));
 					}
 				}
 				else{
@@ -200,7 +212,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		optionsofelementoncell.addItem(chest);
 		optionsofelementoncell.addItem(outdoor);
 		optionsofelementoncell.addItem(playcharacter);
-		optionsofelementoncell.addItem(key);
 		optionsofelementoncell.setLocation(0, 0);
 		iconpanel.add(optionsofelementoncell, BorderLayout.NORTH);
 		iconpanel.setBorder(Config.border);
@@ -282,21 +293,10 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 			mapCreatePopUp();
 			mapPanel.repaint();
 		}
-// 		if(e.getActionCommand().equals("S/M/L")){
-// 			if(MAP_SIZE >= 50){
-// 				MAP_SIZE = 10;
-// 			}
-// 			else
-// 				MAP_SIZE += 20;
-// 			//this.removeAll();
-// 			contentPanel.removeAll();
-// 			contentPanel.revalidate();
-// 			addContentPanel();
-// 		}
+
 		if(e.getActionCommand().equals("VALIDATE")){
 			if(selectedmap.checkValidation(selectedmap)){
 				JOptionPane.showMessageDialog(null, "<html>Vaild Success!!!</html>");
-
 			}
 			else
 				JOptionPane.showMessageDialog(null, "<html>The map is invalid <br> it must have:<br> a indoor, a outdoor, a key <br>and Feasiable Path</html>","Invalid",JOptionPane.ERROR_MESSAGE);

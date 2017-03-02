@@ -2,7 +2,7 @@ package model;
 
 import ddg.item.entity.BaseItem;
 
-public class Chest {
+public class Chest implements java.io.Serializable{
 	private BaseItem item;
 	
 	public Chest(){
