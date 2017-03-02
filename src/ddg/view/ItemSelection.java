@@ -3,6 +3,7 @@ package ddg.view;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 import java.util.*;
@@ -42,14 +43,14 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	public String fighterKeyName = "fighter111";
     private static CharacterEditLayout owner;
     public BaseItem selectedItem;
-	private JButton okBtn = new JButton("   OK   ");
 	private JLabel messageL = new JLabel(" ");
+	private JButton okBtn = new JButton("   OK   ");
 
     public static void main(String[] args) 
     {
         //call the method to build the frame
     	ItemSelection frame1 = new ItemSelection();
-//        createAndShowGUI();
+//    	createAndShowGUI();
     }//end of main()
     ///////////////////////////////////////////////////////////////////////////
     public static void createAndShowGUI(CharacterEditLayout ownerFrame) 
@@ -99,7 +100,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 //        backpackPanel.add(backpackListPanel, BorderLayout.CENTER);
         itemJList.setPreferredSize(new Dimension(200,560));
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
-        attributesPanel.setPreferredSize(new Dimension(600,320));
+        attributesPanel.setPreferredSize(new Dimension(300,320));
         JLabel lb1 = new JLabel(" ");
         JLabel nameModiferL = new JLabel(" L ");
         JLabel levelModiferL = new JLabel(" L ");
@@ -112,39 +113,51 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         lb1.setBounds(0, 0, 20, 15);
         lb1.setIcon(icon);
         lb1.setText(" 2 ");
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(lb1);
-        attributesPanel.add(new JLabel("   L  "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
         attributesPanel.add(new JLabel(" Name: "));
         attributesPanel.add(nameLabel);
-        attributesPanel.add(new JLabel("   L  "));
+        attributesPanel.add(new JLabel("      "));
         attributesPanel.add(new JLabel(" Type: "));
         attributesPanel.add(typeLabel);
-        attributesPanel.add(new JLabel("  L  "));
+        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Attribute: "));
         attributesPanel.add(attributeLabel);
-        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Value  "));
         attributesPanel.add(bonusLabel);
-        attributesPanel.add(new JLabel("  L   "));
-        attributesPanel.add(new JLabel("  L   "));
-        attributesPanel.add(new JLabel("  L   "));
-        attributesPanel.add(new JLabel("  L   "));
-        attributesPanel.add(new JLabel("  L   "));
-        attributesPanel.add(new JLabel("  L   "));
-        attributesPanel.add(new JLabel("  L   "));
-        attributesPanel.add(new JLabel("  L   "));
-        attributesPanel.add(new JLabel("  L   "));
-        attributesPanel.add(new JLabel("  L   "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
         
-        buttonsPanel.add(new JLabel("  L  "));
+        buttonsPanel.add(new JLabel("     "));
         buttonsPanel.add(selectBtn);
         buttonsPanel.add(cancelBtn);
-        buttonsPanel.add(new JLabel("  L  "));
+        buttonsPanel.add(new JLabel("     "));
         buttonsPanel.setSize(300,500);
         selectBtn.setEnabled(false);
 //        itemJList.addListSelectionListener(this);
     	addListView();
+//    	errorMessageWindow.addWindowListener(new WindowAdapter(){
+//    		public void windowClosing(WindowEvent e){
+//    			errorMessageWindow.setVisible(false);;
+//    		}
+//    	});
+    	
+    	okBtn.addActionListener(new ActionListener(){ 
+    		public void actionPerformed(ActionEvent e){
+    			errorMessageWindow.dispose();
+//    			errorMessageWindow.setVisible(false);
+            }
+        }); 
 
         
 
@@ -161,9 +174,30 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         					owner.getOwner().fighter.getWorn().remove(i);
         				}
         			}
-        			owner.getOwner().fighter.getWorn().add(tempItem);
 					owner.getOwner().fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
-        			owner.helmetBtn.setIcon(Config.iconByType(owner.wearingType));
+        			owner.getOwner().fighter.getWorn().add(tempItem);
+        			if (owner.wearingType.equals(BaseItem.HELMET)){
+        				owner.helmetBtn.setText("");
+            			owner.helmetBtn.setIcon(Config.iconByType(owner.wearingType));
+        			} else if (owner.wearingType.equals(BaseItem.ARMOR)){
+            			owner.armorBtn.setText("");
+            			owner.armorBtn.setIcon(Config.iconByType(owner.wearingType));
+        			} else if (owner.wearingType.equals(BaseItem.BOOTS)){
+            			owner.bootsBtn.setText("");
+            			owner.bootsBtn.setIcon(Config.iconByType(owner.wearingType));
+        			} else if (owner.wearingType.equals(BaseItem.RING)){
+            			owner.ringBtn.setText("");
+            			owner.ringBtn.setIcon(Config.iconByType(owner.wearingType));
+        			} else if (owner.wearingType.equals(BaseItem.BELT)){
+            			owner.beltBtn.setText("");
+            			owner.beltBtn.setIcon(Config.iconByType(owner.wearingType));
+        			} else if (owner.wearingType.equals(BaseItem.WEAPON)){
+            			owner.weaponBtn.setText("");
+            			owner.weaponBtn.setIcon(Config.iconByType(owner.wearingType));
+        			} else if (owner.wearingType.equals(BaseItem.SHIELD)){
+            			owner.shieldBtn.setText("");
+            			owner.shieldBtn.setIcon(Config.iconByType(owner.wearingType));
+        			}
 //        			owner.getOwner().fighter.getBackpack().add(selectedItem);   			
         			System.out.println(tempItem.getId() + " " + tempItem.getName() + " " + tempItem.getIncrease() + " " + tempItem.getBonus());
         			dispose();
@@ -192,9 +226,10 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     	errorMessageWindow.add(messageL);
     	errorMessageWindow.add(okBtn);
     	errorMessageWindow.setVisible(true);
+
     }
     
-	private void addListView() {		
+	private void addListView() {
 		DefaultListModel l = itemListModel.getListModel();
 		itemJList.setModel(l);
 		itemJList.setCellRenderer(new ListEntryCellRenderer());

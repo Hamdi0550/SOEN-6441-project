@@ -28,7 +28,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     private final JButton randomBtn = new JButton("      Random      ");
     private final JButton inventoryBtn = new JButton(" Inventory ");
 
-    public final JButton helmetBtn = new JButton();
+    public final JButton helmetBtn = new JButton("  Helmet  ");
     public final JButton shoulderBtn = new JButton("  Shoulder  ");
     public final JButton beltBtn = new JButton("  Belt ");
     public final JButton ringBtn = new JButton("  Ring  ");
@@ -140,8 +140,8 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         characterImagePanel.setBounds(0, 0, 500, 500);
         characterImagePanel.add(new JLabel("                                                                 "));
         buttonsPanel.setPreferredSize(new Dimension(100,320));
-        characterLeftPanel.setPreferredSize(new Dimension(60,320));
-        characterRightPanel.setPreferredSize(new Dimension(60,320));
+        characterLeftPanel.setPreferredSize(new Dimension(100,320));
+        characterRightPanel.setPreferredSize(new Dimension(100,320));
         attributesPanel.setPreferredSize(new Dimension(600,320));
         characterImagePanel.setPreferredSize(new Dimension(350,320));
         
@@ -244,25 +244,32 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));	
     		
     		if (owner.fighter.helmetIsOn){
+    			helmetBtn.setText("");
     			helmetBtn.setIcon(Config.HELMET_ICON);
     		}
     		if (owner.fighter.armorIsOn){
-    			helmetBtn.setIcon(Config.ARMOR_ICON);
+    			armorBtn.setText("");
+    			armorBtn.setIcon(Config.ARMOR_ICON);
     		}
     		if (owner.fighter.beltIsOn){
-    			helmetBtn.setIcon(Config.BELT_ICON);
+    			beltBtn.setText("");
+    			beltBtn.setIcon(Config.BELT_ICON);
     		}
     		if (owner.fighter.bootsIsOn){
-    			helmetBtn.setIcon(Config.BOOTS_ICON);
+    			bootsBtn.setText("");
+    			bootsBtn.setIcon(Config.BOOTS_ICON);
     		}
     		if (owner.fighter.ringIsOn){
-    			helmetBtn.setIcon(Config.RING_ICON);
+    			ringBtn.setText("");
+    			ringBtn.setIcon(Config.RING_ICON);
     		}
     		if (owner.fighter.shieldIsOn){
-    			helmetBtn.setIcon(Config.SHIELD_ICON);
+    			shieldBtn.setText("");
+    			shieldBtn.setIcon(Config.SHIELD_ICON);
     		}
     		if (owner.fighter.weaponIsOn){
-    			helmetBtn.setIcon(Config.WEAPON_ICON);
+    			weaponBtn.setText("");
+    			weaponBtn.setIcon(Config.WEAPON_ICON);
     		}
 		}		
 	}
@@ -284,6 +291,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				System.out.println("save clicked");
 				Fighter fighter1 = new Fighter();
 				if (owner.fighter != null){
+					System.out.println("owner.fighter is not null");
 					fighter1 = owner.fighter;					
 				}
 //				JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -298,7 +306,8 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 					jd.setVisible(true);
 				}
 				else{
-					fighter1.setName("www1");					
+					System.out.println("nametextF is not null ");
+					fighter1.setName(nameTextF.getText());					
 				}
 				fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
 				fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
@@ -390,8 +399,49 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.HELMET;
 				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(helmetBtn);
-				ItemSelection.createAndShowGUI(rootFrame);
-				
+				ItemSelection.createAndShowGUI(rootFrame);				
+			}
+		});
+		armorBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				wearingType = BaseItem.ARMOR;
+				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(armorBtn);
+				ItemSelection.createAndShowGUI(rootFrame);				
+			}
+		});
+		beltBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				wearingType = BaseItem.BELT;
+				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(beltBtn);
+				ItemSelection.createAndShowGUI(rootFrame);				
+			}
+		});
+		bootsBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				wearingType = BaseItem.BOOTS;
+				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(bootsBtn);
+				ItemSelection.createAndShowGUI(rootFrame);				
+			}
+		});
+		ringBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				wearingType = BaseItem.RING;
+				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(ringBtn);
+				ItemSelection.createAndShowGUI(rootFrame);				
+			}
+		});
+		shieldBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				wearingType = BaseItem.SHIELD;
+				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(shieldBtn);
+				ItemSelection.createAndShowGUI(rootFrame);				
+			}
+		});
+		weaponBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				wearingType = BaseItem.WEAPON;
+				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(weaponBtn);
+				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
 		inventoryBtn.addActionListener(new ActionListener(){
@@ -421,10 +471,27 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	 this.addWindowFocusListener(new WindowFocusListener() {  
 	 	
 	     @Override  
-	     public void windowGainedFocus(WindowEvent e) {  
+	     public void windowGainedFocus(WindowEvent e) {
 	         // TODO Auto-generated method stub  
-	         System.out.println("The CE window is focused.");  
-	         //刷新列表，reload文件。
+	    	 System.out.println("The CE window is focused.");  
+	    	 if (owner.fighter != null){
+		    	 nameTextF.setText(owner.fighter.getName());
+		    	 levelTextF.setText(Integer.toString(owner.fighter.getLevel()));
+		    	 strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
+		    	 dexterityTextF.setText(Integer.toString(owner.fighter.getDexterity()));
+		    	 constitutionTextF.setText(Integer.toString(owner.fighter.getConstitution()));
+		    	 intelligenceTextF.setText(Integer.toString(owner.fighter.getIntelligence()));
+		    	 wisdomTextF.setText(Integer.toString(owner.fighter.getWisdom()));
+		    	 charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));
+				
+		    	 strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getStrength())));
+		    	 dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getDexterity())));
+		    	 conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getConstitution())));
+		    	 intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
+		    	 wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
+		    	 chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));
+		    	 System.out.println(owner.fighter.getWorn().size() + "==========" + owner.fighter.getWorn());
+	    	 }
 	     }  
 	
 	     @Override  

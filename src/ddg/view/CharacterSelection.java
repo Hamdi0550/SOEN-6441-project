@@ -342,13 +342,9 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
             		}
         			
         		}
-        		System.out.println("continue");
-        		System.out.println("character list: " + characterList);
-//                for (String key: hm1.keySet()){
-//                    jlistModel.addElement(key);
-//                }
-                
-                //刷新列表，reload文件。
+        		if (fighter != null){
+        			System.out.println(fighter.helmetIsOn + " " + fighter.getWorn().size() + " " + fighter.getWorn());
+        		}
             }  
   
             @Override  
