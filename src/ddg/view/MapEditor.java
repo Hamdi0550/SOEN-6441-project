@@ -164,15 +164,12 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 				}
 				else if(num =='p'){
 					JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(mapPanel);
-//					PopUpForFighter fighterpopup = new PopUpForFighter(rootframe,"Select Character!");
-					CharacterSelection fighterpopup = new CharacterSelection(rootframe, "CS from map editor");
+					PopUpForFighter2 fighterpopup = new PopUpForFighter2(rootframe,"Select Character!");
 					fighterpopup.pack();
-					fighterpopup.setVisible(true);
-					System.out.println();
 					
-					//Here you got the character to put on the map
-					Fighter obtainedFighter = ((DDGameMain) rootframe).getSelectedFighter();
-					System.out.println("Got a fighter with level: " + obtainedFighter.getLevel() + " strength: " + obtainedFighter.getStrength() + " dexterity: " + obtainedFighter.getDexterity());
+					if(fighterpopup.getSelectedFighter()!=null){
+						selectedmap.changeCellsinthemap(x, y, new Cell<Fighter>(fighterpopup.getSelectedFighter(),fighterpopup.getIsfriendly()));
+					}
 				}
 				else{
 					selectedmap.changeLocation(y, x, num);
@@ -215,20 +212,6 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	}
 
 
-	/**
-	 * this function create a popup dialog which allow user to chose the item. 
-	 * It may be used with add chest on the map.
-	 */
-	public void itemPopUp() {
-		
-		JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
-		PopUpForItem itempopup = new PopUpForItem(rootframe,"Select Item for Chect!");
-		if(itempopup.getSelecteditem() != null){
-			
-		}
-		
-	}
-	
 	/**
 	 * create a dialog to ask the map's size when user create a new map
 	 */
@@ -286,7 +269,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	 */
 	public void addChestInCell(BaseItem item, int x, int y){
 		
-		selectedmap.changeCellsinthemap(x, y, new Cell(new Chest(item)));
+		selectedmap.changeCellsinthemap(x, y, new Cell<Chest>(new Chest(item)));
 	}
 	
 	

@@ -126,9 +126,10 @@ public class PopUpForItem extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Ensure")){
 			int index = itemslist.getSelectedIndex();
-			if(index>=0)
+			if(index>=0){
 				selecteditem = itemsmodel.getItemByIndex(itemslist.getSelectedIndex());
-			System.out.println(selecteditem.getId());
+				System.out.println(selecteditem.getId());
+			}
 			JButton button = (JButton)e.getSource();
             SwingUtilities.getWindowAncestor(button).dispose();
 		}
