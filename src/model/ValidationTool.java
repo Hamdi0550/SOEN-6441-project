@@ -68,6 +68,7 @@ public class ValidationTool {
 			}
 		}
 	}
+
 	/**
 	 *  
 	 * @return true when there is a indoor(Entry door) in the location of map 
@@ -127,5 +128,9 @@ public class ValidationTool {
 			}
 		}
 		return false;
+	}
+
+	public boolean isHasvaildpath() {
+		return hasvaildpath;
 	}
 }

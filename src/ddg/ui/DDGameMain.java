@@ -21,7 +21,8 @@ import ddg.view.MapEditor;
  * @author Zhen Du
  * @date Feb 5, 2017
  */
-public class DDGameMain extends JFrame implements ActionListener {
+public class
+DDGameMain extends JFrame implements ActionListener {
 
 	private Container contentPane;
 	private MapEditor mapEditor;
