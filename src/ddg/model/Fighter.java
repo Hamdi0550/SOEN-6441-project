@@ -1,11 +1,12 @@
 package ddg.model;
 import java.io.Serializable;
-import java.util.Date;
+import java.util.*;
 
 import ddg.Config;
 import ddg.utils.Dice;
-//import ddg.utils.FileRW;
+import ddg.utils.FileRW;
 import ddg.utils.Utils;
+import ddg.item.entity.*;
 
 
 /**
@@ -36,19 +37,26 @@ public class Fighter implements Serializable{
 	//Your attack roll is 1d20 + your ability modifier + your proficiency bonus(level) if you're proficient with the weapon you’re using.	
 	private int damageBonus; 	//based on strength modifier, only for melee weapons
 	//You roll the damage die or dice, add any modifiers, and apply the damage to your target. With a penalty, it is possible to deal 0 damage, but never negative damage.
-	private boolean armorIsOn = false;
-	private boolean shieldIsOn = false;
-	private boolean weaponIsOn = false;
-	private boolean bootsIsOn = false;
-	private boolean ringIsOn = false;
-	private boolean beltIsOn = false;
-	private boolean helmetIsOn = false;
+	public boolean armorIsOn = false;
+	public boolean shieldIsOn = false;
+	public boolean weaponIsOn = false;
+	public boolean bootsIsOn = false;
+	public boolean ringIsOn = false;
+	public boolean beltIsOn = false;
+	public boolean helmetIsOn = false;
+	private ArrayList<BaseItem> backpack = new ArrayList<>();
+	private BaseItem[] backpack1 = new BaseItem[10];
+	private ArrayList<BaseItem> wornItems = new ArrayList<>();
+	
+	public Fighter(){
+		
+	}
 	
 	public Fighter(int level, int strength, int dexterity){
 		this.level = level;
 		this.strength = strength;
 		this.dexterity = dexterity;
-//		hitPoints = Dice.d10Roll() + (constitution * this.level);
+		hitPoints = Dice.d10Roll() + (constitution * this.level);
 		armorClass = this.dexterity + 0;
 		
 	}
@@ -67,7 +75,7 @@ public class Fighter implements Serializable{
 //		Utils.save2File(f, json);
 	}
 	public static void deleteFighter(Fighter fighter){
-//		Utils.deleteFromFile(fighter, Config.CHARACTOR_FILE);
+		Utils.deleteFromFile(fighter, Config.CHARACTOR_FILE);
 	}
 	public String getName(){
 		return name;
@@ -81,6 +89,27 @@ public class Fighter implements Serializable{
 	public int getDexterity(){
 		return dexterity;
 	}
+	public int getConstitution(){
+		return constitution;
+	}
+	public int getIntelligence(){
+		return intelligence;
+	}
+	public int getWisdom(){
+		return wisdom;
+	}
+	public int getCharisma(){
+		return charisma;
+	}
+	public int getModifier(int inputValue){
+		return (inputValue/ 2 - 5);
+	}
+	public ArrayList<BaseItem> getBackpack(){
+		return backpack;
+	}
+	public ArrayList<BaseItem> getWorn(){
+		return wornItems;
+	}
 	public void setName(String name){
 		this.name = name;
 	}
@@ -88,9 +117,27 @@ public class Fighter implements Serializable{
 		this.level = level;
 	}
 	public void setStrength(int strength){
-		this.level = strength;
+		this.strength = strength;
 	}
 	public void setDexterity(int dexterity){
-		this.level = dexterity;
+		this.dexterity = dexterity;
+	}
+	public void setConstitution(int constitution){
+		this.constitution = constitution;
+	}
+	public void setIntelligence(int intelligence){
+		this.intelligence = intelligence;
+	}
+	public void setWisdom(int wisdom){
+		this.wisdom = wisdom;
+	}
+	public void setCharisma(int charisma){
+		this.charisma = charisma;
+	}
+	public void setBackpack(ArrayList<BaseItem> backpack){
+		this.backpack = backpack;
+	}
+	public void setWorn(ArrayList<BaseItem> worn){
+		this.wornItems = worn;
 	}
 }
