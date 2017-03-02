@@ -35,9 +35,9 @@ public class ValidationTool {
 	
 
 	/**
-	 * check whether the map has valid path from enter door to exit door.
-	 * @param i the row-coordinate of the enter door
-	 * @param j the column-coordinate of the enter door
+	 * check whether the map has valid path from enter door/or the chest containing key to exit door.
+	 * @param i the row-coordinate of the enter door or the chest containing key
+	 * @param j the column-coordinate of the enter door or the chest containing key
 	 */
 	public void hasValidPath(int i, int j) {
 		char maplocation[][] = map.getLocation();
@@ -93,6 +93,7 @@ public class ValidationTool {
 	 * @return true when there is key on the map, otherwise return false.
 	 */
 	public boolean hasKey() {
+		hasvaildpath = false;
 //		for(int i=0;i<map.getRow();i++){
 //			for(int j=0;j<map.getColumn();j++){
 //				if(map.getLocation()[i][j] == 'k'){
@@ -104,8 +105,12 @@ public class ValidationTool {
 			for(int j=0;j<map.getColumn();j++){
 				if(map.getLocation()[i][j] == 'c'){
 					 String id = ((Chest) map.getCellsinthemap()[i][j].getContent()).getItem().getId();
-					 if(id.equals("key"))
-						 return true;
+					 if(id.equals("key")){
+						usedcell.clear();
+						hasValidPath(i,j);
+						if(hasvaildpath)
+							return true;
+					 }
 				}
 			}
 		}
