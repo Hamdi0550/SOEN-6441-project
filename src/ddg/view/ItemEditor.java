@@ -152,7 +152,7 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 					BaseItem item = model.getItemByIndex(index);
 					int i = 0;
 					if(BaseItem.ABILITY.equals(name)) {
-						item.setIncreate(item.getAbility()[abilityComboBox.getSelectedIndex()]);
+						item.setIncrease(item.getAbility()[abilityComboBox.getSelectedIndex()]);
 					} else if(BaseItem.BONUS.equals(name)) {
 						i = bonusComboBox.getSelectedIndex();
 						item.setBonus(i+1);
@@ -177,7 +177,7 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 					abilityComboBox.addItem(i);
 				}
 				abilityComboBox.addDItemListener(this);
-				abilityComboBox.setSelectedItem(item.getIncreate());
+				abilityComboBox.setSelectedItem(item.getIncrease());
 				bonusComboBox.setSelectedItem(item.getBonus());
 			}
 		}

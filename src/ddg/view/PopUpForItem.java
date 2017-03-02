@@ -67,7 +67,7 @@ public class PopUpForItem extends JDialog implements ActionListener{
 				if(index >= 0) {
 					System.out.println("list select:"+index);
 					BaseItem item = itemsmodel.getItemByIndex(index);
-					detailofitem.setText(item.getId() + "\n\n +" + item.getBonus() +" "+item.getIncreate());
+					detailofitem.setText(item.getId() + "\n\n +" + item.getBonus() +" "+item.getIncrease());
 				}
 			}
 		}

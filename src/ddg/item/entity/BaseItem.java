@@ -32,21 +32,21 @@ public class BaseItem {
 	@SerializedName(value = "ability")
 	private String[] ability;
 	@SerializedName(value = "increate")
-	private String increate;
+	private String increase;
 	
 	public BaseItem(String name) {
 		this.bonus = 1;
 		this.name = name;
 		this.ability = getAbility(name);
-		this.increate = this.ability[0];
+		this.increase = this.ability[0];
 	}
 	
 	public BaseItem(String name, int bonus, String increate) {
 		this.name = name;
 		this.bonus = bonus;
-		this.increate = increate;
+		this.increase = increate;
 		this.ability = getAbility(name);
-		this.increate = this.ability[0];
+		this.increase = this.ability[0];
 	}
 	
 	public String getId() {
@@ -81,12 +81,12 @@ public class BaseItem {
 //		this.ability = ability;
 //	}
 
-	public String getIncreate() {
-		return increate;
+	public String getIncrease() {
+		return increase;
 	}
 
-	public void setIncreate(String increate) {
-		this.increate = increate;
+	public void setIncrease(String increase) {
+		this.increase = increase;
 	}
 
 	private String[] getAbility(String name) {
