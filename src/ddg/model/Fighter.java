@@ -139,4 +139,72 @@ public class Fighter implements Serializable{
 	public void setWorn(ArrayList<BaseItem> worn){
 		this.wornItems = worn;
 	}
+
+	public void setEquipOn(String wearingType) {
+		if (wearingType.equals(BaseItem.HELMET)){
+			helmetIsOn = true;
+		} else if (wearingType.equals(BaseItem.ARMOR)){
+			armorIsOn = true;
+		}else if (wearingType.equals(BaseItem.SHIELD)){
+			shieldIsOn = true;
+		}else if (wearingType.equals(BaseItem.WEAPON)){
+			weaponIsOn = true;
+		}else if (wearingType.equals(BaseItem.BOOTS)){
+			bootsIsOn = true;
+		}else if (wearingType.equals(BaseItem.RING)){
+			ringIsOn = true;
+		}else if (wearingType.equals(BaseItem.BELT)){
+			beltIsOn = true;
+		}
+	}
+	
+	public void setEquipOff(String wearingType) {
+		if (wearingType.equals(BaseItem.HELMET)){
+			helmetIsOn = false;
+		} else if (wearingType.equals(BaseItem.ARMOR)){
+			armorIsOn = false;
+		}else if (wearingType.equals(BaseItem.SHIELD)){
+			shieldIsOn = false;
+		}else if (wearingType.equals(BaseItem.WEAPON)){
+			weaponIsOn = false;
+		}else if (wearingType.equals(BaseItem.BOOTS)){
+			bootsIsOn = false;
+		}else if (wearingType.equals(BaseItem.RING)){
+			ringIsOn = false;
+		}else if (wearingType.equals(BaseItem.BELT)){
+			beltIsOn = false;
+		}
+	}
+
+	public void gainBonus(String increase, int bonus, String string) {
+		if (string.equals("+")){
+			if (increase.equals(Ability.STRENGTH)){
+				strength = strength + bonus;
+			} else if (increase.equals(Ability.DEXTERITY)){
+				dexterity = dexterity + bonus;
+			} else if (increase.equals(Ability.CONSTITUTION)){
+				constitution = constitution + bonus;
+			} else if (increase.equals(Ability.INTELLIGENCE)){
+				intelligence = intelligence + bonus;
+			} else if (increase.equals(Ability.WISDOM)){
+				wisdom = wisdom + bonus;
+			} else if (increase.equals(Ability.CHARISMA)){
+				charisma = charisma + bonus;
+			}			
+		} else if (string.equals("-")){
+			if (increase.equals(Ability.STRENGTH)){
+				strength = strength - bonus;
+			} else if (increase.equals(Ability.DEXTERITY)){
+				dexterity = dexterity - bonus;
+			} else if (increase.equals(Ability.CONSTITUTION)){
+				constitution = constitution - bonus;
+			} else if (increase.equals(Ability.INTELLIGENCE)){
+				intelligence = intelligence - bonus;
+			} else if (increase.equals(Ability.WISDOM)){
+				wisdom = wisdom - bonus;
+			} else if (increase.equals(Ability.CHARISMA)){
+				charisma = charisma - bonus;
+			}			
+		}
+	}
 }

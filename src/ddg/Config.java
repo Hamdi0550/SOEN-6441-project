@@ -3,8 +3,12 @@ package ddg;
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+
+import ddg.item.entity.BaseItem;
 /**
  * This class include all the config data
  * 
@@ -35,7 +39,7 @@ public class Config {
 	
 	public static final String CHARACTOR_FILE = "./charactor.json";
 	
-	public static final String MAP_FILE = "./map.ser";
+	public static final String MAP_FILE = "./map.json";
 
 	public static final String CAMPAIGN_FILE = "./campaign.json";
 	
@@ -43,6 +47,33 @@ public class Config {
 	
 	public static final String GAME_FILE = "./game.json";
 	
+	public static final ImageIcon HELMET_ICON = new ImageIcon("res/Helmet.jpg");  
+	public static final ImageIcon ARMOR_ICON = new ImageIcon("res/Armor.jpg");  
+	public static final ImageIcon BOOTS_ICON = new ImageIcon("res/Boots.jpg");  
+	public static final ImageIcon RING_ICON = new ImageIcon("res/Ring.jpg");  
+	public static final ImageIcon SHIELD_ICON = new ImageIcon("res/Shield.jpg");  
+	public static final ImageIcon WEAPON_ICON = new ImageIcon("res/Weapon.jpg");  
+	public static final ImageIcon BELT_ICON = new ImageIcon("res/Belt.jpg"); 
+	
 	// set the size of map. it could be changed if click the S/M/L button  
 	public static int  MAP_SIZE = 10;
+
+	public static Icon iconByType(String wearingType) {
+		if (wearingType.equals(BaseItem.HELMET)){
+			return HELMET_ICON;
+		} else if (wearingType.equals(BaseItem.ARMOR)){
+			return ARMOR_ICON;
+		} else if (wearingType.equals(BaseItem.BOOTS)){
+			return BOOTS_ICON;
+		} else if (wearingType.equals(BaseItem.RING)){
+			return RING_ICON;
+		} else if (wearingType.equals(BaseItem.BELT)){
+			return BELT_ICON;
+		} else if (wearingType.equals(BaseItem.WEAPON)){
+			return WEAPON_ICON;
+		} else if (wearingType.equals(BaseItem.SHIELD)){
+			return SHIELD_ICON;
+		}
+		return null;
+	}
 }

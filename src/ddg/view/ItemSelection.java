@@ -33,6 +33,8 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     private final JLabel typeLabel = new JLabel(" Equipment type ");
     private final JLabel attributeLabel = new JLabel(" Attribute ");
     private final JLabel bonusLabel = new JLabel(" Value ");
+    
+    private JDialog errorMessageWindow= new JDialog(this, "Item selection error", true);
 
 
 	ArrayList<BaseItem> al1 = new ArrayList<>();
@@ -40,6 +42,8 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	public String fighterKeyName = "fighter111";
     private static CharacterEditLayout owner;
     public BaseItem selectedItem;
+	private JButton okBtn = new JButton("   OK   ");
+	private JLabel messageL = new JLabel(" ");
 
     public static void main(String[] args) 
     {
@@ -138,6 +142,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         buttonsPanel.add(cancelBtn);
         buttonsPanel.add(new JLabel("  L  "));
         buttonsPanel.setSize(300,500);
+        selectBtn.setEnabled(false);
 //        itemJList.addListSelectionListener(this);
     	addListView();
 
@@ -145,17 +150,29 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
-//    			BaseItem tempItem = UtilityStorage.getItem();
-    			BaseItem tempItem = new BaseItem("Helmet");
-    			owner.selectedItem = tempItem;
+    			BaseItem tempItem = UtilityStorage.getItem();
+//    			owner.selectedItem = tempItem;
     			if (owner.wearingType.equals(tempItem.getName())){
-    				System.out.println("Not correct type=========");
+        			owner.getOwner().fighter.setEquipOn(owner.wearingType);
+//        			owner.getOwner().fighter.getWorn().add(selectedItem); 
+        			for (BaseItem i: owner.getOwner().fighter.getWorn()){
+        				if (i.getName().equals(owner.wearingType)){
+        					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
+        					owner.getOwner().fighter.getWorn().remove(i);
+        				}
+        			}
+        			owner.getOwner().fighter.getWorn().add(tempItem);
+					owner.getOwner().fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
+        			owner.helmetBtn.setIcon(Config.iconByType(owner.wearingType));
+//        			owner.getOwner().fighter.getBackpack().add(selectedItem);   			
+        			System.out.println(tempItem.getId() + " " + tempItem.getName() + " " + tempItem.getIncrease() + " " + tempItem.getBonus());
+        			dispose();
     			}
-    			owner.getOwner().fighter.helmetIsOn = true;
-//    			owner.getOwner().fighter.getWorn().add(selectedItem); 
-    			owner.getOwner().fighter.getBackpack().add(selectedItem);   			
-    			System.out.println(tempItem.getId() + " " + tempItem.getName() + " " + tempItem.getIncrease() + " " + tempItem.getBonus());
-    			dispose();
+    			else{
+    				System.out.println("Not correct type=========");
+    				messageL.setText("You must choose a " + owner.wearingType + "for this part!");
+    				ShowErrorMessage();
+    			}
             }
         });
     	cancelBtn.addActionListener(new ActionListener(){ 
@@ -168,6 +185,14 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 
 //        focusManage();
     }//end of constructor
+    
+    public void ShowErrorMessage(){
+    	errorMessageWindow.setLayout(new FlowLayout());
+    	errorMessageWindow.setBounds(400, 300, 300, 200);
+    	errorMessageWindow.add(messageL);
+    	errorMessageWindow.add(okBtn);
+    	errorMessageWindow.setVisible(true);
+    }
     
 	private void addListView() {		
 		DefaultListModel l = itemListModel.getListModel();
@@ -198,6 +223,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 				bonusLabel.setText(Integer.toString(item.getBonus()));
 				selectedItem = item;
 				UtilityStorage.setItem(item);
+		        selectBtn.setEnabled(true);
 			}
 		}
         System.out.println("value changed");

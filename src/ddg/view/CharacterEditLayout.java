@@ -13,6 +13,7 @@ import ddg.Config;
 import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
+import ddg.utils.Dice;
 import ddg.utils.Utils;
 
 import java.util.logging.Level;
@@ -27,14 +28,14 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     private final JButton randomBtn = new JButton("      Random      ");
     private final JButton inventoryBtn = new JButton(" Inventory ");
 
-    private final JButton helmetBtn = new JButton();
-    private final JButton shoulderBtn = new JButton("  Shoulder  ");
-    private final JButton beltBtn = new JButton("  Belt ");
-    private final JButton ringBtn = new JButton("  Ring  ");
-    private final JButton armorBtn = new JButton("  Armor  ");
-    private final JButton shieldBtn = new JButton("  Shield  ");
-    private final JButton bootsBtn = new JButton("    Boots  ");
-    private final JButton weaponBtn = new JButton("   Weapon  ");
+    public final JButton helmetBtn = new JButton();
+    public final JButton shoulderBtn = new JButton("  Shoulder  ");
+    public final JButton beltBtn = new JButton("  Belt ");
+    public final JButton ringBtn = new JButton("  Ring  ");
+    public final JButton armorBtn = new JButton("  Armor  ");
+    public final JButton shieldBtn = new JButton("  Shield  ");
+    public final JButton bootsBtn = new JButton("    Boots  ");
+    public final JButton weaponBtn = new JButton("   Weapon  ");
 
     public int id;
     
@@ -49,9 +50,20 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     private final JTextField wisdomTextF = new JTextField();
     private final JTextField charismaTextF = new JTextField();
     
+
+    JLabel nameModiferL = new JLabel(" L ");
+    JLabel levelModiferL = new JLabel(" L ");
+    JLabel strengthModiferL = new JLabel(" L ");
+    JLabel dexModiferL = new JLabel(" L ");
+    JLabel conModiferL = new JLabel(" L ");
+    JLabel intelliModiferL = new JLabel(" L ");
+    JLabel wisModiferL = new JLabel(" L ");
+    JLabel chaModiferL = new JLabel(" L ");
+    
     private static CharacterSelection owner;
     public BaseItem selectedItem = null;
     public String wearingType; 
+    public JDialog thisWindow = this;
 
 
     public static void main(String[] args) 
@@ -91,9 +103,11 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         JPanel characterPanel= new JPanel(new BorderLayout());
         JPanel attributesPanel= new JPanel(new GridLayout(10,4,5,5));
         JPanel buttonsPanel= new JPanel(new GridLayout(10,1,5,5));
-        ImageIcon icon = new ImageIcon("icon1.jpg");  
-        icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth(),  
-                icon.getIconHeight(), Image.SCALE_DEFAULT)); 
+//        ImageIcon icon = new ImageIcon("res/Helmet.jpg");  
+        Config.HELMET_ICON.setImage(Config.HELMET_ICON.getImage().getScaledInstance(Config.HELMET_ICON.getIconWidth(),  
+        		Config.HELMET_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
+        Config.WEAPON_ICON.setImage(Config.WEAPON_ICON.getImage().getScaledInstance(Config.WEAPON_ICON.getIconWidth(),  
+        		Config.WEAPON_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
         id = 1;
         
         JPanel characterLeftPanel= new JPanel(new GridLayout(5,1,5,5));
@@ -106,9 +120,15 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         characterPanel.add(characterLeftPanel, BorderLayout.WEST);
         characterPanel.add(characterImagePanel, BorderLayout.CENTER);
         characterPanel.add(characterRightPanel, BorderLayout.EAST);
-        helmetBtn.setIcon(icon);
+//        helmetBtn.setIcon(Config.HELMET_ICON);
+//        beltBtn.setIcon(Config.BELT_ICON);
+//        weaponBtn.setIcon(Config.WEAPON_ICON);
+//        ringBtn.setIcon(Config.RING_ICON);
+//        bootsBtn.setIcon(Config.BOOTS_ICON);
+//        armorBtn.setIcon(Config.ARMOR_ICON);
+//        shieldBtn.setIcon(Config.SHIELD_ICON);
         characterLeftPanel.add(helmetBtn);
-        characterLeftPanel.add(shoulderBtn);
+//        characterLeftPanel.add(shoulderBtn);
         characterLeftPanel.add(armorBtn);
         characterLeftPanel.add(beltBtn);
         characterRightPanel.add(ringBtn);
@@ -120,21 +140,13 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         characterImagePanel.setBounds(0, 0, 500, 500);
         characterImagePanel.add(new JLabel("                                                                 "));
         buttonsPanel.setPreferredSize(new Dimension(100,320));
-        characterLeftPanel.setPreferredSize(new Dimension(160,320));
+        characterLeftPanel.setPreferredSize(new Dimension(60,320));
         characterRightPanel.setPreferredSize(new Dimension(60,320));
         attributesPanel.setPreferredSize(new Dimension(600,320));
         characterImagePanel.setPreferredSize(new Dimension(350,320));
         
         characterImagePanel.setPreferredSize(new Dimension(350,320));
         JLabel lb1 = new JLabel(" ");
-        JLabel nameModiferL = new JLabel(" L ");
-        JLabel levelModiferL = new JLabel(" L ");
-        JLabel strengthModiferL = new JLabel(" L ");
-        JLabel dexModiferL = new JLabel(" L ");
-        JLabel conModiferL = new JLabel(" L ");
-        JLabel intelliModiferL = new JLabel(" L ");
-        JLabel wisModiferL = new JLabel(" L ");
-        JLabel chaModiferL = new JLabel(" L ");
         lb1.setBorder(new LineBorder(Color.BLACK));
         nameModiferL.setBorder(new LineBorder(Color.BLACK));
         levelModiferL.setBorder(new LineBorder(Color.BLACK));
@@ -146,7 +158,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         chaModiferL.setBorder(new LineBorder(Color.BLACK));
         lb1.setPreferredSize(new Dimension(20,15));
         lb1.setBounds(0, 0, 20, 15);
-        lb1.setIcon(icon);
+        lb1.setIcon(Config.HELMET_ICON);
         lb1.setText(" 2 ");
         attributesPanel.add(new JLabel("   1  "));
         attributesPanel.add(lb1);
@@ -222,7 +234,36 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 			constitutionTextF.setText(Integer.toString(owner.fighter.getConstitution()));
 			intelligenceTextF.setText(Integer.toString(owner.fighter.getIntelligence()));
 			wisdomTextF.setText(Integer.toString(owner.fighter.getWisdom()));
-			charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));			
+			charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));
+			
+    		strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getStrength())));
+    		dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getDexterity())));
+    		conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getConstitution())));
+    		intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
+    		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
+    		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));	
+    		
+    		if (owner.fighter.helmetIsOn){
+    			helmetBtn.setIcon(Config.HELMET_ICON);
+    		}
+    		if (owner.fighter.armorIsOn){
+    			helmetBtn.setIcon(Config.ARMOR_ICON);
+    		}
+    		if (owner.fighter.beltIsOn){
+    			helmetBtn.setIcon(Config.BELT_ICON);
+    		}
+    		if (owner.fighter.bootsIsOn){
+    			helmetBtn.setIcon(Config.BOOTS_ICON);
+    		}
+    		if (owner.fighter.ringIsOn){
+    			helmetBtn.setIcon(Config.RING_ICON);
+    		}
+    		if (owner.fighter.shieldIsOn){
+    			helmetBtn.setIcon(Config.SHIELD_ICON);
+    		}
+    		if (owner.fighter.weaponIsOn){
+    			helmetBtn.setIcon(Config.WEAPON_ICON);
+    		}
 		}		
 	}
 	@Override
@@ -235,22 +276,30 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 			public void actionPerformed(ActionEvent e){
 				System.out.println("cancel clicked");
 				dispose();
-//				owner.setEnabled(true);
-//				owner.setVisible(true);
 				
 	        }
 	    });
 		saveBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println("save clicked");
-				//validation, 新建ArrayList， 打开character文件，读取所有character
-				//放到ArrayList里，新建character对象，getJTextField，赋值
-				//把character对象add到ArrayList里，把ArrayList保存到文件。
 				Fighter fighter1 = new Fighter();
 				if (owner.fighter != null){
 					fighter1 = owner.fighter;					
 				}
-				fighter1.setName(nameTextF.getText());
+//				JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
+				if (nameTextF.getText().equals("")){
+					JDialog jd = new JDialog(thisWindow,"Error Message", true);
+					JLabel jl = new JLabel();
+					jd.setBounds(400, 300, 300, 200);
+					jd.setLayout(new FlowLayout());
+					jd.add(jl);
+					jd.add(new JButton("OK"));
+					jl.setText("The character must have a name.");
+					jd.setVisible(true);
+				}
+				else{
+					fighter1.setName("www1");					
+				}
 				fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
 				fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
 				fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
@@ -263,28 +312,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         		String g = Utils.readFile(Config.CHARACTOR_FILE);
         		fm = Utils.fromJson(g, FighterModel.class);
         		
-//        		if(fm != null){
-//            		System.out.println(fm);
-//            		HashMap<String, Fighter> hm1 = new HashMap<>();
-//            		try{
-//
-//                		System.out.println("2"+fm);
-//                		if( null!=fm.getFighters() ){
-//                            hm1 = fm.getFighters();
-//                            Set<String> keySet1 = hm1.keySet();
-//                            Iterator<String> it1 = keySet1.iterator();
-//                            
-//                            while(it1.hasNext()){
-//                            	String listItem1 = it1.next();
-////                                jlistModel.addElement(listItem1);
-//                            }
-//                		}        			
-//            		}
-//            		catch (NullPointerException ex){
-//            			System.out.println("there is a NullPointerException");
-//            		}
-//        			
-//        		}
         		HashMap<String, Fighter> hm1 = new HashMap<>();
         		if(fm != null){
             		System.out.println(fm);
@@ -332,21 +359,39 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	    });
 		randomBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				
+				Fighter f1 = new Fighter();
+				if (owner.fighter == null){
+					owner.fighter = f1;
+				}
+				owner.fighter.setStrength(Dice.d46Roll());
+				owner.fighter.setDexterity(Dice.d46Roll());
+				owner.fighter.setConstitution(Dice.d46Roll());
+				owner.fighter.setIntelligence(Dice.d46Roll());
+				owner.fighter.setWisdom(Dice.d46Roll());
+				owner.fighter.setCharisma(Dice.d46Roll());
+
+				strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
+				dexterityTextF.setText(Integer.toString(owner.fighter.getDexterity()));
+				constitutionTextF.setText(Integer.toString(owner.fighter.getConstitution()));
+				intelligenceTextF.setText(Integer.toString(owner.fighter.getIntelligence()));
+				wisdomTextF.setText(Integer.toString(owner.fighter.getWisdom()));
+				charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));
+	    		strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getStrength())));
+	    		dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getDexterity())));
+	    		conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getConstitution())));
+	    		intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
+	    		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
+	    		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));
 				System.out.println("I get the owner's id " + owner.id);
 				System.out.println("I get the figher " + owner.fighterKeyName);
 	        }
 	    });
 		helmetBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				wearingType = "helmet";
+				wearingType = BaseItem.HELMET;
 				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(helmetBtn);
 				ItemSelection.createAndShowGUI(rootFrame);
-				//				ItemSelection rootFrame1 = new ItemSelection();
-//				rootFrame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//				rootFrame1.pack();
-//				rootFrame1.setVisible(true);
-//				itemSelection.setPreferredSize(new Dimension(600,300));
+				
 			}
 		});
 		inventoryBtn.addActionListener(new ActionListener(){
@@ -444,17 +489,13 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	    	super();
 	    	setOpaque(true);
 	    	
-	        //  /img/HomeImg.jpg 是存放在你正在编写的项目的bin文件夹下的img文件夹下的一个图片  
-//	        icon=new ImageIcon(getClass().getResource("example.jpg"));  
-//	        img=icon.getImage();  
 	    	img = Toolkit.getDefaultToolkit().getImage( "example.jpg"); 
 	    }  
 	    public void paintComponent(Graphics g) {  
 	        super.paintComponent(g);  
 	        g.drawImage(img, 0, 0,300, 300, this);  
-//	        g.drawRect(5, 0, 30, 50);
 //		    }  
 		}
 	}
     
-}//end of class
+}

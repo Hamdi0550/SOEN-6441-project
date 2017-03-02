@@ -26,7 +26,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     private final JButton editBtn = new JButton("    Edit... ");
     private final JButton deleteBtn = new JButton("    Delete ");
     private JButton createBtn = new JButton("   Create...  ");
-    private final JButton randomBtn = new JButton("    Random ");
+//    private final JButton randomBtn = new JButton("    Random ");
 
     private final JButton helmetBtn = new JButton();
     
@@ -95,10 +95,8 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         JPanel backpackPanel = new JPanel(new BorderLayout());
         JPanel buttonsPanel= new JPanel(new GridLayout(8,1,5,5));
         JPanel backpackListPanel = new JPanel(new BorderLayout());
-        ImageIcon icon = new ImageIcon("icon1.jpg");  
-        icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth(),  
-                icon.getIconHeight(), Image.SCALE_DEFAULT)); 
-//        id = 2;
+        Config.HELMET_ICON.setImage(Config.HELMET_ICON.getImage().getScaledInstance(Config.HELMET_ICON.getIconWidth(),  
+        		Config.HELMET_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
 
         add(backPanel, BorderLayout.NORTH);
         backPanel.add(characterPanel, BorderLayout.WEST);
@@ -110,7 +108,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
         backpackListPanel.add(characterListPane, BorderLayout.CENTER);
 //        characterButtomPanel.add(removeBtn);
-        helmetBtn.setIcon(icon);
+        helmetBtn.setIcon(Config.HELMET_ICON);
         
         backpackListPanel.setPreferredSize(new Dimension(200,260));
 //        buttonsPanel.setPreferredSize(new Dimension(100,320));
@@ -132,7 +130,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         chaModiferL.setBorder(new LineBorder(Color.BLACK));
         lb1.setPreferredSize(new Dimension(20,15));
         lb1.setBounds(0, 0, 20, 15);
-        lb1.setIcon(icon);
+        lb1.setIcon(Config.HELMET_ICON);
         lb1.setText(" 2 ");
         attributesPanel.add(new JLabel("   1  "));
         attributesPanel.add(lb1);
@@ -153,7 +151,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         attributesPanel.add(new JLabel(" Dexterity "));
         attributesPanel.add(dexterityTextF);
         attributesPanel.add(dexModiferL);
-        attributesPanel.add(randomBtn);
+        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Constitution "));
         attributesPanel.add(constitutionTextF);
         attributesPanel.add(conModiferL);
