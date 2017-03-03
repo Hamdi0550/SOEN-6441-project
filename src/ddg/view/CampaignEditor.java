@@ -45,12 +45,21 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 	private JPanel contentPanel;
 	private MapEditorModel mapData;
 
+	/**
+	 * This is the constructor
+	 * @param a action listener
+	 */
 	public CampaignEditor(ActionListener a) {
 		this.listener = a;
 		initData();
 		initView();
 	}
 
+	/**
+	 * 
+	 * This method for init data 
+	 *
+	 */
 	private void initData() {
 //		String m = Utils.readFile(Config.MAP_FILE);
 //		this.mapData = Utils.fromJson(m, MapEditorModel.class);
@@ -83,6 +92,11 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 		}
 	}
 
+	/**
+	 * 
+	 * This method is for init view
+	 *
+	 */
 	private void initView() {
 		BorderLayout l = new BorderLayout();
 		setLayout(l);
@@ -97,6 +111,11 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 		list.setSelectedIndex(0);
 	}
 
+	/**
+	 * 
+	 * This method is for adding list view on the lift side
+	 *
+	 */
 	private void addListView() {
 		JPanel listPanel = new JPanel();
 		BorderLayout layout = new BorderLayout();
@@ -120,6 +139,11 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 
 	}
 
+	/**
+	 * 
+	 * This method is to edit view
+	 *
+	 */
 	private void addEditorView() {
 		JTextArea ddg = new JTextArea("CAMPAIGN");
 		ddg.setEditable(false);
@@ -171,6 +195,11 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 		loadCampaignView();
 	}
 
+	/**
+	 * 
+	 * This method is to load the campaign from the file 
+	 *
+	 */
 	private void loadCampaignView() {
 		contentPanel.removeAll();
 		int index = list.getSelectedIndex();
@@ -204,6 +233,11 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 		contentPanel.doLayout();
 	}
 
+	/**
+	 * 
+	 * This method is add options on right side 
+	 *
+	 */
 	private void addOptionView() {
 		JPanel optionPanel = new JPanel();
 		optionPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));

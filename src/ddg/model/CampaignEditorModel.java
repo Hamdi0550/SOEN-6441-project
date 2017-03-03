@@ -20,23 +20,48 @@ public class CampaignEditorModel {
 
 	private ArrayList<BaseCampaign> campaigns;
 
+	/**
+	 * 
+	 * This is the constructor for CampaignEditorModel
+	 * 
+	 */
 	public CampaignEditorModel() {
 		super();
 		this.campaigns = new ArrayList<BaseCampaign>();
 
 	}
 
+	/**
+	 * 
+	 * constructor for CampaignEditorModel
+	 * 
+	 * @param items
+	 */
 	public CampaignEditorModel(ArrayList<BaseCampaign> items) {
 		super();
 		this.campaigns = items;
 	}
 
+	/**
+	 * 
+	 * 
+	 * This method is to add campaign 
+	 * 
+	 * @param c is the campaign that needs to be adding 
+	 */
 	public void addCampaign(BaseCampaign c) {
 		int size = this.campaigns.size();
 		c.setId(c.getName() + "_" + (size + 1));
 		this.campaigns.add(c);
 	}
 
+	/**
+	 * 
+	 * 
+	 * This method is to get List Model
+	 * 
+	 * @return
+	 */
 	public DefaultListModel getListModel() {
 		DefaultListModel l = new DefaultListModel();
 		for (BaseCampaign i : this.campaigns) {
@@ -45,6 +70,14 @@ public class CampaignEditorModel {
 		return l;
 	}
 
+	/**
+	 * 
+	 * 
+	 * This method is to get the item 
+	 * 
+	 * @param index of the list 
+	 * @return
+	 */
 	public BaseCampaign getItemByIndex(int index) {
 		if (index < 0 || index > this.campaigns.size() - 1)
 			return null;
