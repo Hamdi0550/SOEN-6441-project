@@ -13,7 +13,7 @@ public class ValidationTool {
 	private Map map;
 	private boolean hasvalidpath;
 	private java.util.Map<String, String> usedcell = new HashMap<>();
-
+	char maplocation[][];
 	/**
 	 * @param map the map whose validation you want to check
 	 */
@@ -21,6 +21,7 @@ public class ValidationTool {
 		// TODO Auto-generated constructor stub
 		this.map = map;
 		hasvalidpath = false;
+		maplocation = map.getLocation();
 	}
 	
 	/**
@@ -43,29 +44,39 @@ public class ValidationTool {
 	 * @param j the column-coordinate of the enter door or the chest containing key
 	 */
 	public void hasValidPath(int i, int j) {
-		char maplocation[][] = map.getLocation();
-		if(maplocation[i][j] == 'o')
+		
+		if(maplocation[i][j] == 'o'){
 			hasvalidpath=true;
+			return;
+		}
 		else{
-			usedcell.put(i+","+j, "i*j");
+			usedcell.put(i+","+j, "");
 			if( j>0 && maplocation[i][j-1]!='w'){
 				if(usedcell.get(i+","+ (j-1) )== null)
 					hasValidPath(i, j-1);
+				if(hasvalidpath)
+					return;
 			}
 			
 			if(i>0 && maplocation[i-1][j]!='w'){
 				if(usedcell.get(i-1 +","+ j)== null)
 					hasValidPath(i-1, j);
+				if(hasvalidpath)
+					return;
 			}
 			
 			if(j<map.getColumn()-1 && maplocation[i][j+1]!='w'){
 				if(usedcell.get(i +","+ (j+1))== null)
 					hasValidPath(i, j+1);
+				if(hasvalidpath)
+					return;
 			}
 			
 			if(i<map.getRow()-1 && maplocation[i+1][j]!='w'){
 				if(usedcell.get((i+1) +","+ j)== null)
 					hasValidPath(i+1, j);
+				if(hasvalidpath)
+					return;
 			}
 		}
 	}
@@ -119,7 +130,6 @@ public class ValidationTool {
 	
 	/**
 	 * 
-	 *  maplocation detail location of map.
 	 * @return true when there is a outdoor(Exit door) in the location of map 
 	 */
 	public boolean hasExitDoor() {
