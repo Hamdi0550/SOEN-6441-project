@@ -90,7 +90,14 @@ public class Utils {
 		return lines;
 	}
 	
-	public int getRadom(int max) {
+	/**
+	 * 
+	 * This method is get a radom value <= max
+	 * 
+	 * @param max the max value
+	 * @return int radom value
+	 */
+	public static int getRadom(int max) {
 		Random r = new Random();
 		return r.nextInt(max);
 	}

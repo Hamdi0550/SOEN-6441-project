@@ -20,11 +20,22 @@ public class MainPage extends JPanel implements ActionListener {
 
 	private ActionListener listener;
 	
+	/**
+	 * 
+	 * Constructors for MainPage
+	 * 
+	 * @param a ActionListener for perform event
+	 */
 	public MainPage(ActionListener a) {
 		this.listener = a;
 		initView();
 	}
 
+	/**
+	 * 
+	 * This method is initView
+	 *
+	 */
 	private void initView() {
 		BorderLayout l = new BorderLayout();
 	    setLayout(l);
@@ -37,6 +48,11 @@ public class MainPage extends JPanel implements ActionListener {
 	    addOption();
 	}
 
+	/**
+	 * 
+	 * This method is add option button
+	 *
+	 */
 	private void addOption() {
 		JPanel optionPanel = new JPanel();
 	    optionPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));

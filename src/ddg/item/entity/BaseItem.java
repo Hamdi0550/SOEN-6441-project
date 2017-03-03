@@ -33,9 +33,15 @@ public class BaseItem implements java.io.Serializable{
 	private int bonus;
 	@SerializedName(value = "ability")
 	private String[] ability;
-	@SerializedName(value = "increate")
+	@SerializedName(value = "increase")
 	private String increase;
 	
+	/**
+	 * 
+	 * Constructors for BaseItem
+	 * 
+	 * @param name
+	 */
 	public BaseItem(String name) {
 		this.bonus = 1;
 		this.name = name;
@@ -43,38 +49,88 @@ public class BaseItem implements java.io.Serializable{
 		this.increase = this.ability[0];
 	}
 	
-	public BaseItem(String name, int bonus, String increate) {
+	/**
+	 * 
+	 * Constructors for BaseItem
+	 * 
+	 * @param name item name
+	 * @param bonus bonus to set
+	 * @param increate increase 
+	 */
+	public BaseItem(String name, int bonus, String increase) {
 		this.name = name;
 		this.bonus = bonus;
-		this.increase = increate;
+		this.increase = increase;
 		this.ability = getAbility(name);
 		this.increase = this.ability[0];
 	}
 	
+	/**
+	 * 
+	 * This method is for get item id
+	 * 
+	 * @return String id
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * 
+	 * This method is set the item id
+	 * 
+	 * @param id item id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
+	/**
+	 * 
+	 * This method is get the item name
+	 * 
+	 * @return String item name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * 
+	 * This method is set the item name
+	 * 
+	 * @param name item name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * 
+	 * This method is get the bonus of this item
+	 * 
+	 * @return int bonus value
+	 */
 	public int getBonus() {
 		return bonus;
 	}
 
+	/**
+	 * 
+	 * This method is set the bonus value
+	 * 
+	 * @param bonus bonus value
+	 */
 	public void setBonus(int bonus) {
 		this.bonus = bonus;
 	}
 
+	/**
+	 * 
+	 * This method get the abilities of this item
+	 * 
+	 * @return String[]	abilities
+	 */
 	public String[] getAbility() {
 		return ability;
 	}
@@ -82,15 +138,34 @@ public class BaseItem implements java.io.Serializable{
 //	public void setAbility(String[] ability) {
 //		this.ability = ability;
 //	}
-
+	
+	/**
+	 * 
+	 * This method is get the increase of this item
+	 * 
+	 * @return String increase
+	 */
 	public String getIncrease() {
 		return increase;
 	}
 
+	/**
+	 * 
+	 * This method is set the increase value
+	 * 
+	 * @param increase String increase value
+	 */
 	public void setIncrease(String increase) {
 		this.increase = increase;
 	}
 
+	/**
+	 * 
+	 * This method is get the ability scale of one specific item
+	 * 
+	 * @param name item name
+	 * @return String[] abilities of this item
+	 */
 	private String[] getAbility(String name) {
 		if(BaseItem.HELMET.equals(name)) {
 			return new String[]{Ability.INTELLIGENCE, Ability.WISDOM, Ability.ARMOR_CLASS};

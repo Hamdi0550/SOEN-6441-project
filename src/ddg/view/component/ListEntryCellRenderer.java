@@ -19,6 +19,17 @@ import ddg.item.entity.ListEntry;
 public class ListEntryCellRenderer extends JLabel implements ListCellRenderer {
 	private JLabel label;
 
+	/**
+	 * getListCellRendererComponent
+	 * 
+	 * @param list
+	 * @param value
+	 * @param index
+	 * @param isSelected
+	 * @param cellHasFocus
+	 * 
+	 * @return Component
+	 */
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 			boolean cellHasFocus) {
 		ListEntry entry = (ListEntry) value;

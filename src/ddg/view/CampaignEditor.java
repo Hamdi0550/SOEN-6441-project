@@ -22,7 +22,6 @@ import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.campaign.entity.BaseCampaign;
-import ddg.map.entity.Map;
 import ddg.model.CampaignEditorModel;
 import ddg.model.MapEditorModel;
 import ddg.utils.Utils;

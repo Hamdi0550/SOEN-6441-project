@@ -23,17 +23,35 @@ public class DComboBox<T> extends JComboBox implements ItemListener {
 	
 	private DItemListener listener;
 	
+	/**
+	 * 
+	 * Constructors for DComboBox
+	 * 
+	 * @param name String name need to specify which comboBox 
+	 */
 	public DComboBox(String name) {
 		super();
 		setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.BTN_HEIGHT));
 		setName(name);
 	}
 
+	/**
+	 * 
+	 * This method is add one Item Listener
+	 * 
+	 * @param l
+	 */
 	public void addDItemListener(DItemListener l) {
 		this.listener = l;
 		addItemListener(this);
 	}
 	
+	/**
+	 * 
+	 * This method is remove the item listener
+	 * 
+	 * @param l
+	 */
 	public void removeDItemListener(DItemListener l) {
 		super.removeItemListener(this);
 	}

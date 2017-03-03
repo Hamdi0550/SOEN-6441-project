@@ -21,8 +21,7 @@ import ddg.view.MapEditor;
  * @author Zhen Du
  * @date Feb 5, 2017
  */
-public class
-DDGameMain extends JFrame implements ActionListener {
+public class DDGameMain extends JFrame implements ActionListener {
 
 	private Container contentPane;
 	private MapEditor mapEditor;
@@ -31,6 +30,11 @@ DDGameMain extends JFrame implements ActionListener {
 	private CampaignEditor campaignEditor;
 	private ItemEditor itemEditor;
 	
+	/**
+	 * 
+	 * Constructors for DDGameMain
+	 *
+	 */
 	public DDGameMain() {
 		init();
 		this.contentPane = getContentPane();
@@ -47,6 +51,11 @@ DDGameMain extends JFrame implements ActionListener {
 		this.contentPane.add(itemEditor);
 	}
 
+	/**
+	 * 
+	 * This method is init the page size
+	 *
+	 */
 	private void init() {
 		setSize(Config.WIDTH, Config.HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

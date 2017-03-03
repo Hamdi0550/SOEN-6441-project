@@ -16,11 +16,23 @@ import ddg.Config;
  */
 public class DButton extends JButton {
 
+	/**
+	 * 
+	 * Constructors for DButton
+	 *
+	 */
 	public DButton() {
 		super();
 		setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	}
 
+	/**
+	 * 
+	 * Constructors for DButton
+	 * 
+	 * @param text
+	 * @param a
+	 */
 	public DButton(String text, ActionListener a) {
 		super(text);
 		setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
