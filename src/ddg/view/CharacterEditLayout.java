@@ -19,7 +19,14 @@ import ddg.utils.Utils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.border.*;
-
+/**
+ * 
+ * 
+ * This class provides an interface to edit a character
+ * 
+ * @author Fei Yu
+ * @date Mar 3, 2017
+ */
 public class CharacterEditLayout extends JDialog implements ActionListener {
 
     private final JButton saveBtn = new JButton("      Save      ");
@@ -72,6 +79,11 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     public static void main(String[] args){
     	CharacterEditLayout f2 = new CharacterEditLayout();
     }
+    
+    /**
+     * 
+     * @param ownerFrame
+     */
     public static void createAndShowGUI(CharacterSelection ownerFrame){
         owner = (CharacterSelection) ownerFrame;
         
@@ -83,6 +95,10 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         frame1.setVisible(true);
         
     }
+    
+    /**
+     * 
+     */
     CharacterEditLayout()
     {
         super();
@@ -207,6 +223,9 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
             
     }
     
+    /**
+     * This method refresh the character's information who is selected in Character Selection window.
+     */
 	private void getOwnerInformation() {
 		if(owner == null){
 			System.out.println("No owner===============");
@@ -263,7 +282,10 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 	}
-	void buttonsManage(){
+	/**
+	 * This method defines actions of different buttons in this frame.
+	 */
+	private void buttonsManage(){
 		cancelBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println("cancel clicked");
@@ -456,21 +478,34 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         }); 
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public CharacterEditLayout getThisFrame() {
 		return this;
 	}
+	
+	/**
+	 * 
+	 */
 	public CharacterSelection getOwner(){
 		return owner;
 	}
-    public void ShowErrorMessage(){
-    	errorMessageWindow.setLayout(new FlowLayout());
-    	errorMessageWindow.setBounds(400, 300, 250, 150);
-    	errorMessageWindow.add(messageL);
-    	errorMessageWindow.add(okBtn);
-    	errorMessageWindow.setVisible(true);
-
-    }
-
+	/**
+	 * 
+	 */
+//    public void ShowErrorMessage(){
+//    	errorMessageWindow.setLayout(new FlowLayout());
+//    	errorMessageWindow.setBounds(400, 300, 250, 150);
+//    	errorMessageWindow.add(messageL);
+//    	errorMessageWindow.add(okBtn);
+//    	errorMessageWindow.setVisible(true);
+//
+//    }
+	/**
+	 * This method manage the actions of the window focus
+	 */
 	public void focusManage() { 
 	 this.addWindowFocusListener(new WindowFocusListener() {  
 	 	
@@ -544,6 +579,14 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	 
 	}
 	
+	/**
+	 * 
+	 * 
+	 * This internal class is to draw a background picture in the frame
+	 * 
+	 * @author Fei Yu
+	 * @date Mar 3, 2017
+	 */
 	class EmbeddedPanel extends JPanel{
 
 	    private ImageIcon icon;  
@@ -553,7 +596,11 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	    	setOpaque(true);
 	    	
 	    	img = Toolkit.getDefaultToolkit().getImage( "example.jpg"); 
-	    }  
+	    }
+	    
+	    /**
+	     * This method is override method to draw a picture
+	     */
 	    public void paintComponent(Graphics g) {  
 	        super.paintComponent(g);  
 	        g.drawImage(img, 0, 0,300, 300, this); 

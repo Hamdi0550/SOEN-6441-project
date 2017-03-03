@@ -17,7 +17,14 @@ import ddg.model.Fighter;
 import ddg.model.FighterModel;
 import ddg.ui.DDGameMain;
 import ddg.utils.Utils;
-
+/**
+ * 
+ * 
+ * This class provides the interface to choose an existing character.
+ * 
+ * @author Fei Yu
+ * @date Mar 3, 2017
+ */
 public class CharacterSelection extends JDialog implements ActionListener, ListSelectionListener{
 
     private final JButton selectBtn = new JButton("      Select      ");
@@ -63,6 +70,10 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     {
         createAndShowGUI();
     }
+    
+    /**
+     * 
+     */
     public static void createAndShowGUI() 
     {
     	CharacterSelection frame1 = new CharacterSelection(null, "CS main"); 
@@ -71,6 +82,12 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         frame1.pack();
         frame1.setVisible(true);
     }
+    
+    /**
+     * Constructor
+     * @param owner
+     * @param title
+     */
 	CharacterSelection(JFrame owner, String title)
     {
         super(owner, title);
@@ -177,7 +194,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     			setEnabled(false);
             }
         });
-
+    	
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			if (!characterList.isSelectionEmpty()){
@@ -276,14 +293,17 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         System.out.println("value changed");
     }
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public CharacterSelection getThisFrame(){
 		return this;
 	}
-	
-	public int getID(){
-		return id;
-	}
-           
+    
+	/**
+	 * This method manage the actions of the window focus
+	 */
     private void focusManage() {
         this.addWindowFocusListener(new WindowFocusListener() {          	
             @Override  

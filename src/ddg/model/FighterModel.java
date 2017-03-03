@@ -15,41 +15,37 @@ public class FighterModel {
 	
 	public HashMap<String, Fighter> fightersHM;
 
+	/**
+	 * Constructor
+	 */
 	public FighterModel() {
 		super();
 		fightersHM = new HashMap<String, Fighter>();
 	}
 	
+	/**
+	 * Constructor
+	 * @param fightersHM
+	 */
 	public FighterModel(HashMap<String, Fighter> fightersHM) {
 		super();
 		this.fightersHM = fightersHM;
 	}
 
+	/**
+	 * Return a hashmap table contains characters
+	 * @return
+	 */
 	public HashMap<String, Fighter> getFighters() {
 		return fightersHM;
 	}
-
+	
+	/**
+	 * Set the hashmap table storing characters
+	 * @param fightersHM
+	 */
 	public void setFighters(HashMap<String, Fighter> fightersHM) {
 		this.fightersHM = fightersHM;
 	}
-	
-//	public ArrayList<Fighter> fighters;
-//
-//	public FighterModel() {
-//		super();
-//		fighters = new ArrayList<Fighter>();
-//	}
-//	
-//	public FighterModel(ArrayList<Fighter> fighters) {
-//		super();
-//		this.fighters = fighters;
-//	}
-//
-//	public ArrayList<Fighter> getFighters() {
-//		return fighters;
-//	}
-//
-//	public void setItems(ArrayList<Fighter> fighters) {
-//		this.fighters = fighters;
-//	}
+
 }

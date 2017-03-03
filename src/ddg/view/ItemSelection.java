@@ -21,7 +21,14 @@ import ddg.utils.UtilityStorage;
 import ddg.utils.Utils;
 import ddg.view.component.DComboBox;
 import ddg.view.component.ListEntryCellRenderer;
-
+/**
+ * 
+ * 
+ * This class provides the interface to allow the user choose an item for the character
+ * 
+ * @author Fei Yu
+ * @date Mar 3, 2017
+ */
 public class ItemSelection extends JDialog implements ActionListener, ListSelectionListener{
     private final JButton selectBtn = new JButton("      Select      ");
     private final JButton cancelBtn = new JButton("    Cancel  ");
@@ -50,6 +57,11 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     {
     	ItemSelection frame1 = new ItemSelection();
     }
+    
+    /**
+     * Create the window
+     * @param ownerFrame The owner window of this window
+     */
     public static void createAndShowGUI(CharacterEditLayout ownerFrame) 
     {
 
@@ -62,6 +74,9 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         frame1.setVisible(true);
     }
 
+    /**
+     * Constructor
+     */
     ItemSelection()
     {
         super();
@@ -215,15 +230,17 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
     }
-    
-    public void ShowErrorMessage(){
-    	errorMessageWindow.setLayout(new FlowLayout());
-    	errorMessageWindow.setBounds(400, 300, 250, 150);
-    	errorMessageWindow.add(messageL);
-    	errorMessageWindow.add(okBtn);
-    	errorMessageWindow.setVisible(true);
-    }
-    
+//    
+//    public void ShowErrorMessage(){
+//    	errorMessageWindow.setLayout(new FlowLayout());
+//    	errorMessageWindow.setBounds(400, 300, 250, 150);
+//    	errorMessageWindow.add(messageL);
+//    	errorMessageWindow.add(okBtn);
+//    	errorMessageWindow.setVisible(true);
+//    }
+    /**
+     * This method is to fill the list of items.
+     */
 	private void addListView() {
 		DefaultListModel l = itemListModel.getListModel();
 		itemJList.setModel(l);
@@ -258,6 +275,10 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         System.out.println("value changed");
     }
 	
+	/**
+	 * Return this window to its caller
+	 * @return This window
+	 */
 	public ItemSelection getThisFrame(){
 		return this;
 	}

@@ -18,7 +18,14 @@ import ddg.utils.Utils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.border.*;
-
+/**
+ * 
+ * 
+ * This class provides an interface to allow user to check a character's attributes, worn equipments and the backpack.
+ * 
+ * @author Fei Yu
+ * @date Mar 3, 2017
+ */
 public class InventoryView extends JDialog implements ActionListener, ListSelectionListener {
 
     private final JButton saveBtn = new JButton("      Save      ");
@@ -74,6 +81,10 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         f2.setVisible(true);
     }
     
+    /**
+     * 
+     * @param ownerFrame
+     */
     public static void createAndShowGUI(CharacterEditLayout ownerFrame) {
         owner = (CharacterEditLayout) ownerFrame;
     	InventoryView frame1 = new InventoryView(); 
@@ -83,6 +94,9 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         frame1.setVisible(true);
     }
 
+    /**
+     * Constructor
+     */
     InventoryView()
     {
         super();
@@ -337,6 +351,9 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         
     }
 
+    /**
+     * This method manage the actions of the window focus
+     */
 	private void focusManage() {        
 		this.addWindowFocusListener(new WindowFocusListener() {          	
 	        @Override  
@@ -357,10 +374,17 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 		
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public InventoryView getThisFrame() {
 		return this;
 	}
 	
+	/**
+	 * 
+	 */
 	public CharacterEditLayout getOwner(){
 		return owner;
 	}
@@ -370,6 +394,14 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 		
 	}
 	
+	/**
+	 * 
+	 * 
+	 * This internal class is to draw a background picture in the frame
+	 * 
+	 * @author Fei Yu
+	 * @date Mar 3, 2017
+	 */
 	class EmbeddedPanel extends JPanel{
 
 	    private ImageIcon icon;  
@@ -379,6 +411,10 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 	    	setOpaque(true);
 	    	img = Toolkit.getDefaultToolkit().getImage( "example.jpg"); 
 	    }  
+	    
+	    /**
+	     * This method is override method to draw a picture
+	     */
 	    public void paintComponent(Graphics g) {  
 	        super.paintComponent(g);  
 	        g.drawImage(img, 0, 0,300, 300, this);  
