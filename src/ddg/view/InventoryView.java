@@ -328,6 +328,9 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     			catch (NullPointerException ex){
     				JOptionPane.showMessageDialog(null, "You need to choose an item.", "Warning", JOptionPane.WARNING_MESSAGE);
     			}
+    			catch (ConcurrentModificationException ex){
+    				JOptionPane.showMessageDialog(null, "The equipment has been equiped!", "Message", JOptionPane.WARNING_MESSAGE);
+    			}
 				
 	        }
 		});

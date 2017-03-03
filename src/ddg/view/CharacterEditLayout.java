@@ -326,14 +326,15 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 							System.out.println("nametextF is not null ");
 							fighter1.setName(nameTextF.getText());
 							fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
-							fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
-							fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
-							fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()));
-							fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
-							fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()));
-							fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()));
-								fighter1.setHitpoints(Dice.d10Roll() + (fighter1.getLevel() * fighter1.getModifier(fighter1.getTotalConstitution())));
-						
+							fighter1.setStrength(Integer.parseInt(strengthTextF.getText()) - fighter1.getGainedStrength());
+							fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText())- fighter1.getGainedDexterity());
+							fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()) - fighter1.getGainedConstitution());
+							fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()) - fighter1.getGainedIntelligence());
+							fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()) - fighter1.getGainedWisdom());
+							fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()) - fighter1.getGainedCharisma());
+							if(fighter1.getHitPoints() == 0){	
+								fighter1.setHitpoints(fighter1.getLevel() *(Dice.d10Roll() +  fighter1.getModifier(fighter1.getTotalConstitution())));
+							}
 			                FighterModel fm = new FighterModel();
 			        		String g = Utils.readFile(Config.CHARACTOR_FILE);
 			        		fm = Utils.fromJson(g, FighterModel.class);

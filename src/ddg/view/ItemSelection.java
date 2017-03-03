@@ -157,53 +157,60 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			BaseItem tempItem = selectedItem;
-    			if (owner.getOwner().fighter == null){
-    				owner.getOwner().fighter = new Fighter();
-    			}
-    			if (owner.wearingType.equals(tempItem.getName())){
-        			owner.getOwner().fighter.setEquipOn(owner.wearingType);
-        			
-        			try{
-            			for (BaseItem i: owner.getOwner().fighter.getWorn()){
-            				if (i.getName().equals(owner.wearingType)){
-            					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
-            					owner.getOwner().fighter.getWorn().remove(i);
-            				}
-            			}
+    			if(tempItem == null){
+    				
+    			} else {
+
+        			if (owner.getOwner().fighter == null){
+        				owner.getOwner().fighter = new Fighter();
         			}
-        			catch (ConcurrentModificationException e1) {        				
-        			}        			
-        			
-					owner.getOwner().fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
-        			owner.getOwner().fighter.getWorn().add(tempItem);
-        			if (owner.wearingType.equals(BaseItem.HELMET)){
-        				owner.helmetBtn.setText("");
-            			owner.helmetBtn.setIcon(Config.iconByType(owner.wearingType));
-        			} else if (owner.wearingType.equals(BaseItem.ARMOR)){
-            			owner.armorBtn.setText("");
-            			owner.armorBtn.setIcon(Config.iconByType(owner.wearingType));
-        			} else if (owner.wearingType.equals(BaseItem.BOOTS)){
-            			owner.bootsBtn.setText("");
-            			owner.bootsBtn.setIcon(Config.iconByType(owner.wearingType));
-        			} else if (owner.wearingType.equals(BaseItem.RING)){
-            			owner.ringBtn.setText("");
-            			owner.ringBtn.setIcon(Config.iconByType(owner.wearingType));
-        			} else if (owner.wearingType.equals(BaseItem.BELT)){
-            			owner.beltBtn.setText("");
-            			owner.beltBtn.setIcon(Config.iconByType(owner.wearingType));
-        			} else if (owner.wearingType.equals(BaseItem.WEAPON)){
-            			owner.weaponBtn.setText("");
-            			owner.weaponBtn.setIcon(Config.iconByType(owner.wearingType));
-        			} else if (owner.wearingType.equals(BaseItem.SHIELD)){
-            			owner.shieldBtn.setText("");
-            			owner.shieldBtn.setIcon(Config.iconByType(owner.wearingType));
-        			}		
-        			System.out.println(tempItem.getId() + " " + tempItem.getName() + " " + tempItem.getIncrease() + " " + tempItem.getBonus());
-        			dispose();
+        			if (owner.wearingType.equals(tempItem.getName())){
+            			owner.getOwner().fighter.setEquipOn(owner.wearingType);
+            			
+            			try{
+                			for (BaseItem i: owner.getOwner().fighter.getWorn()){
+                				if (i.getName().equals(owner.wearingType)){
+                					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
+                					owner.getOwner().fighter.getWorn().remove(i);
+                				}
+                			}
+            			}
+            			catch (ConcurrentModificationException e1) {        				
+            			}        			
+            			
+    					owner.getOwner().fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
+            			owner.getOwner().fighter.getWorn().add(tempItem);
+            			if (owner.wearingType.equals(BaseItem.HELMET)){
+            				owner.helmetBtn.setText("");
+                			owner.helmetBtn.setIcon(Config.iconByType(owner.wearingType));
+            			} else if (owner.wearingType.equals(BaseItem.ARMOR)){
+                			owner.armorBtn.setText("");
+                			owner.armorBtn.setIcon(Config.iconByType(owner.wearingType));
+            			} else if (owner.wearingType.equals(BaseItem.BOOTS)){
+                			owner.bootsBtn.setText("");
+                			owner.bootsBtn.setIcon(Config.iconByType(owner.wearingType));
+            			} else if (owner.wearingType.equals(BaseItem.RING)){
+                			owner.ringBtn.setText("");
+                			owner.ringBtn.setIcon(Config.iconByType(owner.wearingType));
+            			} else if (owner.wearingType.equals(BaseItem.BELT)){
+                			owner.beltBtn.setText("");
+                			owner.beltBtn.setIcon(Config.iconByType(owner.wearingType));
+            			} else if (owner.wearingType.equals(BaseItem.WEAPON)){
+                			owner.weaponBtn.setText("");
+                			owner.weaponBtn.setIcon(Config.iconByType(owner.wearingType));
+            			} else if (owner.wearingType.equals(BaseItem.SHIELD)){
+                			owner.shieldBtn.setText("");
+                			owner.shieldBtn.setIcon(Config.iconByType(owner.wearingType));
+            			}		
+            			System.out.println(tempItem.getId() + " " + tempItem.getName() + " " + tempItem.getIncrease() + " " + tempItem.getBonus());
+            			dispose();
+        			}
+        			else{
+        				JOptionPane.showMessageDialog(null, "The equipment type must match what you chose.");
+        			}
+        			selectedItem = null;
     			}
-    			else{
-    				JOptionPane.showMessageDialog(null, "The equipment type must match what you chose.");
-    			}
+    			
             }
         });
     	cancelBtn.addActionListener(new ActionListener(){ 
