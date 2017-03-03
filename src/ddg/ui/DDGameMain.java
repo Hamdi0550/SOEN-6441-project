@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.view.CampaignEditor;
+import ddg.view.CharacterSelection;
 import ddg.view.CharactorEditor;
 import ddg.view.ItemEditor;
 import ddg.view.MainPage;
@@ -77,17 +78,24 @@ public class DDGameMain extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e.getActionCommand());
 		if(e.getActionCommand().equals("CHARACTOR")) {
-			this.mainPage.setVisible(false);
-			this.charactorEditor.setVisible(true);
+			CharacterSelection frame1 = new CharacterSelection(null, "CS main"); 
+	    	frame1.setBounds(200, 200, 0, 0);
+	        frame1.pack();
+	        frame1.setVisible(true);
+//			this.mainPage.setVisible(false);
+//			this.charactorEditor.setVisible(true);
 		} else if(e.getActionCommand().equals("CAMPAIGN")) {
 			this.mainPage.setVisible(false);
 			this.campaignEditor.setVisible(true);
+			this.setTitle("Campaign Editor");
 		} else if(e.getActionCommand().equals("MAP")) {
 			this.mainPage.setVisible(false);
 			this.mapEditor.setVisible(true);
+			this.setTitle("Map Editor");
 		} else if(e.getActionCommand().equals("ITEM")) {
 			this.mainPage.setVisible(false);
 			this.itemEditor.setVisible(true);
+			this.setTitle("Item Editor");
 		} else if(e.getActionCommand().equals("CONTINUE")) {
 			System.out.println("OPEN CONTINUE");
 		} else if(e.getActionCommand().equals("START")) {
@@ -95,15 +103,19 @@ public class DDGameMain extends JFrame implements ActionListener {
 		} else if(e.getActionCommand().equals("CHARACTOR-BACK")) {
 			this.mainPage.setVisible(true);
 			this.charactorEditor.setVisible(false);
+			this.setTitle("DDG");
 		} else if(e.getActionCommand().equals("CAMPAIGN-BACK")) {
 			this.mainPage.setVisible(true);
 			this.campaignEditor.setVisible(false);
+			this.setTitle("DDG");
 		} else if(e.getActionCommand().equals("MAP-BACK")) {
 			this.mainPage.setVisible(true);
 			this.mapEditor.setVisible(false);
+			this.setTitle("DDG");
 		} else if(e.getActionCommand().equals("ITEM-BACK")) {
 			this.mainPage.setVisible(true);
 			this.itemEditor.setVisible(false);
+			this.setTitle("DDG");
 		} 
 	}
 	
