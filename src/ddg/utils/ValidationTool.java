@@ -11,7 +11,7 @@ import ddg.map.entity.Map;
  */
 public class ValidationTool {
 	private Map map;
-	private boolean hasvaildpath;
+	private boolean hasvalidpath;
 	private java.util.Map<String, String> usedcell = new HashMap<>();
 
 	/**
@@ -20,7 +20,7 @@ public class ValidationTool {
 	public ValidationTool(Map map) {
 		// TODO Auto-generated constructor stub
 		this.map = map;
-		hasvaildpath = false;
+		hasvalidpath = false;
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class ValidationTool {
 	public void hasValidPath(int i, int j) {
 		char maplocation[][] = map.getLocation();
 		if(maplocation[i][j] == 'o')
-			hasvaildpath=true;
+			hasvalidpath=true;
 		else{
 			usedcell.put(i+","+j, "i*j");
 			if( j>0 && maplocation[i][j-1]!='w'){
@@ -75,7 +75,7 @@ public class ValidationTool {
 	 * @return true when there is a indoor(Entry door) in the location of map 
 	 */
 	public boolean hasEntryDoor() {
-		hasvaildpath = false;
+		hasvalidpath = false;
 		int indooraccount = 0;
 		for(int i=0;i<map.getRow();i++){
 			for(int j=0;j<map.getColumn();j++){
@@ -89,7 +89,7 @@ public class ValidationTool {
 		if(indooraccount!=1){
 			return false;
 		}
-		else if(hasvaildpath){
+		else if(hasvalidpath){
 			return true;
 		}
 		return false;
@@ -99,14 +99,8 @@ public class ValidationTool {
 	 * @return true when there is key on the map, otherwise return false.
 	 */
 	public boolean hasKey() {
-		hasvaildpath = false;
-//		for(int i=0;i<map.getRow();i++){
-//			for(int j=0;j<map.getColumn();j++){
-//				if(map.getLocation()[i][j] == 'k'){
-//					return true;
-//				}
-//			}
-//		}
+		hasvalidpath = false;
+		
 		for(int i=0;i<map.getRow();i++){
 			for(int j=0;j<map.getColumn();j++){
 				if(map.getLocation()[i][j] == 'c'){
@@ -114,7 +108,7 @@ public class ValidationTool {
 					 if(name.equals("key")){
 						usedcell.clear();
 						hasValidPath(i,j);
-						if(hasvaildpath)
+						if(hasvalidpath)
 							return true;
 					 }
 				}
@@ -139,7 +133,10 @@ public class ValidationTool {
 		return false;
 	}
 
-	public boolean isHasvaildpath() {
-		return hasvaildpath;
+	/**
+	 * @return true if the map has valid
+	 */
+	public boolean isHasvalidpath() {
+		return hasvalidpath;
 	}
 }
