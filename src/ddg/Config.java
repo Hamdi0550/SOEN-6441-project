@@ -16,8 +16,8 @@ import ddg.item.entity.BaseItem;
  * @date Feb 5, 2017
  */
 public class Config {
-	public static final int WIDTH = 1366;
-	public static final int HEIGHT = 768;
+	public static final int WIDTH = 800;
+	public static final int HEIGHT = 600;
 	
 	public static final int TOOLBAR_WIDTH = WIDTH-8;
 	public static final int TOOLBAR_HEIGHT = HEIGHT/10;

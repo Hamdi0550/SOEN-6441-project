@@ -1,30 +1,29 @@
 package ddg.view;
 
+import static org.junit.Assert.*;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
 import ddg.Config;
+import ddg.map.entity.Map;
 import ddg.model.MapEditorModel;
-import ddg.utils.Utils;
-import junit.framework.TestCase;
-import model.Map;
-import ddg.view.MapEditor;
-import model.ValidationTool;
-
+import ddg.utils.ValidationTool;
+import org.junit.*;
 /**
  * This class is test for MapEditor
  *
  * @author Qin yi
  * @date Mar 1, 2017
  */
-public class MapEditorTest extends TestCase {
+public class MapEditorTest{
     private MapEditorModel mapModel;
     private Map map;
     private ValidationTool validationTool;
 
-    public void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void testBefore() throws Exception {
         try
 	      {
 	         FileInputStream fileIn = new FileInputStream(Config.MAP_FILE);
@@ -44,7 +43,7 @@ public class MapEditorTest extends TestCase {
         
         if(mapModel==null){
         	mapModel = new MapEditorModel();
-        	mapModel.add(new Map()));
+        	mapModel.add(new Map());
         }
         
         map = mapModel.getMapByIndex(0);
@@ -52,6 +51,7 @@ public class MapEditorTest extends TestCase {
 
     }
 
+    @Test
     public void testHasValidPath() throws Exception {
         for (int i = 0; i < map.getRow() ; i ++)
             for (int j =0; j < map.getColumn(); j++ ){
@@ -63,11 +63,13 @@ public class MapEditorTest extends TestCase {
             }
 
     }
-
+    
+    @Test
     public void testHasEntryDoor() throws Exception {
         assertTrue(validationTool.hasEntryDoor());
     }
-
+    
+    @Test
     public void testHasExitDoor() throws Exception {
         assertTrue(validationTool.hasExitDoor());
     }

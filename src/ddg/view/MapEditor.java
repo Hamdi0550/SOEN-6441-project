@@ -207,7 +207,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		JScrollPane jspanel = new JScrollPane(mapPanel);
 		jspanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); 
 		jspanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		jspanel.setPreferredSize(new Dimension(500, 500));
+		jspanel.setPreferredSize(new Dimension(505, 505));
 		jspanel.setBorder(Config.border);
 		
 		JPanel iconpanel = new JPanel();
