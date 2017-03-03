@@ -11,6 +11,8 @@ import javax.swing.SwingUtilities;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.view.CampaignEditor;
+import ddg.view.CharacterEditLayout;
+import ddg.view.CharacterSelection;
 import ddg.view.CharactorEditor;
 import ddg.view.ItemEditor;
 import ddg.view.MainPage;
@@ -77,8 +79,7 @@ public class DDGameMain extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e.getActionCommand());
 		if(e.getActionCommand().equals("CHARACTOR")) {
-			this.mainPage.setVisible(false);
-			this.charactorEditor.setVisible(true);
+			CharacterSelection.createAndShowGUI();
 		} else if(e.getActionCommand().equals("CAMPAIGN")) {
 			this.mainPage.setVisible(false);
 			this.campaignEditor.setVisible(true);

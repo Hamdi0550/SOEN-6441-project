@@ -71,15 +71,10 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     public String wearingType; 
     public JDialog thisWindow = this;
     
-    private JDialog errorMessageWindow= new JDialog(this, "Error Message", true);
-	private JLabel messageL = new JLabel(" ");
-	private JButton okBtn = new JButton("   OK   ");
+//    private JDialog errorMessageWindow= new JDialog(this, "Error Message", true);
+//	private JLabel messageL = new JLabel(" ");
+//	private JButton okBtn = new JButton("   OK   ");
 
-
-    public static void main(String[] args){
-    	CharacterEditLayout f2 = new CharacterEditLayout();
-    }
-    
     /**
      * 
      * @param ownerFrame
@@ -109,10 +104,10 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         JPanel characterPanel= new JPanel(new BorderLayout());
         JPanel attributesPanel= new JPanel(new GridLayout(10,4,5,5));
         JPanel buttonsPanel= new JPanel(new GridLayout(10,1,5,5));
-        Config.HELMET_ICON.setImage(Config.HELMET_ICON.getImage().getScaledInstance(Config.HELMET_ICON.getIconWidth(),  
-        		Config.HELMET_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
-        Config.WEAPON_ICON.setImage(Config.WEAPON_ICON.getImage().getScaledInstance(Config.WEAPON_ICON.getIconWidth(),  
-        		Config.WEAPON_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
+//        Config.HELMET_ICON.setImage(Config.HELMET_ICON.getImage().getScaledInstance(Config.HELMET_ICON.getIconWidth(),  
+//        		Config.HELMET_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
+//        Config.WEAPON_ICON.setImage(Config.WEAPON_ICON.getImage().getScaledInstance(Config.WEAPON_ICON.getIconWidth(),  
+//        		Config.WEAPON_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
         
         JPanel characterLeftPanel= new JPanel(new GridLayout(5,1,5,5));
         JPanel characterRightPanel= new JPanel(new GridLayout(5,1,5,5));
@@ -289,8 +284,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		cancelBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println("cancel clicked");
-				dispose();
-				
+				dispose();				
 	        }
 	    });
 
@@ -303,7 +297,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 					f1 = owner.fighter;
 				}
 				
-				f1.setStrength(f1.getStrength() + Dice.d46Roll());
+				f1.setStrength(Dice.d46Roll());
 				f1.setDexterity(Dice.d46Roll());
 				f1.setConstitution(Dice.d46Roll());
 				f1.setIntelligence(Dice.d46Roll());
@@ -322,7 +316,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	    		intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
 	    		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
 	    		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));
-				System.out.println("I get the owner's id " + owner.id);
+//				System.out.println("I get the owner's id " + owner.id);
 				System.out.println("I get the figher " + owner.fighterKeyName);
 	        }
 	    });
@@ -345,61 +339,65 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 					JOptionPane.showMessageDialog(null, "You must input level.", "Warning", JOptionPane.WARNING_MESSAGE);
 				} else {
 					try{
-					if(Integer.parseInt(levelTextF.getText()) < 1 || Integer.parseInt(levelTextF.getText()) > 20){
-					JOptionPane.showMessageDialog(null, "The level should be between 1 to 20.", "Warning", JOptionPane.WARNING_MESSAGE);
-				}
-				else {
-					
-						System.out.println("nametextF is not null ");
-						fighter1.setName(nameTextF.getText());
-						fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
-						fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
-						fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
-						fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()));
-						fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
-						fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()));
-						fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()));
-
-					
-		                FighterModel fm = new FighterModel();
-		        		String g = Utils.readFile(Config.CHARACTOR_FILE);
-		        		fm = Utils.fromJson(g, FighterModel.class);
-		        		
-		        		HashMap<String, Fighter> hm1 = new HashMap<>();
-		        		if(fm != null){
-		            		System.out.println(fm);
-		            		try{
-		
-		                		System.out.println("2"+fm);
-		                		if( null!=fm.getFighters() ){
-		                            hm1 = fm.getFighters();
-		                            Set<String> keySet1 = hm1.keySet();
-		                            Iterator<String> it1 = keySet1.iterator();
-		                            
-		                            while(it1.hasNext()){
-		                            	String keyName = it1.next();
-		                            	if (keyName == fighter1.getName()){
-		                            		System.out.println("There is a characater with same name==========");
-		                            	}                            		
-		                            }
-		                		}        			
-		            		}
-		            		catch (NullPointerException ex){
-		            			System.out.println("there is a NullPointerException");
-		            		}        			
-		        		}
-		        		hm1.put(fighter1.getName(), fighter1);        		
-		        		fm.setFighters(hm1);
-		        		
-		    			String gSave = Utils.toJson(fm);
-		    			Utils.save2File(Config.CHARACTOR_FILE, gSave);
-		        		
-		    			owner.hm1 = hm1;
-						dispose();
-						owner.setEnabled(true);
-						owner.setVisible(true);
-
-				}
+						if(Integer.parseInt(levelTextF.getText()) < 1 || Integer.parseInt(levelTextF.getText()) > 20){
+						JOptionPane.showMessageDialog(null, "The level should be between 1 to 20.", "Warning", JOptionPane.WARNING_MESSAGE);
+						}
+						else {
+						
+							System.out.println("nametextF is not null ");
+							fighter1.setName(nameTextF.getText());
+							fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
+							fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
+							fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
+							fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()));
+							fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
+							fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()));
+							fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()));
+							if (owner.fighter != null){
+								
+							} else {
+								fighter1.setHitpoints(Dice.d10Roll() + (fighter1.getLevel() * fighter1.getModifier(fighter1.getConstitution())));									
+							}
+//							fighter1.setHitpoints(Dice.d10Roll() + (fighter1.getLevel() * 3));	
+						
+			                FighterModel fm = new FighterModel();
+			        		String g = Utils.readFile(Config.CHARACTOR_FILE);
+			        		fm = Utils.fromJson(g, FighterModel.class);
+			        		
+			        		HashMap<String, Fighter> hm1 = new HashMap<>();
+			        		if(fm != null){
+			            		System.out.println(fm);
+			            		try{			
+			                		System.out.println("2"+fm);
+			                		if( null!=fm.getFighters() ){
+			                            hm1 = fm.getFighters();
+			                            Set<String> keySet1 = hm1.keySet();
+			                            Iterator<String> it1 = keySet1.iterator();
+			                            
+			                            while(it1.hasNext()){
+			                            	String keyName = it1.next();
+			                            	if (keyName == fighter1.getName()){
+			                            		System.out.println("There is a characater with same name==========");
+			                            	}                            		
+			                            }
+			                		}        			
+			            		}
+			            		catch (NullPointerException ex){
+			            			System.out.println("there is a NullPointerException");
+			            		}        			
+			        		}
+			        		hm1.put(fighter1.getName(), fighter1);        		
+			        		fm.setFighters(hm1);
+			        		
+			    			String gSave = Utils.toJson(fm);
+			    			Utils.save2File(Config.CHARACTOR_FILE, gSave);
+			        		
+			    			owner.hm1 = hm1;
+							dispose();
+							owner.setEnabled(true);
+							owner.setVisible(true);
+	
+						}
 					}
 					catch (NumberFormatException ex){
 						JOptionPane.showMessageDialog(null, "The level should be between 1 to 20.", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -471,11 +469,11 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 			}
 		});    	
 		
-    	okBtn.addActionListener(new ActionListener(){ 
-    		public void actionPerformed(ActionEvent e){
-    			errorMessageWindow.dispose();
-            }
-        }); 
+//    	okBtn.addActionListener(new ActionListener(){ 
+//    		public void actionPerformed(ActionEvent e){
+//    			errorMessageWindow.dispose();
+//            }
+//        }); 
 	}
 	
 	/**
@@ -512,7 +510,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	     @Override  
 	     public void windowGainedFocus(WindowEvent e) {
 	    	 System.out.println("The CE window is focused.");  
-	    	 if (owner.fighter != null){
+	    	 if (owner.fighter != null && owner.isCreatingNew == false){
 		    	 nameTextF.setText(owner.fighter.getName());
 		    	 levelTextF.setText(Integer.toString(owner.fighter.getLevel()));
 		    	 strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
@@ -529,6 +527,27 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		    	 wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
 		    	 chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));
 		    	 System.out.println(owner.fighter.getWorn().size() + "==========" + owner.fighter.getWorn());
+		    	 Fighter f2 = owner.fighter;
+
+		    		System.out.println(f2);
+		    		System.out.println(f2.getName());
+		    		System.out.println("backpack now  has " + f2.getBackpack().size());
+		    		System.out.println("worn now  has " +f2.getWorn().size());
+		    		System.out.print(f2.isArmorOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.isBeltOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.isRingOn); 
+		    		System.out.print(" ");
+		    		System.out.print(f2.isBootsOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.isHelmetOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.IsShieldOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.isWeaponOn);
+		    		System.out.println(f2.getBackpack());
+		    		System.out.println(f2.getWorn());
 	    	 }
 	     }  
 	

@@ -39,27 +39,30 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     private final JList<String> characterList = new JList<String>(jlistModel);
     private final JScrollPane characterListPane = new JScrollPane(characterList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);     
     
-    private final JLabel nameTextF = new JLabel(" L ");
-    private final JLabel levelTextF = new JLabel(" L ");
-    private final JLabel strengthTextF = new JLabel(" L ");
-    private final JLabel dexterityTextF = new JLabel(" L ");
-    private final JLabel constitutionTextF = new JLabel(" L ");
-    private final JLabel intelligenceTextF = new JLabel(" L ");
-    private final JLabel wisdomTextF = new JLabel(" L ");
-    private final JLabel charismaTextF = new JLabel(" L ");
+    private final JLabel nameTextF = new JLabel("   ");
+    private final JLabel levelTextF = new JLabel("   ");
+    private final JLabel strengthTextF = new JLabel("   ");
+    private final JLabel dexterityTextF = new JLabel("   ");
+    private final JLabel constitutionTextF = new JLabel("   ");
+    private final JLabel intelligenceTextF = new JLabel("   ");
+    private final JLabel wisdomTextF = new JLabel("   ");
+    private final JLabel charismaTextF = new JLabel("   ");
+    private final JLabel armorClassTextF = new JLabel("    ");
+    private final JLabel hitPointsTextF = new JLabel("    ");
+    private final JLabel attackBonusTextF = new JLabel("    ");
+    private final JLabel damageBonusTextF = new JLabel("   ");
 
-    private final JLabel nameModiferL = new JLabel(" L ");
-    private final JLabel levelModiferL = new JLabel(" L ");
-    private final JLabel strengthModiferL = new JLabel(" L ");
-    private final JLabel dexModiferL = new JLabel(" L ");
-    private final JLabel conModiferL = new JLabel(" L ");
-    private final JLabel intelliModiferL = new JLabel(" L ");
-    private final JLabel wisModiferL = new JLabel(" L ");
-    private final JLabel chaModiferL = new JLabel(" L ");
+    private final JLabel nameModiferL = new JLabel("   ");
+    private final JLabel levelModiferL = new JLabel("   ");
+    private final JLabel strengthModiferL = new JLabel("   ");
+    private final JLabel dexModiferL = new JLabel("   ");
+    private final JLabel conModiferL = new JLabel("   ");
+    private final JLabel intelliModiferL = new JLabel("   ");
+    private final JLabel wisModiferL = new JLabel("   ");
+    private final JLabel chaModiferL = new JLabel("   ");
 
 
 	HashMap<String, Fighter> hm1 = new HashMap<>();
-	public int id = 100;
 	public String fighterKeyName = "fighter111";
 	public Fighter fighter = null;
 	public boolean isCreatingNew = true;
@@ -76,7 +79,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
      */
     public static void createAndShowGUI() 
     {
-    	CharacterSelection frame1 = new CharacterSelection(null, "CS main"); 
+    	CharacterSelection frame1 = new CharacterSelection(null, "Character Selection"); 
     	frame1.setBounds(200, 200, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
@@ -96,7 +99,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         setLayout(new BorderLayout());
         JPanel backPanel= new JPanel(new BorderLayout());
         JPanel characterPanel= new JPanel(new BorderLayout());
-        JPanel attributesPanel= new JPanel(new GridLayout(10,4,5,5));
+        JPanel attributesPanel= new JPanel(new GridLayout(15,4,5,5));
         JPanel backpackPanel = new JPanel(new BorderLayout());
         JPanel buttonsPanel= new JPanel(new GridLayout(8,1,5,5));
         JPanel backpackListPanel = new JPanel(new BorderLayout());
@@ -114,26 +117,28 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         helmetBtn.setIcon(Config.HELMET_ICON);
         
         backpackListPanel.setPreferredSize(new Dimension(200,260));
-        attributesPanel.setPreferredSize(new Dimension(600,320));
-//        characterImagePanel.setPreferredSize(new Dimension(350,320));
-
-//        characterImagePanel.setPreferredSize(new Dimension(350,320));
-        JLabel lb1 = new JLabel(" ");
-        lb1.setBorder(new LineBorder(Color.BLACK));
-        nameModiferL.setBorder(new LineBorder(Color.BLACK));
-        levelModiferL.setBorder(new LineBorder(Color.BLACK));
+        attributesPanel.setPreferredSize(new Dimension(600,450));
         strengthModiferL.setBorder(new LineBorder(Color.BLACK));
         dexModiferL.setBorder(new LineBorder(Color.BLACK));
         conModiferL.setBorder(new LineBorder(Color.BLACK));
         intelliModiferL.setBorder(new LineBorder(Color.BLACK));
         wisModiferL.setBorder(new LineBorder(Color.BLACK));
         chaModiferL.setBorder(new LineBorder(Color.BLACK));
-        lb1.setPreferredSize(new Dimension(20,15));
-        lb1.setBounds(0, 0, 20, 15);
-        lb1.setIcon(Config.HELMET_ICON);
-        lb1.setText(" 2 ");
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(lb1);
+        nameTextF.setBorder(new LineBorder(Color.BLACK));
+        levelTextF.setBorder(new LineBorder(Color.BLACK));
+        strengthTextF.setBorder(new LineBorder(Color.BLACK));
+        dexterityTextF.setBorder(new LineBorder(Color.BLACK));
+        constitutionTextF.setBorder(new LineBorder(Color.BLACK));
+        intelligenceTextF.setBorder(new LineBorder(Color.BLACK));
+        wisdomTextF.setBorder(new LineBorder(Color.BLACK));
+        charismaTextF.setBorder(new LineBorder(Color.BLACK));
+        armorClassTextF.setBorder(new LineBorder(Color.BLACK));
+        hitPointsTextF.setBorder(new LineBorder(Color.BLACK));
+        attackBonusTextF.setBorder(new LineBorder(Color.BLACK));
+        damageBonusTextF.setBorder(new LineBorder(Color.BLACK));
+        
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
         attributesPanel.add(new JLabel(" Modifier "));
         attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Name "));
@@ -168,10 +173,22 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         attributesPanel.add(charismaTextF);
         attributesPanel.add(chaModiferL);
         attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(new JLabel("   1  "));
+        attributesPanel.add(new JLabel(" Hitpoints "));
+        attributesPanel.add(hitPointsTextF);
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel(" Attack Bonus "));
+        attributesPanel.add(attackBonusTextF);
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel(" Damage Bonus "));
+        attributesPanel.add(damageBonusTextF);
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel(" Armor Class "));
+        attributesPanel.add(armorClassTextF);
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
         
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.add(createBtn);        
@@ -189,7 +206,6 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		public void actionPerformed(ActionEvent e){
     			isCreatingNew = true;
     			CharacterSelection rootframe = (CharacterSelection) SwingUtilities.getWindowAncestor(createBtn);
-//    			CharacterEditLayout.createAndShowGUI(getThisFrame());
     			CharacterEditLayout.createAndShowGUI(rootframe);
     			setEnabled(false);
             }
@@ -198,7 +214,6 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			if (!characterList.isSelectionEmpty()){
-//        			CharacterSelection.this.owner.setSelectedFighter(new Fighter(7,1,1));
                     dispose();
     	        }               
             }
@@ -279,18 +294,41 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		intelligenceTextF.setText(Integer.toString(fighter.getIntelligence()));
     		wisdomTextF.setText(Integer.toString(fighter.getWisdom()));
     		charismaTextF.setText(Integer.toString(fighter.getCharisma()));
+    		armorClassTextF.setText(Integer.toString(fighter.getArmorClass()));
+    		hitPointsTextF.setText(Integer.toString(fighter.getHitPoints()));
+    		attackBonusTextF.setText(Integer.toString(fighter.getAttackBonus()));
+    		damageBonusTextF.setText(Integer.toString(fighter.getDamageBonus()));
+    		
+    		
     		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getStrength())));
     		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getDexterity())));
     		conModiferL.setText(Integer.toString(fighter.getModifier(fighter.getConstitution())));
     		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getIntelligence())));
     		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getWisdom())));
     		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getCharisma())));
-    		System.out.println("Helmet is on? " + fighter.isHelmetOn);
-    		System.out.println(fighter.getWorn());
+
+    		System.out.println(fighter);
+    		System.out.println(fighter.getName());
     		System.out.println("backpack now  has " + fighter.getBackpack().size());
+    		System.out.println("worn now  has " +fighter.getWorn().size());
+    		System.out.print(fighter.isArmorOn);
+    		System.out.print(" ");
+    		System.out.print(fighter.isBeltOn);
+    		System.out.print(" ");
+    		System.out.print(fighter.isRingOn); 
+    		System.out.print(" ");
+    		System.out.print(fighter.isBootsOn);
+    		System.out.print(" ");
+    		System.out.print(fighter.isHelmetOn);
+    		System.out.print(" ");
+    		System.out.print(fighter.IsShieldOn);
+    		System.out.print(" ");
+    		System.out.print(fighter.isWeaponOn);
     		System.out.println(fighter.getBackpack());
+    		System.out.println(fighter.getWorn());
         }
         System.out.println("value changed");
+        
     }
 	
 	/**

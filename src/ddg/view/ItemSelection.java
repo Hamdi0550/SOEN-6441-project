@@ -43,7 +43,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     private final JLabel bonusLabel = new JLabel(" Value ");
     
     private JDialog errorMessageWindow= new JDialog(this, "Item selection error", true);
-	private JLabel messageL = new JLabel(" ");
 	private JButton okBtn = new JButton("   OK   ");
 
 	ArrayList<BaseItem> al1 = new ArrayList<>();
@@ -209,10 +208,8 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         			dispose();
     			}
     			else{
-    				JOptionPane.showMessageDialog(null, "Must a type");
+    				JOptionPane.showMessageDialog(null, "The equipment type must match what you chose.");
     				System.out.println("Not correct type=========");
-//    				messageL.setText("You must choose a " + owner.wearingType + " for this part!");
-//    				ShowErrorMessage();
     			}
             }
         });
@@ -224,14 +221,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
     }
-//    
-//    public void ShowErrorMessage(){
-//    	errorMessageWindow.setLayout(new FlowLayout());
-//    	errorMessageWindow.setBounds(400, 300, 250, 150);
-//    	errorMessageWindow.add(messageL);
-//    	errorMessageWindow.add(okBtn);
-//    	errorMessageWindow.setVisible(true);
-//    }
+
     /**
      * This method is to fill the list of items.
      */

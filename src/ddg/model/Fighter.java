@@ -27,13 +27,13 @@ public class Fighter implements Serializable{
 	private int intelligence;
 	private int wisdom;
 	private int charisma;
-	private int gainedStrength;
-	private int gainedDexterity;
-	private int gainedConstitution;
-	private int gainedIntelligence;
-	private int gainedWisdom;
-	private int gainedCharisma;
-	private int gainedArmorClass;
+	private int gainedStrength =0 ;
+	private int gainedDexterity =0 ;
+	private int gainedConstitution =0 ;
+	private int gainedIntelligence =0 ;
+	private int gainedWisdom =0 ;
+	private int gainedCharisma =0 ;
+	private int gainedArmorClass =0 ;
 	private int armorClass;
 	private int hitPoints; 
 	private int attackBonus; 		
@@ -105,42 +105,42 @@ public class Fighter implements Serializable{
 	 * @return strength
 	 */
 	public int getStrength(){
-		return strength;
+		return strength + gainedStrength;
 	}
 	/**
 	 * Get the dexterity of the character
 	 * @return dexterity
 	 */
 	public int getDexterity(){
-		return dexterity;
+		return dexterity + gainedDexterity;
 	}
 	/**
 	 * Get the constitution of the character
 	 * @return constitution
 	 */
 	public int getConstitution(){
-		return constitution;
+		return constitution + gainedConstitution;
 	}
 	/**
 	 * Get the constitution of the character
 	 * @return constitution
 	 */
 	public int getIntelligence(){
-		return intelligence;
+		return intelligence + gainedIntelligence;
 	}
 	/**
 	 * Get the wisdom of the character
 	 * @return wisdom
 	 */
 	public int getWisdom(){
-		return wisdom;
+		return wisdom + gainedWisdom;
 	}
 	/**
 	 * Get the charisma of the character
 	 * @return charisma
 	 */
 	public int getCharisma(){
-		return charisma;
+		return charisma + gainedCharisma ;
 	}	
 	/**
 	 * Get the gainedStrength of the character
@@ -233,7 +233,7 @@ public class Fighter implements Serializable{
 	 */
 	public int getArmorClass(){
 		armorClass = getDexterity() + getGainedDexterity() + 10;
-		return armorClass;
+		return armorClass + gainedArmorClass;
 	}
 	/**
 	 * Get the hitPoints of the character

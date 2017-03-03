@@ -73,14 +73,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     public BaseItem selectedBackPackItem = null;
     public Fighter fighter = null;
     private static CharacterEditLayout owner;
-
-    public static void main(String[] args) {
-    	InventoryView f2 = new InventoryView();
-        f2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        f2.pack();
-        f2.setVisible(true);
-    }
-    
+   
     /**
      * 
      * @param ownerFrame
@@ -362,6 +355,28 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 	        	for (BaseItem i: owner.getOwner().fighter.getBackpack()){
                 	backpackItemModel.addElement(i.getId());
 	        	}
+
+		    	 Fighter f2 = owner.getOwner().fighter;
+
+		    		System.out.println(f2);
+		    		System.out.println(f2.getName());
+		    		System.out.println("backpack now  has " + f2.getBackpack().size());
+		    		System.out.println("worn now  has " +f2.getWorn().size());
+		    		System.out.print(f2.isArmorOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.isBeltOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.isRingOn); 
+		    		System.out.print(" ");
+		    		System.out.print(f2.isBootsOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.isHelmetOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.IsShieldOn);
+		    		System.out.print(" ");
+		    		System.out.print(f2.isWeaponOn);
+		    		System.out.println(f2.getBackpack());
+		    		System.out.println(f2.getWorn());
 	                        
 	            	
 	        }
