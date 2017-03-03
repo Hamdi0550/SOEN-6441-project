@@ -164,7 +164,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         			owner.getOwner().fighter.setEquipOn(owner.wearingType);
         			
         			try{
-
             			for (BaseItem i: owner.getOwner().fighter.getWorn()){
             				if (i.getName().equals(owner.wearingType)){
             					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
@@ -172,10 +171,8 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
             				}
             			}
         			}
-        			catch (ConcurrentModificationException e1) {
-        				
-        			}
-        			
+        			catch (ConcurrentModificationException e1) {        				
+        			}        			
         			
 					owner.getOwner().fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
         			owner.getOwner().fighter.getWorn().add(tempItem);
@@ -206,7 +203,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     			}
     			else{
     				JOptionPane.showMessageDialog(null, "The equipment type must match what you chose.");
-    				System.out.println("Not correct type=========");
     			}
             }
         });
@@ -241,7 +237,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 		if (e.getValueIsAdjusting() == false) {
 			int index = itemJList.getSelectedIndex();
 			if(index >= 0) {
-				System.out.println("list select:"+index);
+//				System.out.println("list select:"+index);
 				BaseItem item = itemListModel.getItemByIndex(index);
 				
 				nameLabel.setText(item.getId());

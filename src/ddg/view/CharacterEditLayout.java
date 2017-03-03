@@ -287,18 +287,18 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				f1.setWisdom(Dice.d46Roll());
 				f1.setCharisma(Dice.d46Roll());
 
-				strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
-				dexterityTextF.setText(Integer.toString(owner.fighter.getDexterity()));
-				constitutionTextF.setText(Integer.toString(owner.fighter.getConstitution()));
-				intelligenceTextF.setText(Integer.toString(owner.fighter.getIntelligence()));
-				wisdomTextF.setText(Integer.toString(owner.fighter.getWisdom()));
-				charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));
-	    		strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getStrength())));
-	    		dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getDexterity())));
-	    		conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getConstitution())));
-	    		intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
-	    		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
-	    		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));
+				strengthTextF.setText(Integer.toString(owner.fighter.getTotalStrength()));
+				dexterityTextF.setText(Integer.toString(owner.fighter.getTotalDexterity()));
+				constitutionTextF.setText(Integer.toString(owner.fighter.getTotalConstitution()));
+				intelligenceTextF.setText(Integer.toString(owner.fighter.getTotalIntelligence()));
+				wisdomTextF.setText(Integer.toString(owner.fighter.getTotalWisdom()));
+				charismaTextF.setText(Integer.toString(owner.fighter.getTotalCharisma()));
+	    		strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalStrength())));
+	    		dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalDexterity())));
+	    		conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalConstitution())));
+	    		intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalIntelligence())));
+	    		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalWisdom())));
+	    		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalCharisma())));
 				System.out.println("I get the figher " + owner.fighterKeyName);
 	        }
 	    });
@@ -307,8 +307,8 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 			public void actionPerformed(ActionEvent e){
 				System.out.println("save clicked");
 				Fighter fighter1 = new Fighter();
-				if (owner.fighter != null){
-					System.out.println("owner.fighter is not null");
+				if (owner.fighter != null && owner.isCreatingNew == false){
+					System.out.println("&&&&&&&&&&&&&&&&&&&&&&&");
 					fighter1 = owner.fighter;					
 				}
 				if (nameTextF.getText().equals("")){
@@ -332,12 +332,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 							fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
 							fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()));
 							fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()));
-							if (owner.fighter != null){
-								
-							} else {
-								fighter1.setHitpoints(Dice.d10Roll() + (fighter1.getLevel() * fighter1.getModifier(fighter1.getConstitution())));									
-							}
-//							fighter1.setHitpoints(Dice.d10Roll() + (fighter1.getLevel() * 3));	
+								fighter1.setHitpoints(Dice.d10Roll() + (fighter1.getLevel() * fighter1.getModifier(fighter1.getTotalConstitution())));
 						
 			                FighterModel fm = new FighterModel();
 			        		String g = Utils.readFile(Config.CHARACTOR_FILE);
@@ -356,7 +351,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 			                            while(it1.hasNext()){
 			                            	String keyName = it1.next();
 			                            	if (keyName == fighter1.getName()){
-			                            		System.out.println("There is a characater with same name==========");
 			                            	}                            		
 			                            }
 			                		}        			
@@ -450,11 +444,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 			}
 		});    	
 		
-//    	okBtn.addActionListener(new ActionListener(){ 
-//    		public void actionPerformed(ActionEvent e){
-//    			errorMessageWindow.dispose();
-//            }
-//        }); 
 	}
 	
 	/**
@@ -484,43 +473,43 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	    	 if (owner.fighter != null && owner.isCreatingNew == false){
 		    	 nameTextF.setText(owner.fighter.getName());
 		    	 levelTextF.setText(Integer.toString(owner.fighter.getLevel()));
-		    	 strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
-		    	 dexterityTextF.setText(Integer.toString(owner.fighter.getDexterity()));
-		    	 constitutionTextF.setText(Integer.toString(owner.fighter.getConstitution()));
-		    	 intelligenceTextF.setText(Integer.toString(owner.fighter.getIntelligence()));
-		    	 wisdomTextF.setText(Integer.toString(owner.fighter.getWisdom()));
-		    	 charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));
+		    	 strengthTextF.setText(Integer.toString(owner.fighter.getTotalStrength()));
+		    	 dexterityTextF.setText(Integer.toString(owner.fighter.getTotalDexterity()));
+		    	 constitutionTextF.setText(Integer.toString(owner.fighter.getTotalConstitution()));
+		    	 intelligenceTextF.setText(Integer.toString(owner.fighter.getTotalIntelligence()));
+		    	 wisdomTextF.setText(Integer.toString(owner.fighter.getTotalWisdom()));
+		    	 charismaTextF.setText(Integer.toString(owner.fighter.getTotalCharisma()));
 				
-		    	 strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getStrength())));
-		    	 dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getDexterity())));
-		    	 conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getConstitution())));
-		    	 intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
-		    	 wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
-		    	 chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));
+		    	 strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalStrength())));
+		    	 dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalDexterity())));
+		    	 conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalConstitution())));
+		    	 intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalIntelligence())));
+		    	 wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalWisdom())));
+		    	 chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getTotalCharisma())));
 		    	 System.out.println(owner.fighter.getWorn().size() + "==========" + owner.fighter.getWorn());
 		    	 Fighter f2 = owner.fighter;
 
-		    		System.out.println("===========================");
-		    		System.out.println(f2);
-		    		System.out.println(f2.getName());
-		    		System.out.println("backpack now  has " + f2.getBackpack().size());
-		    		System.out.println("worn now  has " +f2.getWorn().size());
-		    		System.out.print(f2.isHelmetOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.isArmorOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.isBeltOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.isRingOn); 
-		    		System.out.print(" ");
-		    		System.out.print(f2.isBootsOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.isWeaponOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.IsShieldOn);
-		    		System.out.println(f2.getBackpack());
-		    		System.out.println(f2.getWorn());
-		    		System.out.println("===========================");
+	    		System.out.println("===========================");
+	    		System.out.println(f2);
+	    		System.out.println(f2.getName());
+	    		System.out.println("backpack now  has " + f2.getBackpack().size());
+	    		System.out.println("worn now  has " +f2.getWorn().size());
+	    		System.out.print(f2.isHelmetOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.isArmorOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.isBeltOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.isRingOn); 
+	    		System.out.print(" ");
+	    		System.out.print(f2.isBootsOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.isWeaponOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.IsShieldOn);
+	    		System.out.println(f2.getBackpack());
+	    		System.out.println(f2.getWorn());
+	    		System.out.println("===========================");
 	    	 }
 	     }  
 	

@@ -28,13 +28,11 @@ import javax.swing.border.*;
  */
 public class InventoryView extends JDialog implements ActionListener, ListSelectionListener {
 
-    private final JButton saveBtn = new JButton("      Save      ");
     private final JButton cancelBtn = new JButton("    Back  ");
     private final JButton equipBtn = new JButton("    Equip   ");
     private final JButton removeBtn = new JButton("   Take off  ");
 
     private final JButton helmetBtn = new JButton();
-//    private final JButton shoulderBtn = new JButton("  Shoulder  ");
     private final JButton beltBtn = new JButton("  Belt ");
     private final JButton ringBtn = new JButton("  Ring  ");
     private final JButton armorBtn = new JButton("  Armor  ");
@@ -43,9 +41,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     private final JButton weaponBtn = new JButton("   Weapon  ");
     
     private final DefaultListModel<String> backpackItemModel = new DefaultListModel<String>(); 
-//    private final JList<String> backpackItemList = new JList<String>(backpackItemModel);
     private final JList<String> backpackItemList = new JList<String>();
-//    private final JScrollPane itemListPane = new JScrollPane(backpackItemList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
         
     private final JLabel nameTextF = new JLabel("   ");
     private final JLabel levelTextF = new JLabel("   ");
@@ -130,7 +126,6 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         characterRightPanel.add(weaponBtn);
         characterRightPanel.add(shieldBtn);
 
-//        characterImagePanel.setBackground(Color.YELLOW);
         characterImagePanel.setBounds(0, 0, 500, 500);
         characterImagePanel.add(new JLabel("                                                                 "));
         backpackListPanel.setPreferredSize(new Dimension(200,260));
@@ -204,7 +199,6 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.add(equipBtn);
-        buttonsPanel.add(saveBtn);
         buttonsPanel.add(cancelBtn);
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.setSize(300,500);
@@ -212,8 +206,6 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         focusManage();
 
         backpackItemList.addListSelectionListener(this);
-//        DefaultListModel<String> backpackItemModel = new DefaultListModel<String>(); 
-//        JList<String> backpackItemList = new JList<String>(backpackItemModel);
         backpackItemList.setModel(backpackItemModel);
         JScrollPane itemListPane = new JScrollPane(backpackItemList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
@@ -287,7 +279,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
                 					owner.getOwner().fighter.getBackpack().add(i);
                 					owner.getOwner().fighter.getWorn().remove(i);
                         			owner.getOwner().fighter.setEquipOff(selectedWorn);
-                					System.out.println("backpack=========" + owner.getOwner().fighter.getBackpack());  
+//                					System.out.println("backpack=========" + owner.getOwner().fighter.getBackpack());  
                 					
                 				} else {
                 					JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -320,8 +312,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 	        					owner.getOwner().fighter.gainBonus(item.getIncrease(), item.getBonus(), "-");
 	        					owner.getOwner().fighter.getBackpack().add(item);
 	        					owner.getOwner().fighter.getWorn().remove(item);
-	//        					owner.getOwner().fighter.setEquipOff(selectedWorn);
-	        					System.out.println("backpack=========" + owner.getOwner().fighter.getBackpack());  
+//	        					System.out.println("backpack=========" + owner.getOwner().fighter.getBackpack());  
 	        					
 	        				}
     					}
@@ -362,18 +353,18 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
                 	backpackItemModel.addElement(i.getId());
 	        	}
 
-				strengthTextF.setText(Integer.toString(owner.getOwner().fighter.getStrength()));
-				dexterityTextF.setText(Integer.toString(owner.getOwner().fighter.getDexterity()));
-				constitutionTextF.setText(Integer.toString(owner.getOwner().fighter.getConstitution()));
-				intelligenceTextF.setText(Integer.toString(owner.getOwner().fighter.getIntelligence()));
-				wisdomTextF.setText(Integer.toString(owner.getOwner().fighter.getWisdom()));
-				charismaTextF.setText(Integer.toString(owner.getOwner().fighter.getCharisma()));
-	    		strengthModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getStrength())));
-	    		dexModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getDexterity())));
-	    		conModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getConstitution())));
-	    		intelliModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getIntelligence())));
-	    		wisModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getWisdom())));
-	    		chaModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getCharisma())));
+				strengthTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalStrength()));
+				dexterityTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalDexterity()));
+				constitutionTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalConstitution()));
+				intelligenceTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalIntelligence()));
+				wisdomTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalWisdom()));
+				charismaTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalCharisma()));
+	    		strengthModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalStrength())));
+	    		dexModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalDexterity())));
+	    		conModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalConstitution())));
+	    		intelliModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalIntelligence())));
+	    		wisModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalWisdom())));
+	    		chaModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalCharisma())));
 	    		
 	    		if (owner.getOwner().fighter.isHelmetOn){
 	    			helmetBtn.setText("");
@@ -427,29 +418,29 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 
 		    	 Fighter f2 = owner.getOwner().fighter;
 
-		    		System.out.println("===========================");
-		    		System.out.println(f2);
-		    		System.out.println(f2.getName());
-		    		System.out.println("backpack now  has " + f2.getBackpack().size());
-		    		System.out.println("worn now  has " +f2.getWorn().size());
-		    		System.out.print(f2.isHelmetOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.isArmorOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.isBeltOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.isRingOn); 
-		    		System.out.print(" ");
-		    		System.out.print(f2.isBootsOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.isWeaponOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.IsShieldOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.IsShieldOn);
-		    		System.out.println(f2.getBackpack());
-		    		System.out.println(f2.getWorn());
-		    		System.out.println("===========================");
+	    		System.out.println("===========================");
+	    		System.out.println(f2);
+	    		System.out.println(f2.getName());
+	    		System.out.println("backpack now  has " + f2.getBackpack().size());
+	    		System.out.println("worn now  has " +f2.getWorn().size());
+	    		System.out.print(f2.isHelmetOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.isArmorOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.isBeltOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.isRingOn); 
+	    		System.out.print(" ");
+	    		System.out.print(f2.isBootsOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.isWeaponOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.IsShieldOn);
+	    		System.out.print(" ");
+	    		System.out.print(f2.IsShieldOn);
+	    		System.out.println(f2.getBackpack());
+	    		System.out.println(f2.getWorn());
+	    		System.out.println("===========================");
 	                        
 	            	
 	        }

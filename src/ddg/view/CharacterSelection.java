@@ -278,28 +278,27 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         if (!characterList.isSelectionEmpty()){
         	deleteBtn.setEnabled(true);
             String key = (String) characterList.getSelectedValue();
-//            Fighter f1 = hm1.get(key);
             fighter = hm1.get(key);
             nameTextF.setText(fighter.getName());
             levelTextF.setText(Integer.toString(fighter.getLevel()));
-            strengthTextF.setText(Integer.toString(fighter.getStrength()));
-            dexterityTextF.setText(Integer.toString(fighter.getDexterity()));
-    		constitutionTextF.setText(Integer.toString(fighter.getConstitution()));
-    		intelligenceTextF.setText(Integer.toString(fighter.getIntelligence()));
-    		wisdomTextF.setText(Integer.toString(fighter.getWisdom()));
-    		charismaTextF.setText(Integer.toString(fighter.getCharisma()));
-    		armorClassTextF.setText(Integer.toString(fighter.getArmorClass()));
+            strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
+            dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
+    		constitutionTextF.setText(Integer.toString(fighter.getTotalConstitution()));
+    		intelligenceTextF.setText(Integer.toString(fighter.getTotalIntelligence()));
+    		wisdomTextF.setText(Integer.toString(fighter.getTotalWisdom()));
+    		charismaTextF.setText(Integer.toString(fighter.getTotalCharisma()));
+    		armorClassTextF.setText(Integer.toString(fighter.getTotalArmorClass()));
     		hitPointsTextF.setText(Integer.toString(fighter.getHitPoints()));
     		attackBonusTextF.setText(Integer.toString(fighter.getAttackBonus()));
     		damageBonusTextF.setText(Integer.toString(fighter.getDamageBonus()));
     		
     		
-    		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getStrength())));
-    		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getDexterity())));
-    		conModiferL.setText(Integer.toString(fighter.getModifier(fighter.getConstitution())));
-    		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getIntelligence())));
-    		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getWisdom())));
-    		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getCharisma())));
+    		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalStrength())));
+    		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalDexterity())));
+    		conModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalConstitution())));
+    		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalIntelligence())));
+    		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalWisdom())));
+    		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalCharisma())));
 
     		System.out.println("===========================");
     		System.out.println(fighter);
@@ -328,7 +327,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     }
 	
 	/**
-	 * 
+	 * Return the object of this window
 	 * @return
 	 */
 	public CharacterSelection getThisFrame(){
