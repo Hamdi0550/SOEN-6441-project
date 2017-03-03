@@ -63,28 +63,21 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     public Fighter fighter = null;
     private static CharacterEditLayout owner;
 
-    public static void main(String[] args) 
-    {
-        //call the method to build the frame
+    public static void main(String[] args) {
     	InventoryView f2 = new InventoryView();
         f2.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         f2.pack();
-//        frame1.setResizable(false);
         f2.setVisible(true);
-//        createAndShowGUI();
-    }//end of main()
-    ///////////////////////////////////////////////////////////////////////////
-    public static void createAndShowGUI(CharacterEditLayout ownerFrame) 
-    {
-        //new up  this class, & call constructor, --due to extends, it is a frame
+    }
+    
+    public static void createAndShowGUI(CharacterEditLayout ownerFrame) {
         owner = (CharacterEditLayout) ownerFrame;
     	InventoryView frame1 = new InventoryView(); 
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
-//        frame1.setResizable(false);
         frame1.setVisible(true);
-    }//end of createAndShowGUI()
-    ///////////////////////////////////////////////////////////////////////////
+    }
+
     InventoryView()
     {
         super();
@@ -99,8 +92,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         JPanel backpackListPanel = new JPanel(new BorderLayout());
         ImageIcon icon = new ImageIcon("icon1.jpg");  
         icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth(),  
-                icon.getIconHeight(), Image.SCALE_DEFAULT)); 
-        
+                icon.getIconHeight(), Image.SCALE_DEFAULT));         
 
         JPanel characterLeftPanel= new JPanel(new GridLayout(5,1,5,5));
         JPanel characterRightPanel= new JPanel(new GridLayout(5,1,5,5));
@@ -209,10 +201,8 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         backpackItemList.setPreferredSize(new Dimension(200,220));
         for(BaseItem i: owner.getOwner().fighter.getBackpack()){
         	backpackItemModel.addElement(owner.getOwner().fighter.getBackpack().get(0).getId());
-        }
-        	
+        }      	
         
-
     	helmetBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			selectedWorn = "helmet";
@@ -221,33 +211,33 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     			System.out.println("fighter's inventory size is " + fighter1.getBackpack().size());
             }
         });    	
+    	
     	removeBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			if(selectedWorn.equals("helmet")){
-    			}
-    			
+    			}    			
             }
         }); 
+    	
 		cancelBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println("cancel clicked");
-				dispose();
-				
+				dispose();				
 	        }
 		});
         
-    }//end of constructor RPSGApp()
+    }
 
 	public InventoryView getThisFrame() {
 		return this;
 	}
+	
 	public CharacterEditLayout getOwner(){
 		return owner;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -258,7 +248,6 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 	    public EmbeddedPanel() {  
 	    	super();
 	    	setOpaque(true);
-
 	    	img = Toolkit.getDefaultToolkit().getImage( "example.jpg"); 
 	    }  
 	    public void paintComponent(Graphics g) {  
@@ -275,7 +264,6 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 				System.out.println("list select:"+index);
 				BaseItem item = owner.getOwner().fighter.getBackpack().get(index);
 				
-//				equipmentTypeL.setText(item.getId());
 				equipmentTypeL.setText(item.getName());
 				attributeL.setText(item.getIncrease());
 				valueL.setText(Integer.toString(item.getBonus()));

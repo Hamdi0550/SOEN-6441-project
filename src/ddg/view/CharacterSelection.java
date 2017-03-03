@@ -19,24 +19,19 @@ import ddg.ui.DDGameMain;
 import ddg.utils.Utils;
 
 public class CharacterSelection extends JDialog implements ActionListener, ListSelectionListener{
-    //define components in the frame
 
     private final JButton selectBtn = new JButton("      Select      ");
     private final JButton cancelBtn = new JButton("    Cancel  ");
     private final JButton editBtn = new JButton("    Edit... ");
     private final JButton deleteBtn = new JButton("    Delete ");
     private JButton createBtn = new JButton("   Create...  ");
-//    private final JButton randomBtn = new JButton("    Random ");
 
     private final JButton helmetBtn = new JButton();
     
-    //these 3 lines are for upper left jlist of games in a jscrollpanel
     private final DefaultListModel<String> jlistModel = new DefaultListModel<String>(); 
     private final JList<String> characterList = new JList<String>(jlistModel);
-    private final JScrollPane characterListPane = new JScrollPane(characterList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
+    private final JScrollPane characterListPane = new JScrollPane(characterList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);     
     
-    
-    //Text Fields to show the game results
     private final JLabel nameTextF = new JLabel(" L ");
     private final JLabel levelTextF = new JLabel(" L ");
     private final JLabel strengthTextF = new JLabel(" L ");
@@ -66,27 +61,19 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 
     public static void main(String[] args) 
     {
-        //call the method to build the frame
         createAndShowGUI();
-    }//end of main()
-    ///////////////////////////////////////////////////////////////////////////
+    }
     public static void createAndShowGUI() 
     {
-        //new up  this class, & call constructor, --due to extends, it is a frame
     	CharacterSelection frame1 = new CharacterSelection(null, "CS main"); 
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        frame1.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame1.pack();
-//        frame1.setResizable(false);
         frame1.setVisible(true);
-    }//end of createAndShowGUI()
-    ///////////////////////////////////////////////////////////////////////////
+    }
 	CharacterSelection(JFrame owner, String title)
     {
-        //build the frame with a title and define layout
         super(owner, title);
         this.owner = (DDGameMain)owner;
-//        setTitle("Select Character");
         setModal(true);
         setLayout(new BorderLayout());
         JPanel backPanel= new JPanel(new BorderLayout());
@@ -103,17 +90,12 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         backPanel.add(attributesPanel, BorderLayout.CENTER);
         backPanel.add(backpackPanel, BorderLayout.EAST);
         backpackPanel.add(buttonsPanel, BorderLayout.SOUTH);
-//        backpackPanel.add(backpackListPanel, BorderLayout.CENTER);
         characterList.setPreferredSize(new Dimension(200,560));
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
         backpackListPanel.add(characterListPane, BorderLayout.CENTER);
-//        characterButtomPanel.add(removeBtn);
         helmetBtn.setIcon(Config.HELMET_ICON);
         
         backpackListPanel.setPreferredSize(new Dimension(200,260));
-//        buttonsPanel.setPreferredSize(new Dimension(100,320));
-//        characterLeftPanel.setPreferredSize(new Dimension(60,320));
-//        characterRightPanel.setPreferredSize(new Dimension(60,320));
         attributesPanel.setPreferredSize(new Dimension(600,320));
 //        characterImagePanel.setPreferredSize(new Dimension(350,320));
 
@@ -188,8 +170,6 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     	createBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			isCreatingNew = true;
-//               CharacterEditLayout ce1 = new CharacterEditLayout();
-//               CharacterEditLayout ceFrame = new CharacterEditLayout();
     			CharacterSelection rootframe = (CharacterSelection) SwingUtilities.getWindowAncestor(createBtn);
 //    			CharacterEditLayout.createAndShowGUI(getThisFrame());
     			CharacterEditLayout.createAndShowGUI(rootframe);
@@ -210,7 +190,6 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		public void actionPerformed(ActionEvent e){
     			if (!characterList.isSelectionEmpty()){
         			isCreatingNew = false;
-//					CharacterEditLayout ceFrame = new CharacterEditLayout();
 					System.out.println(getThisFrame());
 					CharacterEditLayout.createAndShowGUI(getThisFrame());
 					setEnabled(false);
@@ -222,9 +201,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		public void actionPerformed(ActionEvent e){
                 String key = (String) characterList.getSelectedValue();
                 FighterModel fm = new FighterModel();
-//        		String g = Utils.readFile(Config.CHARACTOR_FILE);
-//        		fm = Utils.fromJson(g, FighterModel.class);
-//              Fighter f1 = hm1.get(key);
+                
                 hm1.remove(key);
         		fm.setFighters(hm1);
         		
@@ -263,15 +240,12 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         });
 
         focusManage();
-    }//end of constructor
+    }
     
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-//		if (e.getSource() == selectBtn){
-//			owner.setSelectedFighter(new Fighter(3,6,6));			
-//        }
 	}
+	
 	@Override
     public void valueChanged(ListSelectionEvent e){
         if (!characterList.isSelectionEmpty()){
@@ -310,12 +284,9 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 	}
            
     public void focusManage() {
-        // TODO Auto-generated constructor stub  
-        this.addWindowFocusListener(new WindowFocusListener() {  
-        	
+        this.addWindowFocusListener(new WindowFocusListener() {          	
             @Override  
             public void windowGainedFocus(WindowEvent e) {  
-                // TODO Auto-generated method stub  
             	jlistModel.clear();
                 System.out.println("The CS window is focused.");  
                 FighterModel fm = new FighterModel();
@@ -339,8 +310,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
             		}
             		catch (NullPointerException ex){
             			System.out.println("there is a NullPointerException");
-            		}
-        			
+            		}        			
         		}
         		if (fighter != null){
         			System.out.println(fighter.helmetIsOn + " " + fighter.getWorn().size() + " " + fighter.getWorn());
@@ -348,11 +318,9 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
             }  
   
             @Override  
-            public void windowLostFocus(WindowEvent e) {  
-                // TODO Auto-generated method stub  
+            public void windowLostFocus(WindowEvent e) { 
                 System.out.println("The CS window is not focused.");  
-            }  
-              
+            }                
         });  
         
     }
