@@ -12,6 +12,7 @@ import java.io.ObjectInputStream;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -261,6 +262,7 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 		} else if (e.getActionCommand().equals("SAVE")) {
 			String g = Utils.toJson(this.model);
 			Utils.save2File(Config.CAMPAIGN_FILE, g);
+			JOptionPane.showMessageDialog(this, "Save Success!");
 		} else if (e.getActionCommand().equals("ADD")) {
 			BaseCampaign i = new BaseCampaign(BaseCampaign.NAME);
 			model.addCampaign(i);

@@ -95,6 +95,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	    list.setSelectedIndex(0);
 	    addContentPanel();
 	    addOption();
+	    list.setSelectedIndex(0);
 	}
 
 	private JPanel addListView(){
@@ -312,6 +313,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		if(e.getActionCommand().equals("SAVE")){
 			if(selectedmap.checkValidation(selectedmap)){
 				Map.savemap(mapsmodel);
+				JOptionPane.showMessageDialog(this, "Save Success!");
 			}
 			else
 				JOptionPane.showMessageDialog(null, "<html>The map is invalid <br> it must have:<br> a indoor, a outdoor, a key <br>and Feasiable Path</html>","Invalid",JOptionPane.ERROR_MESSAGE);

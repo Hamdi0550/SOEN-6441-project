@@ -8,6 +8,7 @@ import java.awt.event.ItemEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -159,6 +160,7 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 		} else if (e.getActionCommand().equals("SAVE")) {
 			String g = Utils.toJson(this.model);
 			Utils.save2File(Config.ITEM_FILE, g);
+			JOptionPane.showMessageDialog(this, "Save Success!");
 		}
 		listener.actionPerformed(e);
 	}
