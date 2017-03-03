@@ -36,6 +36,8 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     private final JLabel bonusLabel = new JLabel(" Value ");
     
     private JDialog errorMessageWindow= new JDialog(this, "Item selection error", true);
+	private JLabel messageL = new JLabel(" ");
+	private JButton okBtn = new JButton("   OK   ");
 
 
 	ArrayList<BaseItem> al1 = new ArrayList<>();
@@ -43,8 +45,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	public String fighterKeyName = "fighter111";
     private static CharacterEditLayout owner;
     public BaseItem selectedItem;
-	private JLabel messageL = new JLabel(" ");
-	private JButton okBtn = new JButton("   OK   ");
 
     public static void main(String[] args) 
     {
@@ -144,36 +144,40 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         buttonsPanel.add(new JLabel("     "));
         buttonsPanel.setSize(300,500);
         selectBtn.setEnabled(false);
-//        itemJList.addListSelectionListener(this);
     	addListView();
-//    	errorMessageWindow.addWindowListener(new WindowAdapter(){
-//    		public void windowClosing(WindowEvent e){
-//    			errorMessageWindow.setVisible(false);;
-//    		}
-//    	});
     	
     	okBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			errorMessageWindow.dispose();
-//    			errorMessageWindow.setVisible(false);
             }
         }); 
 
         
-
+    	
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			BaseItem tempItem = UtilityStorage.getItem();
 //    			owner.selectedItem = tempItem;
+    			if (owner.getOwner().fighter == null){
+    				owner.getOwner().fighter = new Fighter();
+    			}
     			if (owner.wearingType.equals(tempItem.getName())){
         			owner.getOwner().fighter.setEquipOn(owner.wearingType);
-//        			owner.getOwner().fighter.getWorn().add(selectedItem); 
-        			for (BaseItem i: owner.getOwner().fighter.getWorn()){
-        				if (i.getName().equals(owner.wearingType)){
-        					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
-        					owner.getOwner().fighter.getWorn().remove(i);
-        				}
+        			
+        			try{
+
+            			for (BaseItem i: owner.getOwner().fighter.getWorn()){
+            				if (i.getName().equals(owner.wearingType)){
+            					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
+            					owner.getOwner().fighter.getWorn().remove(i);
+            				}
+            			}
         			}
+        			catch (ConcurrentModificationException e1) {
+        				
+        			}
+        			
+        			
 					owner.getOwner().fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
         			owner.getOwner().fighter.getWorn().add(tempItem);
         			if (owner.wearingType.equals(BaseItem.HELMET)){
@@ -203,9 +207,10 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         			dispose();
     			}
     			else{
+    				JOptionPane.showMessageDialog(null, "Must a type");
     				System.out.println("Not correct type=========");
-    				messageL.setText("You must choose a " + owner.wearingType + "for this part!");
-    				ShowErrorMessage();
+//    				messageL.setText("You must choose a " + owner.wearingType + " for this part!");
+//    				ShowErrorMessage();
     			}
             }
         });
@@ -217,12 +222,12 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
 
-//        focusManage();
-    }//end of constructor
+
+    }
     
     public void ShowErrorMessage(){
     	errorMessageWindow.setLayout(new FlowLayout());
-    	errorMessageWindow.setBounds(400, 300, 300, 200);
+    	errorMessageWindow.setBounds(400, 300, 250, 150);
     	errorMessageWindow.add(messageL);
     	errorMessageWindow.add(okBtn);
     	errorMessageWindow.setVisible(true);
@@ -240,9 +245,9 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
     public void valueChanged(ListSelectionEvent e)
     {
@@ -268,7 +273,4 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 		return this;
 	}
 	
-	public int getID(){
-		return id;
-	}
  }
