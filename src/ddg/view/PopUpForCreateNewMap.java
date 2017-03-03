@@ -25,8 +25,8 @@ public class PopUpForCreateNewMap extends JDialog implements ActionListener,Chan
 	private int column;
 	private JTextField rowtext = new JTextField("10",4);
 	private JTextField columntext = new JTextField("10",4);
-    private JSlider rowslider = new JSlider(10,190,10);
-    private JSlider columnslider = new JSlider(10,190,10);
+    private JSlider rowslider = new JSlider(10,110,10);
+    private JSlider columnslider = new JSlider(10,110,10);
 
     /**
      * @param owner	the owner frame of this dialog
@@ -38,14 +38,14 @@ public class PopUpForCreateNewMap extends JDialog implements ActionListener,Chan
         this.column = 0;
         rowslider.setPaintTicks(true);
         rowslider.setPaintLabels(true);
-        rowslider.setMajorTickSpacing(30);
-        rowslider.setMinorTickSpacing(15);
+        rowslider.setMajorTickSpacing(20);
+        rowslider.setMinorTickSpacing(5);
         rowslider.addChangeListener(this);
         
         columnslider.setPaintTicks(true);
         columnslider.setPaintLabels(true);
-        columnslider.setMajorTickSpacing(30);
-        columnslider.setMinorTickSpacing(15);
+        columnslider.setMajorTickSpacing(20);
+        columnslider.setMinorTickSpacing(5);
         columnslider.addChangeListener(this);
         rowtext.setEnabled(false);
         columntext.setEnabled(false);
