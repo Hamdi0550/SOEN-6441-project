@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 
 import com.google.gson.Gson;
 /**
@@ -87,5 +88,10 @@ public class Utils {
 			e.printStackTrace();
 		}
 		return lines;
+	}
+	
+	public int getRadom(int max) {
+		Random r = new Random();
+		return r.nextInt(max);
 	}
 }

@@ -87,6 +87,8 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 	 */
 	private void addListView() {
 		JPanel listPanel = new JPanel();
+		BorderLayout layout = new BorderLayout();
+		listPanel.setLayout(layout);
 		listPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT));
 		DefaultListModel l = model.getListModel();
 		list = new JList(l);
@@ -104,8 +106,7 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
         	typeComboBox.addItem("  +  " + i);
         }
         typeComboBox.addDItemListener(this);
-        listPanel.add(typeComboBox);
-        
+        listPanel.add(typeComboBox, BorderLayout.SOUTH);
 		add(listPanel, BorderLayout.WEST);
 	}
 

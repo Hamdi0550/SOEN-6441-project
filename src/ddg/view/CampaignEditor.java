@@ -74,7 +74,6 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 		
 		if (this.mapData == null) {
 			this.mapData = new MapEditorModel();
-			this.mapData.add(new Map());
 		}
 
 		String g = Utils.readFile(Config.CAMPAIGN_FILE);
