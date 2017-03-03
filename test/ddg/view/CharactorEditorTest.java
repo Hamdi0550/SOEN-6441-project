@@ -59,11 +59,11 @@ public class CharactorEditorTest {
 	@Test
 	public void testAbility() {
 		BaseItem i = new BaseItem(BaseItem.RING, 3, Ability.STRENGTH);
-		int init = fighter.getStrength();
+		int init = fighter.getTotalStrength();
 
 		fighter.wearItem(i);
 		
-		int after = fighter.getStrength();
+		int after = fighter.getTotalStrength();
 		assertTrue(after-init==3);
 	}
 
