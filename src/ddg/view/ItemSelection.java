@@ -48,27 +48,21 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 
     public static void main(String[] args) 
     {
-        //call the method to build the frame
     	ItemSelection frame1 = new ItemSelection();
-//    	createAndShowGUI();
-    }//end of main()
-    ///////////////////////////////////////////////////////////////////////////
+    }
     public static void createAndShowGUI(CharacterEditLayout ownerFrame) 
     {
 
         owner = (CharacterEditLayout) ownerFrame;
         System.out.println("========"+owner);
-        //new up  this class, & call constructor, --due to extends, it is a frame
     	ItemSelection frame1 = new ItemSelection(); 
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
-//        frame1.setResizable(false);
         frame1.setVisible(true);
-    }//end of createAndShowGUI()
-    ///////////////////////////////////////////////////////////////////////////
+    }
+
     ItemSelection()
     {
-        //build the frame with a title and define layout
         super();
         setTitle("Select Item 2");
         setModal(true);
@@ -92,12 +86,10 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 //        id = 2;
 
         add(backPanel, BorderLayout.NORTH);
-//        backPanel.setPreferredSize(new Dimension(600,300));
         backPanel.add(characterPanel, BorderLayout.WEST);
         backPanel.add(attributesPanel, BorderLayout.CENTER);
         backPanel.add(backpackPanel, BorderLayout.EAST);
         backpackPanel.add(buttonsPanel, BorderLayout.SOUTH);
-//        backpackPanel.add(backpackListPanel, BorderLayout.CENTER);
         itemJList.setPreferredSize(new Dimension(200,560));
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
         attributesPanel.setPreferredSize(new Dimension(300,320));
@@ -221,8 +213,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         });    	
 
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
-
-
     }
     
     public void ShowErrorMessage(){
@@ -231,7 +221,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     	errorMessageWindow.add(messageL);
     	errorMessageWindow.add(okBtn);
     	errorMessageWindow.setVisible(true);
-
     }
     
 	private void addListView() {
@@ -244,8 +233,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 		itemListPane.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT-3 * Config.BTN_HEIGHT));
 	}
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		
+	public void actionPerformed(ActionEvent e) {		
 	}
 	
 	@Override

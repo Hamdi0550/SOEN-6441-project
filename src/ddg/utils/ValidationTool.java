@@ -76,19 +76,22 @@ public class ValidationTool {
 	 */
 	public boolean hasEntryDoor() {
 		hasvaildpath = false;
+		int indooraccount = 0;
 		for(int i=0;i<map.getRow();i++){
 			for(int j=0;j<map.getColumn();j++){
 				if(map.getLocation()[i][j] == 'i'){
 					usedcell.clear();
 					hasValidPath(i,j);
+					indooraccount++;
 				}
 			}
 		}
-		
-		if(hasvaildpath){
+		if(indooraccount!=1){
+			return false;
+		}
+		else if(hasvaildpath){
 			return true;
 		}
-		
 		return false;
 	}
 	
