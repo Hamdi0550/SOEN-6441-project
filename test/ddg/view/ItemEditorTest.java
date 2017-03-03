@@ -5,10 +5,14 @@ package ddg.view;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import ddg.Config;
 import ddg.item.entity.BaseItem;
+import ddg.model.ItemEditorModel;
+import ddg.utils.Utils;
 
 /**
  * This class is test item editor
@@ -18,7 +22,8 @@ import ddg.item.entity.BaseItem;
  */
 public class ItemEditorTest {
 
-//	private ItemD
+	private static String[] items;
+	private ItemEditorModel model;
 	/**
 	 * This method set up test environment
 	 * 
@@ -26,30 +31,37 @@ public class ItemEditorTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		String[] items = new String[] {BaseItem.HELMET, BaseItem.ARMOR, BaseItem.SHIELD, BaseItem.RING,
+		items = new String[] {BaseItem.HELMET, BaseItem.ARMOR, BaseItem.SHIELD, BaseItem.RING,
 				BaseItem.BELT, BaseItem.BOOTS, BaseItem.WEAPON};
+	}
+	
+	@Before
+	public void initItem() {
+		model = new ItemEditorModel();
+		for(int i=0;i<10;i++) {
+			model.addItem(new BaseItem(items[Utils.getRadom(6)]));
+		}
 	}
 
 	@Test
 	public void testCreate() {
-		for(int i=0;i<10;i++) {
-			
-		}
-		fail("Not yet implemented");
+		assertTrue(model.getListModel().getSize() == 10);
 	}
 
 	@Test
 	public void testEdit() {
-		fail("Not yet implemented");
+		for(int i=0;i<10;i++) {
+			model.addItem(new BaseItem(items[Utils.getRadom(6)]));
+		}
+		assertTrue(model.getListModel().getSize() == 20);
 	}
 	
 	@Test
-	public void testSave() {
-		fail("Not yet implemented");
-	}
-	
-	@Test
-	public void testLoad() {
-		fail("Not yet implemented");
+	public void testSaveLoad() {
+		String g = Utils.toJson(this.model);
+		Utils.save2File(Config.ITEM_FILE, g);
+		
+		String s = Utils.readFile(Config.ITEM_FILE);
+		assertEquals(g, s);
 	}
 }
