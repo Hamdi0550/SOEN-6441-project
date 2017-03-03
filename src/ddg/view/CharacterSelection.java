@@ -91,7 +91,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
      * @param owner
      * @param title
      */
-	CharacterSelection(JFrame owner, String title)
+	public CharacterSelection(JFrame owner, String title)
     {
         super(owner, title);
         this.owner = (DDGameMain)owner;

@@ -62,7 +62,6 @@ public class BaseItem implements java.io.Serializable{
 		this.bonus = bonus;
 		this.increase = increase;
 		this.ability = getAbility(name);
-		this.increase = this.ability[0];
 	}
 	
 	/**

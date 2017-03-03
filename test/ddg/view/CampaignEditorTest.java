@@ -13,7 +13,7 @@ import ddg.model.CampaignEditorModel;
 
 /**
  * 
- * This class
+ * This class is test the campaign edit
  * 
  * @author Hamzah Hamdi
  * @date Mar 2, 2017

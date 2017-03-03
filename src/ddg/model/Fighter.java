@@ -470,4 +470,20 @@ public class Fighter implements Serializable{
 			}			
 		}
 	}
+	
+	public boolean wearItem(BaseItem i) {
+		Iterator<BaseItem> iterator = getWorn().iterator();
+		while(iterator.hasNext()) {
+			BaseItem next = iterator.next();
+			if(next.getName().equals(i.getName())) {
+				gainBonus(next.getIncrease(), next.getBonus(), "-");
+				iterator.remove();
+			}
+		}
+
+		gainBonus(i.getIncrease(), i.getBonus(), "+");
+		getWorn().add(i);
+		
+		return true;
+    }
 }
