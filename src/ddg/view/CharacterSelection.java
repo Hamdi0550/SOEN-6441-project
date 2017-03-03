@@ -256,13 +256,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
                         jlistModel.addElement(keyName);
                     }
         		}
-//        		if (hm1 == null){
-//            		characterList.setSelectedIndex(0);
-//        		}
-//        		else{
         			deleteBtn.setEnabled(false);
-//        		}
-        			
             }
         });
     	
@@ -307,10 +301,13 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getWisdom())));
     		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getCharisma())));
 
+    		System.out.println("===========================");
     		System.out.println(fighter);
     		System.out.println(fighter.getName());
     		System.out.println("backpack now  has " + fighter.getBackpack().size());
     		System.out.println("worn now  has " +fighter.getWorn().size());
+    		System.out.print(fighter.isHelmetOn);
+    		System.out.print(" ");
     		System.out.print(fighter.isArmorOn);
     		System.out.print(" ");
     		System.out.print(fighter.isBeltOn);
@@ -319,13 +316,12 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		System.out.print(" ");
     		System.out.print(fighter.isBootsOn);
     		System.out.print(" ");
-    		System.out.print(fighter.isHelmetOn);
+    		System.out.print(fighter.isWeaponOn);
     		System.out.print(" ");
     		System.out.print(fighter.IsShieldOn);
-    		System.out.print(" ");
-    		System.out.print(fighter.isWeaponOn);
     		System.out.println(fighter.getBackpack());
     		System.out.println(fighter.getWorn());
+    		System.out.println("===========================");
         }
         System.out.println("value changed");
         

@@ -92,7 +92,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         ImageIcon icon = new ImageIcon("icon1.jpg");  
         icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth(),  
                 icon.getIconHeight(), Image.SCALE_DEFAULT)); 
-//        id = 2;
 
         add(backPanel, BorderLayout.NORTH);
         backPanel.add(characterPanel, BorderLayout.WEST);
@@ -157,8 +156,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     	
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
-    			BaseItem tempItem = UtilityStorage.getItem();
-//    			owner.selectedItem = tempItem;
+    			BaseItem tempItem = selectedItem;
     			if (owner.getOwner().fighter == null){
     				owner.getOwner().fighter = new Fighter();
     			}
@@ -202,8 +200,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         			} else if (owner.wearingType.equals(BaseItem.SHIELD)){
             			owner.shieldBtn.setText("");
             			owner.shieldBtn.setIcon(Config.iconByType(owner.wearingType));
-        			}
-//        			owner.getOwner().fighter.getBackpack().add(selectedItem);   			
+        			}		
         			System.out.println(tempItem.getId() + " " + tempItem.getName() + " " + tempItem.getIncrease() + " " + tempItem.getBonus());
         			dispose();
     			}

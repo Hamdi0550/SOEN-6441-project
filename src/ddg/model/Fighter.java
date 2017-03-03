@@ -442,31 +442,49 @@ public class Fighter implements Serializable{
 	public void gainBonus(String increase, int bonus, String string) {
 		if (string.equals("+")){
 			if (increase.equals(Ability.STRENGTH)){
-				strength = strength + bonus;
+				setGainedStrength(gainedStrength + bonus);
+//				strength = strength + bonus;
 			} else if (increase.equals(Ability.DEXTERITY)){
-				dexterity = dexterity + bonus;
+				setGainedDexterity(gainedDexterity + bonus);
+//				dexterity = dexterity + bonus;
 			} else if (increase.equals(Ability.CONSTITUTION)){
-				constitution = constitution + bonus;
+				setGainedConstitution(gainedConstitution + bonus);
+//				constitution = constitution + bonus;
 			} else if (increase.equals(Ability.INTELLIGENCE)){
-				intelligence = intelligence + bonus;
+				setGainedIntelligence(gainedIntelligence + bonus);
+//				intelligence = intelligence + bonus;
 			} else if (increase.equals(Ability.WISDOM)){
-				wisdom = wisdom + bonus;
+				setGainedWisdom(gainedWisdom + bonus);
+//				wisdom = wisdom + bonus;
 			} else if (increase.equals(Ability.CHARISMA)){
-				charisma = charisma + bonus;
+				setGainedCharisma(gainedCharisma + bonus);
+//				charisma = charisma + bonus;
+			} else if (increase.equals(Ability.ARMOR_CLASS)){
+				setGainedArmorClass(gainedArmorClass + bonus);
+//				armorClass = armorClass + bonus;
 			}			
 		} else if (string.equals("-")){
 			if (increase.equals(Ability.STRENGTH)){
-				strength = strength - bonus;
+				setGainedStrength(gainedStrength - bonus);
+//				strength = strength + gainedStrength;
 			} else if (increase.equals(Ability.DEXTERITY)){
-				dexterity = dexterity - bonus;
+				setGainedDexterity(gainedDexterity - bonus);
+//				dexterity = dexterity + gainedDexterity;
 			} else if (increase.equals(Ability.CONSTITUTION)){
-				constitution = constitution - bonus;
+				setGainedConstitution(gainedConstitution - bonus);
+//				constitution = constitution - gainedConstitution;
 			} else if (increase.equals(Ability.INTELLIGENCE)){
-				intelligence = intelligence - bonus;
+				setGainedIntelligence(gainedIntelligence - bonus);
+//				intelligence = intelligence + gainedIntelligence;
 			} else if (increase.equals(Ability.WISDOM)){
-				wisdom = wisdom - bonus;
+				setGainedWisdom(gainedWisdom - bonus);
+//				wisdom = wisdom + gainedWisdom;
 			} else if (increase.equals(Ability.CHARISMA)){
-				charisma = charisma - bonus;
+				setGainedCharisma(gainedCharisma - bonus);
+//				charisma = charisma + gainedCharisma;
+			} else if (increase.equals(Ability.ARMOR_CLASS)){
+				setGainedArmorClass(gainedArmorClass - bonus);
+//				armorClass = armorClass + gainedArmorClass;
 			}			
 		}
 	}

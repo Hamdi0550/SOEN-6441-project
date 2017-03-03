@@ -71,10 +71,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     public String wearingType; 
     public JDialog thisWindow = this;
     
-//    private JDialog errorMessageWindow= new JDialog(this, "Error Message", true);
-//	private JLabel messageL = new JLabel(" ");
-//	private JButton okBtn = new JButton("   OK   ");
-
     /**
      * 
      * @param ownerFrame
@@ -104,10 +100,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         JPanel characterPanel= new JPanel(new BorderLayout());
         JPanel attributesPanel= new JPanel(new GridLayout(10,4,5,5));
         JPanel buttonsPanel= new JPanel(new GridLayout(10,1,5,5));
-//        Config.HELMET_ICON.setImage(Config.HELMET_ICON.getImage().getScaledInstance(Config.HELMET_ICON.getIconWidth(),  
-//        		Config.HELMET_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
-//        Config.WEAPON_ICON.setImage(Config.WEAPON_ICON.getImage().getScaledInstance(Config.WEAPON_ICON.getIconWidth(),  
-//        		Config.WEAPON_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
         
         JPanel characterLeftPanel= new JPanel(new GridLayout(5,1,5,5));
         JPanel characterRightPanel= new JPanel(new GridLayout(5,1,5,5));
@@ -119,13 +111,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         characterPanel.add(characterLeftPanel, BorderLayout.WEST);
         characterPanel.add(characterImagePanel, BorderLayout.CENTER);
         characterPanel.add(characterRightPanel, BorderLayout.EAST);
-//        helmetBtn.setIcon(Config.HELMET_ICON);
-//        beltBtn.setIcon(Config.BELT_ICON);
-//        weaponBtn.setIcon(Config.WEAPON_ICON);
-//        ringBtn.setIcon(Config.RING_ICON);
-//        bootsBtn.setIcon(Config.BOOTS_ICON);
-//        armorBtn.setIcon(Config.ARMOR_ICON);
-//        shieldBtn.setIcon(Config.SHIELD_ICON);
         characterLeftPanel.add(helmetBtn);
         characterLeftPanel.add(armorBtn);
         characterLeftPanel.add(beltBtn);
@@ -133,16 +118,14 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         characterRightPanel.add(bootsBtn);
         characterRightPanel.add(weaponBtn);
         characterRightPanel.add(shieldBtn);
-        characterImagePanel.setBackground(Color.YELLOW);
         characterImagePanel.setBounds(0, 0, 500, 500);
         characterImagePanel.add(new JLabel("                                                                 "));
         buttonsPanel.setPreferredSize(new Dimension(100,320));
         characterLeftPanel.setPreferredSize(new Dimension(100,320));
         characterRightPanel.setPreferredSize(new Dimension(100,320));
         attributesPanel.setPreferredSize(new Dimension(600,320));
-        characterImagePanel.setPreferredSize(new Dimension(350,320));
+        characterImagePanel.setPreferredSize(new Dimension(230,320));
         
-        characterImagePanel.setPreferredSize(new Dimension(350,320));
         JLabel lb1 = new JLabel(" ");
         lb1.setBorder(new LineBorder(Color.BLACK));
         nameModiferL.setBorder(new LineBorder(Color.BLACK));
@@ -157,8 +140,8 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         lb1.setBounds(0, 0, 20, 15);
         lb1.setIcon(Config.HELMET_ICON);
         lb1.setText(" 2 ");
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(lb1);
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
         attributesPanel.add(new JLabel(" Modifier "));
         attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Name "));
@@ -193,10 +176,10 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         attributesPanel.add(charismaTextF);
         attributesPanel.add(chaModiferL);
         attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(new JLabel("   1  "));
-        attributesPanel.add(new JLabel("   1  "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
         if (owner.isCreatingNew == false){
         	nameTextF.setEditable(false);
         }
@@ -316,7 +299,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	    		intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
 	    		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
 	    		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));
-//				System.out.println("I get the owner's id " + owner.id);
 				System.out.println("I get the figher " + owner.fighterKeyName);
 	        }
 	    });
@@ -329,12 +311,9 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 					System.out.println("owner.fighter is not null");
 					fighter1 = owner.fighter;					
 				}
-//				JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
 				if (nameTextF.getText().equals("")){
 					JOptionPane.showMessageDialog(null, "The character must have a name.", "Warning", JOptionPane.WARNING_MESSAGE);
     				
-//    				messageL.setText("The character must have a name!");
-//					ShowErrorMessage();
 				} else if(levelTextF.getText().equals("")){
 					JOptionPane.showMessageDialog(null, "You must input level.", "Warning", JOptionPane.WARNING_MESSAGE);
 				} else {
@@ -465,7 +444,9 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		inventoryBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println(getThisFrame());
-				InventoryView.createAndShowGUI(getThisFrame());
+				if (owner.fighter != null){
+					InventoryView.createAndShowGUI(getThisFrame());					
+				}
 			}
 		});    	
 		
@@ -485,22 +466,12 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	}
 	
 	/**
-	 * 
+	 * Get the owner window
 	 */
 	public CharacterSelection getOwner(){
 		return owner;
 	}
-	/**
-	 * 
-	 */
-//    public void ShowErrorMessage(){
-//    	errorMessageWindow.setLayout(new FlowLayout());
-//    	errorMessageWindow.setBounds(400, 300, 250, 150);
-//    	errorMessageWindow.add(messageL);
-//    	errorMessageWindow.add(okBtn);
-//    	errorMessageWindow.setVisible(true);
-//
-//    }
+	
 	/**
 	 * This method manage the actions of the window focus
 	 */
@@ -529,10 +500,13 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		    	 System.out.println(owner.fighter.getWorn().size() + "==========" + owner.fighter.getWorn());
 		    	 Fighter f2 = owner.fighter;
 
+		    		System.out.println("===========================");
 		    		System.out.println(f2);
 		    		System.out.println(f2.getName());
 		    		System.out.println("backpack now  has " + f2.getBackpack().size());
 		    		System.out.println("worn now  has " +f2.getWorn().size());
+		    		System.out.print(f2.isHelmetOn);
+		    		System.out.print(" ");
 		    		System.out.print(f2.isArmorOn);
 		    		System.out.print(" ");
 		    		System.out.print(f2.isBeltOn);
@@ -541,13 +515,12 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		    		System.out.print(" ");
 		    		System.out.print(f2.isBootsOn);
 		    		System.out.print(" ");
-		    		System.out.print(f2.isHelmetOn);
+		    		System.out.print(f2.isWeaponOn);
 		    		System.out.print(" ");
 		    		System.out.print(f2.IsShieldOn);
-		    		System.out.print(" ");
-		    		System.out.print(f2.isWeaponOn);
 		    		System.out.println(f2.getBackpack());
 		    		System.out.println(f2.getWorn());
+		    		System.out.println("===========================");
 	    	 }
 	     }  
 	
@@ -622,7 +595,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	     */
 	    public void paintComponent(Graphics g) {  
 	        super.paintComponent(g);  
-	        g.drawImage(img, 0, 0,300, 300, this); 
+	        g.drawImage(img, 0, 0,230, 320, this); 
 		}
 	}
     
