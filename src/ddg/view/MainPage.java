@@ -2,9 +2,12 @@ package ddg.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -40,8 +43,10 @@ public class MainPage extends JPanel implements ActionListener {
 		BorderLayout l = new BorderLayout();
 	    setLayout(l);
 		JPanel contentPanel = new JPanel();
-		JTextArea ddg = new JTextArea("DDG");
-		ddg.setEditable(false);
+		JLabel ddg = new JLabel();
+		ImageIcon icon = new ImageIcon("./res/logo.jpg");
+		ddg.setIcon(icon);
+		ddg.setSize(Config.CENTER_WIDTH, Config.CENTER_HEIGHT);
 		contentPanel.add(ddg);
 	    add(contentPanel, BorderLayout.CENTER);
 	    
@@ -68,9 +73,11 @@ public class MainPage extends JPanel implements ActionListener {
 	    DButton itemBtn = new DButton("ITEM", this);
 	    itemBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton continueBtn = new DButton("CONTINUE", this);
+	    continueBtn.setEnabled(false);
 	    continueBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton startBtn = new DButton("START", this);
 	    startBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
+	    startBtn.setEnabled(false);
 	    optionPanel.add(optionTitle);
 	    optionPanel.add(charactorBtn);
 	    optionPanel.add(campaignBtn);
