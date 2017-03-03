@@ -6,6 +6,8 @@ package ddg.map.entity;
  * @Feb 22,2017
  */
 public class Cell<T> implements java.io.Serializable{
+	private static final long serialVersionUID = -4203753997046674059L;
+	
 	private T content;	// content in the cell
 	private boolean isfriendly;	//show if the content is friendly to player, mainly used to describe character content
 

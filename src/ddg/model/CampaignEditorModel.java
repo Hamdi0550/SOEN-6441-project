@@ -40,7 +40,7 @@ public class CampaignEditorModel {
 	public DefaultListModel getListModel() {
 		DefaultListModel l = new DefaultListModel();
 		for (BaseCampaign i : this.campaigns) {
-			l.addElement(new ListEntry(i.getId(), new ImageIcon("res/campaign.png")));
+			l.addElement(new ListEntry(i.getId(), new ImageIcon("res/Campaign.png")));
 		}
 		return l;
 	}

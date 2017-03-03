@@ -10,6 +10,8 @@ import com.google.gson.annotations.SerializedName;
  * @date Feb 22, 2017
  */
 public class BaseItem implements java.io.Serializable{
+	private static final long serialVersionUID = 1417331693668110660L;
+	
 	public static final String TYPE = "type";
 	public static final String ABILITY = "ability";
 	public static final String BONUS = "bonus";

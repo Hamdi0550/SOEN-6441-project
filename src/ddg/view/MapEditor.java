@@ -34,7 +34,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 
 	private ActionListener listener;
 	private MapEditorModel mapsmodel;
-	private Map selectedmap;
+	private Map selectedmap;// = new Map();
 	// set the size of map. it could be changed if click the S/M/L button
 	private JList list;
 
@@ -55,7 +55,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	public MapEditor(ActionListener a) {
 		this.listener = a;
 		this.hasvaildpath = false;
-		selectedmap=null;
+//		selectedmap=null;
 		optionPanel = new JPanel();
 		contentPanel = new JPanel();
 		initData();
@@ -76,16 +76,16 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	      }catch(IOException i)
 	      {
 	         i.printStackTrace();
-	         return;
 	      }catch(ClassNotFoundException c)
 	      {
-	         System.out.println("Employee class not found");
 	         c.printStackTrace();
-	         return;
+	      }catch(Exception e){
+	    	  e.printStackTrace();
 	      }
 		
 		if (this.mapsmodel == null) {
 			this.mapsmodel = new MapEditorModel();
+			this.mapsmodel.add(new Map());
 		}
 	}
 	

@@ -22,6 +22,7 @@ import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.campaign.entity.BaseCampaign;
+import ddg.map.entity.Map;
 import ddg.model.CampaignEditorModel;
 import ddg.model.MapEditorModel;
 import ddg.utils.Utils;
@@ -62,17 +63,18 @@ public class CampaignEditor extends JPanel implements ActionListener, ListSelect
 	         fileIn.close();
 	      }catch(IOException i)
 	      {
-	         i.printStackTrace();
-	         return;
+	         i.printStackTrace(); 
+	         this.mapData = new MapEditorModel();
 	      }catch(ClassNotFoundException c)
 	      {
 	         System.out.println("Employee class not found");
 	         c.printStackTrace();
-	         return;
+	         this.mapData = new MapEditorModel();
 	      }
 		
 		if (this.mapData == null) {
 			this.mapData = new MapEditorModel();
+			this.mapData.add(new Map());
 		}
 
 		String g = Utils.readFile(Config.CAMPAIGN_FILE);

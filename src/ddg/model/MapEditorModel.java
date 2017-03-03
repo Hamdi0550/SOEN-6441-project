@@ -13,6 +13,8 @@ import javax.swing.*;
  * a model for save and retrieve all the map in the MapFile
  */
 public class MapEditorModel implements java.io.Serializable{
+	private static final long serialVersionUID = 3102294396514393449L;
+	
 		private ArrayList<Map> maps;
 	
 		public MapEditorModel() {
@@ -40,6 +42,7 @@ public class MapEditorModel implements java.io.Serializable{
 		 */
 		public DefaultListModel getMapListModel(){
 			DefaultListModel l = new DefaultListModel();
+			
 			for (Map i : maps) {
 				l.addElement(new ListEntry(i.getName()));
 			}

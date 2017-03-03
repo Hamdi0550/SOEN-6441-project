@@ -19,6 +19,8 @@ import ddg.utils.ValidationTool;
  *
  */
 public class Map implements java.io.Serializable{
+	private static final long serialVersionUID = -8908299320533978891L;
+	
 	// record the location of things in the map
 	private String name;
 	private char[][] location;
@@ -33,6 +35,7 @@ public class Map implements java.io.Serializable{
 //	private List<Charactor> monster;
 	
 	public Map(){
+		this.name ="Map1";
 		this.row = 10;
 		this.column = 10;
 		this.location = new char[row][column];	// record the inform of location on the map
