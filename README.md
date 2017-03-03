@@ -37,6 +37,3 @@ Window->preferences->Code Style->Code Templates->comments
  * ${tags}
  */
 ```
-/**
-*testtest
-*/
