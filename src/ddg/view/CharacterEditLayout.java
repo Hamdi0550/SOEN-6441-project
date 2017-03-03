@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 import javax.swing.border.*;
 
 public class CharacterEditLayout extends JDialog implements ActionListener {
-    //define components in the frame
 
     private final JButton saveBtn = new JButton("      Save      ");
     private final JButton cancelBtn = new JButton("      Cancel      ");
@@ -64,37 +63,27 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     public BaseItem selectedItem = null;
     public String wearingType; 
     public JDialog thisWindow = this;
+    
+    private JDialog errorMessageWindow= new JDialog(this, "Error Message", true);
+	private JLabel messageL = new JLabel(" ");
+	private JButton okBtn = new JButton("   OK   ");
 
 
-    public static void main(String[] args) 
-    {
-        //call the method to build the frame
-//    	JFrame f1 = new JFrame("owner");
-//    	CharacterSelection f1 = new CharacterSelection();
+    public static void main(String[] args){
     	CharacterEditLayout f2 = new CharacterEditLayout();
-//        f2.createAndShowGUI(f1);
-    }//end of main()
-    ///////////////////////////////////////////////////////////////////////////
-    public static void createAndShowGUI(CharacterSelection ownerFrame) 
-    {
+    }
+    public static void createAndShowGUI(CharacterSelection ownerFrame){
         owner = (CharacterSelection) ownerFrame;
         
         System.out.println("========"+owner);
         CharacterEditLayout frame1 = new CharacterEditLayout(); 
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
-//        frame1.setResizable(false);
         frame1.setVisible(true);
-//        if (ownerFrame != null){
-//        }
-        	
-//        this.owner = getOwner(ownerFrame);
         
-    }//end of createAndShowGUI()
-    ///////////////////////////////////////////////////////////////////////////
+    }
     CharacterEditLayout()
     {
-        //build the frame with a title and define layout
         super();
         setTitle("Character Editor");
         setModal(true);
@@ -103,12 +92,10 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         JPanel characterPanel= new JPanel(new BorderLayout());
         JPanel attributesPanel= new JPanel(new GridLayout(10,4,5,5));
         JPanel buttonsPanel= new JPanel(new GridLayout(10,1,5,5));
-//        ImageIcon icon = new ImageIcon("res/Helmet.jpg");  
         Config.HELMET_ICON.setImage(Config.HELMET_ICON.getImage().getScaledInstance(Config.HELMET_ICON.getIconWidth(),  
         		Config.HELMET_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
         Config.WEAPON_ICON.setImage(Config.WEAPON_ICON.getImage().getScaledInstance(Config.WEAPON_ICON.getIconWidth(),  
         		Config.WEAPON_ICON.getIconHeight(), Image.SCALE_DEFAULT)); 
-        id = 1;
         
         JPanel characterLeftPanel= new JPanel(new GridLayout(5,1,5,5));
         JPanel characterRightPanel= new JPanel(new GridLayout(5,1,5,5));
@@ -128,14 +115,12 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 //        armorBtn.setIcon(Config.ARMOR_ICON);
 //        shieldBtn.setIcon(Config.SHIELD_ICON);
         characterLeftPanel.add(helmetBtn);
-//        characterLeftPanel.add(shoulderBtn);
         characterLeftPanel.add(armorBtn);
         characterLeftPanel.add(beltBtn);
         characterRightPanel.add(ringBtn);
         characterRightPanel.add(bootsBtn);
         characterRightPanel.add(weaponBtn);
         characterRightPanel.add(shieldBtn);
-//        characterImagePanel.setSize(300, 500);
         characterImagePanel.setBackground(Color.YELLOW);
         characterImagePanel.setBounds(0, 0, 500, 500);
         characterImagePanel.add(new JLabel("                                                                 "));
@@ -214,12 +199,12 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         buttonsPanel.add(saveBtn);
         buttonsPanel.add(cancelBtn);
         buttonsPanel.setSize(300,500);
+        
         getOwnerInformation();
         focusManage();
-//        g.drawRect(0, 0, 300, 500);
         buttonsManage();
             
-    }//end of constructor
+    }
     
 	private void getOwnerInformation() {
 		if(owner == null){
@@ -275,7 +260,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	void buttonsManage(){
@@ -296,19 +280,12 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				}
 //				JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
 				if (nameTextF.getText().equals("")){
-					JDialog jd = new JDialog(thisWindow,"Error Message", true);
-					JLabel jl = new JLabel();
-					jd.setBounds(400, 300, 300, 200);
-					jd.setLayout(new FlowLayout());
-					jd.add(jl);
-					jd.add(new JButton("OK"));
-					jl.setText("The character must have a name.");
-					jd.setVisible(true);
+    				messageL.setText("The character must have a name!");
+					ShowErrorMessage();
 				}
-				else{
+				else {
 					System.out.println("nametextF is not null ");
-					fighter1.setName(nameTextF.getText());					
-				}
+					fighter1.setName(nameTextF.getText());
 				fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
 				fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
 				fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
@@ -316,7 +293,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
 				fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()));
 				fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()));
-//				fighter1.setName("Chris");
                 FighterModel fm = new FighterModel();
         		String g = Utils.readFile(Config.CHARACTOR_FILE);
         		fm = Utils.fromJson(g, FighterModel.class);
@@ -336,35 +312,26 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
                             	String keyName = it1.next();
                             	if (keyName == fighter1.getName()){
                             		System.out.println("There is a characater with same name==========");
-                            	}
-                            		
-//                                jlistModel.addElement(listItem1);
+                            	}                            		
                             }
                 		}        			
             		}
             		catch (NullPointerException ex){
             			System.out.println("there is a NullPointerException");
-            		}
-        			
+            		}        			
         		}
-//				Fighter fighter2 = new Fighter(1, 10, 10);
-//				fighter2.setName("Jack");
-//                FighterModel fm2 = new FighterModel();
-//        		HashMap<String, Fighter> hm2 = new HashMap<>();
         		hm1.put(fighter1.getName(), fighter1);        		
-//        		hm2.put((new Date().toLocaleString() + fighter2.getName()), fighter2);
         		fm.setFighters(hm1);
         		
-
     			String gSave = Utils.toJson(fm);
     			Utils.save2File(Config.CHARACTOR_FILE, gSave);
         		
-//				Fighter.saveFighter(fighter1);
     			owner.hm1 = hm1;
 				dispose();
 				owner.setEnabled(true);
 				owner.setVisible(true);
-	        }
+				}
+			}
 	    });
 		randomBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -449,7 +416,12 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				System.out.println(getThisFrame());
 				InventoryView.createAndShowGUI(getThisFrame());
 			}
-		});
+		});    	
+    	okBtn.addActionListener(new ActionListener(){ 
+    		public void actionPerformed(ActionEvent e){
+    			errorMessageWindow.dispose();
+            }
+        }); 
 	}
 	
 	public CharacterEditLayout getThisFrame() {
@@ -458,21 +430,20 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	public CharacterSelection getOwner(){
 		return owner;
 	}
-	
-//	void setDefaultCloseOperation(){
-//		System.out.println("X clicked");
-//		dispose();
-//		owner.setEnabled(true);
-//		owner.setVisible(true);
-//	}
+    public void ShowErrorMessage(){
+    	errorMessageWindow.setLayout(new FlowLayout());
+    	errorMessageWindow.setBounds(400, 300, 250, 150);
+    	errorMessageWindow.add(messageL);
+    	errorMessageWindow.add(okBtn);
+    	errorMessageWindow.setVisible(true);
 
-	public void focusManage() {
-	 // TODO Auto-generated constructor stub  
+    }
+
+	public void focusManage() { 
 	 this.addWindowFocusListener(new WindowFocusListener() {  
 	 	
 	     @Override  
 	     public void windowGainedFocus(WindowEvent e) {
-	         // TODO Auto-generated method stub  
 	    	 System.out.println("The CE window is focused.");  
 	    	 if (owner.fighter != null){
 		    	 nameTextF.setText(owner.fighter.getName());
@@ -495,8 +466,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	     }  
 	
 	     @Override  
-	     public void windowLostFocus(WindowEvent e) {  
-	         // TODO Auto-generated method stub  
+	     public void windowLostFocus(WindowEvent e){
 	         System.out.println("The CE window is not focused.");  
 	     }  
 	       
@@ -511,37 +481,31 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 
 		@Override
 		public void windowActivated(WindowEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void windowClosing(WindowEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void windowDeactivated(WindowEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void windowDeiconified(WindowEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void windowIconified(WindowEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void windowOpened(WindowEvent arg0) {
-			// TODO Auto-generated method stub
 			
 		}
 	 });
@@ -560,8 +524,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	    }  
 	    public void paintComponent(Graphics g) {  
 	        super.paintComponent(g);  
-	        g.drawImage(img, 0, 0,300, 300, this);  
-//		    }  
+	        g.drawImage(img, 0, 0,300, 300, this); 
 		}
 	}
     

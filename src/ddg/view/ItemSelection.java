@@ -36,6 +36,8 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     private final JLabel bonusLabel = new JLabel(" Value ");
     
     private JDialog errorMessageWindow= new JDialog(this, "Item selection error", true);
+	private JLabel messageL = new JLabel(" ");
+	private JButton okBtn = new JButton("   OK   ");
 
 
 	ArrayList<BaseItem> al1 = new ArrayList<>();
@@ -43,32 +45,24 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	public String fighterKeyName = "fighter111";
     private static CharacterEditLayout owner;
     public BaseItem selectedItem;
-	private JLabel messageL = new JLabel(" ");
-	private JButton okBtn = new JButton("   OK   ");
 
     public static void main(String[] args) 
     {
-        //call the method to build the frame
     	ItemSelection frame1 = new ItemSelection();
-//    	createAndShowGUI();
-    }//end of main()
-    ///////////////////////////////////////////////////////////////////////////
+    }
     public static void createAndShowGUI(CharacterEditLayout ownerFrame) 
     {
 
         owner = (CharacterEditLayout) ownerFrame;
         System.out.println("========"+owner);
-        //new up  this class, & call constructor, --due to extends, it is a frame
     	ItemSelection frame1 = new ItemSelection(); 
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
-//        frame1.setResizable(false);
         frame1.setVisible(true);
-    }//end of createAndShowGUI()
-    ///////////////////////////////////////////////////////////////////////////
+    }
+
     ItemSelection()
     {
-        //build the frame with a title and define layout
         super();
         setTitle("Select Item 2");
         setModal(true);
@@ -92,12 +86,10 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 //        id = 2;
 
         add(backPanel, BorderLayout.NORTH);
-//        backPanel.setPreferredSize(new Dimension(600,300));
         backPanel.add(characterPanel, BorderLayout.WEST);
         backPanel.add(attributesPanel, BorderLayout.CENTER);
         backPanel.add(backpackPanel, BorderLayout.EAST);
         backpackPanel.add(buttonsPanel, BorderLayout.SOUTH);
-//        backpackPanel.add(backpackListPanel, BorderLayout.CENTER);
         itemJList.setPreferredSize(new Dimension(200,560));
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
         attributesPanel.setPreferredSize(new Dimension(300,320));
@@ -144,36 +136,40 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         buttonsPanel.add(new JLabel("     "));
         buttonsPanel.setSize(300,500);
         selectBtn.setEnabled(false);
-//        itemJList.addListSelectionListener(this);
     	addListView();
-//    	errorMessageWindow.addWindowListener(new WindowAdapter(){
-//    		public void windowClosing(WindowEvent e){
-//    			errorMessageWindow.setVisible(false);;
-//    		}
-//    	});
     	
     	okBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			errorMessageWindow.dispose();
-//    			errorMessageWindow.setVisible(false);
             }
         }); 
 
         
-
+    	
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			BaseItem tempItem = UtilityStorage.getItem();
 //    			owner.selectedItem = tempItem;
+    			if (owner.getOwner().fighter == null){
+    				owner.getOwner().fighter = new Fighter();
+    			}
     			if (owner.wearingType.equals(tempItem.getName())){
         			owner.getOwner().fighter.setEquipOn(owner.wearingType);
-//        			owner.getOwner().fighter.getWorn().add(selectedItem); 
-        			for (BaseItem i: owner.getOwner().fighter.getWorn()){
-        				if (i.getName().equals(owner.wearingType)){
-        					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
-        					owner.getOwner().fighter.getWorn().remove(i);
-        				}
+        			
+        			try{
+
+            			for (BaseItem i: owner.getOwner().fighter.getWorn()){
+            				if (i.getName().equals(owner.wearingType)){
+            					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
+            					owner.getOwner().fighter.getWorn().remove(i);
+            				}
+            			}
         			}
+        			catch (ConcurrentModificationException e1) {
+        				
+        			}
+        			
+        			
 					owner.getOwner().fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
         			owner.getOwner().fighter.getWorn().add(tempItem);
         			if (owner.wearingType.equals(BaseItem.HELMET)){
@@ -203,9 +199,10 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         			dispose();
     			}
     			else{
+    				JOptionPane.showMessageDialog(null, "Must a type");
     				System.out.println("Not correct type=========");
-    				messageL.setText("You must choose a " + owner.wearingType + "for this part!");
-    				ShowErrorMessage();
+//    				messageL.setText("You must choose a " + owner.wearingType + " for this part!");
+//    				ShowErrorMessage();
     			}
             }
         });
@@ -216,17 +213,14 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         });    	
 
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
-
-//        focusManage();
-    }//end of constructor
+    }
     
     public void ShowErrorMessage(){
     	errorMessageWindow.setLayout(new FlowLayout());
-    	errorMessageWindow.setBounds(400, 300, 300, 200);
+    	errorMessageWindow.setBounds(400, 300, 250, 150);
     	errorMessageWindow.add(messageL);
     	errorMessageWindow.add(okBtn);
     	errorMessageWindow.setVisible(true);
-
     }
     
 	private void addListView() {
@@ -239,10 +233,9 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 		itemListPane.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT-3 * Config.BTN_HEIGHT));
 	}
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent e) {		
 	}
+	
 	@Override
     public void valueChanged(ListSelectionEvent e)
     {
@@ -268,7 +261,4 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 		return this;
 	}
 	
-	public int getID(){
-		return id;
-	}
  }
