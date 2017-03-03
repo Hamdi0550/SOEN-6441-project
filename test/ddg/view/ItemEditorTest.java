@@ -18,7 +18,7 @@ import ddg.item.entity.BaseItem;
  */
 public class ItemEditorTest {
 
-	private ItemD
+//	private ItemD
 	/**
 	 * This method set up test environment
 	 * 
