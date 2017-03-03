@@ -284,7 +284,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 		return id;
 	}
            
-    public void focusManage() {
+    private void focusManage() {
         this.addWindowFocusListener(new WindowFocusListener() {          	
             @Override  
             public void windowGainedFocus(WindowEvent e) {  

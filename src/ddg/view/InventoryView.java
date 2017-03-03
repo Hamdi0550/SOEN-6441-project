@@ -8,9 +8,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.event.*;
 
+import ddg.Config;
 import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
+import ddg.model.FighterModel;
 import ddg.utils.UtilityStorage;
+import ddg.utils.Utils;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +63,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     private final JLabel valueL = new JLabel(" R ");
     
     public String selectedWorn = null;
+    public BaseItem selectedBackPackItem = null;
     public Fighter fighter = null;
     private static CharacterEditLayout owner;
 
@@ -191,7 +195,8 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         buttonsPanel.add(cancelBtn);
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.setSize(300,500);
-        
+
+        focusManage();
 
         backpackItemList.addListSelectionListener(this);
 //        DefaultListModel<String> backpackItemModel = new DefaultListModel<String>(); 
@@ -201,7 +206,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
         backpackItemList.setPreferredSize(new Dimension(200,220));
         for(BaseItem i: owner.getOwner().fighter.getBackpack()){
-        	backpackItemModel.addElement(owner.getOwner().fighter.getBackpack().get(0).getId());
+        	backpackItemModel.addElement(i.getId());
         }      	
         
     	helmetBtn.addActionListener(new ActionListener(){ 
@@ -285,7 +290,43 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     				JOptionPane.showMessageDialog(null, "You need to choose an equipment", "Warning", JOptionPane.WARNING_MESSAGE);
     			}    			
             }
-        }); 
+        });
+    	
+    	equipBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+    			try{
+    				boolean isWearable = false;
+    				for (int i = 0; i< BaseItem.NAME.length; i++){
+    					if (BaseItem.NAME[i].equals(selectedBackPackItem.getName())){
+    						isWearable = true;
+            			}
+    				}
+    				if (isWearable == true){
+    					for (BaseItem item: owner.getOwner().fighter.getWorn()){
+	        				if (item.getName().equals(selectedBackPackItem.getName())){
+	        					owner.getOwner().fighter.gainBonus(item.getIncrease(), item.getBonus(), "-");
+	        					owner.getOwner().fighter.getBackpack().add(item);
+	        					owner.getOwner().fighter.getWorn().remove(item);
+	//        					owner.getOwner().fighter.setEquipOff(selectedWorn);
+	        					System.out.println("backpack=========" + owner.getOwner().fighter.getBackpack());  
+	        					
+	        				}
+    					}
+						owner.getOwner().fighter.gainBonus(selectedBackPackItem.getIncrease(), selectedBackPackItem.getBonus(), "+");
+						owner.getOwner().fighter.getBackpack().remove(selectedBackPackItem);
+						owner.getOwner().fighter.getWorn().add(selectedBackPackItem);
+						owner.getOwner().fighter.setEquipOn(selectedBackPackItem.getName());
+						JOptionPane.showMessageDialog(null, "The item is worn.", "Warning", JOptionPane.WARNING_MESSAGE); 
+    				} else {
+	    				JOptionPane.showMessageDialog(null, "This is not a wearable equipment.", "Warning",JOptionPane.WARNING_MESSAGE);
+    				}    				
+    			}
+    			catch (NullPointerException ex){
+    				JOptionPane.showMessageDialog(null, "You need to choose an item.", "Warning", JOptionPane.WARNING_MESSAGE);
+    			}
+				
+	        }
+		});
     	
 		cancelBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -295,6 +336,26 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 		});
         
     }
+
+	private void focusManage() {        
+		this.addWindowFocusListener(new WindowFocusListener() {          	
+	        @Override  
+	        public void windowGainedFocus(WindowEvent e) { 
+	        	backpackItemModel.clear();
+	        	for (BaseItem i: owner.getOwner().fighter.getBackpack()){
+                	backpackItemModel.addElement(i.getId());
+	        	}
+	                        
+	            	
+	        }
+	
+	        @Override  
+	        public void windowLostFocus(WindowEvent e) {
+	            System.out.println("The CS window is not focused.");  
+	        }                
+		});  
+		
+	}
 
 	public InventoryView getThisFrame() {
 		return this;

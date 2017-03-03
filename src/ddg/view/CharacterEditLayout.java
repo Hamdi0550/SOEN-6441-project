@@ -271,6 +271,40 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				
 	        }
 	    });
+
+		randomBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				Fighter f1 = new Fighter();
+				if (owner.fighter == null){
+					owner.fighter = f1;
+				} else {
+					f1 = owner.fighter;
+				}
+				
+				f1.setStrength(f1.getStrength() + Dice.d46Roll());
+				f1.setDexterity(Dice.d46Roll());
+				f1.setConstitution(Dice.d46Roll());
+				f1.setIntelligence(Dice.d46Roll());
+				f1.setWisdom(Dice.d46Roll());
+				f1.setCharisma(Dice.d46Roll());
+
+				strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
+				dexterityTextF.setText(Integer.toString(owner.fighter.getDexterity()));
+				constitutionTextF.setText(Integer.toString(owner.fighter.getConstitution()));
+				intelligenceTextF.setText(Integer.toString(owner.fighter.getIntelligence()));
+				wisdomTextF.setText(Integer.toString(owner.fighter.getWisdom()));
+				charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));
+	    		strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getStrength())));
+	    		dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getDexterity())));
+	    		conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getConstitution())));
+	    		intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
+	    		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
+	    		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));
+				System.out.println("I get the owner's id " + owner.id);
+				System.out.println("I get the figher " + owner.fighterKeyName);
+	        }
+	    });
+		
 		saveBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println("save clicked");
@@ -297,12 +331,12 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 						System.out.println("nametextF is not null ");
 						fighter1.setName(nameTextF.getText());
 						fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
-						fighter1.addStrength(Integer.parseInt(strengthTextF.getText()));
-						fighter1.addDexterity(Integer.parseInt(dexterityTextF.getText()));
-						fighter1.addConstitution(Integer.parseInt(constitutionTextF.getText()));
-						fighter1.addIntelligence(Integer.parseInt(intelligenceTextF.getText()));
-						fighter1.addWisdom(Integer.parseInt(wisdomTextF.getText()));
-						fighter1.addCharisma(Integer.parseInt(charismaTextF.getText()));
+						fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
+						fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
+						fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()));
+						fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
+						fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()));
+						fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()));
 
 					
 		                FighterModel fm = new FighterModel();
@@ -351,35 +385,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				}
 			}
 	    });
-		randomBtn.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				Fighter f1 = new Fighter();
-				if (owner.fighter == null){
-					owner.fighter = f1;
-				}
-				owner.fighter.addStrength(Dice.d46Roll());
-				owner.fighter.addDexterity(Dice.d46Roll());
-				owner.fighter.addConstitution(Dice.d46Roll());
-				owner.fighter.addIntelligence(Dice.d46Roll());
-				owner.fighter.addWisdom(Dice.d46Roll());
-				owner.fighter.addCharisma(Dice.d46Roll());
-
-				strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
-				dexterityTextF.setText(Integer.toString(owner.fighter.getDexterity()));
-				constitutionTextF.setText(Integer.toString(owner.fighter.getConstitution()));
-				intelligenceTextF.setText(Integer.toString(owner.fighter.getIntelligence()));
-				wisdomTextF.setText(Integer.toString(owner.fighter.getWisdom()));
-				charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));
-	    		strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getStrength())));
-	    		dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getDexterity())));
-	    		conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getConstitution())));
-	    		intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
-	    		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
-	    		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));
-				System.out.println("I get the owner's id " + owner.id);
-				System.out.println("I get the figher " + owner.fighterKeyName);
-	        }
-	    });
+		
 		helmetBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.HELMET;
@@ -387,6 +393,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		armorBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.ARMOR;
@@ -394,6 +401,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		beltBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.BELT;
@@ -401,6 +409,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		bootsBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.BOOTS;
@@ -408,6 +417,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		ringBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.RING;
@@ -415,6 +425,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		shieldBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.SHIELD;
@@ -422,6 +433,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		weaponBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.WEAPON;
@@ -429,12 +441,14 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		inventoryBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println(getThisFrame());
 				InventoryView.createAndShowGUI(getThisFrame());
 			}
 		});    	
+		
     	okBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			errorMessageWindow.dispose();
