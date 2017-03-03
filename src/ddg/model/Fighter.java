@@ -21,12 +21,15 @@ public class Fighter implements Serializable{
 	private int id;
 	private String name;
 	private int level = 1;
+	
 	private int strength;
 	private int dexterity;
 	private int constitution;
 	private int intelligence;
 	private int wisdom;
 	private int charisma;
+	private int armorClass;
+	
 	private int gainedStrength =0 ;
 	private int gainedDexterity =0 ;
 	private int gainedConstitution =0 ;
@@ -34,7 +37,15 @@ public class Fighter implements Serializable{
 	private int gainedWisdom =0 ;
 	private int gainedCharisma =0 ;
 	private int gainedArmorClass =0 ;
-	private int armorClass;
+	
+	private int totalStrength = strength + gainedStrength;
+	private int totalDexterity = dexterity + gainedDexterity;
+	private int totalConstitution = constitution + gainedConstitution;
+	private int totalIntelligence = intelligence + gainedIntelligence;
+	private int totalWisdom = wisdom + gainedWisdom;
+	private int totalCharisma = charisma + gainedCharisma;
+	private int totalArmorClass = armorClass + gainedArmorClass;
+	
 	private int hitPoints; 
 	private int attackBonus; 		
 	private int damageBonus; 	
@@ -105,42 +116,42 @@ public class Fighter implements Serializable{
 	 * @return strength
 	 */
 	public int getStrength(){
-		return strength + gainedStrength;
+		return strength;
 	}
 	/**
 	 * Get the dexterity of the character
 	 * @return dexterity
 	 */
 	public int getDexterity(){
-		return dexterity + gainedDexterity;
+		return dexterity;
 	}
 	/**
 	 * Get the constitution of the character
 	 * @return constitution
 	 */
 	public int getConstitution(){
-		return constitution + gainedConstitution;
+		return constitution;
 	}
 	/**
 	 * Get the constitution of the character
 	 * @return constitution
 	 */
 	public int getIntelligence(){
-		return intelligence + gainedIntelligence;
+		return intelligence;
 	}
 	/**
 	 * Get the wisdom of the character
 	 * @return wisdom
 	 */
 	public int getWisdom(){
-		return wisdom + gainedWisdom;
+		return wisdom;
 	}
 	/**
 	 * Get the charisma of the character
 	 * @return charisma
 	 */
 	public int getCharisma(){
-		return charisma + gainedCharisma ;
+		return charisma;
 	}	
 	/**
 	 * Get the gainedStrength of the character
@@ -191,6 +202,62 @@ public class Fighter implements Serializable{
 	public int getGainedArmorClass(){
 		return gainedArmorClass;
 	}
+	/**
+	 * Return the total Strength of the character
+	 * @return totalStrength
+	 */
+	public int getTotalStrength(){
+		return totalStrength;
+	}
+	
+	/**
+	 * Return the total Dexterity of the character
+	 * @return totalDexterity
+	 */
+	public int getTotalDexterity(){
+		return totalDexterity;
+	}
+	
+	/**
+	 * Return the total Constitution of the character
+	 * @return totalConstitution
+	 */
+	public int getTotalConstitution(){
+		return totalConstitution;
+	}
+	
+	/**
+	 * Return the total Intelligence of the character
+	 * @return totalIntelligence
+	 */
+	public int getTotalIntelligence(){
+		return totalIntelligence;
+	}
+	
+	/**
+	 * Return the total Wisdom of the character
+	 * @return totalWisdom
+	 */
+	public int getTotalWisdom(){
+		return totalWisdom;
+	}
+	
+	/**
+	 * Return the total Charisma of the character
+	 * @return totalCharisma
+	 */
+	public int getTotalCharisma(){
+		return totalCharisma;
+	}
+	
+	/**
+	 * Return the total ArmorClass of the character
+	 * @return
+	 */
+	public int getTotalArmorClass(){
+		return totalArmorClass;
+	}
+	
 	/**
 	 * Get the Modifier of the character
 	 * @param inputValue
@@ -442,31 +509,49 @@ public class Fighter implements Serializable{
 	public void gainBonus(String increase, int bonus, String string) {
 		if (string.equals("+")){
 			if (increase.equals(Ability.STRENGTH)){
-				strength = strength + bonus;
+				setGainedStrength(gainedStrength + bonus);
+//				strength = strength + bonus;
 			} else if (increase.equals(Ability.DEXTERITY)){
-				dexterity = dexterity + bonus;
+				setGainedDexterity(gainedDexterity + bonus);
+//				dexterity = dexterity + bonus;
 			} else if (increase.equals(Ability.CONSTITUTION)){
-				constitution = constitution + bonus;
+				setGainedConstitution(gainedConstitution + bonus);
+//				constitution = constitution + bonus;
 			} else if (increase.equals(Ability.INTELLIGENCE)){
-				intelligence = intelligence + bonus;
+				setGainedIntelligence(gainedIntelligence + bonus);
+//				intelligence = intelligence + bonus;
 			} else if (increase.equals(Ability.WISDOM)){
-				wisdom = wisdom + bonus;
+				setGainedWisdom(gainedWisdom + bonus);
+//				wisdom = wisdom + bonus;
 			} else if (increase.equals(Ability.CHARISMA)){
-				charisma = charisma + bonus;
+				setGainedCharisma(gainedCharisma + bonus);
+//				charisma = charisma + bonus;
+			} else if (increase.equals(Ability.ARMOR_CLASS)){
+				setGainedArmorClass(gainedArmorClass + bonus);
+//				armorClass = armorClass + bonus;
 			}			
 		} else if (string.equals("-")){
 			if (increase.equals(Ability.STRENGTH)){
-				strength = strength - bonus;
+				setGainedStrength(gainedStrength - bonus);
+//				strength = strength + gainedStrength;
 			} else if (increase.equals(Ability.DEXTERITY)){
-				dexterity = dexterity - bonus;
+				setGainedDexterity(gainedDexterity - bonus);
+//				dexterity = dexterity + gainedDexterity;
 			} else if (increase.equals(Ability.CONSTITUTION)){
-				constitution = constitution - bonus;
+				setGainedConstitution(gainedConstitution - bonus);
+//				constitution = constitution - gainedConstitution;
 			} else if (increase.equals(Ability.INTELLIGENCE)){
-				intelligence = intelligence - bonus;
+				setGainedIntelligence(gainedIntelligence - bonus);
+//				intelligence = intelligence + gainedIntelligence;
 			} else if (increase.equals(Ability.WISDOM)){
-				wisdom = wisdom - bonus;
+				setGainedWisdom(gainedWisdom - bonus);
+//				wisdom = wisdom + gainedWisdom;
 			} else if (increase.equals(Ability.CHARISMA)){
-				charisma = charisma - bonus;
+				setGainedCharisma(gainedCharisma - bonus);
+//				charisma = charisma + gainedCharisma;
+			} else if (increase.equals(Ability.ARMOR_CLASS)){
+				setGainedArmorClass(gainedArmorClass - bonus);
+//				armorClass = armorClass + gainedArmorClass;
 			}			
 		}
 	}

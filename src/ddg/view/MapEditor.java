@@ -236,10 +236,10 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	 */
 	public void mapCreatePopUp(){
 		JFrame mapSizeFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-		PopUpForCreateNewMap popUpForCreateNewMap = new PopUpForCreateNewMap(mapSizeFrame, "Select Map Size");
-		if(popUpForCreateNewMap.getRow()>=10 && popUpForCreateNewMap.getColumn()>=10)
+		PopUpForCreateNewMap popupforcreatenewmap = new PopUpForCreateNewMap(mapSizeFrame, "Select Map Size");
+		if(popupforcreatenewmap.getRow()>=10 && popupforcreatenewmap.getColumn()>=10)
 		{
-			mapsmodel.add(new Map("Map"+(mapsmodel.getMaps().size() + 1),popUpForCreateNewMap.getRow(),popUpForCreateNewMap.getColumn()));
+			mapsmodel.add(new Map("Map"+(mapsmodel.getMaps().size() + 1),popupforcreatenewmap.getRow(),popupforcreatenewmap.getColumn()));
 			DefaultListModel l = mapsmodel.getMapListModel();
 			list.setModel(l);
 			list.setSelectedIndex(l.size()-1);
