@@ -19,7 +19,14 @@ import ddg.utils.Utils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.border.*;
-
+/**
+ * 
+ * 
+ * This class provides an interface to edit a character
+ * 
+ * @author Fei Yu
+ * @date Mar 3, 2017
+ */
 public class CharacterEditLayout extends JDialog implements ActionListener {
 
     private final JButton saveBtn = new JButton("      Save      ");
@@ -72,16 +79,26 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     public static void main(String[] args){
     	CharacterEditLayout f2 = new CharacterEditLayout();
     }
+    
+    /**
+     * 
+     * @param ownerFrame
+     */
     public static void createAndShowGUI(CharacterSelection ownerFrame){
         owner = (CharacterSelection) ownerFrame;
         
         System.out.println("========"+owner);
         CharacterEditLayout frame1 = new CharacterEditLayout(); 
+        frame1.setBounds(230, 230, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
         frame1.setVisible(true);
         
     }
+    
+    /**
+     * 
+     */
     CharacterEditLayout()
     {
         super();
@@ -206,6 +223,9 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
             
     }
     
+    /**
+     * This method refresh the character's information who is selected in Character Selection window.
+     */
 	private void getOwnerInformation() {
 		if(owner == null){
 			System.out.println("No owner===============");
@@ -228,31 +248,31 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
     		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));	
     		
-    		if (owner.fighter.helmetIsOn){
+    		if (owner.fighter.isHelmetOn){
     			helmetBtn.setText("");
     			helmetBtn.setIcon(Config.HELMET_ICON);
     		}
-    		if (owner.fighter.armorIsOn){
+    		if (owner.fighter.isArmorOn){
     			armorBtn.setText("");
     			armorBtn.setIcon(Config.ARMOR_ICON);
     		}
-    		if (owner.fighter.beltIsOn){
+    		if (owner.fighter.isBeltOn){
     			beltBtn.setText("");
     			beltBtn.setIcon(Config.BELT_ICON);
     		}
-    		if (owner.fighter.bootsIsOn){
+    		if (owner.fighter.isBootsOn){
     			bootsBtn.setText("");
     			bootsBtn.setIcon(Config.BOOTS_ICON);
     		}
-    		if (owner.fighter.ringIsOn){
+    		if (owner.fighter.isRingOn){
     			ringBtn.setText("");
     			ringBtn.setIcon(Config.RING_ICON);
     		}
-    		if (owner.fighter.shieldIsOn){
+    		if (owner.fighter.IsShieldOn){
     			shieldBtn.setText("");
     			shieldBtn.setIcon(Config.SHIELD_ICON);
     		}
-    		if (owner.fighter.weaponIsOn){
+    		if (owner.fighter.isWeaponOn){
     			weaponBtn.setText("");
     			weaponBtn.setIcon(Config.WEAPON_ICON);
     		}
@@ -262,7 +282,10 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 	}
-	void buttonsManage(){
+	/**
+	 * This method defines actions of different buttons in this frame.
+	 */
+	private void buttonsManage(){
 		cancelBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println("cancel clicked");
@@ -270,81 +293,22 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				
 	        }
 	    });
-		saveBtn.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				System.out.println("save clicked");
-				Fighter fighter1 = new Fighter();
-				if (owner.fighter != null){
-					System.out.println("owner.fighter is not null");
-					fighter1 = owner.fighter;					
-				}
-//				JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
-				if (nameTextF.getText().equals("")){
-    				messageL.setText("The character must have a name!");
-					ShowErrorMessage();
-				}
-				else {
-					System.out.println("nametextF is not null ");
-					fighter1.setName(nameTextF.getText());
-				fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
-				fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
-				fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
-				fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()));
-				fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
-				fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()));
-				fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()));
-                FighterModel fm = new FighterModel();
-        		String g = Utils.readFile(Config.CHARACTOR_FILE);
-        		fm = Utils.fromJson(g, FighterModel.class);
-        		
-        		HashMap<String, Fighter> hm1 = new HashMap<>();
-        		if(fm != null){
-            		System.out.println(fm);
-            		try{
 
-                		System.out.println("2"+fm);
-                		if( null!=fm.getFighters() ){
-                            hm1 = fm.getFighters();
-                            Set<String> keySet1 = hm1.keySet();
-                            Iterator<String> it1 = keySet1.iterator();
-                            
-                            while(it1.hasNext()){
-                            	String keyName = it1.next();
-                            	if (keyName == fighter1.getName()){
-                            		System.out.println("There is a characater with same name==========");
-                            	}                            		
-                            }
-                		}        			
-            		}
-            		catch (NullPointerException ex){
-            			System.out.println("there is a NullPointerException");
-            		}        			
-        		}
-        		hm1.put(fighter1.getName(), fighter1);        		
-        		fm.setFighters(hm1);
-        		
-    			String gSave = Utils.toJson(fm);
-    			Utils.save2File(Config.CHARACTOR_FILE, gSave);
-        		
-    			owner.hm1 = hm1;
-				dispose();
-				owner.setEnabled(true);
-				owner.setVisible(true);
-				}
-			}
-	    });
 		randomBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				Fighter f1 = new Fighter();
 				if (owner.fighter == null){
 					owner.fighter = f1;
+				} else {
+					f1 = owner.fighter;
 				}
-				owner.fighter.setStrength(Dice.d46Roll());
-				owner.fighter.setDexterity(Dice.d46Roll());
-				owner.fighter.setConstitution(Dice.d46Roll());
-				owner.fighter.setIntelligence(Dice.d46Roll());
-				owner.fighter.setWisdom(Dice.d46Roll());
-				owner.fighter.setCharisma(Dice.d46Roll());
+				
+				f1.setStrength(f1.getStrength() + Dice.d46Roll());
+				f1.setDexterity(Dice.d46Roll());
+				f1.setConstitution(Dice.d46Roll());
+				f1.setIntelligence(Dice.d46Roll());
+				f1.setWisdom(Dice.d46Roll());
+				f1.setCharisma(Dice.d46Roll());
 
 				strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
 				dexterityTextF.setText(Integer.toString(owner.fighter.getDexterity()));
@@ -362,6 +326,88 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				System.out.println("I get the figher " + owner.fighterKeyName);
 	        }
 	    });
+		
+		saveBtn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				System.out.println("save clicked");
+				Fighter fighter1 = new Fighter();
+				if (owner.fighter != null){
+					System.out.println("owner.fighter is not null");
+					fighter1 = owner.fighter;					
+				}
+//				JFrame rootframe = (JFrame) SwingUtilities.getWindowAncestor(this);
+				if (nameTextF.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "The character must have a name.", "Warning", JOptionPane.WARNING_MESSAGE);
+    				
+//    				messageL.setText("The character must have a name!");
+//					ShowErrorMessage();
+				} else if(levelTextF.getText().equals("")){
+					JOptionPane.showMessageDialog(null, "You must input level.", "Warning", JOptionPane.WARNING_MESSAGE);
+				} else {
+					try{
+					if(Integer.parseInt(levelTextF.getText()) < 1 || Integer.parseInt(levelTextF.getText()) > 20){
+					JOptionPane.showMessageDialog(null, "The level should be between 1 to 20.", "Warning", JOptionPane.WARNING_MESSAGE);
+				}
+				else {
+					
+						System.out.println("nametextF is not null ");
+						fighter1.setName(nameTextF.getText());
+						fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
+						fighter1.setStrength(Integer.parseInt(strengthTextF.getText()));
+						fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()));
+						fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()));
+						fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
+						fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()));
+						fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()));
+
+					
+		                FighterModel fm = new FighterModel();
+		        		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		        		fm = Utils.fromJson(g, FighterModel.class);
+		        		
+		        		HashMap<String, Fighter> hm1 = new HashMap<>();
+		        		if(fm != null){
+		            		System.out.println(fm);
+		            		try{
+		
+		                		System.out.println("2"+fm);
+		                		if( null!=fm.getFighters() ){
+		                            hm1 = fm.getFighters();
+		                            Set<String> keySet1 = hm1.keySet();
+		                            Iterator<String> it1 = keySet1.iterator();
+		                            
+		                            while(it1.hasNext()){
+		                            	String keyName = it1.next();
+		                            	if (keyName == fighter1.getName()){
+		                            		System.out.println("There is a characater with same name==========");
+		                            	}                            		
+		                            }
+		                		}        			
+		            		}
+		            		catch (NullPointerException ex){
+		            			System.out.println("there is a NullPointerException");
+		            		}        			
+		        		}
+		        		hm1.put(fighter1.getName(), fighter1);        		
+		        		fm.setFighters(hm1);
+		        		
+		    			String gSave = Utils.toJson(fm);
+		    			Utils.save2File(Config.CHARACTOR_FILE, gSave);
+		        		
+		    			owner.hm1 = hm1;
+						dispose();
+						owner.setEnabled(true);
+						owner.setVisible(true);
+
+				}
+					}
+					catch (NumberFormatException ex){
+						JOptionPane.showMessageDialog(null, "The level should be between 1 to 20.", "Warning", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+			}
+	    });
+		
 		helmetBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.HELMET;
@@ -369,6 +415,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		armorBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.ARMOR;
@@ -376,6 +423,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		beltBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.BELT;
@@ -383,6 +431,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		bootsBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.BOOTS;
@@ -390,6 +439,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		ringBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.RING;
@@ -397,6 +447,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		shieldBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.SHIELD;
@@ -404,6 +455,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		weaponBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.WEAPON;
@@ -411,12 +463,14 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
+		
 		inventoryBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println(getThisFrame());
 				InventoryView.createAndShowGUI(getThisFrame());
 			}
 		});    	
+		
     	okBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			errorMessageWindow.dispose();
@@ -424,21 +478,34 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         }); 
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public CharacterEditLayout getThisFrame() {
 		return this;
 	}
+	
+	/**
+	 * 
+	 */
 	public CharacterSelection getOwner(){
 		return owner;
 	}
-    public void ShowErrorMessage(){
-    	errorMessageWindow.setLayout(new FlowLayout());
-    	errorMessageWindow.setBounds(400, 300, 250, 150);
-    	errorMessageWindow.add(messageL);
-    	errorMessageWindow.add(okBtn);
-    	errorMessageWindow.setVisible(true);
-
-    }
-
+	/**
+	 * 
+	 */
+//    public void ShowErrorMessage(){
+//    	errorMessageWindow.setLayout(new FlowLayout());
+//    	errorMessageWindow.setBounds(400, 300, 250, 150);
+//    	errorMessageWindow.add(messageL);
+//    	errorMessageWindow.add(okBtn);
+//    	errorMessageWindow.setVisible(true);
+//
+//    }
+	/**
+	 * This method manage the actions of the window focus
+	 */
 	public void focusManage() { 
 	 this.addWindowFocusListener(new WindowFocusListener() {  
 	 	
@@ -512,6 +579,14 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	 
 	}
 	
+	/**
+	 * 
+	 * 
+	 * This internal class is to draw a background picture in the frame
+	 * 
+	 * @author Fei Yu
+	 * @date Mar 3, 2017
+	 */
 	class EmbeddedPanel extends JPanel{
 
 	    private ImageIcon icon;  
@@ -521,7 +596,11 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	    	setOpaque(true);
 	    	
 	    	img = Toolkit.getDefaultToolkit().getImage( "example.jpg"); 
-	    }  
+	    }
+	    
+	    /**
+	     * This method is override method to draw a picture
+	     */
 	    public void paintComponent(Graphics g) {  
 	        super.paintComponent(g);  
 	        g.drawImage(img, 0, 0,300, 300, this); 

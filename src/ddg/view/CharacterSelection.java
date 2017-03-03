@@ -17,7 +17,14 @@ import ddg.model.Fighter;
 import ddg.model.FighterModel;
 import ddg.ui.DDGameMain;
 import ddg.utils.Utils;
-
+/**
+ * 
+ * 
+ * This class provides the interface to choose an existing character.
+ * 
+ * @author Fei Yu
+ * @date Mar 3, 2017
+ */
 public class CharacterSelection extends JDialog implements ActionListener, ListSelectionListener{
 
     private final JButton selectBtn = new JButton("      Select      ");
@@ -63,13 +70,24 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     {
         createAndShowGUI();
     }
+    
+    /**
+     * 
+     */
     public static void createAndShowGUI() 
     {
     	CharacterSelection frame1 = new CharacterSelection(null, "CS main"); 
+    	frame1.setBounds(200, 200, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
         frame1.setVisible(true);
     }
+    
+    /**
+     * Constructor
+     * @param owner
+     * @param title
+     */
 	CharacterSelection(JFrame owner, String title)
     {
         super(owner, title);
@@ -176,7 +194,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     			setEnabled(false);
             }
         });
-
+    	
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			if (!characterList.isSelectionEmpty()){
@@ -267,7 +285,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getIntelligence())));
     		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getWisdom())));
     		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getCharisma())));
-    		System.out.println("Helmet is on? " + fighter.helmetIsOn);
+    		System.out.println("Helmet is on? " + fighter.isHelmetOn);
     		System.out.println(fighter.getWorn());
     		System.out.println("backpack now  has " + fighter.getBackpack().size());
     		System.out.println(fighter.getBackpack());
@@ -275,25 +293,28 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         System.out.println("value changed");
     }
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public CharacterSelection getThisFrame(){
 		return this;
 	}
-	
-	public int getID(){
-		return id;
-	}
-           
-    public void focusManage() {
+    
+	/**
+	 * This method manage the actions of the window focus
+	 */
+    private void focusManage() {
         this.addWindowFocusListener(new WindowFocusListener() {          	
             @Override  
             public void windowGainedFocus(WindowEvent e) {  
             	jlistModel.clear();
                 System.out.println("The CS window is focused.");  
                 FighterModel fm = new FighterModel();
-
+                
         		String g = Utils.readFile(Config.CHARACTOR_FILE);
         		fm = Utils.fromJson(g, FighterModel.class);
-        		if(fm != null){
+        		if(fm != null){        			
             		System.out.println(fm);
             		try{
             			System.out.println("2"+fm);
@@ -313,7 +334,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
             		}        			
         		}
         		if (fighter != null){
-        			System.out.println(fighter.helmetIsOn + " " + fighter.getWorn().size() + " " + fighter.getWorn());
+        			System.out.println(fighter.isHelmetOn + " " + fighter.getWorn().size() + " " + fighter.getWorn());
         		}
             }  
   

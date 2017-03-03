@@ -12,7 +12,7 @@ import ddg.item.entity.BaseItem;
 /**
  * This class include all the config data
  * 
- * @author Zhen Du
+ * @author Zhen Du, Fei Yu
  * @date Feb 5, 2017
  */
 public class Config {
@@ -58,6 +58,11 @@ public class Config {
 	// set the size of map. it could be changed if click the S/M/L button  
 	public static int  MAP_SIZE = 10;
 
+	/**
+	 * This method is to set icon of different equipment parts of a character
+	 * @param wearingType
+	 * @return item type based on different part
+	 */
 	public static Icon iconByType(String wearingType) {
 		if (wearingType.equals(BaseItem.HELMET)){
 			return HELMET_ICON;
