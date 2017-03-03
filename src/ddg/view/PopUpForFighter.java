@@ -284,11 +284,6 @@ public class PopUpForFighter extends JDialog implements ActionListener, ListSele
         		}
         		System.out.println("continue");
         		System.out.println("character list: " + characterList);
-//                for (String key: hm1.keySet()){
-//                    jlistModel.addElement(key);
-//                }
-                
-                //刷新列表，reload文件。
             }  
   
             @Override  
