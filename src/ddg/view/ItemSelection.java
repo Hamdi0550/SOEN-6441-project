@@ -46,17 +46,11 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	private JLabel messageL = new JLabel(" ");
 	private JButton okBtn = new JButton("   OK   ");
 
-
 	ArrayList<BaseItem> al1 = new ArrayList<>();
 	public int id = 100;
 	public String fighterKeyName = "fighter111";
     private static CharacterEditLayout owner;
     public BaseItem selectedItem;
-
-    public static void main(String[] args) 
-    {
-    	ItemSelection frame1 = new ItemSelection();
-    }
     
     /**
      * Create the window

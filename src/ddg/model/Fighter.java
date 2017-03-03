@@ -34,12 +34,10 @@ public class Fighter implements Serializable{
 	private int gainedWisdom;
 	private int gainedCharisma;
 	private int gainedArmorClass;
-	private int armorClass;		//based on dexterity modifier and worn armor
-	private int hitPoints; 		//based on constitution modifier and level
-	private int attackBonus; 	//based on level and strength/dexterity modifiers
-	//Your attack roll is 1d20 + your ability modifier + your proficiency bonus(level) if you're proficient with the weapon you’re using.	
-	private int damageBonus; 	//based on strength modifier, only for melee weapons
-	//You roll the damage die or dice, add any modifiers, and apply the damage to your target. With a penalty, it is possible to deal 0 damage, but never negative damage.
+	private int armorClass;
+	private int hitPoints; 
+	private int attackBonus; 		
+	private int damageBonus; 	
 	public boolean isArmorOn = false;
 	public boolean IsShieldOn = false;
 	public boolean isWeaponOn = false;
@@ -51,20 +49,28 @@ public class Fighter implements Serializable{
 	private BaseItem[] backpack1 = new BaseItem[10];
 	private ArrayList<BaseItem> wornItems = new ArrayList<>();
 	
+	/**
+	 * Constructor
+	 */
 	public Fighter(){
 		
 	}
-	
+	/**
+	 * Constructor
+	 * @param level
+	 * @param strength
+	 * @param dexterity
+	 */
 	public Fighter(int level, int strength, int dexterity){
 		this.level = level;
 		this.strength = strength;
 		this.dexterity = dexterity;
 		hitPoints = Dice.d10Roll() + (constitution * this.level);
-		armorClass = this.dexterity + 0;
-		
+		armorClass = this.dexterity + 0;		
 	}
+	
 	/**
-	 * 
+	 * Save a character to the file
 	 * @param fighter
 	 */
 	public static void saveFighter(Fighter fighter){
@@ -75,127 +81,127 @@ public class Fighter implements Serializable{
 		fModel.fightersHM.put(dateString, fighter);
 	}
 	/**
-	 * 
+	 * Delete a character from the file
 	 * @param fighter
 	 */
 	public static void deleteFighter(Fighter fighter){
 	}
 	/**
-	 * 
+	 * Get the name of the character
 	 * @return
 	 */
 	public String getName(){
 		return name;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the level of the character
+	 * @return level
 	 */
 	public int getLevel(){
 		return level;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the strength of the character
+	 * @return strength
 	 */
 	public int getStrength(){
 		return strength;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the dexterity of the character
+	 * @return dexterity
 	 */
 	public int getDexterity(){
 		return dexterity;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the constitution of the character
+	 * @return constitution
 	 */
 	public int getConstitution(){
 		return constitution;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the constitution of the character
+	 * @return constitution
 	 */
 	public int getIntelligence(){
 		return intelligence;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the wisdom of the character
+	 * @return wisdom
 	 */
 	public int getWisdom(){
 		return wisdom;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the charisma of the character
+	 * @return charisma
 	 */
 	public int getCharisma(){
 		return charisma;
 	}	
 	/**
-	 * 
-	 * @return
+	 * Get the gainedStrength of the character
+	 * @return gainedStrength
 	 */
 	public int getGainedStrength(){
 		return gainedStrength;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the gainedDexterity of the character
+	 * @return gainedDexterity
 	 */
 	public int getGainedDexterity(){
 		return gainedDexterity;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the gainedConstitution of the character
+	 * @return gainedConstitution
 	 */
 	public int getGainedConstitution(){
 		return gainedConstitution;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the gainedIntelligence of the character
+	 * @return gainedIntelligence
 	 */
 	public int getGainedIntelligence(){
 		return gainedIntelligence;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the gainedWisdom of the character
+	 * @return gainedWisdom
 	 */
 	public int getGainedWisdom(){
 		return gainedWisdom;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the gainedCharisma of the character
+	 * @return gainedCharisma
 	 */
 	public int getGainedCharisma(){
 		return gainedCharisma;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the gainedArmorClass of the character
+	 * @return gainedArmorClass
 	 */
 	public int getGainedArmorClass(){
 		return gainedArmorClass;
 	}
 	/**
-	 * 
+	 * Get the Modifier of the character
 	 * @param inputValue
-	 * @return
+	 * @return Modifier
 	 */
 	public int getModifier(int inputValue){
 		return (inputValue/ 2 - 5);
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the attack bonus of the character
+	 * @return attackBonus
 	 */
 	public int getAttackBonus(){
 		int baseAttackBonus = 0;
@@ -214,58 +220,58 @@ public class Fighter implements Serializable{
 		return attackBonus;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the damage bonus of the character
+	 * @return damageBonus
 	 */
 	public int getDamageBonus(){
 		damageBonus = getModifier(getStrength() + getGainedStrength());
 		return damageBonus;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the armor class of the character
+	 * @return armorClass
 	 */
 	public int getArmorClass(){
 		armorClass = getDexterity() + getGainedDexterity() + 10;
 		return armorClass;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the hitPoints of the character
+	 * @return hitPoints
 	 */
 	public int getHitPoints(){
 		return hitPoints;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the backpack of the character
+	 * @return backpack
 	 */
 	public ArrayList<BaseItem> getBackpack(){
 		return backpack;
 	}
 	/**
-	 * 
-	 * @return
+	 * Get the wornItems of the character
+	 * @return wornItems
 	 */
 	public ArrayList<BaseItem> getWorn(){
 		return wornItems;
 	}
 	/**
-	 * 
+	 * Set the name of the character
 	 * @param name
 	 */
 	public void setName(String name){
 		this.name = name;
 	}
 	/**
-	 * 
+	 * Set the level of the character
 	 * @param level
 	 */
 	public void setLevel(int level){
 		this.level = level;
 	}
 	/**
-	 * 
+	 * Set the strength of the character
 	 * @param strength
 	 */
 
@@ -273,77 +279,77 @@ public class Fighter implements Serializable{
 		this.strength = strength;
 	}
 	/**
-	 * 
+	 * Set the dexterity of the character
 	 * @param dexterity
 	 */
 	public void setDexterity(int dexterity){
 		this.dexterity = dexterity;
 	}
 	/**
-	 * 
+	 * Set the constitution of the character
 	 * @param constitution
 	 */
 	public void setConstitution(int constitution){
 		this.constitution = constitution;
 	}
 	/**
-	 * 
+	 * Set the intelligence of the character
 	 * @param intelligence
 	 */
 	public void setIntelligence(int intelligence){
 		this.intelligence = intelligence;
 	}
 	/**
-	 * 
+	 * Set the wisdom of the character
 	 * @param wisdom
 	 */
 	public void setWisdom(int wisdom){
 		this.wisdom = wisdom;
 	}
 	/**
-	 * 
+	 * Set the charisma of the character
 	 * @param charisma
 	 */
 	public void setCharisma(int charisma){
 		this.charisma = charisma;
 	}
 	/**
-	 * 
+	 * Set the gainedStrength of the character
 	 * @param strength
 	 */
 	public void setGainedStrength(int strength){
 		this.gainedStrength = strength;
 	}
 	/**
-	 * 
+	 * Set the gainedDexterity of the character
 	 * @param dexterity
 	 */
 	public void setGainedDexterity(int dexterity){
 		this.gainedDexterity = dexterity;
 	}
 	/**
-	 * 
+	 * Set the gainedConstitution of the character
 	 * @param constitution
 	 */
 	public void setGainedConstitution(int constitution){
 		this.gainedConstitution = constitution;
 	}
 	/**
-	 * 
+	 * Set the gainedIntelligence of the character
 	 * @param intelligence
 	 */
 	public void setGainedIntelligence(int intelligence){
 		this.gainedIntelligence = intelligence;
 	}
 	/**
-	 * 
+	 * Set the gainedWisdom of the character
 	 * @param wisdom
 	 */
 	public void setGainedWisdom(int wisdom){
 		this.gainedWisdom = wisdom;
 	}
 	/**
-	 * 
+	 * Set the gainedCharisma of the character
 	 * @param charisma
 	 */
 	public void setGainedCharisma(int charisma){
@@ -351,7 +357,7 @@ public class Fighter implements Serializable{
 	}
 	
 	/**
-	 * 
+	 * Set the hitPoints of the character
 	 * @param hitpoints
 	 */
 	public void setHitpoints(int hitpoints){
@@ -359,7 +365,7 @@ public class Fighter implements Serializable{
 	}
 	
 	/**
-	 * 
+	 * Set the gainedArmorClass of the character
 	 * @param ac
 	 */
 
@@ -368,7 +374,7 @@ public class Fighter implements Serializable{
 	}
 	
 	/**
-	 * 
+	 * Set the backpack of the character
 	 * @param backpack
 	 */
 	public void setBackpack(ArrayList<BaseItem> backpack){
@@ -376,7 +382,7 @@ public class Fighter implements Serializable{
 	}
 	
 	/**
-	 * 
+	 * Set the wornItems of the character
 	 * @param worn
 	 */
 	public void setWorn(ArrayList<BaseItem> worn){
@@ -384,7 +390,7 @@ public class Fighter implements Serializable{
 	}
 	
 	/**
-	 * 
+	 * Set the character is wearing a type of equipment
 	 * @param wearingType
 	 */
 	public void setEquipOn(String wearingType) {
@@ -406,7 +412,7 @@ public class Fighter implements Serializable{
 	}
 	
 	/**
-	 * 
+	 * Set the character is not wearing a type of equipment
 	 * @param wearingType
 	 */
 	public void setEquipOff(String wearingType) {
@@ -428,7 +434,7 @@ public class Fighter implements Serializable{
 	}
 	
 	/**
-	 * 
+	 * Set the bonus attributes of the character
 	 * @param increase
 	 * @param bonus
 	 * @param string
