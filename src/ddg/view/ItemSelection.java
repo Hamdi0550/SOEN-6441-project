@@ -56,6 +56,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         owner = (CharacterEditLayout) ownerFrame;
         System.out.println("========"+owner);
     	ItemSelection frame1 = new ItemSelection(); 
+        frame1.setBounds(260, 260, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
         frame1.setVisible(true);

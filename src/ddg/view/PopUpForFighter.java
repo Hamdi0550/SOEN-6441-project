@@ -233,7 +233,7 @@ public class PopUpForFighter extends JDialog implements ActionListener, ListSele
     		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getIntelligence())));
     		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getWisdom())));
     		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getCharisma())));
-    		System.out.println("Helmet is on? " + fighter.helmetIsOn);
+    		System.out.println("Helmet is on? " + fighter.isHelmetOn);
     		System.out.println(fighter.getWorn());
     		System.out.println("backpack now  has " + fighter.getBackpack().size());
     		System.out.println(fighter.getBackpack());

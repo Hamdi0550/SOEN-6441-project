@@ -36,13 +36,13 @@ public class Fighter implements Serializable{
 	//Your attack roll is 1d20 + your ability modifier + your proficiency bonus(level) if you're proficient with the weapon you’re using.	
 	private int damageBonus; 	//based on strength modifier, only for melee weapons
 	//You roll the damage die or dice, add any modifiers, and apply the damage to your target. With a penalty, it is possible to deal 0 damage, but never negative damage.
-	public boolean armorIsOn = false;
-	public boolean shieldIsOn = false;
-	public boolean weaponIsOn = false;
-	public boolean bootsIsOn = false;
-	public boolean ringIsOn = false;
-	public boolean beltIsOn = false;
-	public boolean helmetIsOn = false;
+	public boolean isArmorOn = false;
+	public boolean IsShieldOn = false;
+	public boolean isWeaponOn = false;
+	public boolean isBootsOn = false;
+	public boolean isRingOn = false;
+	public boolean isBeltOn = false;
+	public boolean isHelmetOn = false;
 	private ArrayList<BaseItem> backpack = new ArrayList<>();
 	private BaseItem[] backpack1 = new BaseItem[10];
 	private ArrayList<BaseItem> wornItems = new ArrayList<>();
@@ -115,24 +115,43 @@ public class Fighter implements Serializable{
 	public void setLevel(int level){
 		this.level = level;
 	}
-	public void setStrength(int strength){
-		this.strength = strength;
+
+	public void addStrength(int strength){
+		this.strength += strength;
 	}
-	public void setDexterity(int dexterity){
-		this.dexterity = dexterity;
+	public void addDexterity(int dexterity){
+		this.dexterity += dexterity;
 	}
-	public void setConstitution(int constitution){
-		this.constitution = constitution;
+	public void addConstitution(int constitution){
+		this.constitution += constitution;
 	}
-	public void setIntelligence(int intelligence){
-		this.intelligence = intelligence;
+	public void addIntelligence(int intelligence){
+		this.intelligence += intelligence;
 	}
-	public void setWisdom(int wisdom){
-		this.wisdom = wisdom;
+	public void addWisdom(int wisdom){
+		this.wisdom += wisdom;
 	}
-	public void setCharisma(int charisma){
-		this.charisma = charisma;
+	public void addCharisma(int charisma){
+		this.charisma += charisma;
 	}
+//	public void setStrength(int strength){
+//		this.strength = strength;
+//	}
+//	public void setDexterity(int dexterity){
+//		this.dexterity = dexterity;
+//	}
+//	public void setConstitution(int constitution){
+//		this.constitution = constitution;
+//	}
+//	public void setIntelligence(int intelligence){
+//		this.intelligence = intelligence;
+//	}
+//	public void setWisdom(int wisdom){
+//		this.wisdom = wisdom;
+//	}
+//	public void setCharisma(int charisma){
+//		this.charisma = charisma;
+//	}
 	public void setBackpack(ArrayList<BaseItem> backpack){
 		this.backpack = backpack;
 	}
@@ -142,37 +161,37 @@ public class Fighter implements Serializable{
 
 	public void setEquipOn(String wearingType) {
 		if (wearingType.equals(BaseItem.HELMET)){
-			helmetIsOn = true;
+			isHelmetOn = true;
 		} else if (wearingType.equals(BaseItem.ARMOR)){
-			armorIsOn = true;
+			isArmorOn = true;
 		}else if (wearingType.equals(BaseItem.SHIELD)){
-			shieldIsOn = true;
+			IsShieldOn = true;
 		}else if (wearingType.equals(BaseItem.WEAPON)){
-			weaponIsOn = true;
+			isWeaponOn = true;
 		}else if (wearingType.equals(BaseItem.BOOTS)){
-			bootsIsOn = true;
+			isBootsOn = true;
 		}else if (wearingType.equals(BaseItem.RING)){
-			ringIsOn = true;
+			isRingOn = true;
 		}else if (wearingType.equals(BaseItem.BELT)){
-			beltIsOn = true;
+			isBeltOn = true;
 		}
 	}
 	
 	public void setEquipOff(String wearingType) {
 		if (wearingType.equals(BaseItem.HELMET)){
-			helmetIsOn = false;
+			isHelmetOn = false;
 		} else if (wearingType.equals(BaseItem.ARMOR)){
-			armorIsOn = false;
+			isArmorOn = false;
 		}else if (wearingType.equals(BaseItem.SHIELD)){
-			shieldIsOn = false;
+			IsShieldOn = false;
 		}else if (wearingType.equals(BaseItem.WEAPON)){
-			weaponIsOn = false;
+			isWeaponOn = false;
 		}else if (wearingType.equals(BaseItem.BOOTS)){
-			bootsIsOn = false;
+			isBootsOn = false;
 		}else if (wearingType.equals(BaseItem.RING)){
-			ringIsOn = false;
+			isRingOn = false;
 		}else if (wearingType.equals(BaseItem.BELT)){
-			beltIsOn = false;
+			isBeltOn = false;
 		}
 	}
 

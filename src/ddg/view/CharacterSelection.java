@@ -66,6 +66,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     public static void createAndShowGUI() 
     {
     	CharacterSelection frame1 = new CharacterSelection(null, "CS main"); 
+    	frame1.setBounds(200, 200, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
         frame1.setVisible(true);
@@ -267,7 +268,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getIntelligence())));
     		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getWisdom())));
     		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getCharisma())));
-    		System.out.println("Helmet is on? " + fighter.helmetIsOn);
+    		System.out.println("Helmet is on? " + fighter.isHelmetOn);
     		System.out.println(fighter.getWorn());
     		System.out.println("backpack now  has " + fighter.getBackpack().size());
     		System.out.println(fighter.getBackpack());
@@ -290,10 +291,10 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
             	jlistModel.clear();
                 System.out.println("The CS window is focused.");  
                 FighterModel fm = new FighterModel();
-
+                
         		String g = Utils.readFile(Config.CHARACTOR_FILE);
         		fm = Utils.fromJson(g, FighterModel.class);
-        		if(fm != null){
+        		if(fm != null){        			
             		System.out.println(fm);
             		try{
             			System.out.println("2"+fm);
@@ -313,7 +314,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
             		}        			
         		}
         		if (fighter != null){
-        			System.out.println(fighter.helmetIsOn + " " + fighter.getWorn().size() + " " + fighter.getWorn());
+        			System.out.println(fighter.isHelmetOn + " " + fighter.getWorn().size() + " " + fighter.getWorn());
         		}
             }  
   
