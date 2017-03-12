@@ -3,10 +3,10 @@ package ddg.map.entity;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.Observable;
 
 import ddg.Config;
 import ddg.model.MapEditorModel;
-import ddg.utils.Utils;
 import ddg.utils.ValidationTool;
 
 
@@ -18,7 +18,7 @@ import ddg.utils.ValidationTool;
  * model for Map
  *
  */
-public class Map implements java.io.Serializable{
+public class Map extends Observable implements java.io.Serializable{
 	private static final long serialVersionUID = -8908299320533978891L;
 	
 	// record the location of things in the map
@@ -163,6 +163,20 @@ public class Map implements java.io.Serializable{
 	 */
 	public void changeCellsinthemap(int x,int y, Cell cell){
 		this.cellsinthemap[x][y] = cell;
+	}
+	
+	public void moveOnTheMap(int oldx, int oldy, int newx, int newy, char c){
+		char temp = getLocation()[newx][newy];
+		Cell tempcell = getCellsinthemap()[oldx][oldy];
+		if(temp=='f'){
+			changeLocation(oldx, oldy, 'f');
+			changeCellsinthemap(oldx, oldy, null);
+			changeLocation(newx, newy, c);
+			changeCellsinthemap(newx, newy, tempcell);
+		}
+		
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	/**

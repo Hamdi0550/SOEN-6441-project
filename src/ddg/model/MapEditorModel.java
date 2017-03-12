@@ -63,6 +63,6 @@ public class MapEditorModel implements java.io.Serializable{
 	     * @return whole map array list (all map in the map file).
 	     */
 	    public ArrayList<Map> getMaps() {
-		return maps;
+	    	return maps;
 	    }
 }
