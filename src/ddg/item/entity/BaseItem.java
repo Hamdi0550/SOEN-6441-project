@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * @author Zhen Du
  * @date Feb 22, 2017
  */
-public class BaseItem implements java.io.Serializable{
+public class BaseItem implements Item, java.io.Serializable{
 	private static final long serialVersionUID = 1417331693668110660L;
 	
 	public static final String TYPE = "type";
