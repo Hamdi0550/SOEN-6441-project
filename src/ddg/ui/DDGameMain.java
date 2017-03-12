@@ -63,6 +63,7 @@ public class DDGameMain extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setResizable(false);
 	    this.setTitle("DDG");
+	    setLocationRelativeTo(null);
 	}
 	
 	public static void main(String[] args) {
@@ -75,6 +76,11 @@ public class DDGameMain extends JFrame implements ActionListener {
 		
 	}
 
+	private void startGame() {
+		DDGaming dialog = new DDGaming();
+		dialog.popShow(this, "Gaming");
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e.getActionCommand());
@@ -92,10 +98,11 @@ public class DDGameMain extends JFrame implements ActionListener {
 			this.mainPage.setVisible(false);
 			this.itemEditor.setVisible(true);
 			this.setTitle("Item Editor");
-		} else if(e.getActionCommand().equals("CONTINUE")) {
-			System.out.println("OPEN CONTINUE");
-		} else if(e.getActionCommand().equals("START")) {
-			System.out.println("OPEN START");
+		} else if(e.getActionCommand().equals("LOAD")) {
+			System.out.println("OPEN LOAD");
+		} else if(e.getActionCommand().equals("NEW")) {
+			System.out.println("OPEN NEW");
+			startGame();
 		} else if(e.getActionCommand().equals("CHARACTOR-BACK")) {
 			this.mainPage.setVisible(true);
 			this.charactorEditor.setVisible(false);
