@@ -72,12 +72,12 @@ public class MainPage extends JPanel implements ActionListener {
 	    mapBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton itemBtn = new DButton("ITEM", this);
 	    itemBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    DButton continueBtn = new DButton("CONTINUE", this);
+	    DButton continueBtn = new DButton("LOAD", this);
 	    continueBtn.setEnabled(false);
 	    continueBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-	    DButton startBtn = new DButton("START", this);
+	    DButton startBtn = new DButton("NEW", this);
 	    startBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
-//	    startBtn.setEnabled(false);
+
 	    optionPanel.add(optionTitle);
 	    optionPanel.add(charactorBtn);
 	    optionPanel.add(campaignBtn);
@@ -98,9 +98,9 @@ public class MainPage extends JPanel implements ActionListener {
 			System.out.println("OPEN MAP");
 		} else if(e.getActionCommand().equals("ITEM")) {
 			System.out.println("OPEN ITEM");
-		} else if(e.getActionCommand().equals("CONTINUE")) {
+		} else if(e.getActionCommand().equals("LOAD")) {
 			System.out.println("OPEN CONTINUE");
-		} else if(e.getActionCommand().equals("START")) {
+		} else if(e.getActionCommand().equals("NEW")) {
 			System.out.println("OPEN START");
 		}
 		listener.actionPerformed(e);

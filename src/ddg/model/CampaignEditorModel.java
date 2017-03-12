@@ -69,6 +69,20 @@ public class CampaignEditorModel {
 		}
 		return l;
 	}
+	
+	/**
+	 * 
+	 * This method return list
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> getCampaignList() {
+		ArrayList<String> ids = new ArrayList<String>();
+		for (BaseCampaign i : this.campaigns) {
+			ids.add(i.getId());
+		}
+		return ids;
+	}
 
 	/**
 	 * 

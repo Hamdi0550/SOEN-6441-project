@@ -2,6 +2,8 @@ package ddg.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 
 /**
@@ -48,4 +50,34 @@ public class FighterModel {
 		this.fightersHM = fightersHM;
 	}
 
+	/**
+	 * 
+	 * This method getFighterByName
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Fighter getFighterByName(String name) {
+		return this.fightersHM.get(name);
+	}
+	
+	/**
+	 * 
+	 * This method get fighter list
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> getFighterList() {
+		ArrayList<String> list = new ArrayList<String>();
+		Set<String> keySet = this.fightersHM.keySet();
+		Iterator<String> it = keySet.iterator();
+		while (it.hasNext()) {
+			String name = it.next();
+			if(name.length() > 0) {
+				list.add(name);
+			}
+		}
+		
+		return list;
+	}
 }
