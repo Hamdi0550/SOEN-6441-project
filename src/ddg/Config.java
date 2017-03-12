@@ -55,6 +55,10 @@ public class Config {
 	public static final ImageIcon WEAPON_ICON = new ImageIcon("res/Weapon.jpg");  
 	public static final ImageIcon BELT_ICON = new ImageIcon("res/Belt.jpg"); 
 	
+	public static final String BULLY = "Bully";
+	public static final String NIMBLE = "Nimble";
+	public static final String TANK = "Tank";
+	
 	// set the size of map. it could be changed if click the S/M/L button  
 	public static int  MAP_SIZE = 10;
 

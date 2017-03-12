@@ -55,7 +55,8 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     private final JTextField intelligenceTextF = new JTextField();
     private final JTextField wisdomTextF = new JTextField();
     private final JTextField charismaTextF = new JTextField();
-    
+
+    private JComboBox<String> typeList = new JComboBox();
 
     JLabel nameModiferL = new JLabel(" L ");
     JLabel levelModiferL = new JLabel(" L ");
@@ -148,6 +149,10 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         attributesPanel.add(nameTextF);
         attributesPanel.add(nameModiferL);
         attributesPanel.add(new JLabel("     "));
+        attributesPanel.add(new JLabel(" Type "));
+        attributesPanel.add(typeList);
+        attributesPanel.add(new JLabel("     "));
+        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Level "));
         attributesPanel.add(levelTextF);
         attributesPanel.add(levelModiferL);
@@ -176,10 +181,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         attributesPanel.add(charismaTextF);
         attributesPanel.add(chaModiferL);
         attributesPanel.add(new JLabel("     "));
-        attributesPanel.add(new JLabel("      "));
-        attributesPanel.add(new JLabel("      "));
-        attributesPanel.add(new JLabel("      "));
-        attributesPanel.add(new JLabel("      "));
         if (owner.isCreatingNew == false){
         	nameTextF.setEditable(false);
         }
@@ -194,6 +195,11 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         buttonsPanel.add(saveBtn);
         buttonsPanel.add(cancelBtn);
         buttonsPanel.setSize(300,500);
+        
+        typeList.addItem(Config.BULLY);
+        typeList.addItem(Config.NIMBLE);
+        typeList.addItem(Config.TANK);
+        typeList.addActionListener(this);
         
         getOwnerInformation();
         focusManage();
@@ -258,6 +264,22 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == typeList) {
+			String s = (String)typeList.getSelectedItem();
+			switch (s) {
+			case Config.BULLY:
+				System.out.println("Bully");
+				break;
+			case Config.NIMBLE:
+				System.out.println("Nimble");
+				break;
+			case Config.TANK:
+				System.out.println("Tank");
+				break;
+			default:
+				System.out.println("Type error!");
+			}
+		}
 		
 	}
 	/**
