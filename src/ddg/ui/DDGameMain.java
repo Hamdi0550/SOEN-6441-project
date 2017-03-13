@@ -11,9 +11,8 @@ import javax.swing.SwingUtilities;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.view.CampaignEditor;
-import ddg.view.CharacterEditLayout;
+import ddg.view.CharacterEditor;
 import ddg.view.CharacterSelection;
-import ddg.view.CharactorEditor;
 import ddg.view.ItemEditor;
 import ddg.view.MainPage;
 import ddg.view.MapEditor;
@@ -28,7 +27,7 @@ public class DDGameMain extends JFrame implements ActionListener {
 	private Container contentPane;
 	private MapEditor mapEditor;
 	private MainPage mainPage;
-	private CharactorEditor charactorEditor;
+	private CharacterEditor characterEditor;
 	private CampaignEditor campaignEditor;
 	private ItemEditor itemEditor;
 	
@@ -43,12 +42,12 @@ public class DDGameMain extends JFrame implements ActionListener {
 		this.contentPane.setLayout(new CardLayout());
 		this.mapEditor = new MapEditor(this);
 		this.mainPage = new MainPage(this);
-		this.charactorEditor = new CharactorEditor(this);
+		this.characterEditor = new CharacterEditor(this);
 		this.campaignEditor = new CampaignEditor(this);
 		this.itemEditor = new ItemEditor(this);
 		this.contentPane.add(mainPage);
 		this.contentPane.add(mapEditor);
-		this.contentPane.add(charactorEditor);
+		this.contentPane.add(characterEditor);
 		this.contentPane.add(campaignEditor);
 		this.contentPane.add(itemEditor);
 	}
@@ -85,7 +84,10 @@ public class DDGameMain extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e.getActionCommand());
 		if(e.getActionCommand().equals("CHARACTOR")) {
-			CharacterSelection.createAndShowGUI();
+//			CharacterSelection.createAndShowGUI();
+			this.mainPage.setVisible(false);
+			this.characterEditor.setVisible(true);
+			this.setTitle("Character Editor");
 		} else if(e.getActionCommand().equals("CAMPAIGN")) {
 			this.mainPage.setVisible(false);
 			this.campaignEditor.setVisible(true);
@@ -105,7 +107,7 @@ public class DDGameMain extends JFrame implements ActionListener {
 			startGame();
 		} else if(e.getActionCommand().equals("CHARACTOR-BACK")) {
 			this.mainPage.setVisible(true);
-			this.charactorEditor.setVisible(false);
+			this.characterEditor.setVisible(false);
 			this.setTitle("DDG");
 		} else if(e.getActionCommand().equals("CAMPAIGN-BACK")) {
 			this.mainPage.setVisible(true);
