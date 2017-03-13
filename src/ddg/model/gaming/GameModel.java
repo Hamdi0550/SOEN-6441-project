@@ -20,4 +20,13 @@ public class GameModel {
 		this.campaign = campaign;
 	}
 
+	public Fighter getFighter() {
+		return fighter;
+	}
+
+	public BaseCampaign getCampaign() {
+		return campaign;
+	}
+	
+	
 }

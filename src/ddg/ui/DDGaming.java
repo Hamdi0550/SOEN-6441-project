@@ -1,11 +1,13 @@
 package ddg.ui;
 
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
 
+import ddg.Config;
 import ddg.model.gaming.GameModel;
 import ddg.view.gaming.GameInitDialog;
 import ddg.view.gaming.GamePanel;
@@ -19,7 +21,9 @@ import ddg.view.gaming.GamePanel;
 public class DDGaming extends JDialog implements ActionListener {
 	
 	public DDGaming() {
+		setSize(Config.WIDTH+200, Config.HEIGHT+200);
 		setModal(true);
+		
 	}
 	
 	public void popShow(Frame owner, String title) {
@@ -33,6 +37,7 @@ public class DDGaming extends JDialog implements ActionListener {
 			pack();
 			setLocationRelativeTo(null);
 			setVisible(true);
+			
 		}
 	}
 

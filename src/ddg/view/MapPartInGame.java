@@ -26,6 +26,12 @@ import ddg.map.entity.Map;
 import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
 
+/**
+ * 
+ * @author Bo
+ * @date Mar 12, 2017
+ * 
+ */
 public class MapPartInGame extends JPanel implements Observer, KeyListener{
 	private JScrollPane jspanel;
 	private JPanel mapPanel;
@@ -38,6 +44,7 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 	
 	ImageIcon floor = new ImageIcon("floor.png");
 	ImageIcon chest = new ImageIcon("chest.png");
+	ImageIcon emptychest = new ImageIcon("emptychest.png");
 	ImageIcon wall = new ImageIcon("wall.png");
 	ImageIcon indoor = new ImageIcon("indoor.png");
 	ImageIcon outdoor = new ImageIcon("outdoor.png");
@@ -47,7 +54,7 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 		this.campaign = campaign;
 		this.fighter = fighter;
 		setLayout(new FlowLayout());
-		
+		setFocusable(true);
 		
 		initdata();
 		this.playingMap.addObserver(this);
@@ -70,15 +77,12 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 			}
 			
 			// retrieval all map(name) in the campaign, then 
+			// -----------------------------this part may be produce something wrong-------------------------------------
 			ArrayList<Map> mapsofcampaignlist = new ArrayList<Map>();
 			for(String nameofmap : campaign.getMaps()){
 				for(Map map : mapsmodel.getMaps()){
 					if(map.getName().equals(nameofmap)){
 						mapsofcampaignlist.add(map);
-					}
-					
-					if(!mapsofcampaignlist.contains(map)){
-						System.out.println("!!!!!!!!!!! do not have such map  !!!!!!!!!!!!!!!!!!!");
 					}
 				}
 			}
@@ -145,6 +149,9 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 							if (playingMap.getLocation()[i][j] == 'c'){
 								g.drawImage(chest.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
+							if (playingMap.getLocation()[i][j] == 'e'){
+								g.drawImage(emptychest.getImage(), j*50, i*50, 50, 50, null);
+							    continue;}
 							if (playingMap.getLocation()[i][j] == 'o'){
 								g.drawImage(outdoor.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
@@ -168,7 +175,6 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 			}
 		};
 		mapPanel.setPreferredSize(new Dimension(50*playingMap.getColumn(), 50*playingMap.getRow()));
-//		mapPanel.setPreferredSize(new Dimension(500, 500));
 		
 		jspanel = new JScrollPane(mapPanel);
 		jspanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); 
@@ -196,9 +202,19 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("????????????????????");
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			playingMap.moveOnTheMap(xofplayer, yofplayer, xofplayer-1, yofplayer, 'M');
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			playingMap.moveOnTheMap(xofplayer, yofplayer, xofplayer+1, yofplayer, 'M');
+		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			playingMap.moveOnTheMap(xofplayer, yofplayer, xofplayer, yofplayer-1, 'M');
+		}
+		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			System.out.println("????????????????????");
 			playingMap.moveOnTheMap(xofplayer, yofplayer, xofplayer, yofplayer+1, 'M');
 		}
 	}

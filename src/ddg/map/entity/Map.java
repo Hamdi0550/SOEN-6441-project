@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.Observable;
 
 import ddg.Config;
+import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
 import ddg.utils.ValidationTool;
 
@@ -166,14 +167,29 @@ public class Map extends Observable implements java.io.Serializable{
 	}
 	
 	public void moveOnTheMap(int oldx, int oldy, int newx, int newy, char c){
+		if( newx>=row|| newx<0|| newy >= column|| newy<0)
+			return;
 		char temp = getLocation()[newx][newy];
-		Cell tempcell = getCellsinthemap()[oldx][oldy];
+		Cell<?> mainplayercell = getCellsinthemap()[oldx][oldy];
+		Fighter mainplayer = (Fighter) mainplayercell.getContent();
 		if(temp=='f'){
 			changeLocation(oldx, oldy, 'f');
 			changeCellsinthemap(oldx, oldy, null);
 			changeLocation(newx, newy, c);
-			changeCellsinthemap(newx, newy, tempcell);
+			changeCellsinthemap(newx, newy, mainplayercell);
+			System.out.println(getCellsinthemap()[oldx][oldy] + "1111"+ ((Fighter)getCellsinthemap()[newx][newy].getContent()).getName());
 		}
+		if(temp=='c'){
+			Chest chest = (Chest) getCellsinthemap()[newx][newy].getContent();
+			// should add a function like that to make player getting the item in the Cell
+			// If the backpack is not full, the the fighter receive the item and chect isempty=true;
+//			mainplayer.openChest(chest);
+			if(chest.isEmpty()){
+				changeLocation(newx, newy, 'e');
+			}
+		}
+		
+		
 		
 		setChanged();
 		notifyObservers(this);
