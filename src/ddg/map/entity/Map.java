@@ -121,6 +121,8 @@ public class Map extends Observable implements java.io.Serializable{
 	 */
 	public void changeLocation(int x,int y, char c){
 		this.location[x][y] = c;
+		setChanged();
+		notifyObservers(this);
 	}
 	/**
 	 * 
@@ -164,36 +166,10 @@ public class Map extends Observable implements java.io.Serializable{
 	 */
 	public void changeCellsinthemap(int x,int y, Cell cell){
 		this.cellsinthemap[x][y] = cell;
-	}
-	
-	public void moveOnTheMap(int oldx, int oldy, int newx, int newy, char c){
-		if( newx>=row|| newx<0|| newy >= column|| newy<0)
-			return;
-		char temp = getLocation()[newx][newy];
-		Cell<?> mainplayercell = getCellsinthemap()[oldx][oldy];
-		Fighter mainplayer = (Fighter) mainplayercell.getContent();
-		if(temp=='f'){
-			changeLocation(oldx, oldy, 'f');
-			changeCellsinthemap(oldx, oldy, null);
-			changeLocation(newx, newy, c);
-			changeCellsinthemap(newx, newy, mainplayercell);
-			System.out.println(getCellsinthemap()[oldx][oldy] + "1111"+ ((Fighter)getCellsinthemap()[newx][newy].getContent()).getName());
-		}
-		if(temp=='c'){
-			Chest chest = (Chest) getCellsinthemap()[newx][newy].getContent();
-			// should add a function like that to make player getting the item in the Cell
-			// If the backpack is not full, the the fighter receive the item and chect isempty=true;
-//			mainplayer.openChest(chest);
-			if(chest.isEmpty()){
-				changeLocation(newx, newy, 'e');
-			}
-		}
-		
-		
-		
 		setChanged();
 		notifyObservers(this);
 	}
+	
 	
 	/**
 	 * @param map map whose validation you would like to check

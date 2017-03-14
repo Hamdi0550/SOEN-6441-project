@@ -15,16 +15,21 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import ddg.Config;
 import ddg.campaign.entity.BaseCampaign;
 import ddg.map.entity.Cell;
+import ddg.map.entity.Chest;
 import ddg.map.entity.Map;
 import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
+import ddg.ui.DDGaming;
 
 /**
  * 
@@ -32,7 +37,7 @@ import ddg.model.MapEditorModel;
  * @date Mar 12, 2017
  * 
  */
-public class MapPartInGame extends JPanel implements Observer, KeyListener{
+public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 	private JScrollPane jspanel;
 	private JPanel mapPanel;
 	private Map playingMap;
@@ -49,8 +54,8 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 	ImageIcon indoor = new ImageIcon("indoor.png");
 	ImageIcon outdoor = new ImageIcon("outdoor.png");
 	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
-	ImageIcon Mainplayer = new ImageIcon("Mainplayer.png");
-	public MapPartInGame(Fighter fighter, BaseCampaign campaign){
+	ImageIcon mainplayer = new ImageIcon("Mainplayer.png");
+	public MapPanelInGame(Fighter fighter, BaseCampaign campaign){
 		this.campaign = campaign;
 		this.fighter = fighter;
 		setLayout(new FlowLayout());
@@ -88,30 +93,7 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 			}
 			
 			this.mapsofcampaign = mapsofcampaignlist.listIterator();
-			this.playingMap = this.mapsofcampaign.next();
-			
-			for(int i=0;i<playingMap.getRow();i++){
-				for(int j=0;j<playingMap.getColumn();j++){
-					if(playingMap.getLocation()[i][j] == 'i'){
-						if(i>0 && playingMap.getLocation()[i-1][j]=='f'){
-							playingMap.getLocation()[i-1][j]='M';
-							playingMap.getCellsinthemap()[i-1][j] = new Cell<Fighter>(fighter);
-						}
-						else if(i<playingMap.getRow()-1 && playingMap.getLocation()[i+1][j]=='f'){
-							playingMap.getLocation()[i+1][j]='M';
-							playingMap.getCellsinthemap()[i+1][j] = new Cell<Fighter>(fighter);
-						}
-						else if(j>0 && playingMap.getLocation()[i][j-1]=='f'){
-							playingMap.getLocation()[i][j-1]='M';
-							playingMap.getCellsinthemap()[i][j-1] = new Cell<Fighter>(fighter);
-						}
-						else if(j<playingMap.getColumn()-1 && playingMap.getLocation()[i][j+1]=='f'){
-							playingMap.getLocation()[i][j+1]='M';
-							playingMap.getCellsinthemap()[i][j+1] = new Cell<Fighter>(fighter);
-						}
-					}
-				}
-			}
+			initMapData();
 			
 		}catch(IOException i){
 			i.printStackTrace();
@@ -121,6 +103,42 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 			e.printStackTrace();
 		}
 		
+	}
+	
+	private void initMapData(){
+		if(mapsofcampaign.hasNext()){
+			this.playingMap = this.mapsofcampaign.next();
+			
+			for(int i=0;i<playingMap.getRow();i++){
+				for(int j=0;j<playingMap.getColumn();j++){
+					if(playingMap.getLocation()[i][j] == 'i'){
+						if(i>0 && playingMap.getLocation()[i-1][j]=='f'){
+							 xofplayer = i-1;
+							 yofplayer = j;
+						}
+						else if(i<playingMap.getRow()-1 && playingMap.getLocation()[i+1][j]=='f'){
+							xofplayer = i+1;
+							yofplayer = j;
+						}
+						else if(j>0 && playingMap.getLocation()[i][j-1]=='f'){
+							xofplayer = i;
+							yofplayer = j-1;
+						}
+						else if(j<playingMap.getColumn()-1 && playingMap.getLocation()[i][j+1]=='f'){
+							xofplayer = i;
+							yofplayer = j+1;
+						}
+					}
+				}
+			}
+		}
+		else{
+			JOptionPane.showMessageDialog(null, "You finish this Campaign, Congratulation!!!");
+			JDialog ddgamedialog = (JDialog) SwingUtilities.getWindowAncestor(mapPanel);
+			ddgamedialog.dispose();
+			DDGaming newddgamedialog = new DDGaming();
+			newddgamedialog.popShow(null, "Gaming");
+		}
 	}
 	
 	private void initcontent() {
@@ -158,14 +176,11 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 							if (playingMap.getLocation()[i][j] == 'p'){
 								g.drawImage(playcharacter.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
-							if (playingMap.getLocation()[i][j] == 'M'){
-								g.drawImage(Mainplayer.getImage(), j*50, i*50, 50, 50, null);
-								xofplayer = i;
-								yofplayer = j;
-							    continue;}
 	                    }
 	                }
 	            }
+	            g.drawImage(mainplayer.getImage(), yofplayer*50, xofplayer*50, null);
+	            
 	            for(int i=0; i<playingMap.getRow(); i++){
 	            	g.drawLine(0, i*50, playingMap.getColumn()*50, i*50);
 	            }
@@ -203,19 +218,65 @@ public class MapPartInGame extends JPanel implements Observer, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			playingMap.moveOnTheMap(xofplayer, yofplayer, xofplayer-1, yofplayer, 'M');
+			moveOnMap(xofplayer-1,yofplayer);
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			playingMap.moveOnTheMap(xofplayer, yofplayer, xofplayer+1, yofplayer, 'M');
+			moveOnMap(xofplayer+1,yofplayer);
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			playingMap.moveOnTheMap(xofplayer, yofplayer, xofplayer, yofplayer-1, 'M');
+			moveOnMap(xofplayer,yofplayer-1);
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			playingMap.moveOnTheMap(xofplayer, yofplayer, xofplayer, yofplayer+1, 'M');
+			moveOnMap(xofplayer,yofplayer+1);
+		}
+	}
+
+	private void moveOnMap(int x, int y) {
+		if( x>=playingMap.getRow()|| x<0|| y >= playingMap.getColumn()|| y<0)
+			return;
+		// TODO Auto-generated method stub
+		char temp = playingMap.getLocation()[x][y];
+		if(temp =='f'||temp=='d'||temp=='o'){
+			xofplayer=x;
+			yofplayer=y;
+			mapPanel.repaint();
+		}
+		else if (temp=='c') {
+			Chest chest = (Chest) playingMap.getCellsinthemap()[x][y].getContent();
+			System.out.println("1111111111111");
+//			fighter.openChest(chest);
+			if(chest.isEmpty()){
+				playingMap.changeLocation(x, y, 'e');
+			}
+		}
+		else if(temp=='p'){
+			System.out.println(playingMap.getCellsinthemap()[x][y]);
+			Fighter npc = (Fighter) playingMap.getCellsinthemap()[x][y].getContent();
+			if(!playingMap.getCellsinthemap()[x][y].getIsfriendly()){
+//				fighter.attackCaracter(npc);
+			}
+			else{
+//				fighter.interactWithNpc(npc);
+			}
+		}
+		
+		if(playingMap.getLocation()[xofplayer][yofplayer]=='o'){
+			// check whether there is key on player's backpack, if so can interact with exit door, otherwise popup a warm message
+			
+			if(JOptionPane.showConfirmDialog(null, "Do you want to entry next map?", "Confirm", JOptionPane.YES_NO_OPTION)==0){
+				System.out.println(fighter.getLevel()+"\t\t\t\t\t");
+				
+				// create function levelup in Fighter, to increase level and save in the file
+//				fighter.levelUp();
+				fighter.setLevel(fighter.getLevel()+1);
+				System.out.println(fighter.getLevel()+"\tnew\t\t\t\t");
+				
+				initMapData();
+				mapPanel.repaint();
+			}
 		}
 	}
 

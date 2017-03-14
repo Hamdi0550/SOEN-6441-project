@@ -187,7 +187,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 					fighterpopup.setVisible(true);
 					
 					if(fighterpopup.getFighter()!=null){
-						selectedmap.changeCellsinthemap(x, y, new Cell<Fighter>(fighterpopup.getFighter(),fighterpopup.getIsfriendly()));
+						selectedmap.changeCellsinthemap(y, x, new Cell<Fighter>(fighterpopup.getFighter(),fighterpopup.getIsfriendly()));
 						selectedmap.changeLocation(y, x, num);
 					}
 				}
