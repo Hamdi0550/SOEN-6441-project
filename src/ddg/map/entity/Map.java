@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.util.Observable;
 
 import ddg.Config;
-import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
 import ddg.utils.ValidationTool;
 
@@ -25,7 +24,7 @@ public class Map extends Observable implements java.io.Serializable{
 	// record the location of things in the map
 	private String name;
 	private char[][] location;
-	private Cell[][] cellsinthemap;
+	private Cell<?>[][] cellsinthemap;
 	private int row;
 	private int column;
 	
@@ -155,7 +154,7 @@ public class Map extends Observable implements java.io.Serializable{
 	/**
 	 * @return all cells in this map
 	 */
-	public Cell[][] getCellsinthemap() {
+	public Cell<?>[][] getCellsinthemap() {
 		return cellsinthemap;
 	}
 
@@ -164,7 +163,7 @@ public class Map extends Observable implements java.io.Serializable{
 	 * @param y	column-coordinate of the location
 	 * @param cell	the cell which you would like to put in the map
 	 */
-	public void changeCellsinthemap(int x,int y, Cell cell){
+	public void changeCellsinthemap(int x,int y, Cell<?> cell){
 		this.cellsinthemap[x][y] = cell;
 		setChanged();
 		notifyObservers(this);
@@ -177,6 +176,24 @@ public class Map extends Observable implements java.io.Serializable{
 	 */
 	public boolean checkValidation(Map map){
 		return new ValidationTool(map).checkValidation();
+	}
+	
+	/**
+	 * adapting all item and non-player Characters and Items basing on level of player
+	 * @param level	level of player
+	 */
+	public void adaptedLevel(int level){
+		System.out.println("adaptedLevel()!!!!!");
+		for(int i=0; i<row ;i++){
+			for(int j=0; j<column ;j++){
+				if(location[i][j]=='p'){
+//					((Fighter) cellsinthemap[i][j].getContent()).adaptedLevel();
+				}
+				else if(location[i][j]=='c'){
+//					((Chest) cellsinthemap[i][j].getContent()).getItem().adaptedLevel();
+				}
+			}
+		}
 	}
 
 }

@@ -37,6 +37,12 @@ import ddg.ui.DDGaming;
  * @date Mar 12, 2017
  * 
  */
+/**
+ * 
+ * @author Bo
+ * @date Mar 13, 2017
+ * 
+ */
 public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 	private JScrollPane jspanel;
 	private JPanel mapPanel;
@@ -55,6 +61,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 	ImageIcon outdoor = new ImageIcon("outdoor.png");
 	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
 	ImageIcon mainplayer = new ImageIcon("Mainplayer.png");
+	
 	public MapPanelInGame(Fighter fighter, BaseCampaign campaign){
 		this.campaign = campaign;
 		this.fighter = fighter;
@@ -105,9 +112,13 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		
 	}
 	
+	/**
+	 * initial data of playing map and do adaptedLevel() function
+	 */
 	private void initMapData(){
 		if(mapsofcampaign.hasNext()){
 			this.playingMap = this.mapsofcampaign.next();
+			this.playingMap.adaptedLevel(fighter.getLevel());
 			
 			for(int i=0;i<playingMap.getRow();i++){
 				for(int j=0;j<playingMap.getColumn();j++){
@@ -142,7 +153,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 	}
 	
 	private void initcontent() {
-		
 		mapPanel = new JPanel(){
 			private static final long serialVersionUID = -8627231216589776568L;
 
@@ -200,6 +210,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		add(jspanel);
 	}
 
+	
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
@@ -234,6 +246,11 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		}
 	}
 
+	/**
+	 * this function deal with activities that player move and interact with elements of map
+	 * @param x	the x-coordinate of the cell which player would like to move
+	 * @param y	the y-coordinate of the cell which player would like to move
+	 */
 	private void moveOnMap(int x, int y) {
 		if( x>=playingMap.getRow()|| x<0|| y >= playingMap.getColumn()|| y<0)
 			return;
