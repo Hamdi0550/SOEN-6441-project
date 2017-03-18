@@ -68,14 +68,14 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     public String selectedWorn = null;
     public BaseItem selectedBackPackItem = null;
     public Fighter f2 = null;
-    private static CharacterEditLayout owner;
+    private static CharacterEditor owner;
    
     /**
      * 
      * @param ownerFrame
      */
-    public static void createAndShowGUI(CharacterEditLayout ownerFrame) {
-        owner = (CharacterEditLayout) ownerFrame;
+    public static void createAndShowGUI(CharacterEditor ownerFrame) {
+        owner = (CharacterEditor) ownerFrame;
     	InventoryView frame1 = new InventoryView(); 
         frame1.setBounds(260, 260, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -321,6 +321,10 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 						owner.getOwner().fighter.getWorn().add(selectedBackPackItem);
 						owner.getOwner().fighter.setEquipOn(selectedBackPackItem.getName());
 						JOptionPane.showMessageDialog(null, "The item is worn.", "Message", JOptionPane.WARNING_MESSAGE); 
+
+						equipmentTypeL.setText("");
+						attributeL.setText("");
+						valueL.setText("");
     				} else {
 	    				JOptionPane.showMessageDialog(null, "This is not a wearable equipment.", "Warning",JOptionPane.WARNING_MESSAGE);
     				}    				
@@ -467,7 +471,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 	/**
 	 * 
 	 */
-	public CharacterEditLayout getOwner(){
+	public CharacterEditor getOwner(){
 		return owner;
 	}
 	

@@ -4,20 +4,20 @@ import ddg.model.Fighter;
 
 public class FighterExplorer {
 
-	private FighterBuilder builder;
+	private FighterBuilder fighterBuilder;
 
-	public void setBuilder(FighterBuilder builder) {
-		this.builder = builder;
+	public void setBuilder(FighterBuilder newBuilder) {
+		this.fighterBuilder = newBuilder;
 	}
 
 	public void constructFighter() {
-		builder.createFighter();
-		builder.generateScores();
-		builder.assignScores();
+		fighterBuilder.createFighter();
+		fighterBuilder.generateScores();
+		fighterBuilder.assignScores();
 	}
 
 	public Fighter getFighter() {
-		return builder.getFighter();
+		return fighterBuilder.getFighter();
 	}
 
 }

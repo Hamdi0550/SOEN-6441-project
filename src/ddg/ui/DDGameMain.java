@@ -11,9 +11,9 @@ import javax.swing.SwingUtilities;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.view.CampaignEditor;
-import ddg.view.CharacterEditLayout;
+import ddg.view.CharacterEditor;
 import ddg.view.CharacterSelection;
-import ddg.view.CharactorEditor;
+import ddg.view.OldCharactorEditor;
 import ddg.view.ItemEditor;
 import ddg.view.MainPage;
 import ddg.view.MapEditor;
@@ -28,7 +28,7 @@ public class DDGameMain extends JFrame implements ActionListener {
 	private Container contentPane;
 	private MapEditor mapEditor;
 	private MainPage mainPage;
-	private CharactorEditor charactorEditor;
+	private OldCharactorEditor charactorEditor;
 	private CampaignEditor campaignEditor;
 	private ItemEditor itemEditor;
 	
@@ -43,7 +43,7 @@ public class DDGameMain extends JFrame implements ActionListener {
 		this.contentPane.setLayout(new CardLayout());
 		this.mapEditor = new MapEditor(this);
 		this.mainPage = new MainPage(this);
-		this.charactorEditor = new CharactorEditor(this);
+		this.charactorEditor = new OldCharactorEditor(this);
 		this.campaignEditor = new CampaignEditor(this);
 		this.itemEditor = new ItemEditor(this);
 		this.contentPane.add(mainPage);

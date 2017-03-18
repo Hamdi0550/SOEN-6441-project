@@ -27,7 +27,7 @@ import javax.swing.border.*;
  * @author Fei Yu
  * @date Mar 3, 2017
  */
-public class CharacterEditLayout extends JDialog implements ActionListener {
+public class CharacterEditor extends JDialog implements ActionListener {
 
     private final JButton saveBtn = new JButton("      Save      ");
     private final JButton cancelBtn = new JButton("      Cancel      ");
@@ -58,14 +58,18 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 
     private JComboBox<String> typeList = new JComboBox();
 
-    JLabel nameModiferL = new JLabel(" L ");
-    JLabel levelModiferL = new JLabel(" L ");
-    JLabel strengthModiferL = new JLabel(" L ");
-    JLabel dexModiferL = new JLabel(" L ");
-    JLabel conModiferL = new JLabel(" L ");
-    JLabel intelliModiferL = new JLabel(" L ");
-    JLabel wisModiferL = new JLabel(" L ");
-    JLabel chaModiferL = new JLabel(" L ");
+    private JLabel strengthL = new JLabel();
+    private JLabel dexterityL = new JLabel();
+    private JLabel constitutionL = new JLabel();
+    private JLabel intelligenceL = new JLabel();
+    private JLabel wisdomL = new JLabel();
+    private JLabel charismaL = new JLabel();
+    private JLabel strengthModiferL = new JLabel();
+    private JLabel dexModiferL = new JLabel();
+    private JLabel conModiferL = new JLabel();
+    private JLabel intelliModiferL = new JLabel();
+    private JLabel wisModiferL = new JLabel();
+    private JLabel chaModiferL = new JLabel();
     
     private static CharacterSelection owner;
     public BaseItem selectedItem = null;
@@ -80,7 +84,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         owner = (CharacterSelection) ownerFrame;
         
         System.out.println("========"+owner);
-        CharacterEditLayout frame1 = new CharacterEditLayout(); 
+        CharacterEditor frame1 = new CharacterEditor(); 
         frame1.setBounds(230, 230, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
@@ -91,7 +95,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
     /**
      * 
      */
-    CharacterEditLayout()
+    CharacterEditor()
     {
         super();
         setTitle("Character Editor");
@@ -124,30 +128,25 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         buttonsPanel.setPreferredSize(new Dimension(100,320));
         characterLeftPanel.setPreferredSize(new Dimension(100,320));
         characterRightPanel.setPreferredSize(new Dimension(100,320));
-        attributesPanel.setPreferredSize(new Dimension(600,320));
+        attributesPanel.setPreferredSize(new Dimension(360,320));
         characterImagePanel.setPreferredSize(new Dimension(230,320));
         
-        JLabel lb1 = new JLabel(" ");
-        lb1.setBorder(new LineBorder(Color.BLACK));
-        nameModiferL.setBorder(new LineBorder(Color.BLACK));
-        levelModiferL.setBorder(new LineBorder(Color.BLACK));
         strengthModiferL.setBorder(new LineBorder(Color.BLACK));
         dexModiferL.setBorder(new LineBorder(Color.BLACK));
         conModiferL.setBorder(new LineBorder(Color.BLACK));
         intelliModiferL.setBorder(new LineBorder(Color.BLACK));
         wisModiferL.setBorder(new LineBorder(Color.BLACK));
         chaModiferL.setBorder(new LineBorder(Color.BLACK));
-        lb1.setPreferredSize(new Dimension(20,15));
-        lb1.setBounds(0, 0, 20, 15);
-        lb1.setIcon(Config.HELMET_ICON);
-        lb1.setText(" 2 ");
-        attributesPanel.add(new JLabel("      "));
-        attributesPanel.add(new JLabel("      "));
-        attributesPanel.add(new JLabel(" Modifier "));
-        attributesPanel.add(new JLabel("     "));
+        strengthL.setBorder(new LineBorder(Color.BLACK));
+        dexterityL.setBorder(new LineBorder(Color.BLACK));
+        constitutionL.setBorder(new LineBorder(Color.BLACK));
+        intelligenceL.setBorder(new LineBorder(Color.BLACK));
+        wisdomL.setBorder(new LineBorder(Color.BLACK));
+        charismaL.setBorder(new LineBorder(Color.BLACK));
+        
         attributesPanel.add(new JLabel(" Name "));
         attributesPanel.add(nameTextF);
-        attributesPanel.add(nameModiferL);
+        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Type "));
         attributesPanel.add(typeList);
@@ -155,32 +154,36 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
         attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Level "));
         attributesPanel.add(levelTextF);
-        attributesPanel.add(levelModiferL);
         attributesPanel.add(new JLabel("     "));
+        attributesPanel.add(new JLabel("     "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel(" Value "));
+        attributesPanel.add(new JLabel(" Modifier "));
         attributesPanel.add(new JLabel(" Strength "));
         attributesPanel.add(strengthTextF);
+        attributesPanel.add(strengthL);
         attributesPanel.add(strengthModiferL);
-        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Dexterity "));
         attributesPanel.add(dexterityTextF);
+        attributesPanel.add(dexterityL);
         attributesPanel.add(dexModiferL);
-        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Constitution "));
         attributesPanel.add(constitutionTextF);
+        attributesPanel.add(constitutionL);
         attributesPanel.add(conModiferL);
-        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Intelligence "));
         attributesPanel.add(intelligenceTextF);
+        attributesPanel.add(intelligenceL);
         attributesPanel.add(intelliModiferL);
-        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Wisdom "));
         attributesPanel.add(wisdomTextF);
+        attributesPanel.add(wisdomL);
         attributesPanel.add(wisModiferL);
-        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Charisma "));
         attributesPanel.add(charismaTextF);
+        attributesPanel.add(charismaL);
         attributesPanel.add(chaModiferL);
-        attributesPanel.add(new JLabel("     "));
         if (owner.isCreatingNew == false){
         	nameTextF.setEditable(false);
         }
@@ -215,53 +218,72 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 			System.out.println("No owner===============");
 		}
 		if(owner.isCreatingNew == false){
-			System.out.println(owner.toString());
-			nameTextF.setText(owner.fighter.getName());
-			levelTextF.setText(Integer.toString(owner.fighter.getLevel()));
-			strengthTextF.setText(Integer.toString(owner.fighter.getStrength()));
-			dexterityTextF.setText(Integer.toString(owner.fighter.getDexterity()));
-			constitutionTextF.setText(Integer.toString(owner.fighter.getConstitution()));
-			intelligenceTextF.setText(Integer.toString(owner.fighter.getIntelligence()));
-			wisdomTextF.setText(Integer.toString(owner.fighter.getWisdom()));
-			charismaTextF.setText(Integer.toString(owner.fighter.getCharisma()));
-			
-    		strengthModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getStrength())));
-    		dexModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getDexterity())));
-    		conModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getConstitution())));
-    		intelliModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getIntelligence())));
-    		wisModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getWisdom())));
-    		chaModiferL.setText(Integer.toString(owner.fighter.getModifier(owner.fighter.getCharisma())));	
+			System.out.println(owner.toString());			
+			setLabels(owner.fighter);    		
+    		setEquipmentIcon(owner.fighter);    		
     		
-    		if (owner.fighter.isHelmetOn){
-    			helmetBtn.setText("");
-    			helmetBtn.setIcon(Config.HELMET_ICON);
-    		}
-    		if (owner.fighter.isArmorOn){
-    			armorBtn.setText("");
-    			armorBtn.setIcon(Config.ARMOR_ICON);
-    		}
-    		if (owner.fighter.isBeltOn){
-    			beltBtn.setText("");
-    			beltBtn.setIcon(Config.BELT_ICON);
-    		}
-    		if (owner.fighter.isBootsOn){
-    			bootsBtn.setText("");
-    			bootsBtn.setIcon(Config.BOOTS_ICON);
-    		}
-    		if (owner.fighter.isRingOn){
-    			ringBtn.setText("");
-    			ringBtn.setIcon(Config.RING_ICON);
-    		}
-    		if (owner.fighter.IsShieldOn){
-    			shieldBtn.setText("");
-    			shieldBtn.setIcon(Config.SHIELD_ICON);
-    		}
-    		if (owner.fighter.isWeaponOn){
-    			weaponBtn.setText("");
-    			weaponBtn.setIcon(Config.WEAPON_ICON);
-    		}
-		}		
+		}
 	}
+	
+	/**
+	 * 
+	 * @param fighter
+	 */
+	private void setLabels(Fighter fighter) {
+		nameTextF.setText(fighter.getName());
+		levelTextF.setText(Integer.toString(fighter.getLevel()));
+		strengthTextF.setText(Integer.toString(fighter.getStrength()));
+		dexterityTextF.setText(Integer.toString(fighter.getDexterity()));
+		constitutionTextF.setText(Integer.toString(fighter.getConstitution()));
+		intelligenceTextF.setText(Integer.toString(fighter.getIntelligence()));
+		wisdomTextF.setText(Integer.toString(fighter.getWisdom()));
+		charismaTextF.setText(Integer.toString(fighter.getCharisma()));
+		
+		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getStrength())));
+		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getDexterity())));
+		conModiferL.setText(Integer.toString(fighter.getModifier(fighter.getConstitution())));
+		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getIntelligence())));
+		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getWisdom())));
+		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getCharisma())));	
+		
+	}
+
+	/**
+	 * 
+	 * @param fighter
+	 */
+	private void setEquipmentIcon(Fighter fighter) {
+		if (fighter.isHelmetOn){
+			helmetBtn.setText("");
+			helmetBtn.setIcon(Config.HELMET_ICON);
+		}
+		if (fighter.isArmorOn){
+			armorBtn.setText("");
+			armorBtn.setIcon(Config.ARMOR_ICON);
+		}
+		if (fighter.isBeltOn){
+			beltBtn.setText("");
+			beltBtn.setIcon(Config.BELT_ICON);
+		}
+		if (fighter.isBootsOn){
+			bootsBtn.setText("");
+			bootsBtn.setIcon(Config.BOOTS_ICON);
+		}
+		if (fighter.isRingOn){
+			ringBtn.setText("");
+			ringBtn.setIcon(Config.RING_ICON);
+		}
+		if (fighter.IsShieldOn){
+			shieldBtn.setText("");
+			shieldBtn.setIcon(Config.SHIELD_ICON);
+		}
+		if (fighter.isWeaponOn){
+			weaponBtn.setText("");
+			weaponBtn.setIcon(Config.WEAPON_ICON);
+		}
+		
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == typeList) {
@@ -405,7 +427,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		helmetBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.HELMET;
-				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(helmetBtn);
+				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(helmetBtn);
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
@@ -413,7 +435,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		armorBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.ARMOR;
-				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(armorBtn);
+				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(armorBtn);
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
@@ -421,7 +443,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		beltBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.BELT;
-				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(beltBtn);
+				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(beltBtn);
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
@@ -429,7 +451,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		bootsBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.BOOTS;
-				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(bootsBtn);
+				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(bootsBtn);
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
@@ -437,7 +459,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		ringBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.RING;
-				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(ringBtn);
+				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(ringBtn);
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
@@ -445,7 +467,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		shieldBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.SHIELD;
-				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(shieldBtn);
+				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(shieldBtn);
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
@@ -453,7 +475,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 		weaponBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				wearingType = BaseItem.WEAPON;
-				CharacterEditLayout rootFrame = (CharacterEditLayout) SwingUtilities.getWindowAncestor(weaponBtn);
+				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(weaponBtn);
 				ItemSelection.createAndShowGUI(rootFrame);				
 			}
 		});
@@ -473,7 +495,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	 * 
 	 * @return
 	 */
-	public CharacterEditLayout getThisFrame() {
+	public CharacterEditor getThisFrame() {
 		return this;
 	}
 	
@@ -494,6 +516,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	     public void windowGainedFocus(WindowEvent e) {
 	    	 System.out.println("The CE window is focused.");  
 	    	 if (owner.fighter != null && owner.isCreatingNew == false){
+	    		 
 		    	 nameTextF.setText(owner.fighter.getName());
 		    	 levelTextF.setText(Integer.toString(owner.fighter.getLevel()));
 		    	 strengthTextF.setText(Integer.toString(owner.fighter.getTotalStrength()));
@@ -583,6 +606,7 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	 
 	}
 	
+
 	/**
 	 * 
 	 * 
@@ -593,7 +617,6 @@ public class CharacterEditLayout extends JDialog implements ActionListener {
 	 */
 	class EmbeddedPanel extends JPanel{
 
-	    private ImageIcon icon;  
 	    private Image img;  
 	    public EmbeddedPanel() {  
 	    	super();

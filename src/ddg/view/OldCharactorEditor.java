@@ -16,11 +16,11 @@ import ddg.view.component.DButton;
  * @author 
  * @date Feb 5, 2017
  */
-public class CharactorEditor extends JPanel implements ActionListener {
+public class OldCharactorEditor extends JPanel implements ActionListener {
 
 	private ActionListener listener;
 	
-	public CharactorEditor(ActionListener a) {
+	public OldCharactorEditor(ActionListener a) {
 		this.listener = a;
 		initView();
 	}

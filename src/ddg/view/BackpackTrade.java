@@ -48,7 +48,7 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
     public String selectedWorn = null;
     public BaseItem selectedBackPackItem = null;
     public Fighter f2 = null;
-    private static CharacterEditLayout owner;
+    private static CharacterEditor owner;
     
     /**
      * 
@@ -62,8 +62,8 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
      * 
      * @param ownerFrame
      */
-    public static void createAndShowGUI(CharacterEditLayout ownerFrame) {
-        owner = (CharacterEditLayout) ownerFrame;
+    public static void createAndShowGUI(CharacterEditor ownerFrame) {
+        owner = (CharacterEditor) ownerFrame;
     	BackpackTrade frame1 = new BackpackTrade(); 
         frame1.setBounds(260, 260, 500, 500);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -213,7 +213,7 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
 	/**
 	 * 
 	 */
-	public CharacterEditLayout getOwner(){
+	public CharacterEditor getOwner(){
 		return owner;
 	}
 	

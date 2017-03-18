@@ -206,7 +206,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		public void actionPerformed(ActionEvent e){
     			isCreatingNew = true;
     			CharacterSelection rootframe = (CharacterSelection) SwingUtilities.getWindowAncestor(createBtn);
-    			CharacterEditLayout.createAndShowGUI(rootframe);
+    			CharacterEditor.createAndShowGUI(rootframe);
     			setEnabled(false);
             }
         });
@@ -224,7 +224,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     			if (!characterList.isSelectionEmpty()){
         			isCreatingNew = false;
 					System.out.println(getThisFrame());
-					CharacterEditLayout.createAndShowGUI(getThisFrame());
+					CharacterEditor.createAndShowGUI(getThisFrame());
 					setEnabled(false);
     	        }               
             }

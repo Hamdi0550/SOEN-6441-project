@@ -48,17 +48,17 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	ArrayList<BaseItem> al1 = new ArrayList<>();
 	public int id = 100;
 	public String fighterKeyName = "fighter111";
-    private static CharacterEditLayout owner;
+    private static CharacterEditor owner;
     public BaseItem selectedItem;
     
     /**
      * Create the window
      * @param ownerFrame The owner window of this window
      */
-    public static void createAndShowGUI(CharacterEditLayout ownerFrame) 
+    public static void createAndShowGUI(CharacterEditor ownerFrame) 
     {
 
-        owner = (CharacterEditLayout) ownerFrame;
+        owner = (CharacterEditor) ownerFrame;
         System.out.println("========"+owner);
     	ItemSelection frame1 = new ItemSelection(); 
         frame1.setBounds(260, 260, 0, 0);
