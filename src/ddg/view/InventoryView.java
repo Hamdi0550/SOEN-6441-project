@@ -347,6 +347,86 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 		});
         
     }
+    
+    /**
+     * 
+     * @param fighter
+     */
+	protected void updateAttributes(Fighter fighter) {
+
+		strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
+		dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
+		constitutionTextF.setText(Integer.toString(fighter.getTotalConstitution()));
+		intelligenceTextF.setText(Integer.toString(fighter.getTotalIntelligence()));
+		wisdomTextF.setText(Integer.toString(fighter.getTotalWisdom()));
+		charismaTextF.setText(Integer.toString(fighter.getTotalCharisma()));
+		
+		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalStrength())));
+		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalDexterity())));
+		conModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalConstitution())));
+		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalIntelligence())));
+		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalWisdom())));
+		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalCharisma())));
+
+	}
+	
+	/**
+	 * 
+	 * @param fighter
+	 */
+	private void setEquipmentIcon(Fighter fighter) {
+		
+		if (owner.getOwner().fighter.isHelmetOn){
+			helmetBtn.setText("");
+			helmetBtn.setIcon(Config.HELMET_ICON);
+		} else{
+			helmetBtn.setText("Helmet");
+			helmetBtn.setIcon(null);	    			
+		}
+		if (owner.getOwner().fighter.isArmorOn){
+			armorBtn.setText("");
+			armorBtn.setIcon(Config.ARMOR_ICON);
+		} else{
+			armorBtn.setText("Armor");
+			armorBtn.setIcon(null);	    			
+		}
+		if (owner.getOwner().fighter.isBeltOn){
+			beltBtn.setText("");
+			beltBtn.setIcon(Config.BELT_ICON);
+		} else{
+			beltBtn.setText("Belt");
+			beltBtn.setIcon(null);	    			
+		}
+		if (owner.getOwner().fighter.isBootsOn){
+			bootsBtn.setText("");
+			bootsBtn.setIcon(Config.BOOTS_ICON);
+		} else{
+			bootsBtn.setText("Boots");
+			bootsBtn.setIcon(null);	    			
+		}
+		if (owner.getOwner().fighter.isRingOn){
+			ringBtn.setText("");
+			ringBtn.setIcon(Config.RING_ICON);
+		} else{
+			ringBtn.setText("Ring");
+			ringBtn.setIcon(null);	    			
+		}
+		if (owner.getOwner().fighter.IsShieldOn){
+			shieldBtn.setText("");
+			shieldBtn.setIcon(Config.SHIELD_ICON);
+		} else{
+			shieldBtn.setText("Shield");
+			shieldBtn.setIcon(null);	    			
+		}
+		if (owner.getOwner().fighter.isWeaponOn){
+			weaponBtn.setText("");
+			weaponBtn.setIcon(Config.WEAPON_ICON);
+		} else{
+			weaponBtn.setText("Weapon");
+			weaponBtn.setIcon(null);	    			
+		}
+
+	}
 
     /**
      * This method manage the actions of the window focus
@@ -362,68 +442,12 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 
 				strengthTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalStrength()));
 				dexterityTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalDexterity()));
-				constitutionTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalConstitution()));
-				intelligenceTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalIntelligence()));
-				wisdomTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalWisdom()));
-				charismaTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalCharisma()));
-	    		strengthModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalStrength())));
-	    		dexModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalDexterity())));
-	    		conModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalConstitution())));
-	    		intelliModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalIntelligence())));
-	    		wisModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalWisdom())));
-	    		chaModiferL.setText(Integer.toString(owner.getOwner().fighter.getModifier(owner.getOwner().fighter.getTotalCharisma())));
-	    		
-	    		if (owner.getOwner().fighter.isHelmetOn){
-	    			helmetBtn.setText("");
-	    			helmetBtn.setIcon(Config.HELMET_ICON);
-	    		} else{
-	    			helmetBtn.setText("Helmet");
-	    			helmetBtn.setIcon(null);	    			
-	    		}
-	    		if (owner.getOwner().fighter.isArmorOn){
-	    			armorBtn.setText("");
-	    			armorBtn.setIcon(Config.ARMOR_ICON);
-	    		} else{
-	    			armorBtn.setText("Armor");
-	    			armorBtn.setIcon(null);	    			
-	    		}
-	    		if (owner.getOwner().fighter.isBeltOn){
-	    			beltBtn.setText("");
-	    			beltBtn.setIcon(Config.BELT_ICON);
-	    		} else{
-	    			beltBtn.setText("Belt");
-	    			beltBtn.setIcon(null);	    			
-	    		}
-	    		if (owner.getOwner().fighter.isBootsOn){
-	    			bootsBtn.setText("");
-	    			bootsBtn.setIcon(Config.BOOTS_ICON);
-	    		} else{
-	    			bootsBtn.setText("Boots");
-	    			bootsBtn.setIcon(null);	    			
-	    		}
-	    		if (owner.getOwner().fighter.isRingOn){
-	    			ringBtn.setText("");
-	    			ringBtn.setIcon(Config.RING_ICON);
-	    		} else{
-	    			ringBtn.setText("Ring");
-	    			ringBtn.setIcon(null);	    			
-	    		}
-	    		if (owner.getOwner().fighter.IsShieldOn){
-	    			shieldBtn.setText("");
-	    			shieldBtn.setIcon(Config.SHIELD_ICON);
-	    		} else{
-	    			shieldBtn.setText("Shield");
-	    			shieldBtn.setIcon(null);	    			
-	    		}
-	    		if (owner.getOwner().fighter.isWeaponOn){
-	    			weaponBtn.setText("");
-	    			weaponBtn.setIcon(Config.WEAPON_ICON);
-	    		} else{
-	    			weaponBtn.setText("Weapon");
-	    			weaponBtn.setIcon(null);	    			
-	    		}
-
-		    	 Fighter f2 = owner.getOwner().fighter;
+				
+				updateAttributes(owner.getOwner().fighter);
+				
+				setEquipmentIcon(owner.getOwner().fighter);
+				
+		    	Fighter f2 = owner.getOwner().fighter;
 
 	    		System.out.println("===========================");
 	    		System.out.println(f2);
