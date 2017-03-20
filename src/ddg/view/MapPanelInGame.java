@@ -61,6 +61,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 	ImageIcon outdoor = new ImageIcon("outdoor.png");
 	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
 	ImageIcon mainplayer = new ImageIcon("Mainplayer.png");
+	ImageIcon deadnpc = new ImageIcon("deadnpc.png");
 	
 	public MapPanelInGame(Fighter fighter, BaseCampaign campaign){
 		this.campaign = campaign;
@@ -157,7 +158,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			private static final long serialVersionUID = -8627231216589776568L;
 
 			@Override  
-	        public void paint(Graphics g) {  
+	        public void paint(Graphics g) {
 	            super.paint(g);  
 	            for(int i=0;i< playingMap.getRow();i++){
 	                for(int j=0;j< playingMap.getColumn();j++){
@@ -185,6 +186,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 							    continue;}
 							if (playingMap.getLocation()[i][j] == 'p'){
 								g.drawImage(playcharacter.getImage(), j*50, i*50, 50, 50, null);
+							    continue;}
+							if (playingMap.getLocation()[i][j] == 'd'){
+								g.drawImage(deadnpc.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 	                    }
 	                }
@@ -256,7 +260,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			return;
 		// TODO Auto-generated method stub
 		char temp = playingMap.getLocation()[x][y];
-		if(temp =='f'||temp=='d'||temp=='o'){
+		if(temp =='f'||temp=='d'||temp=='o'||temp=='i'){
 			xofplayer=x;
 			yofplayer=y;
 			mapPanel.repaint();
@@ -264,7 +268,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		else if (temp=='c') {
 			Chest chest = (Chest) playingMap.getCellsinthemap()[x][y].getContent();
 			System.out.println("1111111111111");
-//			fighter.openChest(chest);
+			fighter.openChest(chest);
 			if(chest.isEmpty()){
 				playingMap.changeLocation(x, y, 'e');
 			}
@@ -273,7 +277,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			System.out.println(playingMap.getCellsinthemap()[x][y]);
 			Fighter npc = (Fighter) playingMap.getCellsinthemap()[x][y].getContent();
 			if(!playingMap.getCellsinthemap()[x][y].getIsfriendly()){
-//				fighter.attackCaracter(npc);
+				fighter.attackCaracter(npc);
+				if(!npc.isAlive()){
+					playingMap.changeLocation(x, y, 'd');//dead npc
+				}
 			}
 			else{
 //				fighter.interactWithNpc(npc);
@@ -287,7 +294,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				System.out.println(fighter.getLevel()+"\t\t\t\t\t");
 				
 				// create function levelup in Fighter, to increase level and save in the file
-//				fighter.levelUp();
+				fighter.levelUp();
 				fighter.setLevel(fighter.getLevel()+1);
 				System.out.println(fighter.getLevel()+"\tnew\t\t\t\t");
 				

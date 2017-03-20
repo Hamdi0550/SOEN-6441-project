@@ -6,6 +6,7 @@ import ddg.Config;
 import ddg.utils.Dice;
 import ddg.utils.Utils;
 import ddg.item.entity.*;
+import ddg.map.entity.Chest;
 
 
 /**
@@ -21,6 +22,7 @@ public class Fighter implements Serializable{
 	private int id;
 	private String name;
 	private int level = 1;
+	private boolean isalive;
 	
 	private int strength;
 	private int dexterity;
@@ -60,6 +62,7 @@ public class Fighter implements Serializable{
 	private BaseItem[] backpack1 = new BaseItem[10];
 	private ArrayList<BaseItem> wornItems = new ArrayList<>();
 	
+	
 	/**
 	 * Constructor
 	 */
@@ -76,6 +79,7 @@ public class Fighter implements Serializable{
 		this.level = level;
 		this.strength = strength;
 		this.dexterity = dexterity;
+		this.isalive = true;
 		hitPoints = Dice.d10Roll() + (constitution * this.level);
 		armorClass = this.dexterity + 0;		
 	}
@@ -564,4 +568,33 @@ public class Fighter implements Serializable{
 		
 		return true;
     }
+	public void openChest(Chest chest) {
+		if(this.backpack.size()<10){
+			chest.becameEmpty();
+		}
+		else{
+			// can add inform on Textarea
+			return;
+		}
+	}
+	public void attackCaracter(Fighter npc) {
+//		int harm = ;
+		npc.beAttacked(100);
+	}
+	public void beAttacked(int i) {
+		this.hitPoints -= i;
+		if(this.hitPoints<=0){
+			die();
+		}
+	}
+	public boolean isAlive() {
+		return isalive;
+	}
+	private void die() {
+		this.isalive = false;
+	}
+	public void levelUp() {
+		this.level++;
+		
+	}
 }
