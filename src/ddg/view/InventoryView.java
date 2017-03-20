@@ -28,7 +28,7 @@ import javax.swing.border.*;
  */
 public class InventoryView extends JDialog implements ActionListener, ListSelectionListener {
 
-    private final JButton cancelBtn = new JButton("    Back  ");
+    private final JButton backBtn = new JButton("    Back  ");
     private final JButton equipBtn = new JButton("    Equip   ");
     private final JButton removeBtn = new JButton("   Take off  ");
 
@@ -67,7 +67,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     
     public String selectedWorn = null;
     public BaseItem selectedBackPackItem = null;
-    public Fighter f2 = null;
+    public Fighter fighter;
     private static CharacterEditor owner;
    
     /**
@@ -84,11 +84,37 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     }
 
     /**
+     * 
+     * @param fighter
+     */
+	public static void createAndShowGUI(Fighter fighter) {
+    	InventoryView frame1 = new InventoryView(fighter); 
+        frame1.setBounds(260, 260, 0, 0);
+        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        frame1.pack();
+        frame1.setVisible(true);
+		
+	}    
+	InventoryView(Fighter fighter){
+    	super();
+		this.fighter = fighter;
+		initialization();
+	}
+
+    /**
      * Constructor
      */
     InventoryView()
     {
-        super();
+    	super();
+    	this.fighter = owner.getOwner().fighter;
+    	initialization();        
+    }
+    
+    /**
+     * Initialize the inventory view window.
+     */
+    private void initialization() {
         setTitle("Inventory");
         setModal(true);
         setLayout(new BorderLayout());
@@ -199,7 +225,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.add(equipBtn);
-        buttonsPanel.add(cancelBtn);
+        buttonsPanel.add(backBtn);
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.setSize(300,500);
 
@@ -210,7 +236,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
         JScrollPane itemListPane = new JScrollPane(backpackItemList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
         backpackItemList.setPreferredSize(new Dimension(200,220));
-        for(BaseItem i: owner.getOwner().fighter.getBackpack()){
+        for(BaseItem i: fighter.getBackpack()){
         	backpackItemModel.addElement(i.getId());
         }      	
         
@@ -218,7 +244,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     		public void actionPerformed(ActionEvent e){
     			selectedWorn = BaseItem.HELMET;
     			Fighter fighter1;
-    			fighter1 = owner.getOwner().fighter;
+    			fighter1 = fighter;
     			System.out.println("fighter's inventory size is " + fighter1.getBackpack().size());
             }
         });
@@ -227,7 +253,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     		public void actionPerformed(ActionEvent e){
     			selectedWorn = BaseItem.BELT;
     			Fighter fighter1;
-    			fighter1 = owner.getOwner().fighter;
+    			fighter1 = fighter;
             }
         });
 
@@ -235,51 +261,51 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     		public void actionPerformed(ActionEvent e){
     			selectedWorn = BaseItem.RING;
     			Fighter fighter1;
-    			fighter1 = owner.getOwner().fighter;
+    			fighter1 = fighter;
             }
         });
     	armorBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			selectedWorn = BaseItem.ARMOR;
     			Fighter fighter1;
-    			fighter1 = owner.getOwner().fighter;
+    			fighter1 = fighter;
             }
         });
     	shieldBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			selectedWorn = BaseItem.SHIELD;
     			Fighter fighter1;
-    			fighter1 = owner.getOwner().fighter;
+    			fighter1 = fighter;
             }
         });
     	bootsBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			selectedWorn = BaseItem.BOOTS;
     			Fighter fighter1;
-    			fighter1 = owner.getOwner().fighter;
+    			fighter1 = fighter;
             }
         });
     	weaponBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			selectedWorn = BaseItem.WEAPON;
     			Fighter fighter1;
-    			fighter1 = owner.getOwner().fighter;
+    			fighter1 = fighter;
             }
         });
     	removeBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			try{
-        			if (owner.getOwner().fighter.getBackpack().size() >= 10){
+        			if (fighter.getBackpack().size() >= 10){
     					JOptionPane.showMessageDialog(null, "The backpack is full, there is no place for the item!", "Warning", JOptionPane.WARNING_MESSAGE);
         			} else {
             			try{
-                			for (BaseItem i: owner.getOwner().fighter.getWorn()){
+                			for (BaseItem i: fighter.getWorn()){
                 				if (i.getName().equals(selectedWorn)){
-                					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
-                					owner.getOwner().fighter.getBackpack().add(i);
-                					owner.getOwner().fighter.getWorn().remove(i);
-                        			owner.getOwner().fighter.setEquipOff(selectedWorn);
-//                					System.out.println("backpack=========" + owner.getOwner().fighter.getBackpack());  
+                					fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
+                					fighter.getBackpack().add(i);
+                					fighter.getWorn().remove(i);
+                        			fighter.setEquipOff(selectedWorn);
+//                					System.out.println("backpack=========" + fighter.getBackpack());  
                 					
                 				} else {
                 					JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -307,19 +333,19 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
             			}
     				}
     				if (isWearable == true){
-    					for (BaseItem item: owner.getOwner().fighter.getWorn()){
+    					for (BaseItem item: fighter.getWorn()){
 	        				if (item.getName().equals(selectedBackPackItem.getName())){
-	        					owner.getOwner().fighter.gainBonus(item.getIncrease(), item.getBonus(), "-");
-	        					owner.getOwner().fighter.getBackpack().add(item);
-	        					owner.getOwner().fighter.getWorn().remove(item);
-//	        					System.out.println("backpack=========" + owner.getOwner().fighter.getBackpack());  
+	        					fighter.gainBonus(item.getIncrease(), item.getBonus(), "-");
+	        					fighter.getBackpack().add(item);
+	        					fighter.getWorn().remove(item);
+//	        					System.out.println("backpack=========" + fighter.getBackpack());  
 	        					
 	        				}
     					}
-						owner.getOwner().fighter.gainBonus(selectedBackPackItem.getIncrease(), selectedBackPackItem.getBonus(), "+");
-						owner.getOwner().fighter.getBackpack().remove(selectedBackPackItem);
-						owner.getOwner().fighter.getWorn().add(selectedBackPackItem);
-						owner.getOwner().fighter.setEquipOn(selectedBackPackItem.getName());
+						fighter.gainBonus(selectedBackPackItem.getIncrease(), selectedBackPackItem.getBonus(), "+");
+						fighter.getBackpack().remove(selectedBackPackItem);
+						fighter.getWorn().add(selectedBackPackItem);
+						fighter.setEquipOn(selectedBackPackItem.getName());
 						JOptionPane.showMessageDialog(null, "The item is worn.", "Message", JOptionPane.WARNING_MESSAGE); 
 
 						equipmentTypeL.setText("");
@@ -339,16 +365,15 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 	        }
 		});
     	
-		cancelBtn.addActionListener(new ActionListener(){
+		backBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println("cancel clicked");
 				dispose();				
 	        }
 		});
-        
-    }
-    
-    /**
+	}
+
+	/**
      * 
      * @param fighter
      */
@@ -376,49 +401,49 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 	 */
 	private void setEquipmentIcon(Fighter fighter) {
 		
-		if (owner.getOwner().fighter.isHelmetOn){
+		if (fighter.isHelmetOn){
 			helmetBtn.setText("");
 			helmetBtn.setIcon(Config.HELMET_ICON);
 		} else{
 			helmetBtn.setText("Helmet");
 			helmetBtn.setIcon(null);	    			
 		}
-		if (owner.getOwner().fighter.isArmorOn){
+		if (fighter.isArmorOn){
 			armorBtn.setText("");
 			armorBtn.setIcon(Config.ARMOR_ICON);
 		} else{
 			armorBtn.setText("Armor");
 			armorBtn.setIcon(null);	    			
 		}
-		if (owner.getOwner().fighter.isBeltOn){
+		if (fighter.isBeltOn){
 			beltBtn.setText("");
 			beltBtn.setIcon(Config.BELT_ICON);
 		} else{
 			beltBtn.setText("Belt");
 			beltBtn.setIcon(null);	    			
 		}
-		if (owner.getOwner().fighter.isBootsOn){
+		if (fighter.isBootsOn){
 			bootsBtn.setText("");
 			bootsBtn.setIcon(Config.BOOTS_ICON);
 		} else{
 			bootsBtn.setText("Boots");
 			bootsBtn.setIcon(null);	    			
 		}
-		if (owner.getOwner().fighter.isRingOn){
+		if (fighter.isRingOn){
 			ringBtn.setText("");
 			ringBtn.setIcon(Config.RING_ICON);
 		} else{
 			ringBtn.setText("Ring");
 			ringBtn.setIcon(null);	    			
 		}
-		if (owner.getOwner().fighter.IsShieldOn){
+		if (fighter.IsShieldOn){
 			shieldBtn.setText("");
 			shieldBtn.setIcon(Config.SHIELD_ICON);
 		} else{
 			shieldBtn.setText("Shield");
 			shieldBtn.setIcon(null);	    			
 		}
-		if (owner.getOwner().fighter.isWeaponOn){
+		if (fighter.isWeaponOn){
 			weaponBtn.setText("");
 			weaponBtn.setIcon(Config.WEAPON_ICON);
 		} else{
@@ -436,18 +461,18 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 	        @Override  
 	        public void windowGainedFocus(WindowEvent e) { 
 	        	backpackItemModel.clear();
-	        	for (BaseItem i: owner.getOwner().fighter.getBackpack()){
+	        	for (BaseItem i: fighter.getBackpack()){
                 	backpackItemModel.addElement(i.getId());
 	        	}
 
-				strengthTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalStrength()));
-				dexterityTextF.setText(Integer.toString(owner.getOwner().fighter.getTotalDexterity()));
+				strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
+				dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
 				
-				updateAttributes(owner.getOwner().fighter);
+				updateAttributes(fighter);
 				
-				setEquipmentIcon(owner.getOwner().fighter);
+				setEquipmentIcon(fighter);
 				
-		    	Fighter f2 = owner.getOwner().fighter;
+		    	Fighter f2 = fighter;
 
 	    		System.out.println("===========================");
 	    		System.out.println(f2);
@@ -537,7 +562,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 			int index = backpackItemList.getSelectedIndex();
 			if(index >= 0) {
 				System.out.println("list select:"+index);
-				BaseItem item = owner.getOwner().fighter.getBackpack().get(index);
+				BaseItem item = fighter.getBackpack().get(index);
 				
 				equipmentTypeL.setText(item.getName());
 				attributeL.setText(item.getIncrease());
@@ -550,5 +575,6 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 		}
         System.out.println("value changed");
 		
-	}    
+	}
+
 }

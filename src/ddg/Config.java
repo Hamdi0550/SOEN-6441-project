@@ -54,6 +54,8 @@ public class Config {
 	public static final ImageIcon SHIELD_ICON = new ImageIcon("res/Shield.jpg");  
 	public static final ImageIcon WEAPON_ICON = new ImageIcon("res/Weapon.jpg");  
 	public static final ImageIcon BELT_ICON = new ImageIcon("res/Belt.jpg"); 
+	public static final ImageIcon NPC_ICON = new ImageIcon("playcharacter.png");
+	public static final ImageIcon PLAYER_ICON = new ImageIcon("Mainplayer.png");
 	
 	public static final String BULLY = "Bully";
 	public static final String NIMBLE = "Nimble";
