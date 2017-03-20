@@ -295,7 +295,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				}
 		        
 				mapPanel.repaint();
-				System.out.println("mapPanel repainted");	
+				System.out.println("mapPanel repainted");
 			}
 		});
 		
@@ -337,7 +337,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				moveOnMap(xofplayer-1,yofplayer);
 				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 			}
-			mapPanel.repaint();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -350,7 +349,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				moveOnMap(xofplayer+1,yofplayer);
 				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 			}
-			mapPanel.repaint();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -360,11 +358,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				xIndex = yofplayer;
 				yIndex = xofplayer;
 			} else {
-			moveOnMap(xofplayer,yofplayer-1);
-			System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
-		}
-			
-			mapPanel.repaint();
+				moveOnMap(xofplayer,yofplayer-1);
+				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
+			}
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
@@ -377,7 +373,12 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				moveOnMap(xofplayer,yofplayer+1);
 				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 			}			
-			mapPanel.repaint();
+		}
+		if(e.getKeyCode() == KeyEvent.VK_SPACE){
+			System.out.println("kongkongkong!!!\n");
+			if(playingMap.getLocation()[xofplayer][yofplayer]=='d'){
+				System.out.println("interact with corpse!!!\n");
+			}
 		}
 	}
 
@@ -409,7 +410,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			if(!playingMap.getCellsinthemap()[x][y].getIsfriendly()){
 				fighter.attackCaracter(npc);
 				if(!npc.isAlive()){
-					playingMap.changeLocation(x, y, 'd');//dead npc
+					playingMap.changeLocation(x, y, 'd');
 				}
 			}
 			else{
@@ -426,7 +427,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				
 				// create function levelup in Fighter, to increase level and save in the file
 				fighter.levelUp();
-				fighter.setLevel(fighter.getLevel()+1);
 				System.out.println(fighter.getLevel()+"\tnew\t\t\t\t");
 				
 				initMapData();

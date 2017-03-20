@@ -570,6 +570,7 @@ public class Fighter implements Serializable{
     }
 	public void openChest(Chest chest) {
 		if(this.backpack.size()<10){
+			backpack.add(chest.getItem());
 			chest.becameEmpty();
 		}
 		else{
