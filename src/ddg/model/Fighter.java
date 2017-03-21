@@ -659,22 +659,39 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		}
 	}
 	public void takeoffEquipment(String selectedWorn) {
-		try{
-			for (BaseItem i: this.getWorn()){
-				if (i.getName().equals(selectedWorn)){
-					this.gainBonus(i.getIncrease(), i.getBonus(), "-");
-					this.getBackpack().add(i);
-					this.getWorn().remove(i);
-					this.setEquipOff(selectedWorn);
-//					System.out.println("backpack=========" + fighter.getBackpack());  
-					
-				} else {
-					JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
+		if(this.getWorn().size()==0) {
+			JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
+		} else {
+			try{
+				Iterator<BaseItem> it = this.getWorn().iterator();
+				while (it.hasNext()) {
+					BaseItem i = it.next();
+					if (i.getName().equals(selectedWorn)){
+						this.gainBonus(i.getIncrease(), i.getBonus(), "-");
+						this.getBackpack().add(i);
+						this.getWorn().remove(i);
+						this.setEquipOff(selectedWorn);
+						break;
+					} else {
+						JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
+					}
 				}
+//				for (BaseItem i: this.getWorn()){
+//					if (i.getName().equals(selectedWorn)){
+//						this.gainBonus(i.getIncrease(), i.getBonus(), "-");
+//						this.getBackpack().add(i);
+//						this.getWorn().remove(i);
+//						this.setEquipOff(selectedWorn);
+////					System.out.println("backpack=========" + fighter.getBackpack());  
+//						
+//					} else {
+//						JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
+//					}
+//				}
 			}
-		}
-		catch (ConcurrentModificationException e1) {
-			JOptionPane.showMessageDialog(null, "The equipment has been move to backpack!", "Message", JOptionPane.WARNING_MESSAGE);
+			catch (ConcurrentModificationException e1) {
+				JOptionPane.showMessageDialog(null, "The equipment has been move to backpack!", "Message", JOptionPane.WARNING_MESSAGE);
+			}
 		}
 	}
 	
