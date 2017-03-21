@@ -416,11 +416,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			}
 			if(containKey){
 			if(JOptionPane.showConfirmDialog(null, "Do you want to entry next map?", "Confirm", JOptionPane.YES_NO_OPTION)==0){
-<<<<<<< HEAD
+
 				System.out.println(fighter.getLevel()+"\t\t\t\t\t");
-=======
-				
->>>>>>> origin/master
+
 				// create function levelup in Fighter, to increase level and save in the file
 				fighter.levelUp();
 				
