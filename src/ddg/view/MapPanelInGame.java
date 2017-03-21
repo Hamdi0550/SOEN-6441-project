@@ -237,11 +237,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		            g.drawRect(xIndex * 50 + 1, yIndex * 50 + 1, 48, 48);
 		            g.drawRect(xIndex * 50 + 2, yIndex * 50 + 2, 46, 46);	            	
 	            }
-
-	            System.out.println("x= " + xIndex + " y= " + yIndex);
-	            System.out.println("isCharacter? " + isCharacter);
-	        	System.out.println("selectedCharacter = " + selectedCharacter);
-				System.out.println("============= 2 paint");
 			}
 		};
 		mapPanel.setPreferredSize(new Dimension(50*playingMap.getColumn(), 50*playingMap.getRow()));
@@ -298,7 +293,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				}
 		        
 				mapPanel.repaint();
-				System.out.println("mapPanel repainted");	
+				System.out.println("mapPanel repainted");
 			}
 		});
 		
@@ -322,8 +317,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		String line1="1111"+e.getKeyChar();
-		System.out.println(line1);
 	}
 
 	@Override
@@ -333,54 +326,46 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			if(xIndex == yofplayer && yIndex == xofplayer && isCharacter == true){
 				moveOnMap(xofplayer-1,yofplayer);
-				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 				xIndex = yofplayer;
 				yIndex = xofplayer;
 			} else {
 				moveOnMap(xofplayer-1,yofplayer);
-				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 			}
-			mapPanel.repaint();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			if(xIndex == yofplayer && yIndex == xofplayer && isCharacter == true){
 				moveOnMap(xofplayer+1,yofplayer);
-				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 				xIndex = yofplayer;
 				yIndex = xofplayer;
 			} else {
 				moveOnMap(xofplayer+1,yofplayer);
-				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 			}
-			mapPanel.repaint();
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			if(xIndex == yofplayer && yIndex == xofplayer && isCharacter == true){
 				moveOnMap(xofplayer,yofplayer-1);
-				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 				xIndex = yofplayer;
 				yIndex = xofplayer;
 			} else {
-			moveOnMap(xofplayer,yofplayer-1);
-			System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
-		}
-			
-			mapPanel.repaint();
+				moveOnMap(xofplayer,yofplayer-1);
+			}
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			if(xIndex == yofplayer && yIndex == xofplayer && isCharacter == true){
 				moveOnMap(xofplayer,yofplayer+1);
-				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 				xIndex = yofplayer;
 				yIndex = xofplayer;
 			} else {
 				moveOnMap(xofplayer,yofplayer+1);
-				System.out.println("xofp = " + xofplayer + " yofp = " + yofplayer);
 			}			
-			mapPanel.repaint();
+		}
+		if(e.getKeyCode() == KeyEvent.VK_SPACE){
+			if(playingMap.getLocation()[xofplayer][yofplayer]=='d'){
+				System.out.println("interact with corpse!!!\n");
+			}
 		}
 	}
 
@@ -407,12 +392,12 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			}
 		}
 		else if(temp=='p'){
-			System.out.println(playingMap.getCellsinthemap()[x][y]);
 			Fighter npc = (Fighter) playingMap.getCellsinthemap()[x][y].getContent();
 			if(!playingMap.getCellsinthemap()[x][y].getIsfriendly()){
+				System.out.println("-----------"+npc.getHitPoints());
 				fighter.attackCaracter(npc);
 				if(!npc.isAlive()){
-					playingMap.changeLocation(x, y, 'd');//dead npc
+					playingMap.changeLocation(x, y, 'd');
 				}
 			}
 			else{
@@ -431,11 +416,13 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			}
 			if(containKey){
 			if(JOptionPane.showConfirmDialog(null, "Do you want to entry next map?", "Confirm", JOptionPane.YES_NO_OPTION)==0){
+<<<<<<< HEAD
 				System.out.println(fighter.getLevel()+"\t\t\t\t\t");
+=======
+				
+>>>>>>> origin/master
 				// create function levelup in Fighter, to increase level and save in the file
 				fighter.levelUp();
-				fighter.setLevel(fighter.getLevel()+1);
-				System.out.println(fighter.getLevel()+"\tnew\t\t\t\t");
 				
 				initMapData();
 				mapPanel.repaint();

@@ -22,7 +22,7 @@ public class Fighter implements Serializable{
 	private int id;
 	private String name;
 	private int level = 1;
-	private boolean isalive;
+	private boolean isalive = true;
 	
 	private int strength;
 	private int dexterity;
@@ -79,7 +79,6 @@ public class Fighter implements Serializable{
 		this.level = level;
 		this.strength = strength;
 		this.dexterity = dexterity;
-		this.isalive = true;
 		hitPoints = Dice.d10Roll() + (constitution * this.level);
 		armorClass = this.dexterity + 0;		
 	}
@@ -570,6 +569,7 @@ public class Fighter implements Serializable{
     }
 	public void openChest(Chest chest) {
 		if(this.backpack.size()<10){
+			backpack.add(chest.getItem());
 			chest.becameEmpty();
 		}
 		else{
@@ -579,11 +579,13 @@ public class Fighter implements Serializable{
 	}
 	public void attackCaracter(Fighter npc) {
 //		int harm = ;
-		npc.beAttacked(100);
+// here 15 should be the harm values for npc
+		npc.beAttacked(15);
 	}
 	public void beAttacked(int i) {
 		this.hitPoints -= i;
 		if(this.hitPoints<=0){
+			System.out.println("going dead!!!!!");
 			die();
 		}
 	}
