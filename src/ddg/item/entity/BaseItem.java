@@ -36,6 +36,7 @@ public class BaseItem implements Item, java.io.Serializable{
 	@SerializedName(value = "increase")
 	private String increase;
 	
+	private int level = 0;
 	/**
 	 * 
 	 * Constructors for BaseItem
@@ -62,6 +63,19 @@ public class BaseItem implements Item, java.io.Serializable{
 		this.bonus = bonus;
 		this.increase = increase;
 		this.ability = getAbility(name);
+	}
+	
+	public void setLevel(int level) {
+		this.level= level;
+	}
+	
+	private int getBonusByLevel() {
+		if(this.level <= 0)
+			return 0;
+		else if(this.level > 17)
+			return 5;
+		else
+			return (this.level-1)/4 + 1;
 	}
 	
 	/**
@@ -111,7 +125,7 @@ public class BaseItem implements Item, java.io.Serializable{
 	 * @return int bonus value
 	 */
 	public int getBonus() {
-		return bonus;
+		return bonus + getBonusByLevel();
 	}
 
 	/**
