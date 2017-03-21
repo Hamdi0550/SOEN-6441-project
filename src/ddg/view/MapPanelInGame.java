@@ -271,11 +271,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		        	characterPanel.setVisible(true);
 		        	System.out.println("Character selected");
 		        	System.out.println(playingMap.getCellsinthemap()[yIndex][xIndex].getContent());
-		        	if(selectedCharacter!=null)
-		        		selectedCharacter.deleteObserver(characterPanel);
 		        	selectedCharacter = (Fighter) playingMap.getCellsinthemap()[yIndex][xIndex].getContent();
-		        	selectedCharacter.addObserver(characterPanel);
-		        	
+
 		        	System.out.println("selectedCharacter = " + selectedCharacter);
 		        	characterPanel.updateAttributes(selectedCharacter);
 		        	characterPanel.iconL.setIcon(Config.NPC_ICON);
@@ -284,11 +281,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				else if(xIndex == yofplayer && yIndex == xofplayer){
 		        	isCharacter = true;
 		        	characterPanel.setVisible(true);
-		        	if(selectedCharacter!=null)
-		        		selectedCharacter.deleteObserver(characterPanel);
 		        	selectedCharacter = fighter;
-		        	selectedCharacter.addObserver(characterPanel);
-		        	
 		        	System.out.println("selectedCharacter = " + selectedCharacter);
 		        	characterPanel.updateAttributes(selectedCharacter);
 		        	characterPanel.iconL.setIcon(Config.PLAYER_ICON);
@@ -373,6 +366,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_SPACE){
 			if(playingMap.getLocation()[xofplayer][yofplayer]=='d'){
 				System.out.println("interact with corpse!!!\n");
+				Fighter corpse = (Fighter)playingMap.getCellsinthemap()[xofplayer][yofplayer].getContent();
+				this.fighter.lootCorpseItems(corpse);
+				System.out.println("loot finish!");
 			}
 		}
 	}

@@ -605,6 +605,25 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 			return;
 		}
 	}
+	/**
+	 * 
+	  * This method loot all items from a corpse
+	  * 
+	  * @param corpse
+	 */
+	public void lootCorpseItems(Fighter corpse){
+		if(corpse.backpack.size() > 0){
+		for(BaseItem item: corpse.backpack){
+			this.backpack.add(item);
+			System.out.println("get a item from corpse backpack items" + item.getName());
+		}}
+		if(corpse.wornItems.size() > 0){
+			for(BaseItem item : corpse.wornItems){
+				this.backpack.add(item);
+				System.out.println("get a item from corpse worn items" + item.getName() );
+			}
+		}
+	}
 	public void attackCaracter(Fighter npc) {
 //		int harm = ;
 // here 15 should be the harm values for npc
