@@ -6,7 +6,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class GameInitDialogTest {
-
+	/**
+	 * 
+	 * This method is to chose the campaign and character 
+	 * 
+	 * @throws java.lang.Exception
+	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
