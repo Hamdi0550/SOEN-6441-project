@@ -597,4 +597,14 @@ public class Fighter implements Serializable{
 		this.level++;
 		
 	}
+   /**
+     * This method adapter fighter level to map
+     * @param targetLevel
+    */
+	public void updateLevel(int targetLevel){
+		if(targetLevel != level){
+			this.level = targetLevel;
+		}
+		System.out.println(level);
+	}
 }

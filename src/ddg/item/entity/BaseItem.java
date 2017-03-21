@@ -185,4 +185,14 @@ public class BaseItem implements Item, java.io.Serializable{
 		}
 		return null;
 	}
+	/**
+	  * This method check the targetLevel equals to level 
+	  * @param targetLevel
+	 */
+	public void updateLevel(int targetLevel){
+		if(targetLevel != bonus){
+			this.bonus = targetLevel;
+		}
+		System.out.println(bonus);
+	}
 }

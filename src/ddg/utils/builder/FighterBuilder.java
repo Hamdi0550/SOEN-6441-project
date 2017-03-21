@@ -17,6 +17,7 @@ public abstract class FighterBuilder {
 
 	public void createFighter() {
 		fighter = new Fighter();
+		
 	}
 
 	public void generateScores() {

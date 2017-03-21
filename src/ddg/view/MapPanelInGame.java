@@ -33,6 +33,7 @@ import javax.swing.SwingUtilities;
 
 import ddg.Config;
 import ddg.campaign.entity.BaseCampaign;
+import ddg.item.entity.BaseItem;
 import ddg.map.entity.Cell;
 import ddg.map.entity.Chest;
 import ddg.map.entity.Map;
@@ -174,6 +175,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			DDGaming newddgamedialog = new DDGaming();
 			newddgamedialog.popShow(null, "Gaming");
 		}
+		
+		
 	}
 	
 	private void initcontent() {
@@ -303,7 +306,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 
 	/**
 	 * 
-	 * @return
+	 * @return Fighter
 	 */
 	public Fighter getSelectedCharacter() {
 		return selectedCharacter;
@@ -420,10 +423,15 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		
 		if(playingMap.getLocation()[xofplayer][yofplayer]=='o'){
 			// check whether there is key on player's backpack, if so can interact with exit door, otherwise popup a warm message
-			
+			Boolean containKey = false;
+			for(BaseItem item:fighter.getBackpack()){
+				if(item.getName().equals("key")){
+					containKey = true;
+				}
+			}
+			if(containKey){
 			if(JOptionPane.showConfirmDialog(null, "Do you want to entry next map?", "Confirm", JOptionPane.YES_NO_OPTION)==0){
 				System.out.println(fighter.getLevel()+"\t\t\t\t\t");
-				
 				// create function levelup in Fighter, to increase level and save in the file
 				fighter.levelUp();
 				fighter.setLevel(fighter.getLevel()+1);
@@ -431,6 +439,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 				
 				initMapData();
 				mapPanel.repaint();
+			}}else{
+				JOptionPane.showMessageDialog(null, "Please find a exit door key!", "Need to Find Exit Door Key", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

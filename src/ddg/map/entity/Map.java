@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.util.Observable;
 
 import ddg.Config;
+import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
 import ddg.utils.ValidationTool;
 
@@ -183,14 +184,14 @@ public class Map extends Observable implements java.io.Serializable{
 	 * @param level	level of player
 	 */
 	public void adaptedLevel(int level){
-		System.out.println("adaptedLevel()!!!!!");
+		System.out.println("adaptedLevel()!!!!!" + level);
 		for(int i=0; i<row ;i++){
 			for(int j=0; j<column ;j++){
 				if(location[i][j]=='p'){
-//					((Fighter) cellsinthemap[i][j].getContent()).adaptedLevel();
+				 ((Fighter)cellsinthemap[i][j].getContent()).updateLevel(level);
 				}
 				else if(location[i][j]=='c'){
-//					((Chest) cellsinthemap[i][j].getContent()).getItem().adaptedLevel();
+					((Chest) cellsinthemap[i][j].getContent()).getItem().updateLevel(level);
 				}
 			}
 		}
