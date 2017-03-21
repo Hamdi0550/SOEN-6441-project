@@ -29,7 +29,7 @@ import javax.swing.border.*;
 public class BackpackTrade extends JDialog implements ActionListener, ListSelectionListener {
 
     private final JButton cancelBtn = new JButton("    Cancel  ");
-    private final JButton tradeBtn = new JButton("   Exchange  ");
+    private final JButton tradeBtn = new JButton("   Trade  ");
     
     private final DefaultListModel<String> playerItemModel = new DefaultListModel<String>(); 
     private final JList<String> playerItemList = new JList<String>();
@@ -47,7 +47,7 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
     
     public String selectedWorn = null;
     public BaseItem selectedBackPackItem = null;
-    public Fighter f2 = null;
+    public Fighter fighter = null;
     private static CharacterEditor owner;
     
     /**
@@ -173,6 +173,7 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
         
         tradeBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
+    			fighter.trade(fighter, selectedBackPackItem, selectedWorn);
             }
         });    	
     	

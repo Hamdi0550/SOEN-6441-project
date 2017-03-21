@@ -2,6 +2,8 @@ package ddg.model;
 import java.io.Serializable;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import ddg.Config;
 import ddg.utils.Dice;
 import ddg.utils.Utils;
@@ -552,21 +554,46 @@ public class Fighter implements Cloneable, Serializable{
 		}
 	}
 	
+//	public boolean wearItem(BaseItem i) {
+//		Iterator<BaseItem> iterator = getWorn().iterator();
+//		while(iterator.hasNext()) {
+//			BaseItem next = iterator.next();
+//			if(next.getName().equals(i.getName())) {
+//				gainBonus(next.getIncrease(), next.getBonus(), "-");
+//				iterator.remove();
+//			}
+//		}
+//
+//		gainBonus(i.getIncrease(), i.getBonus(), "+");
+//		getWorn().add(i);
+//		
+//		return true;
+//    }
+	
+	/**
+	 * 
+	 * @param i
+	 * @return
+	 */
 	public boolean wearItem(BaseItem i) {
-		Iterator<BaseItem> iterator = getWorn().iterator();
-		while(iterator.hasNext()) {
-			BaseItem next = iterator.next();
-			if(next.getName().equals(i.getName())) {
-				gainBonus(next.getIncrease(), next.getBonus(), "-");
-				iterator.remove();
+
+		for (BaseItem item: this.getWorn()){
+			if (item.getName().equals(i.getName())){
+				this.gainBonus(item.getIncrease(), item.getBonus(), "-");
+				this.getBackpack().add(item);
+				this.getWorn().remove(item);
+				System.out.println("backpack=========" + getBackpack());  				
 			}
 		}
-
-		gainBonus(i.getIncrease(), i.getBonus(), "+");
-		getWorn().add(i);
+		this.gainBonus(i.getIncrease(), i.getBonus(), "+");
+		this.getBackpack().remove(i);
+		this.getWorn().add(i);
+		this.setEquipOn(i.getName());
+		JOptionPane.showMessageDialog(null, "The item is worn.", "Message", JOptionPane.WARNING_MESSAGE); 
 		
 		return true;
     }
+	
 	public void openChest(Chest chest) {
 		if(this.backpack.size()<10){
 			backpack.add(chest.getItem());
@@ -619,5 +646,33 @@ public class Fighter implements Cloneable, Serializable{
 		}
 		
 		return newfighter;
+	}
+	public void trade(Fighter fighter, BaseItem selectedBackPackItem, String selectedWorn) {
+		if (selectedBackPackItem != null && selectedWorn != null){
+			
+		} else if (selectedBackPackItem == null && selectedWorn != null){
+			
+		} else if (selectedBackPackItem != null && selectedWorn == null){
+			
+		}
+	}
+	public void takeoffEquipment(String selectedWorn) {
+		try{
+			for (BaseItem i: this.getWorn()){
+				if (i.getName().equals(selectedWorn)){
+					this.gainBonus(i.getIncrease(), i.getBonus(), "-");
+					this.getBackpack().add(i);
+					this.getWorn().remove(i);
+					this.setEquipOff(selectedWorn);
+//					System.out.println("backpack=========" + fighter.getBackpack());  
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		}
+		catch (ConcurrentModificationException e1) {
+			JOptionPane.showMessageDialog(null, "The equipment has been move to backpack!", "Message", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 }
