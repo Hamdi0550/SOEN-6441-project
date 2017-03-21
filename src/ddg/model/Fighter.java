@@ -664,6 +664,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		} else {
 			try{
 				Iterator<BaseItem> it = this.getWorn().iterator();
+				boolean wearing = false;
 				while (it.hasNext()) {
 					BaseItem i = it.next();
 					if (i.getName().equals(selectedWorn)){
@@ -671,11 +672,14 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 						this.getBackpack().add(i);
 						this.getWorn().remove(i);
 						this.setEquipOff(selectedWorn);
+						wearing = true;
 						break;
 					} else {
-						JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
+						wearing = false;
 					}
 				}
+				if(!wearing)
+					JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
 //				for (BaseItem i: this.getWorn()){
 //					if (i.getName().equals(selectedWorn)){
 //						this.gainBonus(i.getIncrease(), i.getBonus(), "-");
