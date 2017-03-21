@@ -37,6 +37,10 @@ public class BaseItem implements Item, java.io.Serializable{
 	private String increase;
 	
 	private int level = 0;
+	public int getLevel() {
+		return level;
+	}
+
 	/**
 	 * 
 	 * Constructors for BaseItem
@@ -63,10 +67,6 @@ public class BaseItem implements Item, java.io.Serializable{
 		this.bonus = bonus;
 		this.increase = increase;
 		this.ability = getAbility(name);
-	}
-	
-	public void setLevel(int level) {
-		this.level= level;
 	}
 	
 	private int getBonusByLevel() {
@@ -204,9 +204,8 @@ public class BaseItem implements Item, java.io.Serializable{
 	  * @param targetLevel
 	 */
 	public void updateLevel(int targetLevel){
-		if(targetLevel != bonus){
-			this.bonus = targetLevel;
+		if(targetLevel != 0){
+			this.level = targetLevel;
 		}
-		System.out.println(bonus);
 	}
 }
