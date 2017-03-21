@@ -61,6 +61,7 @@ public class CharacterPanel extends JPanel {
 	private JLabel nameL = new JLabel();
 	private JLabel levelL = new JLabel();
 	private JLabel typeL = new JLabel();
+	private JLabel hitponitL = new JLabel();
 	private JLabel strengthL = new JLabel();
 	private JLabel dexterityL = new JLabel();
 	private JLabel constitutionL = new JLabel();
@@ -106,7 +107,7 @@ public class CharacterPanel extends JPanel {
 		owner1 = mapPanelInGame;
 		setLayout(new BorderLayout());
 		JPanel backPanel = new JPanel(new BorderLayout());
-		JPanel attributesPanel = new JPanel(new GridLayout(10, 3, 5, 5));
+		JPanel attributesPanel = new JPanel(new GridLayout(11, 3, 5, 5));
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 		JPanel iconPanel = new JPanel(new FlowLayout());
 		
@@ -141,6 +142,9 @@ public class CharacterPanel extends JPanel {
 		attributesPanel.add(new JLabel("     "));
 		attributesPanel.add(new JLabel(" Level "));
 		attributesPanel.add(levelL);
+		attributesPanel.add(new JLabel("     "));
+		attributesPanel.add(new JLabel(" Hitpoints "));
+		attributesPanel.add(hitponitL);
 		attributesPanel.add(new JLabel("     "));
 		attributesPanel.add(new JLabel("      "));
 		attributesPanel.add(new JLabel(" Value "));
@@ -201,6 +205,7 @@ public class CharacterPanel extends JPanel {
 	protected void updateAttributes(Fighter fighter) {
 		nameL.setText(fighter.getName());
 		levelL.setText(Integer.toString(fighter.getLevel()));
+		hitponitL.setText(Integer.toString(fighter.getHitPoints()));
 
 		strengthL.setText(Integer.toString(fighter.getTotalStrength()));
 		dexterityL.setText(Integer.toString(fighter.getTotalDexterity()));
