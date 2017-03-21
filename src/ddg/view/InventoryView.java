@@ -60,6 +60,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
     JLabel intelliModiferL = new JLabel("   ");
     JLabel wisModiferL = new JLabel("   ");
     JLabel chaModiferL = new JLabel("   ");
+    JPanel backpackListPanel;
     static JDialog dialog;
     
     private final JLabel equipmentTypeL = new JLabel("   ");
@@ -240,13 +241,18 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         buttonsPanel.add(new JLabel("    "));
         buttonsPanel.setSize(300,500);
 
-        focusManage();
-
         backpackItemList.addListSelectionListener(this);
         backpackItemList.setModel(backpackItemModel);
         JScrollPane itemListPane = new JScrollPane(backpackItemList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
         backpackItemList.setPreferredSize(new Dimension(200,220));
+        
+        initMethod();
+	}
+
+	private void initMethod() {
+		focusManage();
+
         for(BaseItem i: fighter.getBackpack()){
         	backpackItemModel.addElement(i.getId());
         }      	
