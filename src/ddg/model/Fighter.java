@@ -19,7 +19,7 @@ import ddg.map.entity.Chest;
  * @author Fei Yu
  * @date Mar 3, 2017
  */
-public class Fighter implements Cloneable, Serializable{
+public class Fighter extends Observable implements Cloneable, Serializable{
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
@@ -615,6 +615,8 @@ public class Fighter implements Cloneable, Serializable{
 			System.out.println("going dead!!!!!");
 			die();
 		}
+		setChanged();
+		notifyObservers(this);
 	}
 	public boolean isAlive() {
 		return isalive;

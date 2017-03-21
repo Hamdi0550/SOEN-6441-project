@@ -273,7 +273,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		        	System.out.println("Character selected");
 		        	System.out.println(playingMap.getCellsinthemap()[yIndex][xIndex].getContent());
 		        	selectedCharacter = (Fighter) playingMap.getCellsinthemap()[yIndex][xIndex].getContent();
-
+		        	selectedCharacter.addObserver(characterPanel);
+		        	
 		        	System.out.println("selectedCharacter = " + selectedCharacter);
 		        	characterPanel.updateAttributes(selectedCharacter);
 		        	characterPanel.iconL.setIcon(Config.NPC_ICON);
@@ -283,6 +284,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		        	isCharacter = true;
 		        	characterPanel.setVisible(true);
 		        	selectedCharacter = fighter;
+		        	selectedCharacter.addObserver(characterPanel);
+		        	
 		        	System.out.println("selectedCharacter = " + selectedCharacter);
 		        	characterPanel.updateAttributes(selectedCharacter);
 		        	characterPanel.iconL.setIcon(Config.PLAYER_ICON);

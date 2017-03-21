@@ -4,38 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowListener;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.Observable;
+import java.util.Observer;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
 import ddg.Config;
 import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
-import ddg.model.FighterModel;
-import ddg.utils.Dice;
-import ddg.utils.Utils;
-import ddg.view.CharacterEditor.EmbeddedPanel;
 
 /**
  * 
@@ -44,7 +27,7 @@ import ddg.view.CharacterEditor.EmbeddedPanel;
  * @author Fei Yu
  * @date Mar 12, 2017
  */
-public class CharacterPanel extends JPanel {
+public class CharacterPanel extends JPanel implements Observer {
 	
 	private final JButton inventoryBtn = new JButton(" Inventory ");
 
@@ -244,6 +227,11 @@ public class CharacterPanel extends JPanel {
 			}
 		});
 
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		updateAttributes((Fighter)arg);
 	}
 
 //	/**
