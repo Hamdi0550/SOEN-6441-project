@@ -89,13 +89,13 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * Save a character to the file
 	 * @param fighter
 	 */
-	public static void saveFighter(Fighter fighter){
-		FighterModel fModel = new FighterModel();
-		
-		String dateString = new Date().toLocaleString();
-		dateString = dateString + fighter.name;
-		fModel.fightersHM.put(dateString, fighter);
-	}
+//	public static void saveFighter(Fighter fighter){
+//		FighterModel fModel = new FighterModel();
+//		
+//		String dateString = new Date().toLocaleString();
+//		dateString = dateString + fighter.name;
+//		fModel.fightersHM.put(dateString, fighter);
+//	}
 	/**
 	 * Delete a character from the file
 	 * @param fighter
@@ -597,6 +597,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void openChest(Chest chest) {
 		if(this.backpack.size()<10){
 			backpack.add(chest.getItem());
+			System.out.println("get"+ chest.getItem().getLevel()+"------bouns--"+chest.getItem().getBonus());
 			chest.becameEmpty();
 		}
 		else{
@@ -626,7 +627,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	}
 	public void levelUp() {
 		this.level++;
-		
+		saveFighter(this);
 	}
    /**
      * This method adapter fighter level to map
@@ -675,6 +676,27 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		}
 		catch (ConcurrentModificationException e1) {
 			JOptionPane.showMessageDialog(null, "The equipment has been move to backpack!", "Message", JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	
+	public void saveFighter(Fighter fighter){
+		FighterModel fm = new FighterModel();
+		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		fm = Utils.fromJson(g, FighterModel.class);
+
+		if(fm.getFighters()!=null){
+			Set<String> keySet = fm.getFighters().keySet();
+			if(keySet.contains(fighter.name)){
+				fm.getFighters().put(fighter.name, fighter);
+				String gSave = Utils.toJson(fm);
+				Utils.save2File(Config.CHARACTOR_FILE, gSave);
+			}
+			else{
+				System.out.println("wrong !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			}
+		}
+		else{
+			System.out.println("there is Not Pointer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		}
 	}
 }
