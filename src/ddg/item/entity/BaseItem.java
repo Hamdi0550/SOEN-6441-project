@@ -204,8 +204,15 @@ public class BaseItem implements Item, java.io.Serializable{
 	  * @param targetLevel
 	 */
 	public void updateLevel(int targetLevel){
+
 		if(targetLevel != 0){
 			this.level = targetLevel;
 		}
+
+		if(targetLevel != level){
+			level = targetLevel;
+		}
+		System.out.println(level);
+
 	}
 }
