@@ -26,7 +26,7 @@ import javax.swing.border.*;
  * @author Fei Yu
  * @date Mar 3, 2017
  */
-public class InventoryView extends JDialog implements ActionListener, ListSelectionListener {
+public class InventoryView extends JPanel implements ActionListener, ListSelectionListener {
 
     private final JButton backBtn = new JButton("    Back  ");
     private final JButton equipBtn = new JButton("    Equip   ");
@@ -60,7 +60,8 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
     JLabel intelliModiferL = new JLabel("   ");
     JLabel wisModiferL = new JLabel("   ");
     JLabel chaModiferL = new JLabel("   ");
-
+    static JDialog dialog;
+    
     private final JLabel equipmentTypeL = new JLabel("   ");
     private final JLabel attributeL = new JLabel("   ");
     private final JLabel valueL = new JLabel("   ");
@@ -76,11 +77,21 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
      */
     public static void createAndShowGUI(CharacterEditor ownerFrame) {
         owner = (CharacterEditor) ownerFrame;
-    	InventoryView frame1 = new InventoryView(); 
-        frame1.setBounds(260, 260, 0, 0);
-        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        frame1.pack();
-        frame1.setVisible(true);
+        dialog = new JDialog(owner);
+        InventoryView frame1 = new InventoryView(); 
+        dialog.add(frame1);
+        dialog.setBounds(260, 260, 0, 0);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.pack();
+        dialog.setTitle("Inventory");
+        dialog.setModal(true);
+        dialog.setVisible(true);
+//        
+//    	InventoryView frame1 = new InventoryView(); 
+//        frame1.setBounds(260, 260, 0, 0);
+//        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        frame1.pack();
+//        frame1.setVisible(true);
     }
 
     /**
@@ -90,8 +101,8 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 	public static void createAndShowGUI(Fighter fighter) {
     	InventoryView frame1 = new InventoryView(fighter); 
         frame1.setBounds(260, 260, 0, 0);
-        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        frame1.pack();
+//        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//        frame1.pack();
         frame1.setVisible(true);
 		
 	}    
@@ -115,8 +126,8 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
      * Initialize the inventory view window.
      */
     private void initialization() {
-        setTitle("Inventory");
-        setModal(true);
+//        setTitle("Inventory");
+//        setModal(true);
         setLayout(new BorderLayout());
         JPanel backPanel= new JPanel(new BorderLayout());
         JPanel characterPanel= new JPanel(new BorderLayout());
@@ -330,7 +341,8 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
 		backBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println("cancel clicked");
-				dispose();				
+//				dispose();		
+				dialog.dispose();
 	        }
 		});
 	}
@@ -419,7 +431,7 @@ public class InventoryView extends JDialog implements ActionListener, ListSelect
      * This method manage the actions of the window focus
      */
 	private void focusManage() {        
-		this.addWindowFocusListener(new WindowFocusListener() {          	
+		dialog.addWindowFocusListener(new WindowFocusListener() {          	
 	        @Override  
 	        public void windowGainedFocus(WindowEvent e) { 
 	        	backpackItemModel.clear();
