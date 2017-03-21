@@ -627,7 +627,6 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	}
 	public void levelUp() {
 		this.level++;
-		saveFighter(this);
 	}
    /**
      * This method adapter fighter level to map
@@ -679,24 +678,24 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		}
 	}
 	
-	public void saveFighter(Fighter fighter){
-		FighterModel fm = new FighterModel();
+	public static void saveFighter(Fighter fighter){
+		System.out.println("save fighter======1");
+		
 		String g = Utils.readFile(Config.CHARACTOR_FILE);
-		fm = Utils.fromJson(g, FighterModel.class);
-
-		if(fm.getFighters()!=null){
-			Set<String> keySet = fm.getFighters().keySet();
-			if(keySet.contains(fighter.name)){
-				fm.getFighters().put(fighter.name, fighter);
-				String gSave = Utils.toJson(fm);
-				Utils.save2File(Config.CHARACTOR_FILE, gSave);
-			}
-			else{
-				System.out.println("wrong !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			}
+		FighterModel fm = Utils.fromJson(g, FighterModel.class);
+		if (fm == null) {
+			fm = new FighterModel();
+		}
+		System.out.println("save fighter======2");
+			
+		if(fm.getFighters().containsKey(fighter.name)){
+			fm.getFighters().put(fighter.name, fighter);
+			String gSave = Utils.toJson(fm);
+			Utils.save2File(Config.CHARACTOR_FILE, gSave);
+			System.out.println("save fighter======success");
 		}
 		else{
-			System.out.println("there is Not Pointer !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			System.out.println("wrong !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		}
 	}
 }

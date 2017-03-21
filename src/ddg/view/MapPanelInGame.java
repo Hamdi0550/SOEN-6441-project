@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -424,9 +423,11 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 					if(JOptionPane.showConfirmDialog(null, "Do you want to entry next map?", "Confirm", JOptionPane.YES_NO_OPTION)==0){
 						System.out.println(fighter.getLevel()+"\t\t\t\t\t");
 						// create function levelup in Fighter, to increase level and save in the file
-						fighter.levelUp();
-						
 						fighter.getBackpack().remove(item);
+						fighter.levelUp();
+						fighter.deleteObservers();
+						Fighter.saveFighter(fighter);
+						
 						initMapData();
 						mapPanel.repaint();
 						break;
