@@ -19,7 +19,7 @@ import ddg.utils.ValidationTool;
  * model for Map
  *
  */
-public class Map extends Observable implements java.io.Serializable{
+public class Map extends Observable implements Cloneable, java.io.Serializable{
 	private static final long serialVersionUID = -8908299320533978891L;
 	
 	// record the location of things in the map
@@ -86,6 +86,30 @@ public class Map extends Observable implements java.io.Serializable{
 		
 	}
 	
+	public Map(Map map) {
+		this.name = map.getName();
+		this.row = map.getRow();
+		this.column = map.getColumn();
+		this.location = new char[row][column];
+		this.cellsinthemap = new Cell[row][column];
+		
+		for(int i=0;i<row;i++){
+			for(int j=0;j<column;j++){
+				this.location[i][j] = map.getLocation()[i][j];
+				if(this.location[i][j] == 'c' || this.location[i][j] == 'e'){
+					this.cellsinthemap[i][j]=new Cell<>(((Chest)map.getCellsinthemap()[i][j].getContent()).clone());
+				}
+				else if(this.location[i][j] == 'p' || this.location[i][j] == 'd'){
+					if(map.getCellsinthemap()[i][j].getIsfriendly())
+						this.cellsinthemap[i][j] = new Cell<>(((Fighter)map.getCellsinthemap()[i][j].getContent()).clone());
+					else
+						this.cellsinthemap[i][j] = new Cell<>(((Fighter)map.getCellsinthemap()[i][j].getContent()).clone(),false);
+				}
+			}
+		}
+	}
+
+
 	/** 
 	 * @return get the number of the row of the map
 	 */
@@ -138,7 +162,7 @@ public class Map extends Observable implements java.io.Serializable{
 	        out.writeObject(mapEditorModel);
 	        out.close();
 	        fileOut.close();
-	        System.out.printf("Serialized data is saved in /tmp/employee.ser");
+	        System.out.printf("Serialized data is saved");
 		}catch (IOException e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -196,5 +220,4 @@ public class Map extends Observable implements java.io.Serializable{
 			}
 		}
 	}
-
 }

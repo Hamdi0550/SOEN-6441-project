@@ -193,12 +193,19 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 				}
 				else{
 					selectedmap.changeLocation(y, x, num);
+					selectedmap.changeCellsinthemap(y, x, null);
 				}
 				
 				mapPanel.repaint();
 				for (int i = 0;i<selectedmap.getRow(); i++){
 					for (int j = 0;j<selectedmap.getColumn(); j++)
 						System.out.print(selectedmap.getLocation()[i][j]);
+					System.out.print("\n");
+				}
+				
+				for (int i = 0;i<selectedmap.getRow(); i++){
+					for (int j = 0;j<selectedmap.getColumn(); j++)
+						System.out.print(selectedmap.getCellsinthemap()[i][j]);
 					System.out.print("\n");
 				}
 				
@@ -321,8 +328,10 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 		if(e.getActionCommand().equals("CLEAR")){
 			char maplocation[][] = selectedmap.getLocation();
 			for (int i = 0;i<selectedmap.getRow(); i++){
-				for (int j = 0;j<selectedmap.getColumn(); j++)
+				for (int j = 0;j<selectedmap.getColumn(); j++){
 					maplocation[i][j] = 'f';
+					selectedmap.getCellsinthemap()[i][j]=null;
+				}
 			}
 			mapPanel.repaint();
 		}

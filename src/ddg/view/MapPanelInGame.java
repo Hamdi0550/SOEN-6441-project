@@ -111,7 +111,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			for(String nameofmap : campaign.getMaps()){
 				for(Map map : mapsmodel.getMaps()){
 					if(map.getName().equals(nameofmap)){
-						mapsofcampaignlist.add(map);
+						mapsofcampaignlist.add(new Map(map));
+						break;
 					}
 				}
 			}
@@ -144,6 +145,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		    }
 			this.playingMap = this.mapsofcampaign.next();
 			this.playingMap.adaptedLevel(fighter.getLevel());
+			this.playingMap.addObserver(this);
 			
 			for(int i=0;i<playingMap.getRow();i++){
 				for(int j=0;j<playingMap.getColumn();j++){
@@ -412,19 +414,19 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			for(BaseItem item:fighter.getBackpack()){
 				if(item.getName().equals("key")){
 					containKey = true;
+					if(JOptionPane.showConfirmDialog(null, "Do you want to entry next map?", "Confirm", JOptionPane.YES_NO_OPTION)==0){
+						System.out.println(fighter.getLevel()+"\t\t\t\t\t");
+						// create function levelup in Fighter, to increase level and save in the file
+						fighter.levelUp();
+						
+						fighter.getBackpack().remove(item);
+						initMapData();
+						mapPanel.repaint();
+						break;
+					}
 				}
 			}
-			if(containKey){
-			if(JOptionPane.showConfirmDialog(null, "Do you want to entry next map?", "Confirm", JOptionPane.YES_NO_OPTION)==0){
-
-				System.out.println(fighter.getLevel()+"\t\t\t\t\t");
-
-				// create function levelup in Fighter, to increase level and save in the file
-				fighter.levelUp();
-				
-				initMapData();
-				mapPanel.repaint();
-			}}else{
+			if(!containKey){
 				JOptionPane.showMessageDialog(null, "Please find a exit door key!", "Need to Find Exit Door Key", JOptionPane.ERROR_MESSAGE);
 			}
 		}

@@ -17,7 +17,7 @@ import ddg.map.entity.Chest;
  * @author Fei Yu
  * @date Mar 3, 2017
  */
-public class Fighter implements Serializable{
+public class Fighter implements Cloneable, Serializable{
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
@@ -603,10 +603,21 @@ public class Fighter implements Serializable{
      * This method adapter fighter level to map
      * @param targetLevel
     */
+	// scores values have to be changed
 	public void updateLevel(int targetLevel){
 		if(targetLevel != level){
 			this.level = targetLevel;
 		}
 		System.out.println(level);
+	}
+	public Fighter clone(){
+		Fighter newfighter = null;
+		try{
+			newfighter=(Fighter)super.clone();
+		}catch(Exception e ){
+			e.printStackTrace();
+		}
+		
+		return newfighter;
 	}
 }
