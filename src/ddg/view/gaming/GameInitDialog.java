@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import ddg.Config;
 import ddg.campaign.entity.BaseCampaign;
+import ddg.map.entity.Map;
 import ddg.model.CampaignEditorModel;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
@@ -125,7 +126,7 @@ public class GameInitDialog extends JDialog implements ActionListener, DItemList
 				campaignComboBox.addItem(i);
 			}
 		}
-		if(characterComboBox.getItemCount()>0&&campaignComboBox.getItemCount()>0) {
+		if(characterComboBox.getItemCount() > 0 && campaignComboBox.getItemCount() > 0) {
 			okBtn.setEnabled(true);
 		}
 	}
@@ -135,11 +136,24 @@ public class GameInitDialog extends JDialog implements ActionListener, DItemList
 		if (e.getActionCommand().equals("OK")) {
 			System.out.println("OK");
 			if(selectFighter!=null&&selectCampaign!=null) {
-				this.gameModel = new GameModel(selectFighter, selectCampaign);
+				this.gameModel = mapLoading(selectFighter, selectCampaign);
 			}
 		} else if (e.getActionCommand().equals("CANCEL")) {
 		}
 		dispose();
+	}
+	/**
+	 * 
+	  * This method load fighter and baseCampaign in GameModle
+	  * @param fighter
+	  * @param baseCampaign
+	  * @return GameModel
+	 */
+	public GameModel mapLoading(Fighter fighter, BaseCampaign baseCampaign){
+		if(fighter != null && baseCampaign != null){
+			return new GameModel(fighter, baseCampaign);
+		}else 
+			return null;
 	}
 
 	@Override
