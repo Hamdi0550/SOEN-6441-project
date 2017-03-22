@@ -12,14 +12,32 @@ import javax.swing.JScrollPane;
 
 import ddg.model.Fighter;
 
+/**
+ * 
+ * This class to show InventoryPanel during playing
+ * 
+ * @author Zhen Du
+ * @date Mar 22, 2017
+ */
 public class InventoryPanel extends InventoryView implements Observer {
 
 	private JPanel operation;
 	
+	/**
+	 * 
+	 * Constructors for InventoryPanel
+	 * 
+	 * @param fighter
+	 */
 	public InventoryPanel(Fighter fighter) {
 		super(fighter);
 	}
 
+	/**
+	 * 
+	 * Constructors for InventoryPanel
+	 *
+	 */
 	public InventoryPanel() {
 		super();
 	}
@@ -85,7 +103,13 @@ public class InventoryPanel extends InventoryView implements Observer {
         initMethod();
 	}
 
-	
+	/**
+	 * 
+	 * This method to updateView
+	 * 
+	 * @param f
+	 * @param isPlayer
+	 */
 	protected void updateView(Fighter f, boolean isPlayer) {
 		super.updateView(f);
 		if(isPlayer) {

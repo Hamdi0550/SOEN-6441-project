@@ -20,12 +20,24 @@ import ddg.view.gaming.GamePanel;
  */
 public class DDGaming extends JDialog implements ActionListener {
 	
+	/**
+	 * 
+	 * Constructors for DDGaming
+	 *
+	 */
 	public DDGaming() {
 //		setSize(Config.WIDTH+200, Config.HEIGHT+200);
 		setModal(true);
 		
 	}
 	
+	/**
+	 * 
+	 * This method is popShow
+	 * 
+	 * @param owner
+	 * @param title
+	 */
 	public void popShow(Frame owner, String title) {
 		GameInitDialog d = new GameInitDialog(owner, "Choose Character&Campaign");
 		d.showSelectView();

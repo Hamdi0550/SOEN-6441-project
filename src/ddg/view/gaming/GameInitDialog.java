@@ -38,22 +38,45 @@ public class GameInitDialog extends JDialog implements ActionListener, DItemList
 	private Fighter selectFighter;
 	private BaseCampaign selectCampaign;
 	
+	/**
+	 * 
+	 * Constructors for GameInitDialog
+	 * 
+	 * @param owner
+	 * @param title
+	 */
 	public GameInitDialog(Frame owner, String title) {
 		super(owner, title, true);
 		initView();
 		initData();
 	}
 
+	/**
+	 * 
+	 * This method showSelectView
+	 *
+	 */
 	public void showSelectView() {
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
+	/**
+	 * 
+	 * This method getGameModel
+	 * 
+	 * @return
+	 */
 	public GameModel getGameModel() {
 		return this.gameModel;
 	}
 	
+	/**
+	 * 
+	 * This method initView
+	 *
+	 */
 	private void initView() {
 		JPanel panel = new JPanel();
 		JPanel selectPanel = new JPanel();
@@ -80,6 +103,11 @@ public class GameInitDialog extends JDialog implements ActionListener, DItemList
 		getContentPane().add(panel, BorderLayout.SOUTH);
 	}
 	
+	/**
+	 * 
+	 * This method initData
+	 *
+	 */
 	private void initData() {
 		fighterModel = new FighterModel();
 		String g = Utils.readFile(Config.CHARACTOR_FILE);

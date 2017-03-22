@@ -16,6 +16,13 @@ import ddg.view.MapPanelInGame;
 public class GamePanel extends JPanel {
 	private MapPanelInGame mapPanel;
 
+	/**
+	 * 
+	 * Constructors for GamePanel
+	 * 
+	 * @param model
+	 * @param a
+	 */
 	public GamePanel(GameModel model, ActionListener a) {
 //		setPreferredSize(new Dimension(1000, 800));
 		mapPanel = new MapPanelInGame(model.getFighter(), model.getCampaign());

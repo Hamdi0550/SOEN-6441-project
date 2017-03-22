@@ -8,6 +8,7 @@ import java.io.Serializable;
  * @author Zhen Du
  * @date Mar 11, 2017
  */
+@Deprecated
 public class AdapterItem implements Item, Serializable {
 	
 	private static final long serialVersionUID = -8157381198311896595L;
@@ -16,7 +17,7 @@ public class AdapterItem implements Item, Serializable {
 	
 	/**
 	 * 
-	 * Constructors for
+	 * Constructors for AdapterItem
 	 * 
 	 * @param item
 	 * @param level
@@ -26,6 +27,12 @@ public class AdapterItem implements Item, Serializable {
 		this.level = level;
 	}
 	
+	/**
+	 * 
+	 * This method getBonusByLevel
+	 * 
+	 * @return
+	 */
 	private int getBonusByLevel() {
 		if(this.level <= 0)
 			return 0;
@@ -34,6 +41,13 @@ public class AdapterItem implements Item, Serializable {
 		else
 			return (this.level-1)/4 + 1;
 	}
+	
+	/**
+	 * 
+	 * This method getAdapterBonus
+	 * 
+	 * @return
+	 */
 	public int getAdapterBonus() {
 		return this.item.getBonus() + getBonusByLevel();
 	}
