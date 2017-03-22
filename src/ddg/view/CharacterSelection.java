@@ -317,7 +317,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		System.out.print(" ");
     		System.out.print(fighter.isWeaponOn);
     		System.out.print(" ");
-    		System.out.print(fighter.IsShieldOn);
+    		System.out.print(fighter.isShieldOn);
     		System.out.println(fighter.getBackpack());
     		System.out.println(fighter.getWorn());
     		System.out.println("===========================");

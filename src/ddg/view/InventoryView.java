@@ -100,17 +100,31 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
      * @param fighter
      */
 	public static void createAndShowGUI(Fighter fighter) {
-    	InventoryView frame1 = new InventoryView(fighter); 
-        frame1.setBounds(260, 260, 0, 0);
-//        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        frame1.pack();
-        frame1.setVisible(true);
+
+        dialog = new JDialog(owner);
+        InventoryView frame1 = new InventoryView(fighter); 
+        dialog.add(frame1);
+        dialog.setBounds(260, 260, 0, 0);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.pack();
+        dialog.setTitle("Inventory");
+        dialog.setModal(true);
+        dialog.setVisible(true);
+        
+//    	InventoryView frame1 = new InventoryView(fighter); 
+//        frame1.setBounds(260, 260, 0, 0);
+////        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+////        frame1.pack();
+//        frame1.setVisible(true);
 		
 	}    
 	InventoryView(Fighter fighter){
     	super();
 		this.fighter = fighter;
+		System.out.println("before inintial");
 		initialization();
+
+		System.out.println("after inintial");
 	}
 
     /**
@@ -163,13 +177,21 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         characterRightPanel.add(bootsBtn);
         characterRightPanel.add(weaponBtn);
         characterRightPanel.add(shieldBtn);
+        
+        helmetBtn.setMargin(new Insets(1,1,1,1));
+        armorBtn.setMargin(new Insets(1,1,1,1));
+        beltBtn.setMargin(new Insets(1,1,1,1));
+        ringBtn.setMargin(new Insets(1,1,1,1));
+        bootsBtn.setMargin(new Insets(1,1,1,1));
+        weaponBtn.setMargin(new Insets(1,1,1,1));
+        shieldBtn.setMargin(new Insets(1,1,1,1));
 
         characterImagePanel.setBounds(0, 0, 500, 500);
         characterImagePanel.add(new JLabel("                                                                 "));
         backpackListPanel.setPreferredSize(new Dimension(200,260));
-        characterLeftPanel.setPreferredSize(new Dimension(100,320));
-        characterRightPanel.setPreferredSize(new Dimension(100,320));
-        attributesPanel.setPreferredSize(new Dimension(600,320));
+        characterLeftPanel.setPreferredSize(new Dimension(70,320));
+        characterRightPanel.setPreferredSize(new Dimension(70,320));
+        attributesPanel.setPreferredSize(new Dimension(360,320));
         characterImagePanel.setPreferredSize(new Dimension(230,320));
 
         JLabel lb1 = new JLabel(" ");
@@ -416,7 +438,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 			ringBtn.setText("Ring");
 			ringBtn.setIcon(null);	    			
 		}
-		if (fighter.IsShieldOn){
+		if (fighter.isShieldOn){
 			shieldBtn.setText("");
 			shieldBtn.setIcon(Config.SHIELD_ICON);
 		} else{
@@ -463,9 +485,9 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 	    		System.out.print(" ");
 	    		System.out.print(f2.isWeaponOn);
 	    		System.out.print(" ");
-	    		System.out.print(f2.IsShieldOn);
+	    		System.out.print(f2.isShieldOn);
 	    		System.out.print(" ");
-	    		System.out.print(f2.IsShieldOn);
+	    		System.out.print(f2.isShieldOn);
 	    		System.out.println(f2.getBackpack());
 	    		System.out.println(f2.getWorn());
 	    		System.out.println("===========================");

@@ -1,7 +1,17 @@
 package ddg.utils.builder;
 
+/**
+ * 
+ * This class is to build a character of Nimble type
+ * @author Zhen Du, Fei Yu
+ * @version 1.1
+ *
+ */
 public class NimbleFighterBuilder extends FighterBuilder {
 
+	/**
+	 * This method assign different values to a Nimble's attributes according to its type
+	 */
 	@Override
 	void assignScores() {
 		fighter.setDexterity(scores.get(0));

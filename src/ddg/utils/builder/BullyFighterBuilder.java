@@ -1,7 +1,17 @@
 package ddg.utils.builder;
 
+/**
+ * 
+ * This class is to build a character of Bully type
+ * @author Zhen Du, Fei Yu
+ * @version 1.1
+ *
+ */
 public class BullyFighterBuilder extends FighterBuilder {
 
+	/**
+	 * This method assign different values to a Bully's attributes according to its type
+	 */
 	@Override
 	void assignScores() {
 		fighter.setStrength(scores.get(0));

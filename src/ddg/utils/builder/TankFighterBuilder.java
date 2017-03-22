@@ -1,7 +1,17 @@
 package ddg.utils.builder;
 
+/**
+ * 
+ * This class is to build a character of Tank type
+ * @author Zhen Du, Fei Yu
+ * @version 1.1
+ *
+ */
 public class TankFighterBuilder extends FighterBuilder {
 
+	/**
+	 * This method assign different values to a Tank's attributes according to its type
+	 */
 	@Override
 	void assignScores() {
 		fighter.setConstitution(scores.get(0));

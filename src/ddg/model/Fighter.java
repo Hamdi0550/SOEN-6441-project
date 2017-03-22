@@ -55,7 +55,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	private int attackBonus; 		
 	private int damageBonus; 	
 	public boolean isArmorOn = false;
-	public boolean IsShieldOn = false;
+	public boolean isShieldOn = false;
 	public boolean isWeaponOn = false;
 	public boolean isBootsOn = false;
 	public boolean isRingOn = false;
@@ -94,7 +94,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void clearWornItems() {
 		wornItems.clear();
 		isArmorOn = false;
-		IsShieldOn = false;
+		isShieldOn = false;
 		isWeaponOn = false;
 		isBootsOn = false;
 		isRingOn = false;
@@ -496,7 +496,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		} else if (wearingType.equals(BaseItem.ARMOR)){
 			isArmorOn = true;
 		}else if (wearingType.equals(BaseItem.SHIELD)){
-			IsShieldOn = true;
+			isShieldOn = true;
 		}else if (wearingType.equals(BaseItem.WEAPON)){
 			isWeaponOn = true;
 		}else if (wearingType.equals(BaseItem.BOOTS)){
@@ -518,7 +518,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		} else if (wearingType.equals(BaseItem.ARMOR)){
 			isArmorOn = false;
 		}else if (wearingType.equals(BaseItem.SHIELD)){
-			IsShieldOn = false;
+			isShieldOn = false;
 		}else if (wearingType.equals(BaseItem.WEAPON)){
 			isWeaponOn = false;
 		}else if (wearingType.equals(BaseItem.BOOTS)){

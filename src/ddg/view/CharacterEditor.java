@@ -15,6 +15,11 @@ import ddg.model.Fighter;
 import ddg.model.FighterModel;
 import ddg.utils.Dice;
 import ddg.utils.Utils;
+import ddg.utils.builder.BullyFighterBuilder;
+import ddg.utils.builder.FighterBuilder;
+import ddg.utils.builder.FighterExplorer;
+import ddg.utils.builder.NimbleFighterBuilder;
+import ddg.utils.builder.TankFighterBuilder;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,8 +48,6 @@ public class CharacterEditor extends JDialog implements ActionListener {
 	public final JButton shieldBtn = new JButton("  Shield  ");
 	public final JButton bootsBtn = new JButton("    Boots  ");
 	public final JButton weaponBtn = new JButton("   Weapon  ");
-
-	public int id;
 
 	private final DefaultListModel<String> model = new DefaultListModel<String>();
 
@@ -76,6 +79,8 @@ public class CharacterEditor extends JDialog implements ActionListener {
 	public BaseItem selectedItem = null;
 	public String wearingType;
 	public JDialog thisWindow = this;
+	private FighterExplorer fighterExplorer = new FighterExplorer();
+	private Fighter currentFighter = null;
 
 	/**
 	 * 
@@ -198,6 +203,10 @@ public class CharacterEditor extends JDialog implements ActionListener {
 		buttonsPanel.add(saveBtn);
 		buttonsPanel.add(cancelBtn);
 		buttonsPanel.setSize(300, 500);
+		
+		if (currentFighter == null){
+			inventoryBtn.setEnabled(false);
+		}
 
 		typeList.addItem(Config.BULLY);
 		typeList.addItem(Config.NIMBLE);
@@ -296,7 +305,7 @@ public class CharacterEditor extends JDialog implements ActionListener {
 			ringBtn.setText("Ring");
 			ringBtn.setIcon(null);	    			
 		}
-		if (fighter.IsShieldOn){
+		if (fighter.isShieldOn){
 			shieldBtn.setText("");
 			shieldBtn.setIcon(Config.SHIELD_ICON);
 		} else{
@@ -317,14 +326,21 @@ public class CharacterEditor extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == typeList) {
 			String s = (String) typeList.getSelectedItem();
+			FighterBuilder fb;
 			switch (s) {
 			case Config.BULLY:
+				fb = new BullyFighterBuilder();
+				fighterExplorer.setBuilder(fb);
 				System.out.println("Bully");
 				break;
 			case Config.NIMBLE:
+				fb = new NimbleFighterBuilder();
+				fighterExplorer.setBuilder(fb);
 				System.out.println("Nimble");
 				break;
 			case Config.TANK:
+				fb = new TankFighterBuilder();
+				fighterExplorer.setBuilder(fb);
 				System.out.println("Tank");
 				break;
 			default:
@@ -347,21 +363,33 @@ public class CharacterEditor extends JDialog implements ActionListener {
 
 		randomBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Fighter f1 = new Fighter();
-				if (owner.fighter == null) {
-					owner.fighter = f1;
-				} else {
-					f1 = owner.fighter;
-				}
 
-				f1.setStrength(Dice.d46Roll());
-				f1.setDexterity(Dice.d46Roll());
-				f1.setConstitution(Dice.d46Roll());
-				f1.setIntelligence(Dice.d46Roll());
-				f1.setWisdom(Dice.d46Roll());
-				f1.setCharisma(Dice.d46Roll());
+				fighterExplorer.constructFighter();
+//				if (fighterExplorer.getFighter() == null){
+//					fighterExplorer.constructFighter();
+//				} else {
+//					fighterExplorer.constructFighter(fighterExplorer.getFighter());
+//				}
+				System.out.println(fighterExplorer.getFighter());
+				currentFighter = fighterExplorer.getFighter();
+				inventoryBtn.setEnabled(true);
+				updateAttributes(fighterExplorer.getFighter());
+				
+//				Fighter f1 = new Fighter();
+//				if (owner.fighter == null) {
+//					owner.fighter = f1;
+//				} else {
+//					f1 = owner.fighter;
+//				}
+//
+//				f1.setStrength(Dice.d46Roll());
+//				f1.setDexterity(Dice.d46Roll());
+//				f1.setConstitution(Dice.d46Roll());
+//				f1.setIntelligence(Dice.d46Roll());
+//				f1.setWisdom(Dice.d46Roll());
+//				f1.setCharisma(Dice.d46Roll());
 
-				updateAttributes(owner.fighter);
+//				updateAttributes(owner.fighter);
 				System.out.println("I get the figher " + owner.fighterKeyName);
 			}
 		});
@@ -508,9 +536,13 @@ public class CharacterEditor extends JDialog implements ActionListener {
 
 		inventoryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(getThisFrame());
-				if (owner.fighter != null) {
-					InventoryView.createAndShowGUI(getThisFrame());
+//				System.out.println(getThisFrame());
+				System.out.println(currentFighter);
+//				if (owner.fighter != null) {
+				if (currentFighter != null) {
+					System.out.println("there is a fighter");
+//					InventoryView.createAndShowGUI(getThisFrame());
+					InventoryView.createAndShowGUI(currentFighter);
 				}
 			}
 		});
@@ -570,7 +602,7 @@ public class CharacterEditor extends JDialog implements ActionListener {
 					System.out.print(" ");
 					System.out.print(f2.isWeaponOn);
 					System.out.print(" ");
-					System.out.print(f2.IsShieldOn);
+					System.out.print(f2.isShieldOn);
 					System.out.println(f2.getBackpack());
 					System.out.println(f2.getWorn());
 					System.out.println("===========================");
