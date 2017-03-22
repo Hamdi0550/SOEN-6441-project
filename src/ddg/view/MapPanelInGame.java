@@ -495,8 +495,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			System.out.println("OPEN Inventory");
 			if(inventoryPanel.isVisible()) {
 				inventoryPanel.setVisible(false);
+				requestFocus();
 			} else {
 				inventoryPanel.setVisible(true);
+				requestFocus();
 			}
 		}
 	}

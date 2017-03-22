@@ -655,6 +655,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void beAttacked(int i) {
 		this.hitPoints -= i;
 		if(this.hitPoints<=0){
+			this.hitPoints=0;
 			System.out.println("going dead!!!!!");
 			die();
 		}
