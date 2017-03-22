@@ -1,5 +1,7 @@
 package ddg.utils.builder;
 
+import ddg.Config;
+
 /**
  * 
  * This class is to build a character of Nimble type
@@ -14,6 +16,7 @@ public class NimbleFighterBuilder extends FighterBuilder {
 	 */
 	@Override
 	void assignScores() {
+		fighter.setType(Config.NIMBLE);
 		fighter.setDexterity(scores.get(0));
 		fighter.setConstitution(scores.get(1));
 		fighter.setStrength(scores.get(2));

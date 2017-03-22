@@ -153,6 +153,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getStrength(){
 		return strength;
 	}
+	
 	/**
 	 * Get the dexterity of the character
 	 * @return dexterity
@@ -160,6 +161,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getDexterity(){
 		return dexterity;
 	}
+	
 	/**
 	 * Get the constitution of the character
 	 * @return constitution
@@ -167,6 +169,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getConstitution(){
 		return constitution;
 	}
+	
 	/**
 	 * Get the constitution of the character
 	 * @return constitution
@@ -174,6 +177,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getIntelligence(){
 		return intelligence;
 	}
+	
 	/**
 	 * Get the wisdom of the character
 	 * @return wisdom
@@ -181,6 +185,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getWisdom(){
 		return wisdom;
 	}
+	
 	/**
 	 * Get the charisma of the character
 	 * @return charisma
@@ -188,6 +193,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getCharisma(){
 		return charisma;
 	}	
+	
 	/**
 	 * Get the gainedStrength of the character
 	 * @return gainedStrength
@@ -195,6 +201,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getGainedStrength(){
 		return gainedStrength;
 	}
+	
 	/**
 	 * Get the gainedDexterity of the character
 	 * @return gainedDexterity
@@ -202,6 +209,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getGainedDexterity(){
 		return gainedDexterity;
 	}
+	
 	/**
 	 * Get the gainedConstitution of the character
 	 * @return gainedConstitution
@@ -209,6 +217,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getGainedConstitution(){
 		return gainedConstitution;
 	}
+	
 	/**
 	 * Get the gainedIntelligence of the character
 	 * @return gainedIntelligence
@@ -216,6 +225,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getGainedIntelligence(){
 		return gainedIntelligence;
 	}
+	
 	/**
 	 * Get the gainedWisdom of the character
 	 * @return gainedWisdom
@@ -223,6 +233,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getGainedWisdom(){
 		return gainedWisdom;
 	}
+	
 	/**
 	 * Get the gainedCharisma of the character
 	 * @return gainedCharisma
@@ -230,6 +241,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getGainedCharisma(){
 		return gainedCharisma;
 	}
+	
 	/**
 	 * Get the gainedArmorClass of the character
 	 * @return gainedArmorClass
@@ -237,6 +249,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getGainedArmorClass(){
 		return gainedArmorClass;
 	}
+	
 	/**
 	 * Return the total Strength of the character
 	 * @return totalStrength
@@ -308,6 +321,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getModifier(int inputValue){
 		return (inputValue/ 2 - 5);
 	}
+	
 	/**
 	 * Get the attack bonus of the character
 	 * @return attackBonus
@@ -328,6 +342,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		attackBonus = baseAttackBonus + getDamageBonus();
 		return attackBonus;
 	}
+	
 	/**
 	 * Get the damage bonus of the character
 	 * @return damageBonus
@@ -336,6 +351,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		damageBonus = getModifier(getStrength() + getGainedStrength());
 		return damageBonus;
 	}
+	
 	/**
 	 * Get the armor class of the character
 	 * @return armorClass
@@ -344,6 +360,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		armorClass = getDexterity() + getGainedDexterity() + 10;
 		return armorClass + gainedArmorClass;
 	}
+	
 	/**
 	 * Get the hitPoints of the character
 	 * @return hitPoints
@@ -351,6 +368,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getHitPoints(){
 		return hitPoints;
 	}
+	
 	/**
 	 * Get the backpack of the character
 	 * @return backpack
@@ -358,6 +376,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public ArrayList<BaseItem> getBackpack(){
 		return backpack;
 	}
+	
 	/**
 	 * Get the wornItems of the character
 	 * @return wornItems
@@ -365,6 +384,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public ArrayList<BaseItem> getWorn(){
 		return wornItems;
 	}
+	
 	/**
 	 * Set the name of the character
 	 * @param name
@@ -372,6 +392,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setName(String name){
 		this.name = name;
 	}
+	
 	/**
 	 * Set the level of the character
 	 * @param level
@@ -411,6 +432,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setConstitution(int constitution){
 		this.constitution = constitution;
 	}
+	
 	/**
 	 * Set the intelligence of the character
 	 * @param intelligence
@@ -418,6 +440,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setIntelligence(int intelligence){
 		this.intelligence = intelligence;
 	}
+	
 	/**
 	 * Set the wisdom of the character
 	 * @param wisdom
@@ -425,6 +448,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setWisdom(int wisdom){
 		this.wisdom = wisdom;
 	}
+	
 	/**
 	 * Set the charisma of the character
 	 * @param charisma
@@ -432,6 +456,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setCharisma(int charisma){
 		this.charisma = charisma;
 	}
+	
 	/**
 	 * Set the gainedStrength of the character
 	 * @param strength
@@ -439,6 +464,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setGainedStrength(int strength){
 		this.gainedStrength = strength;
 	}
+	
 	/**
 	 * Set the gainedDexterity of the character
 	 * @param dexterity
@@ -446,6 +472,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setGainedDexterity(int dexterity){
 		this.gainedDexterity = dexterity;
 	}
+	
 	/**
 	 * Set the gainedConstitution of the character
 	 * @param constitution
@@ -453,6 +480,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setGainedConstitution(int constitution){
 		this.gainedConstitution = constitution;
 	}
+	
 	/**
 	 * Set the gainedIntelligence of the character
 	 * @param intelligence
@@ -460,6 +488,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setGainedIntelligence(int intelligence){
 		this.gainedIntelligence = intelligence;
 	}
+	
 	/**
 	 * Set the gainedWisdom of the character
 	 * @param wisdom
@@ -467,6 +496,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setGainedWisdom(int wisdom){
 		this.gainedWisdom = wisdom;
 	}
+	
 	/**
 	 * Set the gainedCharisma of the character
 	 * @param charisma
@@ -647,6 +677,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 			return;
 		}
 	}
+	
 	/**
 	 * 
 	  * This method loot all items from a corpse
@@ -670,11 +701,17 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		}
 		observerNotify();
 	}
+	
+	/**
+	 * This method show a character being attacked
+	 * @param npc
+	 */
 	public void attackCaracter(Fighter npc) {
 //		int harm = ;
 // here 15 should be the harm values for npc
 		npc.beAttacked(15);
 	}
+	
 	public void beAttacked(int i) {
 		this.hitPoints -= i;
 		if(this.hitPoints<=0){
@@ -684,16 +721,20 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		}
 		observerNotify();
 	}
+	
 	public boolean isAlive() {
 		return isalive;
 	}
+	
 	public void die() {
 		this.isalive = false;
 	}
+	
 	public void levelUp() {
 		this.level++;
 		observerNotify();
 	}
+	
    /**
      * This method adapter fighter level to map
      * @param targetLevel
@@ -705,6 +746,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		}
 		System.out.println(level);
 	}
+	
 	public Fighter clone(){
 		Fighter newfighter = null;
 		try{
@@ -715,15 +757,23 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		
 		return newfighter;
 	}
+	
 	public void trade(BaseItem playeritem, Fighter npc, BaseItem npcitem) {
 		if (npc != null && npcitem != null && playeritem!=null){
+			npc.backpack.remove(npcitem);		
 			this.backpack.add(npcitem);
 			this.backpack.remove(playeritem);
+			npc.backpack.add(playeritem);	
+		} else if (npc != null && npcitem == null && playeritem != null){
+			this.backpack.remove(playeritem);
 			npc.backpack.add(playeritem);
-			npc.backpack.remove(npcitem);
+		} else if (npc != null && npcitem != null && playeritem == null){
+			npc.backpack.remove(npcitem);			
+			this.backpack.add(npcitem);
 		}
 		observerNotify();
 	}
+	
 	public void takeoffEquipment(String selectedWorn) {
 		if(this.getWorn().size()==0) {
 			JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);

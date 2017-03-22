@@ -45,6 +45,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         
     protected final JLabel nameTextF = new JLabel("   ");
     protected final JLabel levelTextF = new JLabel("   ");
+    protected final JLabel typeTextF = new JLabel("   ");
     protected final JLabel strengthTextF = new JLabel("   ");
     protected final JLabel dexterityTextF = new JLabel("   ");
     protected final JLabel constitutionTextF = new JLabel("   ");
@@ -52,8 +53,6 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
     protected final JLabel wisdomTextF = new JLabel("   ");
     protected final JLabel charismaTextF = new JLabel("   ");
     
-    JLabel nameModiferL = new JLabel("   ");
-    JLabel levelModiferL = new JLabel("   ");
     JLabel strengthModiferL = new JLabel("   ");
     JLabel dexModiferL = new JLabel("   ");
     JLabel conModiferL = new JLabel("   ");
@@ -146,7 +145,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         setLayout(new BorderLayout());
         JPanel backPanel= new JPanel(new BorderLayout());
         JPanel characterPanel= new JPanel(new BorderLayout());
-        JPanel attributesPanel= new JPanel(new GridLayout(10,4,5,5));
+        JPanel attributesPanel= new JPanel(new GridLayout(11,4,5,5));
         JPanel backpackPanel = new JPanel(new BorderLayout());
         JPanel buttonsPanel= new JPanel(new GridLayout(5,1,5,5));
 //        backpackListPanel = new JPanel(new BorderLayout());
@@ -194,10 +193,6 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         attributesPanel.setPreferredSize(new Dimension(360,320));
         characterImagePanel.setPreferredSize(new Dimension(230,320));
 
-        JLabel lb1 = new JLabel(" ");
-        lb1.setBorder(new LineBorder(Color.BLACK));
-        nameModiferL.setBorder(new LineBorder(Color.BLACK));
-        levelModiferL.setBorder(new LineBorder(Color.BLACK));
         strengthModiferL.setBorder(new LineBorder(Color.BLACK));
         dexModiferL.setBorder(new LineBorder(Color.BLACK));
         conModiferL.setBorder(new LineBorder(Color.BLACK));
@@ -206,27 +201,29 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         chaModiferL.setBorder(new LineBorder(Color.BLACK));
         nameTextF.setBorder(new LineBorder(Color.BLACK));
         levelTextF.setBorder(new LineBorder(Color.BLACK));
+        typeTextF.setBorder(new LineBorder(Color.BLACK));
         strengthTextF.setBorder(new LineBorder(Color.BLACK));
         dexterityTextF.setBorder(new LineBorder(Color.BLACK));
         constitutionTextF.setBorder(new LineBorder(Color.BLACK));
         intelligenceTextF.setBorder(new LineBorder(Color.BLACK));
         wisdomTextF.setBorder(new LineBorder(Color.BLACK));
         charismaTextF.setBorder(new LineBorder(Color.BLACK));
-        lb1.setPreferredSize(new Dimension(20,15));
-        lb1.setBounds(0, 0, 20, 15);
-        lb1.setIcon(icon);
-        lb1.setText(" 2 ");
+        
         attributesPanel.add(new JLabel("      "));
         attributesPanel.add(new JLabel("      "));
         attributesPanel.add(new JLabel(" Modifier "));
         attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Name "));
         attributesPanel.add(nameTextF);
-        attributesPanel.add(nameModiferL);
+        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Level "));
         attributesPanel.add(levelTextF);
-        attributesPanel.add(levelModiferL);
+        attributesPanel.add(new JLabel("     "));
+        attributesPanel.add(new JLabel("     "));
+        attributesPanel.add(new JLabel(" Type "));
+        attributesPanel.add(typeTextF);
+        attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Item Type "));
         attributesPanel.add(new JLabel(" Strength "));
         attributesPanel.add(strengthTextF);
@@ -235,7 +232,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         attributesPanel.add(new JLabel(" Dexterity "));
         attributesPanel.add(dexterityTextF);
         attributesPanel.add(dexModiferL);
-        attributesPanel.add(new JLabel("  Attribute  "));
+        attributesPanel.add(new JLabel(" Attribute  "));
         attributesPanel.add(new JLabel(" Constitution "));
         attributesPanel.add(constitutionTextF);
         attributesPanel.add(conModiferL);
@@ -381,6 +378,9 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
      */
 	protected void updateAttributes(Fighter fighter) {
 
+		nameTextF.setText(fighter.getName());
+		levelTextF.setText(Integer.toString(fighter.getLevel()));
+		typeTextF.setText(fighter.getType());
 		strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
 		dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
 		constitutionTextF.setText(Integer.toString(fighter.getTotalConstitution()));

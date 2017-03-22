@@ -1,5 +1,7 @@
 package ddg.utils.builder;
 
+import ddg.Config;
+
 /**
  * 
  * This class is to build a character of Bully type
@@ -14,6 +16,7 @@ public class BullyFighterBuilder extends FighterBuilder {
 	 */
 	@Override
 	void assignScores() {
+		fighter.setType(Config.BULLY);
 		fighter.setStrength(scores.get(0));
 		fighter.setConstitution(scores.get(1));
 		fighter.setDexterity(scores.get(2));
