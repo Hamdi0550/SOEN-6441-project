@@ -1,10 +1,12 @@
 package ddg.view;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,6 +30,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import ddg.Config;
@@ -52,7 +55,7 @@ import ddg.ui.DDGaming;
  * @date Mar 13, 2017
  * 
  */
-public class MapPanelInGame extends JPanel implements Observer, KeyListener{
+public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener {
 	private JScrollPane jspanel;
 	private JPanel mapPanel;
 	private Map playingMap;
@@ -63,7 +66,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 	private int xofplayer;
 	private int yofplayer;
 
-	private CharacterPanel characterPanel = new CharacterPanel(this);	
+	private CharacterPanel characterPanel = new CharacterPanel(this);
+	private InventoryPanel inventoryPanel = new InventoryPanel();
     private int xIndex = -1;
     private int yIndex = -1; 
 	protected boolean isCharacter = false;
@@ -77,6 +81,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
 	ImageIcon mainplayer = new ImageIcon("Mainplayer.png");
 	ImageIcon deadnpc = new ImageIcon("deadnpc.png");
+	JTextArea log = new JTextArea();
 	
 	public MapPanelInGame(Fighter fighter, BaseCampaign campaign){
 		this.campaign = campaign;
@@ -141,6 +146,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		    }
 		    if (isCharacter == false){
 		    	characterPanel.setVisible(false);
+		    	inventoryPanel.setVisible(false);
 		    }
 			this.playingMap = this.mapsofcampaign.next();
 			this.playingMap.adaptedLevel(fighter.getLevel());
@@ -170,13 +176,16 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 			}
 		}
 		else{
+			log.append("You finish this Campaign, Congratulation!!!");
 			JOptionPane.showMessageDialog(null, "You finish this Campaign, Congratulation!!!");
 			JDialog ddgamedialog = (JDialog) SwingUtilities.getWindowAncestor(mapPanel);
 			ddgamedialog.dispose();
 			DDGaming newddgamedialog = new DDGaming();
 			newddgamedialog.popShow(null, "Gaming");
 		}
-		
+		log.setText("Enter game, Welcome!\n");
+		log.append("Current Level:"+fighter.getLevel()+"\n");
+		log.append("Current Map:"+mapsofcampaign.nextIndex()+"\n");
 		
 	}
 	
@@ -249,13 +258,27 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		jspanel.setBorder(Config.border);
 		
 		JPanel emptyPanel = new JPanel();
-		emptyPanel.setPreferredSize(new Dimension(270, 500));
+		emptyPanel.setLayout(new CardLayout());
+		emptyPanel.setPreferredSize(new Dimension(240, 505));
 		add(jspanel, BorderLayout.CENTER);
 		add(emptyPanel, BorderLayout.EAST);
 
+		log.setDisabledTextColor(Color.BLACK);
+		log.setPreferredSize(new Dimension(240, 505));
+		log.setBorder(Config.border);
+		log.setEnabled(false);
+		
+		emptyPanel.add(log);
 		emptyPanel.add(characterPanel);
-		characterPanel.setPreferredSize(new Dimension(270, 500));
+		characterPanel.setPreferredSize(new Dimension(240, 505));
 		characterPanel.setVisible(false);
+		characterPanel.setBorder(Config.border);
+		JPanel inventory = new JPanel();
+		inventory.setPreferredSize(new Dimension(745, 180));
+		inventory.add(inventoryPanel);
+		inventoryPanel.setVisible(false);
+		add(inventory, BorderLayout.SOUTH);
+		inventory.setBorder(Config.border);
 		
 		mapPanel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
@@ -269,28 +292,48 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 		        if (playingMap.getLocation()[yIndex][xIndex] == 'p'){
 		        	isCharacter = true;
 		        	characterPanel.setVisible(true);
+		        	inventoryPanel.setVisible(true);
+		        	log.setVisible(false);
 		        	System.out.println("Character selected");
 		        	System.out.println(playingMap.getCellsinthemap()[yIndex][xIndex].getContent());
+		        	if(selectedCharacter!=null) {
+		        		selectedCharacter.deleteObserver(characterPanel);
+		        		selectedCharacter.deleteObserver(inventoryPanel);
+		        	}
 		        	selectedCharacter = (Fighter) playingMap.getCellsinthemap()[yIndex][xIndex].getContent();
-
+		        	selectedCharacter.addObserver(characterPanel);
+		        	selectedCharacter.addObserver(inventoryPanel);
+		        	
 		        	System.out.println("selectedCharacter = " + selectedCharacter);
 		        	characterPanel.updateAttributes(selectedCharacter);
 		        	characterPanel.iconL.setIcon(Config.NPC_ICON);
+		        	inventoryPanel.updateView(selectedCharacter, false);
 		        	System.out.println(selectedCharacter.getName());
 		        }
 				else if(xIndex == yofplayer && yIndex == xofplayer){
 		        	isCharacter = true;
 		        	characterPanel.setVisible(true);
+		        	inventoryPanel.setVisible(true);
+		        	log.setVisible(false);
+		        	if(selectedCharacter!=null) {
+		        		selectedCharacter.deleteObserver(characterPanel);
+		        		selectedCharacter.deleteObserver(inventoryPanel);
+		        	}
 		        	selectedCharacter = fighter;
+		        	selectedCharacter.addObserver(characterPanel);
+		        	selectedCharacter.addObserver(inventoryPanel);
 		        	System.out.println("selectedCharacter = " + selectedCharacter);
 		        	characterPanel.updateAttributes(selectedCharacter);
 		        	characterPanel.iconL.setIcon(Config.PLAYER_ICON);
+		        	inventoryPanel.updateView(selectedCharacter, true);
 				}
 				else {
 
 		        	System.out.println(selectedCharacter);
 		        	isCharacter = false;
 		        	characterPanel.setVisible(false);
+		        	inventoryPanel.setVisible(false);
+		        	log.setVisible(true);
 				}
 		        
 				mapPanel.repaint();
@@ -425,7 +468,11 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 						Fighter.saveFighter(fighter);
 						
 						initMapData();
+						jspanel.removeAll();
+						jspanel.add(mapPanel);
 						mapPanel.repaint();
+						jspanel.doLayout();
+						jspanel.revalidate();
 						break;
 					}
 				}
@@ -440,6 +487,18 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener{
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().contains("Inventory")) {
+			System.out.println("OPEN Inventory");
+			if(inventoryPanel.isVisible()) {
+				inventoryPanel.setVisible(false);
+			} else {
+				inventoryPanel.setVisible(true);
+			}
+		}
 	}
 	
 }

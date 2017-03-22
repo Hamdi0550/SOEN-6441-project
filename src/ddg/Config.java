@@ -16,6 +16,7 @@ import ddg.item.entity.BaseItem;
  * @date Feb 5, 2017
  */
 public class Config {
+	public static final int BACKPACK_SIZE = Integer.MAX_VALUE;
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
 	

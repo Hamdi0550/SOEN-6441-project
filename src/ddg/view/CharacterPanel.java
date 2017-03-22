@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -29,7 +28,7 @@ import ddg.model.Fighter;
  */
 public class CharacterPanel extends JPanel implements Observer {
 	
-	private final JButton inventoryBtn = new JButton(" Inventory ");
+	private final JButton inventoryBtn = new JButton("Inventory");
 
 //	public final JButton helmetBtn = new JButton("  Helmet  ");
 //	public final JButton beltBtn = new JButton("  Belt ");
@@ -98,7 +97,7 @@ public class CharacterPanel extends JPanel implements Observer {
 		add(backPanel, BorderLayout.NORTH);
 		backPanel.add(attributesPanel, BorderLayout.CENTER);
 		backPanel.add(iconPanel, BorderLayout.NORTH);
-		backPanel.add(buttonsPanel, BorderLayout.SOUTH);
+		add(buttonsPanel, BorderLayout.SOUTH);
 		attributesPanel.setPreferredSize(new Dimension(270, 320));
 
 		strengthModiferL.setBorder(new LineBorder(Color.BLACK));
@@ -150,7 +149,8 @@ public class CharacterPanel extends JPanel implements Observer {
 		attributesPanel.add(new JLabel(" Charisma "));
 		attributesPanel.add(charismaL);
 		attributesPanel.add(chaModiferL);
-
+		
+		inventoryBtn.setPreferredSize(new Dimension(240, 40));
 		buttonsPanel.add(inventoryBtn);
 //		getOwnerInformation();
 		buttonsManage();
@@ -214,18 +214,18 @@ public class CharacterPanel extends JPanel implements Observer {
 	 * This method defines actions of different buttons in this frame.
 	 */
 	private void buttonsManage() {
-		
-		inventoryBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("opening 1 " + fighter);
-				System.out.println("opening 2 " + owner1);
-//				System.out.println(getThisFrame());
-				if ( owner1.getSelectedCharacter() != null) {
-					System.out.println("opening");
-					InventoryView.createAndShowGUI(owner1.getSelectedCharacter());
-				}
-			}
-		});
+		inventoryBtn.addActionListener(owner1);
+//		inventoryBtn.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				System.out.println("opening 1 " + fighter);
+//				System.out.println("opening 2 " + owner1);
+////				System.out.println(getThisFrame());
+//				if ( owner1.getSelectedCharacter() != null) {
+//					System.out.println("opening");
+//					InventoryView.createAndShowGUI(owner1.getSelectedCharacter());
+//				}
+//			}
+//		});
 
 	}
 

@@ -85,6 +85,23 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		armorClass = this.dexterity + 0;		
 	}
 	
+	public void clearBackpack() {
+		backpack.clear();
+		observerNotify();
+	}
+	
+	public void clearWornItems() {
+		wornItems.clear();
+		isArmorOn = false;
+		IsShieldOn = false;
+		isWeaponOn = false;
+		isBootsOn = false;
+		isRingOn = false;
+		isBeltOn = false;
+		isHelmetOn = false;
+		observerNotify();
+	}
+	
 	/**
 	 * Save a character to the file
 	 * @param fighter
@@ -582,7 +599,8 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 				this.gainBonus(item.getIncrease(), item.getBonus(), "-");
 				this.getBackpack().add(item);
 				this.getWorn().remove(item);
-				System.out.println("backpack=========" + getBackpack());  				
+				System.out.println("backpack=========" + getBackpack());
+				break;
 			}
 		}
 		this.gainBonus(i.getIncrease(), i.getBonus(), "+");
@@ -590,15 +608,16 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		this.getWorn().add(i);
 		this.setEquipOn(i.getName());
 		JOptionPane.showMessageDialog(null, "The item is worn.", "Message", JOptionPane.WARNING_MESSAGE); 
-		
+		observerNotify();
 		return true;
     }
 	
 	public void openChest(Chest chest) {
-		if(this.backpack.size()<10){
+		if(this.backpack.size()<Config.BACKPACK_SIZE){
 			backpack.add(chest.getItem());
 			System.out.println("get"+ chest.getItem().getLevel()+"------bouns--"+chest.getItem().getBonus());
 			chest.becameEmpty();
+			observerNotify();
 		}
 		else{
 			// can add inform on Textarea
@@ -613,16 +632,20 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 */
 	public void lootCorpseItems(Fighter corpse){
 		if(corpse.backpack.size() > 0){
-		for(BaseItem item: corpse.backpack){
-			this.backpack.add(item);
-			System.out.println("get a item from corpse backpack items" + item.getName());
-		}}
+			for(BaseItem item: corpse.backpack){
+				this.backpack.add(item);
+				System.out.println("get a item from corpse backpack items" + item.getName());
+			}
+			corpse.clearBackpack();
+		}
 		if(corpse.wornItems.size() > 0){
 			for(BaseItem item : corpse.wornItems){
 				this.backpack.add(item);
 				System.out.println("get a item from corpse worn items" + item.getName() );
 			}
+			corpse.clearWornItems();
 		}
+		observerNotify();
 	}
 	public void attackCaracter(Fighter npc) {
 //		int harm = ;
@@ -635,8 +658,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 			System.out.println("going dead!!!!!");
 			die();
 		}
-		setChanged();
-		notifyObservers(this);
+		observerNotify();
 	}
 	public boolean isAlive() {
 		return isalive;
@@ -646,6 +668,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	}
 	public void levelUp() {
 		this.level++;
+		observerNotify();
 	}
    /**
      * This method adapter fighter level to map
@@ -676,6 +699,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		} else if (selectedBackPackItem != null && selectedWorn == null){
 			
 		}
+		observerNotify();
 	}
 	public void takeoffEquipment(String selectedWorn) {
 		if(this.getWorn().size()==0) {
@@ -701,6 +725,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 					JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
 				} else {
 					JOptionPane.showMessageDialog(null, "The equipment has been move to backpack!", "Message", JOptionPane.WARNING_MESSAGE);
+					observerNotify();
 				}
 //				for (BaseItem i: this.getWorn()){
 //					if (i.getName().equals(selectedWorn)){
@@ -740,5 +765,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		else{
 			System.out.println("wrong !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		}
+	}
+	
+	private void observerNotify() {
+		setChanged();
+		notifyObservers(this);
 	}
 }

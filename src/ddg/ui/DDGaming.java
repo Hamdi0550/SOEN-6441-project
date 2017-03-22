@@ -21,7 +21,7 @@ import ddg.view.gaming.GamePanel;
 public class DDGaming extends JDialog implements ActionListener {
 	
 	public DDGaming() {
-		setSize(Config.WIDTH+200, Config.HEIGHT+200);
+//		setSize(Config.WIDTH+200, Config.HEIGHT+200);
 		setModal(true);
 		
 	}
