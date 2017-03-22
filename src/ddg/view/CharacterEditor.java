@@ -80,7 +80,8 @@ public class CharacterEditor extends JDialog implements ActionListener {
 	public String wearingType;
 	public JDialog thisWindow = this;
 	private FighterExplorer fighterExplorer = new FighterExplorer();
-	private Fighter currentFighter = null;
+	private FighterBuilder fb = new BullyFighterBuilder();
+	private Fighter fighter = null;
 
 	/**
 	 * 
@@ -204,19 +205,20 @@ public class CharacterEditor extends JDialog implements ActionListener {
 		buttonsPanel.add(cancelBtn);
 		buttonsPanel.setSize(300, 500);
 		
-		if (currentFighter == null){
+		if (fighter == null){
 			inventoryBtn.setEnabled(false);
 		}
 
 		typeList.addItem(Config.BULLY);
 		typeList.addItem(Config.NIMBLE);
 		typeList.addItem(Config.TANK);
-//		typeList.setSelectedItem(Config.BULLY);
 		typeList.addActionListener(this);
 		System.out.println(typeList.getSelectedItem());
 		getOwnerInformation();
 		focusManage();
 		buttonsManage();
+
+		fighterExplorer.setBuilder(fb);
 
 	}
 
@@ -325,23 +327,26 @@ public class CharacterEditor extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		//TODO
 		if (e.getSource() == typeList) {
 			String s = (String) typeList.getSelectedItem();
-			FighterBuilder fb;
 			switch (s) {
 			case Config.BULLY:
 				fb = new BullyFighterBuilder();
 				fighterExplorer.setBuilder(fb);
+				randomBtn.setEnabled(true);
 				System.out.println("Bully");
 				break;
 			case Config.NIMBLE:
 				fb = new NimbleFighterBuilder();
 				fighterExplorer.setBuilder(fb);
+				randomBtn.setEnabled(true);
 				System.out.println("Nimble");
 				break;
 			case Config.TANK:
 				fb = new TankFighterBuilder();
 				fighterExplorer.setBuilder(fb);
+				randomBtn.setEnabled(true);
 				System.out.println("Tank");
 				break;
 			default:
@@ -372,7 +377,7 @@ public class CharacterEditor extends JDialog implements ActionListener {
 					fighterExplorer.constructFighter(fighterExplorer.getFighter());
 				}
 				System.out.println(fighterExplorer.getFighter());
-				currentFighter = fighterExplorer.getFighter();
+				fighter = fighterExplorer.getFighter();
 				inventoryBtn.setEnabled(true);
 				updateAttributes(fighterExplorer.getFighter());
 				
@@ -468,56 +473,56 @@ public class CharacterEditor extends JDialog implements ActionListener {
 		helmetBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				wearingType = BaseItem.HELMET;
-				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(helmetBtn);
-				ItemSelection.createAndShowGUI(rootFrame);
+//				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(helmetBtn);
+				ItemSelection.createAndShowGUI(fighter, wearingType);
 			}
 		});
 
 		armorBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				wearingType = BaseItem.ARMOR;
-				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(armorBtn);
-				ItemSelection.createAndShowGUI(rootFrame);
+//				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(armorBtn);
+				ItemSelection.createAndShowGUI(fighter, wearingType);
 			}
 		});
 
 		beltBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				wearingType = BaseItem.BELT;
-				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(beltBtn);
-				ItemSelection.createAndShowGUI(rootFrame);
+//				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(beltBtn);
+				ItemSelection.createAndShowGUI(fighter, wearingType);
 			}
 		});
 
 		bootsBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				wearingType = BaseItem.BOOTS;
-				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(bootsBtn);
-				ItemSelection.createAndShowGUI(rootFrame);
+//				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(bootsBtn);
+				ItemSelection.createAndShowGUI(fighter, wearingType);
 			}
 		});
 
 		ringBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				wearingType = BaseItem.RING;
-				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(ringBtn);
-				ItemSelection.createAndShowGUI(rootFrame);
+//				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(ringBtn);
+				ItemSelection.createAndShowGUI(fighter, wearingType);
 			}
 		});
 
 		shieldBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				wearingType = BaseItem.SHIELD;
-				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(shieldBtn);
-				ItemSelection.createAndShowGUI(rootFrame);
+//				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(shieldBtn);
+				ItemSelection.createAndShowGUI(fighter, wearingType);
 			}
 		});
 
 		weaponBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				wearingType = BaseItem.WEAPON;
-				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(weaponBtn);
-				ItemSelection.createAndShowGUI(rootFrame);
+//				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(weaponBtn);
+				ItemSelection.createAndShowGUI(fighter, wearingType);
 			}
 		});
 
@@ -525,12 +530,12 @@ public class CharacterEditor extends JDialog implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				//TODO
 //				System.out.println(getThisFrame());
-				System.out.println(currentFighter);
+				System.out.println(fighter);
 //				if (owner.fighter != null) {
-				if (currentFighter != null) {
+				if (fighter != null) {
 					System.out.println("there is a fighter");
 //					InventoryView.createAndShowGUI(getThisFrame());
-					InventoryView.createAndShowGUI(currentFighter);
+					InventoryView.createAndShowGUI(fighter);
 				}
 			}
 		});

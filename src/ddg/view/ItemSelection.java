@@ -43,36 +43,49 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     private final JLabel bonusLabel = new JLabel(" Value ");
     
     private JDialog errorMessageWindow= new JDialog(this, "Item selection error", true);
-	private JButton okBtn = new JButton("   OK   ");
+//	private JButton okBtn = new JButton("   OK   ");
 
 	ArrayList<BaseItem> al1 = new ArrayList<>();
-	public int id = 100;
 	public String fighterKeyName = "fighter111";
     private static CharacterEditor owner;
     public BaseItem selectedItem;
+    private Fighter fighter;
+	private String wearingType;
     
     /**
      * Create the window
-     * @param ownerFrame The owner window of this window
+     * @param wearingType 
+     * @param currentFighter2 The owner window of this window
      */
-    public static void createAndShowGUI(CharacterEditor ownerFrame) 
+    public static void createAndShowGUI(Fighter fighter, String wearingType) 
     {
 
-        owner = (CharacterEditor) ownerFrame;
+//        owner = (CharacterEditor) currentFighter2;
+//    	currentFighter = fighter;
         System.out.println("========"+owner);
-    	ItemSelection frame1 = new ItemSelection(); 
+    	ItemSelection frame1 = new ItemSelection(fighter, wearingType); 
         frame1.setBounds(260, 260, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
         frame1.setVisible(true);
     }
 
-    /**
+    public ItemSelection(Fighter fighter, String wearingType) {
+    	this.fighter = fighter;
+    	this.wearingType = wearingType;
+		System.out.println("before inintial");
+		initialization();
+		System.out.println("after inintial");
+	}
+    
+	/**
      * Constructor
      */
-    ItemSelection()
-    {
-        super();
+    public ItemSelection(){
+		initialization();
+    }
+
+    protected void initialization() {
         setTitle("Select Item 2");
         setModal(true);
         
@@ -146,14 +159,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         selectBtn.setEnabled(false);
     	addListView();
     	
-    	okBtn.addActionListener(new ActionListener(){ 
-    		public void actionPerformed(ActionEvent e){
-    			errorMessageWindow.dispose();
-            }
-        }); 
-
-        
-    	
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			BaseItem tempItem = selectedItem;
@@ -161,25 +166,25 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     				
     			} else {
 
-        			if (owner.getOwner().fighter == null){
-        				owner.getOwner().fighter = new Fighter();
+        			if (fighter == null){
+        				fighter = new Fighter();
         			}
         			if (owner.wearingType.equals(tempItem.getName())){
-            			owner.getOwner().fighter.setEquipOn(owner.wearingType);
+            			fighter.setEquipOn(owner.wearingType);
             			
             			try{
-                			for (BaseItem i: owner.getOwner().fighter.getWorn()){
+                			for (BaseItem i: fighter.getWorn()){
                 				if (i.getName().equals(owner.wearingType)){
-                					owner.getOwner().fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
-                					owner.getOwner().fighter.getWorn().remove(i);
+                					fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
+                					fighter.getWorn().remove(i);
                 				}
                 			}
             			}
             			catch (ConcurrentModificationException e1) {        				
             			}        			
             			
-    					owner.getOwner().fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
-            			owner.getOwner().fighter.getWorn().add(tempItem);
+    					fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
+            			fighter.getWorn().add(tempItem);
             			if (owner.wearingType.equals(BaseItem.HELMET)){
             				owner.helmetBtn.setText("");
                 			owner.helmetBtn.setIcon(Config.iconByType(owner.wearingType));
@@ -219,10 +224,10 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
             }
         });    	
 
-        backpackListPanel.add(itemListPane, BorderLayout.CENTER);
-    }
+        backpackListPanel.add(itemListPane, BorderLayout.CENTER);    			
+	}
 
-    /**
+	/**
      * This method is to fill the list of items.
      */
 	private void addListView() {

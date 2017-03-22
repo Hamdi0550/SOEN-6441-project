@@ -62,7 +62,6 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public boolean isBeltOn = false;
 	public boolean isHelmetOn = false;
 	private ArrayList<BaseItem> backpack = new ArrayList<>();
-	private BaseItem[] backpack1 = new BaseItem[10];
 	private ArrayList<BaseItem> wornItems = new ArrayList<>();
 	
 	
@@ -82,7 +81,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		this.level = level;
 		this.strength = strength;
 		this.dexterity = dexterity;
-		hitPoints = Dice.d10Roll() + (constitution * this.level);
+		hitPoints = (Dice.d10Roll() + getModifier(getTotalConstitution())) * this.level;
 		armorClass = this.dexterity + 0;		
 	}
 	
@@ -348,7 +347,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @return damageBonus
 	 */
 	public int getDamageBonus(){
-		damageBonus = getModifier(totalStrength);
+		damageBonus = getModifier(getTotalStrength());
 		return damageBonus;
 	}
 	
