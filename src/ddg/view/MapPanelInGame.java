@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -503,6 +504,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		}
 	}
 	
+	public Point getPlayerLocation(){
+		return new Point(xofplayer,yofplayer);
+	}
 }
 
 
