@@ -348,7 +348,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @return damageBonus
 	 */
 	public int getDamageBonus(){
-		damageBonus = getModifier(getStrength() + getGainedStrength());
+		damageBonus = getModifier(totalStrength);
 		return damageBonus;
 	}
 	
