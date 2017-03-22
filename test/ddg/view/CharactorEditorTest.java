@@ -15,6 +15,7 @@ import org.junit.Test;
 import ddg.Config;
 import ddg.item.entity.Ability;
 import ddg.item.entity.BaseItem;
+import ddg.map.entity.Chest;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
 import ddg.utils.Utils;
@@ -77,5 +78,25 @@ public class CharactorEditorTest {
 		fighter.wearItem(i);
 		fighter.wearItem(i);
 		assertTrue(fighter.getWorn().size()-n==1);
+	}
+	
+	@Test
+	public void testOpenChest(){
+		int n = fighter.getBackpack().size();
+		BaseItem i = new BaseItem(BaseItem.HELMET);
+		Chest chest = new Chest(i);
+		fighter.openChest(chest);
+		assertTrue(fighter.getBackpack().size() == n+1);
+	}
+	
+	@Test
+	public void testLootCorpseItem(){
+		int n = fighter.getBackpack().size();
+		Fighter corpse = new Fighter();
+		BaseItem i = new BaseItem(BaseItem.HELMET);
+		corpse.getBackpack().add(i);
+		corpse.die();
+		fighter.lootCorpseItems(corpse);
+		assertTrue(fighter.getBackpack().size() == n + 1);
 	}
 }

@@ -664,7 +664,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public boolean isAlive() {
 		return isalive;
 	}
-	private void die() {
+	public void die() {
 		this.isalive = false;
 	}
 	public void levelUp() {
