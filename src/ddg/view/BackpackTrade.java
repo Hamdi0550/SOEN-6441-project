@@ -176,10 +176,16 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
     			int indexplayer = playerItemList.getSelectedIndex();
     			int indexnpc = npcItemList.getSelectedIndex();
     			if(indexplayer>=0){
+    				BaseItem item = null;
     				if(indexnpc<0){
-    					indexnpc = Utils.getRadom(npcItemModel.size());
+    					if(npcItemModel.size()!=0) {
+    						indexnpc = Utils.getRadom(npcItemModel.size());
+    						item = npcbackpack.get(indexnpc);
+    					}
+    				} else {
+						item = npcbackpack.get(indexnpc);
     				}
-    				player.trade(playerbackpack.get(indexplayer), npc, npcbackpack.get(indexnpc));
+    				player.trade(playerbackpack.get(indexplayer), npc, item);
     				refreshListView();
     			}
     			else if(indexplayer<0){
