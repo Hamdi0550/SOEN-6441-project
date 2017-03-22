@@ -34,6 +34,7 @@ public class FighterExplorer {
 	public void constructFighter(Fighter fighter) {
 		fighterBuilder.generateScores();
 		fighterBuilder.assignScores();
+		fighterBuilder.clearScores();
 	}
 
 	/**

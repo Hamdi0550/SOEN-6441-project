@@ -26,7 +26,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	private String name;
 	private int level = 1;
 	private boolean isalive = true;
-	
+	private String type;
 	private int strength;
 	private int dexterity;
 	private int constitution;
@@ -114,12 +114,14 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 //		dateString = dateString + fighter.name;
 //		fModel.fightersHM.put(dateString, fighter);
 //	}
+	
 	/**
 	 * Delete a character from the file
 	 * @param fighter
 	 */
 	public static void deleteFighter(Fighter fighter){
 	}
+	
 	/**
 	 * Get the name of the character
 	 * @return
@@ -127,6 +129,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public String getName(){
 		return name;
 	}
+	
 	/**
 	 * Get the level of the character
 	 * @return level
@@ -134,6 +137,15 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getLevel(){
 		return level;
 	}
+	
+	/**
+	 * Get the type of the character
+	 * @return type
+	 */
+	public String getType() {
+		return type;
+	}
+		
 	/**
 	 * Get the strength of the character
 	 * @return strength
@@ -367,21 +379,31 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setLevel(int level){
 		this.level = level;
 	}
+	
+	/**
+	 * Set the type of the character
+	 * @param type the type of the character
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	/**
 	 * Set the strength of the character
-	 * @param strength
+	 * @param strength the strength of the character
 	 */
-
 	public void setStrength(int strength){
 		this.strength = strength;
 	}
+	
 	/**
 	 * Set the dexterity of the character
-	 * @param dexterity
+	 * @param dexterity the dexterity of the character
 	 */
 	public void setDexterity(int dexterity){
 		this.dexterity = dexterity;
 	}
+	
 	/**
 	 * Set the constitution of the character
 	 * @param constitution

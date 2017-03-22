@@ -211,8 +211,9 @@ public class CharacterEditor extends JDialog implements ActionListener {
 		typeList.addItem(Config.BULLY);
 		typeList.addItem(Config.NIMBLE);
 		typeList.addItem(Config.TANK);
+//		typeList.setSelectedItem(Config.BULLY);
 		typeList.addActionListener(this);
-
+		System.out.println(typeList.getSelectedItem());
 		getOwnerInformation();
 		focusManage();
 		buttonsManage();
@@ -363,13 +364,13 @@ public class CharacterEditor extends JDialog implements ActionListener {
 
 		randomBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				fighterExplorer.constructFighter();
-//				if (fighterExplorer.getFighter() == null){
-//					fighterExplorer.constructFighter();
-//				} else {
-//					fighterExplorer.constructFighter(fighterExplorer.getFighter());
-//				}
+				//TODO
+//				fighterExplorer.constructFighter();
+				if (fighterExplorer.getFighter() == null){
+					fighterExplorer.constructFighter();
+				} else {
+					fighterExplorer.constructFighter(fighterExplorer.getFighter());
+				}
 				System.out.println(fighterExplorer.getFighter());
 				currentFighter = fighterExplorer.getFighter();
 				inventoryBtn.setEnabled(true);
