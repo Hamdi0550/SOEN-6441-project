@@ -3,7 +3,6 @@ package ddg.view;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -13,10 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.awt.event.WindowListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -27,7 +22,6 @@ import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -37,7 +31,6 @@ import javax.swing.SwingUtilities;
 import ddg.Config;
 import ddg.campaign.entity.BaseCampaign;
 import ddg.item.entity.BaseItem;
-import ddg.map.entity.Cell;
 import ddg.map.entity.Chest;
 import ddg.map.entity.Map;
 import ddg.model.Fighter;
@@ -46,14 +39,9 @@ import ddg.ui.DDGaming;
 
 /**
  * 
+ * MapPanelInGame include the map of game, character detail and inventory detail
  * @author Bo
  * @date Mar 12, 2017
- * 
- */
-/**
- * 
- * @author Bo
- * @date Mar 13, 2017
  * 
  */
 public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener {
@@ -84,6 +72,11 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	ImageIcon deadnpc = new ImageIcon("deadnpc.png");
 	JTextArea log = new JTextArea();
 	
+	/**
+	 * Constructor
+	 * @param fighter the play character who is chosen by user
+	 * @param campaign the Campaign which user would like to play
+	 */
 	public MapPanelInGame(Fighter fighter, BaseCampaign campaign){
 		this.campaign = campaign;
 		this.fighter = fighter;
@@ -95,6 +88,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		initcontent();
 	}
 	
+	/**
+	 * read data from file, and initialize all data on the Panel
+	 */
 	private void initdata() {
 		
 		try{
@@ -190,6 +186,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		
 	}
 	
+	/**
+	 * initialize the view of this panel
+	 */
 	private void initcontent() {
 		mapPanel = new JPanel(){
 			private static final long serialVersionUID = -8627231216589776568L;
@@ -344,14 +343,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		
 	}
 
-	/**
-	 * 
-	 * @return Fighter
-	 */
-	public Fighter getSelectedCharacter() {
-		return selectedCharacter;
-	}	
-	
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
@@ -504,6 +495,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		}
 	}
 	
+	/**
+	 * using to gain play Character's location point
+	 * @return location point of play character
+	 */
 	public Point getPlayerLocation(){
 		return new Point(xofplayer,yofplayer);
 	}

@@ -23,11 +23,23 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ * Test class for testing MapPanelInGame class
+ * @author Bo
+ * @date Mar 22, 2017
+ * 
+ */
 public class MapPanelInGameTest {
 	Fighter player;
 	BaseCampaign campaign;
 	MapPanelInGame mappanelingame;
 	
+	
+	
+	/**
+	 * initialize data before all test case
+	 * @throws Exception
+	 */
 	@Before
 	public void testBefore() throws Exception {
 		 FighterModel fighterModel = new FighterModel();
@@ -42,6 +54,9 @@ public class MapPanelInGameTest {
 		 mappanelingame = new MapPanelInGame(player,campaign);
 	}
 	
+	/**
+	 * test When thisPanel receive a KeyEvent, if the play character would move correctly.
+	 */
 	@Test
 	public void testMoveOnMap(){
 		Point point = mappanelingame.getPlayerLocation();
