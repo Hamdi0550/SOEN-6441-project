@@ -448,8 +448,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 				}
 			}
 			else{
-//				fighter.interactWithNpc(npc);
-				BackpackTrade.createAndShowGUI(null);
+				BackpackTrade bpteade = new BackpackTrade(fighter,npc);
+				bpteade.setVisible(true);
 			}
 		}
 		

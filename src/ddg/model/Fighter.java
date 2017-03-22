@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import ddg.Config;
 import ddg.utils.Dice;
 import ddg.utils.Utils;
+import ddg.view.BackpackTrade;
 import ddg.item.entity.*;
 import ddg.map.entity.Chest;
 
@@ -692,13 +693,12 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		
 		return newfighter;
 	}
-	public void trade(Fighter fighter, BaseItem selectedBackPackItem, String selectedWorn) {
-		if (selectedBackPackItem != null && selectedWorn != null){
-			
-		} else if (selectedBackPackItem == null && selectedWorn != null){
-			
-		} else if (selectedBackPackItem != null && selectedWorn == null){
-			
+	public void trade(BaseItem playeritem, Fighter npc, BaseItem npcitem) {
+		if (npc != null && npcitem != null && playeritem!=null){
+			this.backpack.add(npcitem);
+			this.backpack.remove(playeritem);
+			npc.backpack.add(playeritem);
+			npc.backpack.remove(npcitem);
 		}
 		observerNotify();
 	}

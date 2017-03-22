@@ -2,6 +2,7 @@ package ddg.view;
 import java.util.*;
 import java.io.FileNotFoundException;
 
+import javax.rmi.CORBA.Util;
 import javax.swing.*;
 
 import java.awt.*;
@@ -31,56 +32,55 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
     private final JButton cancelBtn = new JButton("    Cancel  ");
     private final JButton tradeBtn = new JButton("   Trade  ");
     
-    private final DefaultListModel<String> playerItemModel = new DefaultListModel<String>(); 
-    private final JList<String> playerItemList = new JList<String>();
-    private final DefaultListModel<String> npcItemModel = new DefaultListModel<String>(); 
-    private final JList<String> npcItemList = new JList<String>();        
+    private ArrayList<BaseItem> playerbackpack = new ArrayList<>();
+    private DefaultListModel<String> playerItemModel = new DefaultListModel<String>();
+    private JList<String> playerItemList = new JList<String>();
     
-    private JLabel nameL = new JLabel(" L  ");
-    private JLabel typeL = new JLabel(" L  ");
-    private JLabel attributeL = new JLabel(" L  ");
-    private JLabel valueL = new JLabel("  L ");
-    private JLabel name2L = new JLabel(" L  ");
-    private JLabel type2L = new JLabel(" L  ");
-    private JLabel attribute2L = new JLabel("  L ");
-    private JLabel value2L = new JLabel(" L  ");
+    private ArrayList<BaseItem> npcbackpack = new ArrayList<>();
+    private DefaultListModel<String> npcItemModel = new DefaultListModel<String>();
+    private JList<String> npcItemList = new JList<String>();        
     
-    public String selectedWorn = null;
-    public BaseItem selectedBackPackItem = null;
-    public Fighter fighter = null;
-    private static CharacterEditor owner;
+    private JLabel nameL = new JLabel();
+    private JLabel typeL = new JLabel();
+    private JLabel attributeL = new JLabel();
+    private JLabel valueL = new JLabel();
     
-    /**
-     * 
-     * @param args
-     */
-    public static void main(String[] args) {
-		createAndShowGUI(null);
-	}
+    private JLabel name2L = new JLabel();
+    private JLabel type2L = new JLabel();
+    private JLabel attribute2L = new JLabel();
+    private JLabel value2L = new JLabel();
+    
+//    public BaseItem playeritem = null;
+//    public BaseItem npcitem = null;
+    
    
-    /**
-     * 
-     * @param ownerFrame
-     */
-    public static void createAndShowGUI(CharacterEditor ownerFrame) {
-        owner = (CharacterEditor) ownerFrame;
-    	BackpackTrade frame1 = new BackpackTrade(); 
-        frame1.setBounds(260, 260, 500, 500);
-        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        frame1.pack();
-        frame1.setResizable(false);
-        frame1.setVisible(true);
-    }
-
+    private void initData(Fighter player, Fighter npc) {
+    	playerItemModel.clear();
+    	npcItemModel.clear();
+    	playerbackpack = player.getBackpack();
+    	npcbackpack = npc.getBackpack();
+    	for(BaseItem playeritem : playerbackpack){
+    		playerItemModel.addElement(playeritem.getId());
+    	}
+    	
+    	for(BaseItem npcitem : npcbackpack){
+    		npcItemModel.addElement(npcitem.getId());
+    	}
+    	
+	}
+    
     /**
      * Constructor
      */
-    BackpackTrade()
+    public BackpackTrade(Fighter player,Fighter npc)
     {
         super();
         setTitle("Trade");
         setModal(true);
-        setLayout(new BorderLayout());
+        setBounds(260, 260, 700, 400);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setResizable(false);
+        initData(player,npc);
         JPanel backPanel= new JPanel(new BorderLayout());
         JPanel playerPanel= new JPanel(new BorderLayout());
         JPanel playerTopPanel= new JPanel(new FlowLayout());
@@ -109,7 +109,7 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
         playerItemAttrPanel.add(nameL);
         playerItemAttrPanel.add(new JLabel(" Type   "));
         playerItemAttrPanel.add(typeL);
-        playerItemAttrPanel.add(new JLabel(" Attribute   "));
+        playerItemAttrPanel.add(new JLabel(" Attribute"));
         playerItemAttrPanel.add(attributeL);
         playerItemAttrPanel.add(new JLabel(" Value   "));
         playerItemAttrPanel.add(valueL);
@@ -119,13 +119,14 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
         playerItemAttrPanel.add(new JLabel("      "));
         playerItemAttrPanel.add(new JLabel("      "));
         playerItemAttrPanel.add(new JLabel("      "));
+        playerItemAttrPanel.setPreferredSize(new Dimension(160, 230));
         npcItemAttrPanel.add(new JLabel("      "));
         npcItemAttrPanel.add(new JLabel("      "));
         npcItemAttrPanel.add(new JLabel(" Name   "));
         npcItemAttrPanel.add(name2L);
         npcItemAttrPanel.add(new JLabel(" Type   "));
         npcItemAttrPanel.add(type2L);
-        npcItemAttrPanel.add(new JLabel(" Attribute   "));
+        npcItemAttrPanel.add(new JLabel(" Attribute"));
         npcItemAttrPanel.add(attribute2L);
         npcItemAttrPanel.add(new JLabel(" Value   "));
         npcItemAttrPanel.add(value2L);
@@ -135,7 +136,8 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
         npcItemAttrPanel.add(new JLabel("      "));
         npcItemAttrPanel.add(new JLabel("      "));
         npcItemAttrPanel.add(new JLabel("      "));
-        
+        npcItemAttrPanel.setPreferredSize(new Dimension(160, 230));
+
         nameL.setBorder(new LineBorder(Color.BLACK));
         typeL.setBorder(new LineBorder(Color.BLACK));
         attributeL.setBorder(new LineBorder(Color.BLACK));
@@ -156,25 +158,41 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
         buttonPanel.add(tradeBtn);
         buttonPanel.add(cancelBtn);
         buttonPanel.add(new JLabel("      "));
-
+        buttonPanel.setPreferredSize(new Dimension(200, 250));
         playerItemList.addListSelectionListener(this);
         playerItemList.setModel(playerItemModel);
         JScrollPane playerItemListPane = new JScrollPane(playerItemList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
         playerItemListPanel.add(playerItemListPane, BorderLayout.CENTER);
-        playerItemListPane.setPreferredSize(new Dimension(150,220));
+        playerItemListPane.setPreferredSize(new Dimension(120,230));
         
         npcItemList.addListSelectionListener(this);
         npcItemList.setModel(npcItemModel);
         JScrollPane npcItemListPane = new JScrollPane(npcItemList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
         npcItemListPanel.add(npcItemListPane, BorderLayout.CENTER);
-        npcItemListPane.setPreferredSize(new Dimension(150,220));
+        npcItemListPane.setPreferredSize(new Dimension(120,230));
 
-        focusManage();
-        
         tradeBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
-    			fighter.trade(fighter, selectedBackPackItem, selectedWorn);
-            }
+    			int indexplayer = playerItemList.getSelectedIndex();
+    			int indexnpc = npcItemList.getSelectedIndex();
+    			if(indexplayer>=0){
+    				if(indexnpc<0){
+    					indexnpc = Utils.getRadom(npcItemModel.size());
+    				}
+    				player.trade(playerbackpack.get(indexplayer), npc, npcbackpack.get(indexnpc));
+    				refreshListView();
+    			}
+    			else if(indexplayer<0){
+    				JOptionPane.showMessageDialog(null, "Must chose one item to exchange!!","NotSelected",JOptionPane.ERROR_MESSAGE);
+    			}
+    		}
+
+			private void refreshListView() {
+				initData(player, npc);
+				playerItemList.setModel(playerItemModel);
+				npcItemList.setModel(npcItemModel);
+				
+			}
         });    	
     	
 		cancelBtn.addActionListener(new ActionListener(){
@@ -185,23 +203,6 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
 		});        
     }
 
-    /**
-     * This method manage the actions of the window focus
-     */
-	private void focusManage() {        
-		this.addWindowFocusListener(new WindowFocusListener() {          	
-	        @Override  
-	        public void windowGainedFocus(WindowEvent e) {
-	            	
-	        }
-	
-	        @Override  
-	        public void windowLostFocus(WindowEvent e) {
-	            System.out.println("The CS window is not focused.");  
-	        }                
-		});  
-		
-	}
 
 	/**
 	 * 
@@ -209,13 +210,6 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
 	 */
 	public BackpackTrade getThisFrame() {
 		return this;
-	}
-	
-	/**
-	 * 
-	 */
-	public CharacterEditor getOwner(){
-		return owner;
 	}
 	
 	@Override
@@ -227,16 +221,22 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
 			int index = playerItemList.getSelectedIndex();
+			int indexnpc = npcItemList.getSelectedIndex();
 			if(index >= 0) {
 				System.out.println("list select:"+index);
-				BaseItem item = owner.getOwner().fighter.getBackpack().get(index);
-				
+				BaseItem item = playerbackpack.get(index);
+				nameL.setText(item.getId());
+				typeL.setText(item.getName());
 				attributeL.setText(item.getIncrease());
 				valueL.setText(Integer.toString(item.getBonus()));
-				selectedWorn = item.getName();
-				selectedBackPackItem = item;
-				
-				UtilityStorage.setItem(item);
+			}
+			if(indexnpc >= 0) {
+				System.out.println("list select:"+indexnpc);
+				BaseItem item = npcbackpack.get(indexnpc);
+				name2L.setText(item.getId());
+				type2L.setText(item.getName());
+				attribute2L.setText(item.getIncrease());
+				value2L.setText(Integer.toString(item.getBonus()));
 			}
 		}
         System.out.println("value changed");
