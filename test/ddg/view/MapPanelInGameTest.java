@@ -1,27 +1,19 @@
 package ddg.view;
 
-import ddg.Config;
-import ddg.campaign.entity.BaseCampaign;
-import ddg.map.entity.Map;
-import ddg.model.CampaignEditorModel;
-import ddg.model.Fighter;
-import ddg.model.FighterModel;
-import ddg.model.MapEditorModel;
-import ddg.utils.Utils;
-import ddg.utils.ValidationTool;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.nio.channels.FileChannel.MapMode;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import ddg.Config;
+import ddg.campaign.entity.BaseCampaign;
+import ddg.model.CampaignEditorModel;
+import ddg.model.Fighter;
+import ddg.model.FighterModel;
+import ddg.utils.Utils;
 
 /**
  * Test class for testing MapPanelInGame class

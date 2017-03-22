@@ -49,24 +49,6 @@ public class Map extends Observable implements Cloneable, java.io.Serializable{
 		
 	}
 
-//	public Map(char[][] loca, Cell[][] cells){
-//		this.height = 10;
-//		this.width = 10;
-//		this.location = new char[Config.MAP_SIZE][Config.MAP_SIZE];
-//		this.location = loca;
-//		this.cellsinthemap = new Cell[Config.MAP_SIZE][Config.MAP_SIZE];
-//		this.cellsinthemap = cells;
-//		
-//	}
-
-//	public Map(String name, char[][] location, Cell[][] cellsinthemap) {
-//		this.name = name;
-//		this.location = location;
-//		this.cellsinthemap = cellsinthemap;
-//		this.height = 10;
-//		this.width = 10;
-//	}
-	
 	/**
 	 * @param name	name of the map
 	 * @param row	the number of row of the map
@@ -86,6 +68,10 @@ public class Map extends Observable implements Cloneable, java.io.Serializable{
 		
 	}
 	
+	/**
+	 * Constructor create new Map from a exist map
+	 * @param map the old map your would like to use
+	 */
 	public Map(Map map) {
 		this.name = map.getName();
 		this.row = map.getRow();
