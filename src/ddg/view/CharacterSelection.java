@@ -27,7 +27,7 @@ import ddg.utils.Utils;
  */
 public class CharacterSelection extends JDialog implements ActionListener, ListSelectionListener{
 
-    private final JButton selectBtn = new JButton("      Select      ");
+    private final JButton selectBtn = new JButton("      OK      ");
     private final JButton cancelBtn = new JButton("    Cancel  ");
     private final JButton editBtn = new JButton("    Edit... ");
     private final JButton deleteBtn = new JButton("    Delete ");

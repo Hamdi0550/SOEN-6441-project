@@ -339,7 +339,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		} else if (level > 20){
 			baseAttackBonus = 50;
 		}
-		attackBonus = baseAttackBonus + getDamageBonus();
+		attackBonus = level + getDamageBonus();
 		return attackBonus;
 	}
 	

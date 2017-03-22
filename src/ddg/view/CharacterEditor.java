@@ -376,27 +376,13 @@ public class CharacterEditor extends JDialog implements ActionListener {
 				inventoryBtn.setEnabled(true);
 				updateAttributes(fighterExplorer.getFighter());
 				
-//				Fighter f1 = new Fighter();
-//				if (owner.fighter == null) {
-//					owner.fighter = f1;
-//				} else {
-//					f1 = owner.fighter;
-//				}
-//
-//				f1.setStrength(Dice.d46Roll());
-//				f1.setDexterity(Dice.d46Roll());
-//				f1.setConstitution(Dice.d46Roll());
-//				f1.setIntelligence(Dice.d46Roll());
-//				f1.setWisdom(Dice.d46Roll());
-//				f1.setCharisma(Dice.d46Roll());
-
-//				updateAttributes(owner.fighter);
 				System.out.println("I get the figher " + owner.fighterKeyName);
 			}
 		});
 
 		saveBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//TODO
 				System.out.println("save clicked");
 				Fighter fighter1 = new Fighter();
 				if (owner.fighter != null && owner.isCreatingNew == false) {
@@ -472,7 +458,7 @@ public class CharacterEditor extends JDialog implements ActionListener {
 
 						}
 					} catch (NumberFormatException ex) {
-						JOptionPane.showMessageDialog(null, "The level should be between 1 to 20.", "Warning",
+						JOptionPane.showMessageDialog(null, "The attibute values is not valid.", "Warning",
 								JOptionPane.WARNING_MESSAGE);
 					}
 				}
@@ -537,6 +523,7 @@ public class CharacterEditor extends JDialog implements ActionListener {
 
 		inventoryBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//TODO
 //				System.out.println(getThisFrame());
 				System.out.println(currentFighter);
 //				if (owner.fighter != null) {
