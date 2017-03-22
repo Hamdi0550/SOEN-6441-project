@@ -697,8 +697,11 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 						wearing = false;
 					}
 				}
-				if(!wearing)
+				if(!wearing) {
 					JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null, "The equipment has been move to backpack!", "Message", JOptionPane.WARNING_MESSAGE);
+				}
 //				for (BaseItem i: this.getWorn()){
 //					if (i.getName().equals(selectedWorn)){
 //						this.gainBonus(i.getIncrease(), i.getBonus(), "-");
