@@ -30,17 +30,17 @@ import ddg.view.component.ListEntryCellRenderer;
  * @date Mar 3, 2017
  */
 public class ItemSelection extends JDialog implements ActionListener, ListSelectionListener{
-    private final JButton selectBtn = new JButton("      Select      ");
-    private final JButton cancelBtn = new JButton("    Cancel  ");
+    private JButton selectBtn = new JButton("      Select      ");
+    private JButton cancelBtn = new JButton("    Cancel  ");
     
     private  ItemEditorModel itemListModel = new ItemEditorModel(); 
-    private final JList itemJList = new JList();
-    private final JScrollPane itemListPane = new JScrollPane(itemJList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
+    private JList itemJList = new JList();
+    private JScrollPane itemListPane = new JScrollPane(itemJList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
     
-    private final JLabel nameLabel = new JLabel(" Equipment name ");
-    private final JLabel typeLabel = new JLabel(" Equipment type ");
-    private final JLabel attributeLabel = new JLabel(" Attribute ");
-    private final JLabel bonusLabel = new JLabel(" Value ");
+    private JLabel nameLabel = new JLabel(" Equipment name ");
+    private JLabel typeLabel = new JLabel(" Equipment type ");
+    private JLabel attributeLabel = new JLabel(" Attribute ");
+    private JLabel bonusLabel = new JLabel(" Value ");
     
     private JDialog errorMessageWindow= new JDialog(this, "Item selection error", true);
 //	private JButton okBtn = new JButton("   OK   ");
@@ -216,6 +216,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 //                			owner.shieldBtn.setText("");
 //                			owner.shieldBtn.setIcon(Config.iconByType(owner.wearingType));
 //            			}		
+        				System.out.println(fighter);
             			System.out.println(tempItem.getId() + " " + tempItem.getName() + " " + tempItem.getIncrease() + " " + tempItem.getBonus());
             			dispose();
         			}

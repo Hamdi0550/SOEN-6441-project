@@ -9,10 +9,12 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 import com.google.gson.Gson;
+
+import ddg.model.Fighter;
 /**
  * This class include some static method which often used
  * 
- * @author Zhen Du
+ * @author Zhen Du, Fei Yu
  * @date Feb 5, 2017
  */
 public class Utils {
@@ -100,5 +102,33 @@ public class Utils {
 	public static int getRadom(int max) {
 		Random r = new Random();
 		return r.nextInt(max);
+	}
+
+	/**
+	 * This method displays the character's equipment information
+	 * @param fighter
+	 */
+	public static void displayFighterInfo(Fighter fighter) {
+		System.out.println("===========================");
+		System.out.println("fighter is at " + fighter);
+		System.out.println("name: " + fighter.getName());
+		System.out.println("backpack " + fighter.getBackpack().size() + " worn " + fighter.getWorn().size());
+		System.out.println("Strength = " + fighter.getTotalStrength());
+		System.out.print(fighter.isHelmetOn());
+		System.out.print(" ");
+		System.out.print(fighter.isArmorOn());
+		System.out.print(" ");
+		System.out.print(fighter.isBeltOn());
+		System.out.print(" ");
+		System.out.print(fighter.isRingOn());
+		System.out.print(" ");
+		System.out.print(fighter.isBootsOn());
+		System.out.print(" ");
+		System.out.print(fighter.isWeaponOn());
+		System.out.print(" ");
+		System.out.print(fighter.isShieldOn());
+		System.out.println(fighter.getBackpack());
+		System.out.println(fighter.getWorn());
+		System.out.println("===========================");		
 	}
 }

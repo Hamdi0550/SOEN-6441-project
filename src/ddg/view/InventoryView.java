@@ -43,28 +43,28 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
     private final DefaultListModel<String> backpackItemModel = new DefaultListModel<String>(); 
     protected final JList<String> backpackItemList = new JList<String>();
         
-    protected final JLabel nameTextF = new JLabel("   ");
-    protected final JLabel levelTextF = new JLabel("   ");
-    protected final JLabel typeTextF = new JLabel("   ");
-    protected final JLabel strengthTextF = new JLabel("   ");
-    protected final JLabel dexterityTextF = new JLabel("   ");
-    protected final JLabel constitutionTextF = new JLabel("   ");
-    protected final JLabel intelligenceTextF = new JLabel("   ");
-    protected final JLabel wisdomTextF = new JLabel("   ");
-    protected final JLabel charismaTextF = new JLabel("   ");
+    private JLabel nameTextF = new JLabel("   ");
+    private JLabel levelTextF = new JLabel("   ");
+    private JLabel typeTextF = new JLabel("   ");
+    private JLabel strengthTextF = new JLabel("   ");
+    private JLabel dexterityTextF = new JLabel("   ");
+    private JLabel constitutionTextF = new JLabel("   ");
+    private JLabel intelligenceTextF = new JLabel("   ");
+    private JLabel wisdomTextF = new JLabel("   ");
+    private JLabel charismaTextF = new JLabel("   ");
     
-    JLabel strengthModiferL = new JLabel("   ");
-    JLabel dexModiferL = new JLabel("   ");
-    JLabel conModiferL = new JLabel("   ");
-    JLabel intelliModiferL = new JLabel("   ");
-    JLabel wisModiferL = new JLabel("   ");
-    JLabel chaModiferL = new JLabel("   ");
-    JPanel backpackListPanel = new JPanel(new BorderLayout());
+    private JLabel strengthModiferL = new JLabel("   ");
+    private JLabel dexModiferL = new JLabel("   ");
+    private JLabel conModiferL = new JLabel("   ");
+    private JLabel intelliModiferL = new JLabel("   ");
+    private JLabel wisModiferL = new JLabel("   ");
+    private JLabel chaModiferL = new JLabel("   ");
+    private JPanel backpackListPanel = new JPanel(new BorderLayout());
     static JDialog dialog;
     
-    protected final JLabel equipmentTypeL = new JLabel("   ");
-    protected final JLabel attributeL = new JLabel("   ");
-    protected final JLabel valueL = new JLabel("   ");
+    private JLabel equipmentTypeL = new JLabel("   ");
+    private JLabel attributeL = new JLabel("   ");
+    private JLabel valueL = new JLabel("   ");
     
     public String selectedWorn = null;
     public BaseItem selectedBackPackItem = null;
@@ -371,16 +371,36 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 	        }
 		});
 	}
+	
+	
+	protected void updateView() {
+		updateView(fighter);
+	}
 
 	/**
-     * 
-     * @param fighter
-     */
+	 * This method call two method to update character information.
+	 * @param fighter The character selected
+	 */
+	protected void updateView(Fighter f) {
+		fighter = f;
+		backpackItemModel.clear();
+		for (BaseItem i: fighter.getBackpack()){
+			backpackItemModel.addElement(i.getId());
+		}		
+		updateAttributes(fighter);		
+		setEquipmentIcon(fighter);
+	}
+
+	/**
+	 * This method update attribute values of the character when his attributes change.
+	 * @param fighter The character selected
+	 */
 	protected void updateAttributes(Fighter fighter) {
 
 		nameTextF.setText(fighter.getName());
 		levelTextF.setText(Integer.toString(fighter.getLevel()));
 		typeTextF.setText(fighter.getType());
+		
 		strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
 		dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
 		constitutionTextF.setText(Integer.toString(fighter.getTotalConstitution()));
@@ -398,8 +418,8 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 	}
 	
 	/**
-	 * 
-	 * @param fighter
+	 * This method update the icon of the worn equipments.
+	 * @param fighter The character selected
 	 */
 	private void setEquipmentIcon(Fighter fighter) {
 		
@@ -464,33 +484,8 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 		dialog.addWindowFocusListener(new WindowFocusListener() {          	
 	        @Override  
 	        public void windowGainedFocus(WindowEvent e) { 
-	        	updateView();
-				
-		    	Fighter f2 = fighter;
-
-	    		System.out.println("===========================");
-	    		System.out.println(f2);
-	    		System.out.println(f2.getName());
-	    		System.out.println("backpack now  has " + f2.getBackpack().size());
-	    		System.out.println("worn now  has " +f2.getWorn().size());
-	    		System.out.print(f2.isHelmetOn());
-	    		System.out.print(" ");
-	    		System.out.print(f2.isArmorOn());
-	    		System.out.print(" ");
-	    		System.out.print(f2.isBeltOn());
-	    		System.out.print(" ");
-	    		System.out.print(f2.isRingOn()); 
-	    		System.out.print(" ");
-	    		System.out.print(f2.isBootsOn());
-	    		System.out.print(" ");
-	    		System.out.print(f2.isWeaponOn());
-	    		System.out.print(" ");
-	    		System.out.print(f2.isShieldOn());
-	    		System.out.print(" ");
-	    		System.out.print(f2.isShieldOn());
-	    		System.out.println(f2.getBackpack());
-	    		System.out.println(f2.getWorn());
-	    		System.out.println("===========================");
+	        	updateView();				
+	        	Utils.displayFighterInfo(fighter);
 	                        
 	            	
 	        }
@@ -503,25 +498,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 		});  
 		
 	}
-	
-	protected void updateView() {
-		updateView(fighter);
-	}
-	
-	protected void updateView(Fighter f) {
-		fighter = f;
-		backpackItemModel.clear();
-		for (BaseItem i: fighter.getBackpack()){
-			backpackItemModel.addElement(i.getId());
-		}
-		
-		strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
-		dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
-		
-		updateAttributes(fighter);
-		
-		setEquipmentIcon(fighter);
-	}
+
 
 	/**
 	 * 

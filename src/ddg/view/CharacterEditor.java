@@ -35,30 +35,30 @@ import javax.swing.border.*;
  */
 public class CharacterEditor extends JDialog implements ActionListener, Observer {
 
-	private final JButton saveBtn = new JButton("      Save      ");
-	private final JButton cancelBtn = new JButton("      Cancel      ");
-	private final JButton randomBtn = new JButton("      Random      ");
-	private final JButton inventoryBtn = new JButton(" Inventory ");
+	private JButton saveBtn = new JButton("      Save      ");
+	private JButton cancelBtn = new JButton("      Cancel      ");
+	private JButton randomBtn = new JButton("      Random      ");
+	private JButton inventoryBtn = new JButton(" Inventory ");
 
-	public final JButton helmetBtn = new JButton("  Helmet  ");
-	public final JButton shoulderBtn = new JButton("  Shoulder  ");
-	public final JButton beltBtn = new JButton("  Belt ");
-	public final JButton ringBtn = new JButton("  Ring  ");
-	public final JButton armorBtn = new JButton("  Armor  ");
-	public final JButton shieldBtn = new JButton("  Shield  ");
-	public final JButton bootsBtn = new JButton("    Boots  ");
-	public final JButton weaponBtn = new JButton("   Weapon  ");
+	private JButton helmetBtn = new JButton("  Helmet  ");
+	private JButton shoulderBtn = new JButton("  Shoulder  ");
+	private JButton beltBtn = new JButton("  Belt ");
+	private JButton ringBtn = new JButton("  Ring  ");
+	private JButton armorBtn = new JButton("  Armor  ");
+	private JButton shieldBtn = new JButton("  Shield  ");
+	private JButton bootsBtn = new JButton("    Boots  ");
+	private JButton weaponBtn = new JButton("   Weapon  ");
 
 	private final DefaultListModel<String> model = new DefaultListModel<String>();
 
-	private final JTextField nameTextF = new JTextField();
-	private final JTextField levelTextF = new JTextField();
-	private final JTextField strengthTextF = new JTextField();
-	private final JTextField dexterityTextF = new JTextField();
-	private final JTextField constitutionTextF = new JTextField();
-	private final JTextField intelligenceTextF = new JTextField();
-	private final JTextField wisdomTextF = new JTextField();
-	private final JTextField charismaTextF = new JTextField();
+	private JTextField nameTextF = new JTextField();
+	private JTextField levelTextF = new JTextField();
+	private JTextField strengthTextF = new JTextField();
+	private JTextField dexterityTextF = new JTextField();
+	private JTextField constitutionTextF = new JTextField();
+	private JTextField intelligenceTextF = new JTextField();
+	private JTextField wisdomTextF = new JTextField();
+	private JTextField charismaTextF = new JTextField();
 
 	private JComboBox<String> typeList = new JComboBox();
 
@@ -244,8 +244,11 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 		
 	}
 
-	private void updateView(Fighter f) {
-		fighter = f;		
+	/**
+	 * This method call two method to update character information.
+	 * @param fighter The character selected
+	 */
+	private void updateView(Fighter fighter) {
 		updateAttributes(fighter);		
 		setEquipmentIcon(fighter);
 	}
@@ -575,40 +578,15 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 			@Override
 			public void windowGainedFocus(WindowEvent e) {
 				System.out.println("The CE window is focused.");
-				if (owner.fighter != null && owner.isCreatingNew == false) {
 
-					nameTextF.setText(owner.fighter.getName());
-					levelTextF.setText(Integer.toString(owner.fighter.getLevel()));
-
-					updateAttributes(owner.fighter);
-					setEquipmentIcon(owner.fighter);
-					
-					System.out.println(owner.fighter.getWorn().size() + "==========" + owner.fighter.getWorn());
-					Fighter f2 = owner.fighter;
-
-					System.out.println("===========================");
-					System.out.println(f2);
-					System.out.println(f2.getName());
-					System.out.println("backpack now  has " + f2.getBackpack().size());
-					System.out.println("worn now  has " + f2.getWorn().size());
-					System.out.print(f2.isHelmetOn());
-					System.out.print(" ");
-					System.out.print(f2.isArmorOn());
-					System.out.print(" ");
-					System.out.print(f2.isBeltOn());
-					System.out.print(" ");
-					System.out.print(f2.isRingOn());
-					System.out.print(" ");
-					System.out.print(f2.isBootsOn());
-					System.out.print(" ");
-					System.out.print(f2.isWeaponOn());
-					System.out.print(" ");
-					System.out.print(f2.isShieldOn());
-					System.out.println(f2.getBackpack());
-					System.out.println(f2.getWorn());
-					System.out.println("===========================");
-
-				}
+//				if (fighter != null ) {
+					updateView(fighter);					
+					Utils.displayFighterInfo(fighter);
+//				}
+				
+//				if (owner.fighter != null && owner.isCreatingNew == false) {
+//				}
+				
 			}
 
 			@Override

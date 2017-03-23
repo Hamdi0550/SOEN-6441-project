@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.rmi.CORBA.Util;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.*;
@@ -27,39 +28,40 @@ import ddg.utils.Utils;
  */
 public class CharacterSelection extends JDialog implements ActionListener, ListSelectionListener{
 
-    private final JButton selectBtn = new JButton("      OK      ");
-    private final JButton cancelBtn = new JButton("    Cancel  ");
-    private final JButton editBtn = new JButton("    Edit... ");
-    private final JButton deleteBtn = new JButton("    Delete ");
+    private JButton selectBtn = new JButton("      OK      ");
+    private JButton cancelBtn = new JButton("    Cancel  ");
+    private JButton editBtn = new JButton("    Edit... ");
+    private JButton deleteBtn = new JButton("    Delete ");
     private JButton createBtn = new JButton("   Create...  ");
 
-    private final JButton helmetBtn = new JButton();
+    private JButton helmetBtn = new JButton();
     
     private final DefaultListModel<String> jlistModel = new DefaultListModel<String>(); 
     private final JList<String> characterList = new JList<String>(jlistModel);
     private final JScrollPane characterListPane = new JScrollPane(characterList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);     
     
-    private final JLabel nameTextF = new JLabel("   ");
-    private final JLabel levelTextF = new JLabel("   ");
-    private final JLabel strengthTextF = new JLabel("   ");
-    private final JLabel dexterityTextF = new JLabel("   ");
-    private final JLabel constitutionTextF = new JLabel("   ");
-    private final JLabel intelligenceTextF = new JLabel("   ");
-    private final JLabel wisdomTextF = new JLabel("   ");
-    private final JLabel charismaTextF = new JLabel("   ");
-    private final JLabel armorClassTextF = new JLabel("    ");
-    private final JLabel hitPointsTextF = new JLabel("    ");
-    private final JLabel attackBonusTextF = new JLabel("    ");
-    private final JLabel damageBonusTextF = new JLabel("   ");
+    private JLabel nameTextF = new JLabel("   ");
+    private JLabel levelTextF = new JLabel("   ");
+    private JLabel typeTextF = new JLabel("   ");
+    private JLabel strengthTextF = new JLabel("   ");
+    private JLabel dexterityTextF = new JLabel("   ");
+    private JLabel constitutionTextF = new JLabel("   ");
+    private JLabel intelligenceTextF = new JLabel("   ");
+    private JLabel wisdomTextF = new JLabel("   ");
+    private JLabel charismaTextF = new JLabel("   ");
+    private JLabel armorClassTextF = new JLabel("    ");
+    private JLabel hitPointsTextF = new JLabel("    ");
+    private JLabel attackBonusTextF = new JLabel("    ");
+    private JLabel damageBonusTextF = new JLabel("   ");
 
-    private final JLabel nameModiferL = new JLabel("   ");
-    private final JLabel levelModiferL = new JLabel("   ");
-    private final JLabel strengthModiferL = new JLabel("   ");
-    private final JLabel dexModiferL = new JLabel("   ");
-    private final JLabel conModiferL = new JLabel("   ");
-    private final JLabel intelliModiferL = new JLabel("   ");
-    private final JLabel wisModiferL = new JLabel("   ");
-    private final JLabel chaModiferL = new JLabel("   ");
+    private JLabel nameModiferL = new JLabel("   ");
+    private JLabel levelModiferL = new JLabel("   ");
+    private JLabel strengthModiferL = new JLabel("   ");
+    private JLabel dexModiferL = new JLabel("   ");
+    private JLabel conModiferL = new JLabel("   ");
+    private JLabel intelliModiferL = new JLabel("   ");
+    private JLabel wisModiferL = new JLabel("   ");
+    private JLabel chaModiferL = new JLabel("   ");
 
 
 	HashMap<String, Fighter> hm1 = new HashMap<>();
@@ -279,53 +281,39 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         	deleteBtn.setEnabled(true);
             String key = (String) characterList.getSelectedValue();
             fighter = hm1.get(key);
-            nameTextF.setText(fighter.getName());
-            levelTextF.setText(Integer.toString(fighter.getLevel()));
-            strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
-            dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
-    		constitutionTextF.setText(Integer.toString(fighter.getTotalConstitution()));
-    		intelligenceTextF.setText(Integer.toString(fighter.getTotalIntelligence()));
-    		wisdomTextF.setText(Integer.toString(fighter.getTotalWisdom()));
-    		charismaTextF.setText(Integer.toString(fighter.getTotalCharisma()));
-    		armorClassTextF.setText(Integer.toString(fighter.getTotalArmorClass()));
-    		hitPointsTextF.setText(Integer.toString(fighter.getHitPoints()));
-    		attackBonusTextF.setText(Integer.toString(fighter.getAttackBonus()));
-    		damageBonusTextF.setText(Integer.toString(fighter.getDamageBonus()));
-    		
-    		
-    		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalStrength())));
-    		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalDexterity())));
-    		conModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalConstitution())));
-    		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalIntelligence())));
-    		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalWisdom())));
-    		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalCharisma())));
-
-    		System.out.println("===========================");
-    		System.out.println(fighter);
-    		System.out.println(fighter.getName());
-    		System.out.println("backpack now  has " + fighter.getBackpack().size());
-    		System.out.println("worn now  has " +fighter.getWorn().size());
-    		System.out.print(fighter.isHelmetOn());
-    		System.out.print(" ");
-    		System.out.print(fighter.isArmorOn());
-    		System.out.print(" ");
-    		System.out.print(fighter.isBeltOn());
-    		System.out.print(" ");
-    		System.out.print(fighter.isRingOn()); 
-    		System.out.print(" ");
-    		System.out.print(fighter.isBootsOn());
-    		System.out.print(" ");
-    		System.out.print(fighter.isWeaponOn());
-    		System.out.print(" ");
-    		System.out.print(fighter.isShieldOn());
-    		System.out.println(fighter.getBackpack());
-    		System.out.println(fighter.getWorn());
-    		System.out.println("===========================");
+            
+            updateAttributes(fighter);
+    		Utils.displayFighterInfo(fighter);
         }
         System.out.println("value changed");
         
     }
 	
+	private void updateAttributes(Fighter fighter) {
+        nameTextF.setText(fighter.getName());
+        levelTextF.setText(Integer.toString(fighter.getLevel()));
+		typeTextF.setText(fighter.getType());
+        
+        strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
+        dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
+		constitutionTextF.setText(Integer.toString(fighter.getTotalConstitution()));
+		intelligenceTextF.setText(Integer.toString(fighter.getTotalIntelligence()));
+		wisdomTextF.setText(Integer.toString(fighter.getTotalWisdom()));
+		charismaTextF.setText(Integer.toString(fighter.getTotalCharisma()));
+		armorClassTextF.setText(Integer.toString(fighter.getTotalArmorClass()));
+		hitPointsTextF.setText(Integer.toString(fighter.getHitPoints()));
+		attackBonusTextF.setText(Integer.toString(fighter.getAttackBonus()));
+		damageBonusTextF.setText(Integer.toString(fighter.getDamageBonus()));
+		
+		
+		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalStrength())));
+		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalDexterity())));
+		conModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalConstitution())));
+		intelliModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalIntelligence())));
+		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalWisdom())));
+		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalCharisma())));		
+	}
+
 	/**
 	 * Return the object of this window
 	 * @return
