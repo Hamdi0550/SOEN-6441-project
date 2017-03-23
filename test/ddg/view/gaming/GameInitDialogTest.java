@@ -55,4 +55,11 @@ public class GameInitDialogTest {
 		gameModel = test.mapLoading(fighter, baseCampaign);
 		assertNotNull(gameModel.getFighter());
 	}
+	
+	@Test
+	public void testSelectTheCampaign(){
+		String g = Utils.readFile(Config.CAMPAIGN_FILE);
+		CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);
+		assertNotNull(campaignModel.getCampaignList());
+	}
 }
