@@ -49,6 +49,7 @@ public class Chest implements Cloneable, java.io.Serializable{
 	 */
 	public void becameEmpty(){
 		isempty = true;
+//		item=null;
 	}
 	
 	public Chest clone(){
