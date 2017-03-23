@@ -66,4 +66,20 @@ public class BackpackTradeTest {
 		assertNotNull(player);
 		assertNotNull(npc);
 	}
+
+	@Test
+	public void testRandomTrade() {
+		testExitsPlayer();
+		int pSize = player.getBackpack().size();
+		assertFalse(pSize <= 0);
+		
+		int size = npc.getBackpack().size();
+		assertFalse(size <= 0);
+		
+		int r = Utils.getRadom(npc.getBackpack().size());
+		BaseItem i = npc.getBackpack().get(r);
+		player.trade(player.getBackpack().get(0), npc, i);
+		
+		assertTrue(pSize == player.getBackpack().size());
+	}
 }
