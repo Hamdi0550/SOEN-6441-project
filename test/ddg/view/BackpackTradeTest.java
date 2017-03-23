@@ -108,8 +108,22 @@ public class BackpackTradeTest {
 		int size = npc.getBackpack().size();
 		assertFalse(size <= 0);
 		
-		player.trade(player.getBackpack().get(0), npc, null);
-		
+		player.trade(player.getBackpack().get(0), npc, null);	
 		assertTrue(pSize-1 == player.getBackpack().size());
+	}
+	
+	@Test
+	public void testPlayerNull() {
+		testExitsPlayer();
+		int pSize = player.getBackpack().size();
+		assertFalse(pSize <= 0);
+		
+		int size = npc.getBackpack().size();
+		assertFalse(size <= 0);
+		
+		BaseItem i = npc.getBackpack().get(0);
+		player.trade(null, npc, i);
+		
+		assertTrue(pSize+1 == player.getBackpack().size());
 	}
 }
