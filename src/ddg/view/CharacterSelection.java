@@ -75,7 +75,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     public static void createAndShowGUI() 
     {
     	CharacterSelection frame1 = new CharacterSelection(null, "Character Selection"); 
-    	frame1.setBounds(200, 200, 0, 0);
+    	frame1.setBounds(200, 15, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
         frame1.setVisible(true);

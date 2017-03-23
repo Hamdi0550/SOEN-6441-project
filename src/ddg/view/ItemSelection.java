@@ -59,7 +59,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     public static void createAndShowGUI(Fighter fighter, String wearingType) 
     {
     	ItemSelection frame1 = new ItemSelection(fighter, wearingType); 
-        frame1.setBounds(260, 260, 0, 0);
+        frame1.setBounds(260, 20, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         frame1.pack();
         frame1.setVisible(true);
@@ -106,7 +106,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         backPanel.add(attributesPanel, BorderLayout.CENTER);
         backPanel.add(backpackPanel, BorderLayout.EAST);
         backpackPanel.add(buttonsPanel, BorderLayout.SOUTH);
-        itemJList.setPreferredSize(new Dimension(200,560));
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
         attributesPanel.setPreferredSize(new Dimension(300,320));
         JLabel lb1 = new JLabel(" ");

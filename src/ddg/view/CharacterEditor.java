@@ -94,7 +94,7 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 	 */
 	public static void createAndShowGUI(Fighter fighter) {
 		CharacterEditor frame1 = new CharacterEditor(fighter);
-		frame1.setBounds(230, 230, 0, 0);
+		frame1.setBounds(230, 25, 0, 0);
 		frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		frame1.pack();
 		frame1.setVisible(true);
