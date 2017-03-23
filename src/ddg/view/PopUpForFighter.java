@@ -3,7 +3,6 @@ package ddg.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -14,35 +13,32 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
-import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
-import ddg.model.FighterEditorModel;
 import ddg.model.FighterModel;
-import ddg.model.ItemEditorModel;
 import ddg.ui.DDGameMain;
 import ddg.utils.Utils;
-import ddg.view.component.ListEntryCellRenderer;
-import javax.swing.JCheckBox;
 
+/**
+ * for popUp a Dialog supporting user chose character
+ * @author Bo
+ * @date Mar 23, 2017
+ * 
+ */
 public class PopUpForFighter extends JDialog implements ActionListener, ListSelectionListener{
     //define components in the frame
 
@@ -83,10 +79,16 @@ public class PopUpForFighter extends JDialog implements ActionListener, ListSele
 	public Fighter fighter = null;
 	private boolean isfriendly = false;
 	
+	/**
+	 * @return the character which user chose
+	 */
 	public Fighter getFighter() {
 		return fighter;
 	}
 
+	/**
+	 * @return true if this character is friendly, otherwise return false
+	 */
 	public boolean getIsfriendly() {
 		return isfriendly;
 	}
@@ -96,12 +98,14 @@ public class PopUpForFighter extends JDialog implements ActionListener, ListSele
 	private DDGameMain owner = null;
 	private final JCheckBox checkboxfriendly = new JCheckBox(" isFriendly?");
 
+	/**
+	 * @param owner	the frame that own this dialog
+	 * @param title title for this dialog
+	 */
 	public PopUpForFighter(JFrame owner, String title)
     {
-        //build the frame with a title and define layout
         super(owner, title);
         this.owner = (DDGameMain)owner;
-//        setTitle("Select Character");
         setModal(true);
         getContentPane().setLayout(new BorderLayout());
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -114,28 +118,20 @@ public class PopUpForFighter extends JDialog implements ActionListener, ListSele
         ImageIcon icon = new ImageIcon("icon1.jpg");  
         icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth(),  
                 icon.getIconHeight(), Image.SCALE_DEFAULT)); 
-//        id = 2;
 
         getContentPane().add(backPanel, BorderLayout.NORTH);
         backPanel.add(characterPanel, BorderLayout.WEST);
         backPanel.add(attributesPanel, BorderLayout.CENTER);
         backPanel.add(backpackPanel, BorderLayout.EAST);
         backpackPanel.add(buttonsPanel, BorderLayout.SOUTH);
-//        backpackPanel.add(backpackListPanel, BorderLayout.CENTER);
         characterList.setPreferredSize(new Dimension(200,560));
         characterPanel.add(backpackListPanel, BorderLayout.CENTER);
         backpackListPanel.add(characterListPane, BorderLayout.CENTER);
-//        characterButtomPanel.add(removeBtn);
         helmetBtn.setIcon(icon);
         
         backpackListPanel.setPreferredSize(new Dimension(200,260));
-//        buttonsPanel.setPreferredSize(new Dimension(100,320));
-//        characterLeftPanel.setPreferredSize(new Dimension(60,320));
-//        characterRightPanel.setPreferredSize(new Dimension(60,320));
         attributesPanel.setPreferredSize(new Dimension(600,320));
-//        characterImagePanel.setPreferredSize(new Dimension(350,320));
 
-//        characterImagePanel.setPreferredSize(new Dimension(350,320));
         JLabel lb1 = new JLabel(" ");
         lb1.setBorder(new LineBorder(Color.BLACK));
         strengthModiferL.setBorder(new LineBorder(Color.BLACK));
@@ -241,14 +237,6 @@ public class PopUpForFighter extends JDialog implements ActionListener, ListSele
         System.out.println("value changed");
     }
 	
-	public PopUpForFighter getThisFrame(){
-		return this;
-	}
-	
-	public int getID(){
-		return id;
-	}
-           
     public void focusManage() {
         // TODO Auto-generated constructor stub  
         this.addWindowFocusListener(new WindowFocusListener() {  
