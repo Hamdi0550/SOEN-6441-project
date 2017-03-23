@@ -774,7 +774,11 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 				setGainedCharisma(gainedCharisma + bonus);
 			} else if (increase.equals(Ability.ARMOR_CLASS)){
 				setGainedArmorClass(gainedArmorClass + bonus);
-			}			
+			} else if (increase.equals(Ability.ATTACK_BONUS)){
+				setGainedAttackBonus(gainedAttackBonus + bonus);
+			} else if (increase.equals(Ability.DAMAGE_BONUS)){
+				setGainedDamageBonus(gainedDamageBonus + bonus);
+			}					
 		} else if (string.equals("-")){
 			if (increase.equals(Ability.STRENGTH)){
 				setGainedStrength(gainedStrength - bonus);
@@ -790,7 +794,11 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 				setGainedCharisma(gainedCharisma - bonus);
 			} else if (increase.equals(Ability.ARMOR_CLASS)){
 				setGainedArmorClass(gainedArmorClass - bonus);
-			}			
+			} else if (increase.equals(Ability.ATTACK_BONUS)){
+				setGainedAttackBonus(gainedAttackBonus - bonus);
+			} else if (increase.equals(Ability.DAMAGE_BONUS)){
+				setGainedDamageBonus(gainedDamageBonus - bonus);
+			}		
 		}else if(string.equals("=")){
 			if (increase.equals(Ability.STRENGTH)){
 				setGainedStrength(bonus);
@@ -806,7 +814,11 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 				setGainedCharisma(bonus);
 			} else if (increase.equals(Ability.ARMOR_CLASS)){
 				setGainedArmorClass(bonus);
-			}	
+			} else if (increase.equals(Ability.ATTACK_BONUS)){
+				setGainedAttackBonus(bonus);
+			} else if (increase.equals(Ability.DAMAGE_BONUS)){
+				setGainedDamageBonus(bonus);
+			}
 		}
 	}	
 	
