@@ -61,12 +61,18 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 
 	private JComboBox<String> typeList = new JComboBox();
 
+	private JLabel typeL = new JLabel();
 	private JLabel strengthL = new JLabel();
 	private JLabel dexterityL = new JLabel();
 	private JLabel constitutionL = new JLabel();
 	private JLabel intelligenceL = new JLabel();
 	private JLabel wisdomL = new JLabel();
 	private JLabel charismaL = new JLabel();
+    private JLabel armorClassL = new JLabel("    ");
+    private JLabel hitPointsL = new JLabel("    ");
+    private JLabel attackBonusL = new JLabel("    ");
+    private JLabel damageBonusL = new JLabel("   ");
+	
 	private JLabel strengthModiferL = new JLabel();
 	private JLabel dexModiferL = new JLabel();
 	private JLabel conModiferL = new JLabel();
@@ -82,21 +88,21 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 	private FighterBuilder fb = new BullyFighterBuilder();
 	private Fighter fighter = new Fighter();
 
-	/**
-	 * This method build frame of the Character Selection Window
-	 * @param ownerFrame the object object get from owner window
-	 */
-	public static void createAndShowGUI(CharacterSelection ownerFrame) {
-		owner = (CharacterSelection) ownerFrame;
-
-		System.out.println("========" + owner);
-		CharacterEditor frame1 = new CharacterEditor();
-		frame1.setBounds(230, 230, 0, 0);
-		frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		frame1.pack();
-		frame1.setVisible(true);
-
-	}
+//	/**
+//	 * This method build frame of the Character Selection Window
+//	 * @param ownerFrame the object object get from owner window
+//	 */
+//	public static void createAndShowGUI(CharacterSelection ownerFrame) {
+//		owner = (CharacterSelection) ownerFrame;
+//
+//		System.out.println("========" + owner);
+//		CharacterEditor frame1 = new CharacterEditor();
+//		frame1.setBounds(230, 230, 0, 0);
+//		frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//		frame1.pack();
+//		frame1.setVisible(true);
+//
+//	}
 
 	/**
 	 * This method build frame of the Character Selection Window
@@ -138,8 +144,8 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 		setLayout(new BorderLayout());
 		JPanel backPanel = new JPanel(new BorderLayout());
 		JPanel characterPanel = new JPanel(new BorderLayout());
-		JPanel attributesPanel = new JPanel(new GridLayout(10, 4, 5, 5));
-		JPanel buttonsPanel = new JPanel(new GridLayout(10, 1, 5, 5));
+		JPanel attributesPanel = new JPanel(new GridLayout(15, 4, 5, 5));
+		JPanel buttonsPanel = new JPanel(new GridLayout(15, 1, 5, 5));
 
 		JPanel characterLeftPanel = new JPanel(new GridLayout(5, 1, 5, 5));
 		JPanel characterRightPanel = new JPanel(new GridLayout(5, 1, 5, 5));
@@ -160,11 +166,11 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 		characterRightPanel.add(shieldBtn);
 		characterImagePanel.setBounds(0, 0, 500, 500);
 		characterImagePanel.add(new JLabel("                                                                 "));
-		buttonsPanel.setPreferredSize(new Dimension(100, 320));
-		characterLeftPanel.setPreferredSize(new Dimension(100, 320));
-		characterRightPanel.setPreferredSize(new Dimension(100, 320));
-		attributesPanel.setPreferredSize(new Dimension(360, 320));
-		characterImagePanel.setPreferredSize(new Dimension(230, 320));
+		buttonsPanel.setPreferredSize(new Dimension(100, 450));
+		characterLeftPanel.setPreferredSize(new Dimension(100, 450));
+		characterRightPanel.setPreferredSize(new Dimension(100, 450));
+		attributesPanel.setPreferredSize(new Dimension(400, 450));
+		characterImagePanel.setPreferredSize(new Dimension(230, 450));
 
 		strengthModiferL.setBorder(new LineBorder(Color.BLACK));
 		dexModiferL.setBorder(new LineBorder(Color.BLACK));
@@ -178,13 +184,26 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 		intelligenceL.setBorder(new LineBorder(Color.BLACK));
 		wisdomL.setBorder(new LineBorder(Color.BLACK));
 		charismaL.setBorder(new LineBorder(Color.BLACK));
+        armorClassL.setBorder(new LineBorder(Color.BLACK));
+        hitPointsL.setBorder(new LineBorder(Color.BLACK));
+        attackBonusL.setBorder(new LineBorder(Color.BLACK));
+        damageBonusL.setBorder(new LineBorder(Color.BLACK));
 
 		attributesPanel.add(new JLabel(" Name "));
 		attributesPanel.add(nameTextF);
 		attributesPanel.add(new JLabel("     "));
 		attributesPanel.add(new JLabel("     "));
-		attributesPanel.add(new JLabel(" Type "));
-		attributesPanel.add(typeList);
+		attributesPanel.add(new JLabel(" Type "));		
+		
+		if (fighter == null){
+			attributesPanel.add(typeList);
+		} else {
+			nameTextF.setEditable(false);
+			nameTextF.setText(fighter.getName());
+			attributesPanel.add(typeL);
+			typeL.setText(fighter.getType());	
+			levelTextF.setText(Integer.toString(fighter.getLevel()));
+		}
 		attributesPanel.add(new JLabel("     "));
 		attributesPanel.add(new JLabel("     "));
 		attributesPanel.add(new JLabel(" Level "));
@@ -219,10 +238,30 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 		attributesPanel.add(charismaTextF);
 		attributesPanel.add(charismaL);
 		attributesPanel.add(chaModiferL);
+        attributesPanel.add(new JLabel(" Hitpoints "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(hitPointsL);
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel(" Attack Bonus "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(attackBonusL);
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel(" Damage Bonus "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(damageBonusL);
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel(" Armor Class "));
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(armorClassL);
+        attributesPanel.add(new JLabel("      "));
 //		if (owner.isCreatingNew == false) {
 //			nameTextF.setEditable(false);
 //		}
 
+		buttonsPanel.add(new JLabel("    "));
+		buttonsPanel.add(new JLabel("    "));
+		buttonsPanel.add(new JLabel("    "));
+		buttonsPanel.add(new JLabel("    "));
 		buttonsPanel.add(new JLabel("    "));
 		buttonsPanel.add(new JLabel("    "));
 		buttonsPanel.add(new JLabel("    "));
@@ -293,19 +332,37 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 	}
 
 	/**
+	 * This method update information of the character when his information change.
+	 * @param fighter The character selected
+	 */
+	protected void updateInformation(Fighter fighter) {
+		nameTextF.setText(fighter.getName());
+		levelTextF.setText(Integer.toString(fighter.getLevel()));
+		updateAttributes(fighter);
+	}
+
+	/**
 	 * This method update attribute values of the character when his attributes change.
 	 * @param fighter The character selected
 	 */
 	protected void updateAttributes(Fighter fighter) {
-		nameTextF.setText(fighter.getName());
-		levelTextF.setText(Integer.toString(fighter.getLevel()));
 
-		strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
-		dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
-		constitutionTextF.setText(Integer.toString(fighter.getTotalConstitution()));
-		intelligenceTextF.setText(Integer.toString(fighter.getTotalIntelligence()));
-		wisdomTextF.setText(Integer.toString(fighter.getTotalWisdom()));
-		charismaTextF.setText(Integer.toString(fighter.getTotalCharisma()));
+		strengthTextF.setText(Integer.toString(fighter.getStrength()));
+		dexterityTextF.setText(Integer.toString(fighter.getDexterity()));
+		constitutionTextF.setText(Integer.toString(fighter.getConstitution()));
+		intelligenceTextF.setText(Integer.toString(fighter.getIntelligence()));
+		wisdomTextF.setText(Integer.toString(fighter.getWisdom()));
+		charismaTextF.setText(Integer.toString(fighter.getCharisma()));
+
+		strengthL.setText(Integer.toString(fighter.getTotalStrength()));
+		dexterityL.setText(Integer.toString(fighter.getTotalDexterity()));
+		constitutionL.setText(Integer.toString(fighter.getTotalConstitution()));
+		intelligenceL.setText(Integer.toString(fighter.getTotalIntelligence()));
+		wisdomL.setText(Integer.toString(fighter.getTotalWisdom()));
+		charismaL.setText(Integer.toString(fighter.getTotalCharisma()));
+		armorClassL.setText(Integer.toString(fighter.getTotalArmorClass()));
+		attackBonusL.setText(Integer.toString(fighter.getAttackBonus()));
+		damageBonusL.setText(Integer.toString(fighter.getDamageBonus()));
 		
 		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalStrength())));
 		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalDexterity())));
@@ -420,26 +477,50 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 			public void actionPerformed(ActionEvent e) {
 				//TODO
 //				fighterExplorer.constructFighter();
-				if (fighterExplorer.getFighter() == null){
-					fighterExplorer.constructFighter();
-				} else {
-					fighterExplorer.constructFighter(fighterExplorer.getFighter());
-				}
-				System.out.println(fighterExplorer.getFighter());
-				fighter = fighterExplorer.getFighter();
-				inventoryBtn.setEnabled(true);
+				if (fighter == null){
+					if (fighterExplorer.getFighter() == null){
+						fighterExplorer.constructFighter();
+					} else {
+						fighterExplorer.constructFighter(fighterExplorer.getFighter());
+					}
+					System.out.println(fighterExplorer.getFighter());
+					fighter = fighterExplorer.getFighter();
+					inventoryBtn.setEnabled(true);
 
-				helmetBtn.setEnabled(true);
-				beltBtn.setEnabled(true);
-				ringBtn.setEnabled(true);
-				armorBtn.setEnabled(true);
-				shieldBtn.setEnabled(true);
-				bootsBtn.setEnabled(true);
-				weaponBtn.setEnabled(true);
+					helmetBtn.setEnabled(true);
+					beltBtn.setEnabled(true);
+					ringBtn.setEnabled(true);
+					armorBtn.setEnabled(true);
+					shieldBtn.setEnabled(true);
+					bootsBtn.setEnabled(true);
+					weaponBtn.setEnabled(true);
+					
+					updateAttributes(fighterExplorer.getFighter());
+				} else {
+					if (fighter.getType().equals(Config.BULLY)){
+						fb = new BullyFighterBuilder();
+						fighterExplorer.setBuilder(fb);
+						fb.setFighter(fighter);
+						fighterExplorer.constructFighter(fighterExplorer.getFighter());
+					} else if (fighter.getType().equals(Config.NIMBLE)){
+						fb = new NimbleFighterBuilder();
+						fighterExplorer.setBuilder(fb);
+						fb.setFighter(fighter);
+						fighterExplorer.constructFighter(fighterExplorer.getFighter());		
+					} else if (fighter.getType().equals(Config.TANK)){
+						fb = new TankFighterBuilder();
+						fighterExplorer.setBuilder(fb);
+						fb.setFighter(fighter);
+						fighterExplorer.constructFighter(fighterExplorer.getFighter());				
+					} else {
+						fb = new BullyFighterBuilder();
+						fighterExplorer.setBuilder(fb);
+						fb.setFighter(fighter);
+						fighterExplorer.constructFighter(fighterExplorer.getFighter());				
+					}
+					updateAttributes(fighterExplorer.getFighter());
+				}
 				
-				updateAttributes(fighterExplorer.getFighter());
-				
-//				System.out.println("I get the figher " + owner.fighterKeyName);
 			}
 		});
 
@@ -448,10 +529,10 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 				//TODO
 				System.out.println("save clicked");
 				Fighter fighter1 = new Fighter();
-				if (owner.fighter != null && owner.isCreatingNew == false) {
-					System.out.println("&&&&&&&&&&&&&&&&&&&&&&&");
-					fighter1 = owner.fighter;
-				}
+//				if (owner.fighter != null && owner.isCreatingNew == false) {
+//					System.out.println("&&&&&&&&&&&&&&&&&&&&&&&");
+//					fighter1 = owner.fighter;
+//				}
 				if (nameTextF.getText().equals("")) {
 					JOptionPane.showMessageDialog(null, "The character must have a name.", "Warning",
 							JOptionPane.WARNING_MESSAGE);
@@ -467,20 +548,27 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 						} else {
 
 							System.out.println("nametextF is not null ");
-							fighter1.setName(nameTextF.getText());
-							fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
-							fighter1.setStrength(Integer.parseInt(strengthTextF.getText()) - fighter1.getGainedStrength());
-							fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()) - fighter1.getGainedDexterity());
-							fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()) - fighter1.getGainedConstitution());
-							fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()) - fighter1.getGainedIntelligence());
-							fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()) - fighter1.getGainedWisdom());
-							fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()) - fighter1.getGainedCharisma());
-							if (fighter1.getHitPoints() == 0) {
-								fighter1.setHitpoints(fighter1.getLevel()
-										* (Dice.d10Roll() + fighter1.getModifier(fighter1.getTotalConstitution())));
+							fighter.setName(nameTextF.getText());
+							fighter.setLevel(Integer.parseInt(levelTextF.getText()));
+							fighter.setStrength(Integer.parseInt(strengthTextF.getText()));
+							fighter.setDexterity(Integer.parseInt(dexterityTextF.getText()));
+							fighter.setConstitution(Integer.parseInt(constitutionTextF.getText()));
+							fighter.setIntelligence(Integer.parseInt(intelligenceTextF.getText()));
+							fighter.setWisdom(Integer.parseInt(wisdomTextF.getText()));
+							fighter.setCharisma(Integer.parseInt(charismaTextF.getText()));
+							
+//							fighter.setStrength(Integer.parseInt(strengthTextF.getText()) - fighter.getGainedStrength());
+//							fighter.setDexterity(Integer.parseInt(dexterityTextF.getText()) - fighter.getGainedDexterity());
+//							fighter.setConstitution(Integer.parseInt(constitutionTextF.getText()) - fighter.getGainedConstitution());
+//							fighter.setIntelligence(Integer.parseInt(intelligenceTextF.getText()) - fighter.getGainedIntelligence());
+//							fighter.setWisdom(Integer.parseInt(wisdomTextF.getText()) - fighter.getGainedWisdom());
+//							fighter.setCharisma(Integer.parseInt(charismaTextF.getText()) - fighter.getGainedCharisma());
+							if (fighter.getHitPoints() == 0) {
+								fighter.setHitpoints(fighter.getLevel()
+										* (Dice.d10Roll() + fighter.getModifier(fighter.getTotalConstitution())));
 							}
 							
-							Utils.saveFighter(fighter1);
+							Utils.saveFighter(fighter);
 							
 //							FighterModel fm = new FighterModel();
 //							String g = Utils.readFile(Config.CHARACTER_FILE);
@@ -516,8 +604,8 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 
 //							owner.hm1 = hm1;
 							dispose();
-							owner.setEnabled(true);
-							owner.setVisible(true);
+//							owner.setEnabled(true);
+//							owner.setVisible(true);
 
 						}
 					} catch (NumberFormatException ex) {

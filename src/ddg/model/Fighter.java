@@ -308,7 +308,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @return
 	 */
 	public int getTotalArmorClass(){
-		totalArmorClass = armorClass + gainedArmorClass;
+		totalArmorClass = getArmorClass() + gainedArmorClass;
 		return totalArmorClass;
 	}
 	
@@ -356,8 +356,8 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @return armorClass
 	 */
 	public int getArmorClass(){
-		armorClass = getDexterity() + getGainedDexterity() + 10;
-		return armorClass + gainedArmorClass;
+		armorClass = getTotalDexterity() + 10;
+		return armorClass;
 	}
 	
 	/**

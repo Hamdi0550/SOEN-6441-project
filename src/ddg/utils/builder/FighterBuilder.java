@@ -20,11 +20,21 @@ public abstract class FighterBuilder {
 	
 	/**
 	 * This method is to return the character that is built.
-	 * @return fighter
+	 * @return fighter The character object
 	 */
 	public Fighter getFighter() {
 		return fighter;
 	}
+		
+	/**
+	 * This method is to set the character that is built.
+	 * @param fighter The character object
+	 */
+	public void setFighter(Fighter fighter) {
+		this.fighter = fighter;
+	}
+
+
 
 	/**
 	 * This method creates an object of Fighter class

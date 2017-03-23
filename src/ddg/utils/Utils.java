@@ -149,27 +149,35 @@ public class Utils {
 		FighterModel fm = new FighterModel();
 		String g = Utils.readFile(Config.CHARACTER_FILE);
 		fm = Utils.fromJson(g, FighterModel.class);
-
-		HashMap<String, Fighter> hm1 = new HashMap<>();
+		Boolean isInFile = false;
+		HashMap<String, Fighter> hm = new HashMap<>();
 //		if (fm != null) {
 			System.out.println(fm);
 			try {
 				System.out.println("2   " + fm);
 				if (null != fm.getFighters()) {
-					hm1 = fm.getFighters();
-					Set<String> keySet1 = hm1.keySet();
+					hm = fm.getFighters();
+					Set<String> keySet1 = hm.keySet();
 					Iterator<String> it1 = keySet1.iterator();
 
 					while (it1.hasNext()) {
 						String keyName = it1.next();
 						if (keyName == fighter.getName()) {
 							JOptionPane.showMessageDialog(null, "There already exists a character with this name, please change a name.", "Warning",
-									JOptionPane.WARNING_MESSAGE);												
+									JOptionPane.WARNING_MESSAGE);	
+							isInFile = true;
 						}
 					}
+					if (isInFile == false){
+						hm.put(fighter.getName(), fighter);
+						fm.setFighters(hm);
+
+						String gSave = Utils.toJson(fm);
+						Utils.save2File(Config.CHARACTER_FILE, gSave);						
+					}
 				} else {
-					hm1.put(fighter.getName(), fighter);
-					fm.setFighters(hm1);
+					hm.put(fighter.getName(), fighter);
+					fm.setFighters(hm);
 
 					String gSave = Utils.toJson(fm);
 					Utils.save2File(Config.CHARACTER_FILE, gSave);					
@@ -185,10 +193,10 @@ public class Utils {
 	/**
 	 * This method is to read Fighter objects from the file and put them to a hashmap structure
 	 * @param jlistModel
-	 * @param hm The HashMap of character list
+	 * @param fighterHM The HashMap of character list
 	 * @return hm The HashMap of character list
 	 */
-	public static HashMap<String, Fighter> updateFighterList(DefaultListModel<String> jlistModel, HashMap<String, Fighter> hm) {
+	public static HashMap<String, Fighter> updateFighterList(DefaultListModel<String> jlistModel, HashMap<String, Fighter> fighterHM) {
         FighterModel fm = new FighterModel();
         
 		String g = Utils.readFile(Config.CHARACTER_FILE);
@@ -198,8 +206,8 @@ public class Utils {
     		try{
     			System.out.println("2"+fm);
         		if( null!=fm.getFighters() ){
-                    hm = fm.getFighters();
-                    Set<String> keySet1 = hm.keySet();
+                    fighterHM = fm.getFighters();
+                    Set<String> keySet1 = fighterHM.keySet();
                     Iterator<String> it1 = keySet1.iterator();
                     
                     while(it1.hasNext()){
@@ -212,7 +220,40 @@ public class Utils {
     			System.out.println("there is a NullPointerException");
     		}        			
 //		}
-		return hm;
+		return fighterHM;
 		
+	}
+
+	/**
+	 * This method is to delete a Fighter object from the hashmap and save the file.
+	 * @param fighterHM HashMap for Fighter objects
+	 * @param key Key of fighterHM
+	 * @param jlistModel 
+	 * @return fighterHM HashMap for Fighter objects
+	 */
+	public static HashMap<String, Fighter> deleteFighter(HashMap<String, Fighter> fighterHM, String key, DefaultListModel<String> jlistModel) {
+        FighterModel fm = new FighterModel();
+        
+        fighterHM.remove(key);
+		fm.setFighters(fighterHM);
+		
+		String gSave = Utils.toJson(fm);
+		Utils.save2File(Config.CHARACTER_FILE, gSave);
+		
+    	jlistModel.clear();
+		String g = Utils.readFile(Config.CHARACTER_FILE);
+		fm = Utils.fromJson(g, FighterModel.class);
+
+		if( null!=fm.getFighters() ){
+            fighterHM = fm.getFighters();
+            Set<String> keySet1 = fighterHM.keySet();
+            Iterator<String> it = keySet1.iterator();
+            
+            while(it.hasNext()){
+            	String keyName = it.next();
+                jlistModel.addElement(keyName);
+            }
+		}		
+		return fighterHM;
 	}
 }
