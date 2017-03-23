@@ -119,6 +119,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         chaModiferL.setBorder(new LineBorder(Color.BLACK));
         nameL.setBorder(new LineBorder(Color.BLACK));
         levelL.setBorder(new LineBorder(Color.BLACK));
+        typeL.setBorder(new LineBorder(Color.BLACK));
         strengthL.setBorder(new LineBorder(Color.BLACK));
         dexterityL.setBorder(new LineBorder(Color.BLACK));
         constitutionL.setBorder(new LineBorder(Color.BLACK));
@@ -140,6 +141,10 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Level "));
         attributesPanel.add(levelL);
+        attributesPanel.add(new JLabel("      "));
+        attributesPanel.add(new JLabel("     "));
+        attributesPanel.add(new JLabel(" Type "));
+        attributesPanel.add(typeL);
         attributesPanel.add(new JLabel("      "));
         attributesPanel.add(new JLabel("     "));
         attributesPanel.add(new JLabel(" Strength "));
