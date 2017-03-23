@@ -151,6 +151,8 @@ public class InventoryPanel extends InventoryView implements Observer, ActionLis
 			operation.setVisible(false);
 		}
 		attribute.setVisible(false);
+		selectedWorn = null;
+	    selectedBackPackItem = null;
 	}
 
 	@Override
