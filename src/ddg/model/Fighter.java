@@ -82,7 +82,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		this.strength = strength;
 		this.dexterity = dexterity;
 		hitPoints = (Dice.d10Roll() + getModifier(getTotalConstitution())) * this.level;
-		armorClass = this.dexterity + 0;		
+		armorClass = this.dexterity + 0;
 	}
 	
 	public void clearBackpack() {
@@ -811,14 +811,14 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		if(corpse.backpack.size() > 0){
 			for(BaseItem item: corpse.backpack){
 				this.backpack.add(item);
-				System.out.println("get a item from corpse backpack items" + item.getName());
+				System.out.println(item.getLevel()+"----get a item from corpse backpack items" + item.getName());
 			}
 			corpse.clearBackpack();
 		}
 		if(corpse.wornItems.size() > 0){
 			for(BaseItem item : corpse.wornItems){
 				this.backpack.add(item);
-				System.out.println("get a item from corpse worn items" + item.getName() );
+				System.out.println(item.getLevel()+"---get a item from corpse worn items" + item.getName() );
 			}
 			corpse.clearWornItems();
 		}
@@ -864,10 +864,19 @@ public class Fighter extends Observable implements Cloneable, Serializable{
     */
 	// scores values have to be changed
 	public void updateLevel(int targetLevel){
+		int basehitpoint = this.hitPoints/this.level;
 		if(targetLevel != level){
 			this.level = targetLevel;
+			this.hitPoints = basehitpoint * this.level;
 		}
-		System.out.println(level);
+		for(BaseItem item : this.backpack){
+			item.updateLevel(targetLevel);
+		}
+		
+		for(BaseItem item : this.wornItems){
+			item.updateLevel(targetLevel);
+			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "+");
+		}
 	}
 	
 	public Fighter clone(){
