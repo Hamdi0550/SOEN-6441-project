@@ -37,7 +37,7 @@ public class MapPanelInGameTest {
 		 FighterModel fighterModel = new FighterModel();
 		 String g = Utils.readFile(Config.CHARACTER_FILE);
 		 fighterModel = Utils.fromJson(g, FighterModel.class);
-		 player = fighterModel.getFighters().get("Tank");
+		 player = fighterModel.getFighters().get("Tank3");
 		
 		 g = Utils.readFile(Config.CAMPAIGN_FILE);
 		 CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);
