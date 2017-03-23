@@ -792,7 +792,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 				setGainedArmorClass(gainedArmorClass - bonus);
 			}			
 		}
-	}	
+	}
 	
 	/**
 	 * This method allows a character wear an item
