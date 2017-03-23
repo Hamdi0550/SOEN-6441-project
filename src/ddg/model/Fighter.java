@@ -791,22 +791,6 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 			} else if (increase.equals(Ability.ARMOR_CLASS)){
 				setGainedArmorClass(gainedArmorClass - bonus);
 			}			
-		}else if(string.equals("=")){
-			if (increase.equals(Ability.STRENGTH)){
-				setGainedStrength(bonus);
-			} else if (increase.equals(Ability.DEXTERITY)){
-				setGainedDexterity(bonus);
-			} else if (increase.equals(Ability.CONSTITUTION)){
-				setGainedConstitution(bonus);
-			} else if (increase.equals(Ability.INTELLIGENCE)){
-				setGainedIntelligence(bonus);
-			} else if (increase.equals(Ability.WISDOM)){
-				setGainedWisdom(bonus);
-			} else if (increase.equals(Ability.CHARISMA)){
-				setGainedCharisma(bonus);
-			} else if (increase.equals(Ability.ARMOR_CLASS)){
-				setGainedArmorClass(bonus);
-			}	
 		}
 	}	
 	
@@ -943,8 +927,9 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void updateLevel(int targetLevel){
 		
 		for(BaseItem item : this.wornItems){
+			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "-");
 			item.updateLevel(targetLevel);
-			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "=");
+			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "+");
 		}
 		
 		for(BaseItem item : this.backpack){
