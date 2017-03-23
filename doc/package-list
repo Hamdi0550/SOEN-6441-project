@@ -3,7 +3,10 @@ ddg.campaign.entity
 ddg.item.entity
 ddg.map.entity
 ddg.model
+ddg.model.gaming
 ddg.ui
 ddg.utils
+ddg.utils.builder
 ddg.view
 ddg.view.component
+ddg.view.gaming
