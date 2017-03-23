@@ -105,6 +105,11 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         dialog.setVisible(true);        
 		
 	}    
+	
+	/**
+	 * Constructor
+	 * @param fighter The current character
+	 */
 	InventoryView(Fighter fighter){
     	super();
 		this.fighter = fighter;
@@ -133,9 +138,6 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         JPanel attributesPanel= new JPanel(new GridLayout(11,4,5,5));
         JPanel backpackPanel = new JPanel(new BorderLayout());
         JPanel buttonsPanel= new JPanel(new GridLayout(5,1,5,5));
-//        ImageIcon icon = new ImageIcon("icon1.jpg");  
-//        icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth(),  
-//                icon.getIconHeight(), Image.SCALE_DEFAULT));         
 
         JPanel characterLeftPanel= new JPanel(new GridLayout(5,1,5,5));
         JPanel characterRightPanel= new JPanel(new GridLayout(5,1,5,5));
@@ -152,7 +154,6 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         characterPanel.add(characterRightPanel, BorderLayout.EAST);
         characterPanel.add(characterButtomPanel, BorderLayout.SOUTH);
         characterButtomPanel.add(removeBtn);
-//        helmetBtn.setIcon(icon);
         characterLeftPanel.add(helmetBtn);
         characterLeftPanel.add(armorBtn);
         characterLeftPanel.add(beltBtn);
@@ -355,7 +356,9 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 		});
 	}
 	
-	
+	/**
+	 * This method refresh the information displayed on the panel
+	 */
 	protected void updateView() {
 		updateView(fighter);
 	}
@@ -478,12 +481,12 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 		});  		
 	}
 	
-	/**
-	 * 
-	 */
-	public CharacterEditor getOwner(){
-		return owner;
-	}
+//	/**
+//	 * 
+//	 */
+//	public CharacterEditor getOwner(){
+//		return owner;
+//	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

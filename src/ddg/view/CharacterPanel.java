@@ -30,15 +30,6 @@ public class CharacterPanel extends JPanel implements Observer {
 	
 	private final JButton inventoryBtn = new JButton("Inventory");
 
-//	public final JButton helmetBtn = new JButton("  Helmet  ");
-//	public final JButton beltBtn = new JButton("  Belt ");
-//	public final JButton ringBtn = new JButton("  Ring  ");
-//	public final JButton armorBtn = new JButton("  Armor  ");
-//	public final JButton shieldBtn = new JButton("  Shield  ");
-//	public final JButton bootsBtn = new JButton("    Boots  ");
-//	public final JButton weaponBtn = new JButton("   Weapon  ");
-
-
 	public JLabel iconL = new JLabel();
 	private JLabel nameL = new JLabel();
 	private JLabel levelL = new JLabel();
@@ -56,26 +47,19 @@ public class CharacterPanel extends JPanel implements Observer {
 	private JLabel intelliModiferL = new JLabel();
 	private JLabel wisModiferL = new JLabel();
 	private JLabel chaModiferL = new JLabel();
-
-	private static CharacterSelection owner;
+	private JLabel armorClassL = new JLabel();
 	public BaseItem selectedItem = null;
-//	public String wearingType;
 	public Fighter fighter = null;
-	private MapPanelInGame owner1;
-	
-	public static void main(String[] args) {
-		createAndShowGUI(null);
-	}
+	private MapPanelInGame owner1;	
 
 	/**
-	 * 
+	 * This method create the window of character information
 	 * @param ownerFrame
 	 */
 	public static void createAndShowGUI(CharacterSelection ownerFrame) {
 		JFrame frame2 = new JFrame();
 		frame2.setLayout(new FlowLayout());
 		frame2.add(new CharacterPanel(null));
-//		frame2.setBounds(230, 230, 0, 0);
 		frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame2.pack();
 		frame2.setVisible(true);
@@ -83,16 +67,16 @@ public class CharacterPanel extends JPanel implements Observer {
 	}
 
 	/**
-	 * 
+	 * Constructor
+	 * @param mapPanelInGame The map for the current game
 	 */
 	CharacterPanel(MapPanelInGame mapPanelInGame) {
 		owner1 = mapPanelInGame;
 		setLayout(new BorderLayout());
 		JPanel backPanel = new JPanel(new BorderLayout());
-		JPanel attributesPanel = new JPanel(new GridLayout(11, 3, 5, 5));
+		JPanel attributesPanel = new JPanel(new GridLayout(12, 3, 5, 5));
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
-		JPanel iconPanel = new JPanel(new FlowLayout());
-		
+		JPanel iconPanel = new JPanel(new FlowLayout());		
 
 		add(backPanel, BorderLayout.NORTH);
 		backPanel.add(attributesPanel, BorderLayout.CENTER);
@@ -112,8 +96,8 @@ public class CharacterPanel extends JPanel implements Observer {
 		intelligenceL.setBorder(new LineBorder(Color.BLACK));
 		wisdomL.setBorder(new LineBorder(Color.BLACK));
 		charismaL.setBorder(new LineBorder(Color.BLACK));
+		armorClassL.setBorder(new LineBorder(Color.BLACK));
 
-//		iconL.setPreferredSize(new Dimension(50,50));
 		iconL.setIcon(Config.NPC_ICON);
 		iconPanel.add(iconL);
 		attributesPanel.add(new JLabel(" Name "));
@@ -149,37 +133,15 @@ public class CharacterPanel extends JPanel implements Observer {
 		attributesPanel.add(new JLabel(" Charisma "));
 		attributesPanel.add(charismaL);
 		attributesPanel.add(chaModiferL);
+		attributesPanel.add(new JLabel(" Armor Class "));
+		attributesPanel.add(armorClassL);
+		attributesPanel.add(new JLabel("      "));
 		
 		inventoryBtn.setPreferredSize(new Dimension(240, 40));
 		buttonsPanel.add(inventoryBtn);
-//		getOwnerInformation();
 		buttonsManage();
 
 	}
-
-	/**
-	 * This method refresh the character's information who is selected in
-	 * Character Selection window.
-	 */
-	private void getOwnerInformation() {
-		if (owner == null) {
-			System.out.println("No owner===============");
-		}
-		if (owner.isCreatingNew == false) {
-			System.out.println(owner.toString());
-//			setLabels(owner.fighter);
-//			setEquipmentIcon(owner.fighter);
-		}
-	}
-
-//	/**
-//	 * 
-//	 * @param fighter
-//	 */
-//	private void setLabels(Fighter fighter) {
-//		updateAttributes(fighter);
-//
-//	}
 
 	/**
 	 * This method refresh attribute values of a character during a game.
@@ -196,6 +158,7 @@ public class CharacterPanel extends JPanel implements Observer {
 		intelligenceL.setText(Integer.toString(fighter.getTotalIntelligence()));
 		wisdomL.setText(Integer.toString(fighter.getTotalWisdom()));
 		charismaL.setText(Integer.toString(fighter.getTotalCharisma()));
+		armorClassL.setText(Integer.toString(fighter.getTotalArmorClass()));
 		
 		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalStrength())));
 		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalDexterity())));
@@ -206,59 +169,16 @@ public class CharacterPanel extends JPanel implements Observer {
 
 	}
 
-	public void actionPerformed(ActionEvent e) {
-
-	}
-
 	/**
 	 * This method defines actions of different buttons in this frame.
 	 */
 	private void buttonsManage() {
 		inventoryBtn.addActionListener(owner1);
-//		inventoryBtn.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				System.out.println("opening 1 " + fighter);
-//				System.out.println("opening 2 " + owner1);
-////				System.out.println(getThisFrame());
-//				if ( owner1.getSelectedCharacter() != null) {
-//					System.out.println("opening");
-//					InventoryView.createAndShowGUI(owner1.getSelectedCharacter());
-//				}
-//			}
-//		});
-
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		updateAttributes((Fighter)arg);
 	}
-
-//	/**
-//	 *  
-//	 * This internal class is to draw a background picture in the frame
-//	 * 
-//	 * @author Fei Yu
-//	 * @date Mar 3, 2017
-//	 */
-//	class EmbeddedPanel extends JPanel {
-//
-//		private Image img;
-//
-//		public EmbeddedPanel() {
-//			super();
-//			setOpaque(true);
-//
-//			img = Toolkit.getDefaultToolkit().getImage("example.jpg");
-//		}
-//
-//		/**
-//		 * This method is override method to draw a picture
-//		 */
-//		public void paintComponent(Graphics g) {
-//			super.paintComponent(g);
-//			g.drawImage(img, 0, 0, 230, 320, this);
-//		}
-//	}
 
 }

@@ -69,6 +69,10 @@ public class BaseItem implements Item, java.io.Serializable{
 		this.ability = getAbility(name);
 	}
 	
+	/**
+	 * This method is to get bonus of an item by its level
+	 * @return the according attribute
+	 */
 	private int getBonusByLevel() {
 		if(this.level <= 0)
 			return 0;

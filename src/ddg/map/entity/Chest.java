@@ -14,6 +14,9 @@ public class Chest implements Cloneable, java.io.Serializable{
 	private BaseItem item;
 	private boolean isempty;
 	
+	/**
+	 * Constructor
+	 */
 	public Chest(){
 		item = null;
 		isempty = true;
@@ -52,14 +55,17 @@ public class Chest implements Cloneable, java.io.Serializable{
 //		item=null;
 	}
 	
+	/**
+	 * This method clones a chest and return the new one
+	 * @return newchest The new chest
+	 */
 	public Chest clone(){
 		Chest newchest = null;
 		try{
 			newchest=(Chest)super.clone();
 		}catch(Exception e ){
 			e.printStackTrace();
-		}
-		
+		}		
 		return newchest;
 	}
 }
