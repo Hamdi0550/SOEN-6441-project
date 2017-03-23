@@ -35,7 +35,7 @@ public class MapPanelInGameTest {
 	@Before
 	public void testBefore() throws Exception {
 		 FighterModel fighterModel = new FighterModel();
-		 String g = Utils.readFile(Config.CHARACTOR_FILE);
+		 String g = Utils.readFile(Config.CHARACTER_FILE);
 		 fighterModel = Utils.fromJson(g, FighterModel.class);
 		 player = fighterModel.getFighters().get("Tank");
 		

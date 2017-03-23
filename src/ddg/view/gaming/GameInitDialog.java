@@ -111,7 +111,7 @@ public class GameInitDialog extends JDialog implements ActionListener, DItemList
 	 */
 	private void initData() {
 		fighterModel = new FighterModel();
-		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		String g = Utils.readFile(Config.CHARACTER_FILE);
 		fighterModel = Utils.fromJson(g, FighterModel.class);
 		if (fighterModel != null) {
 			for(String i : this.fighterModel.getFighterList()) {

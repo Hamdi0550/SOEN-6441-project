@@ -36,7 +36,7 @@ public class CharactorEditorTest {
 	 */
 	@Before
 	public void setUpBefore() {
-		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		String g = Utils.readFile(Config.CHARACTER_FILE);
 		FighterModel fighterModel = Utils.fromJson(g, FighterModel.class);
 		if(fighterModel != null){        			
     		try{

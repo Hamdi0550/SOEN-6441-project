@@ -77,7 +77,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     }
     
     /**
-     * 
+     * This method build frame of the Character Selection Window
      */
     public static void createAndShowGUI() 
     {
@@ -207,9 +207,10 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     	createBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			isCreatingNew = true;
-    			CharacterSelection rootframe = (CharacterSelection) SwingUtilities.getWindowAncestor(createBtn);
-    			CharacterEditor.createAndShowGUI(rootframe);
-    			setEnabled(false);
+//    			CharacterSelection rootframe = (CharacterSelection) SwingUtilities.getWindowAncestor(createBtn);
+//    			CharacterEditor.createAndShowGUI(rootframe);
+    			CharacterEditor.createAndShowGUI(fighter);
+//    			setEnabled(false);
             }
         });
     	
@@ -241,11 +242,11 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         		fm.setFighters(hm1);
         		
     			String gSave = Utils.toJson(fm);
-    			Utils.save2File(Config.CHARACTOR_FILE, gSave);
+    			Utils.save2File(Config.CHARACTER_FILE, gSave);
 
     			
             	jlistModel.clear();
-        		String g = Utils.readFile(Config.CHARACTOR_FILE);
+        		String g = Utils.readFile(Config.CHARACTER_FILE);
         		fm = Utils.fromJson(g, FighterModel.class);
 
         		if( null!=fm.getFighters() ){
@@ -333,7 +334,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
                 System.out.println("The CS window is focused.");  
                 FighterModel fm = new FighterModel();
                 
-        		String g = Utils.readFile(Config.CHARACTOR_FILE);
+        		String g = Utils.readFile(Config.CHARACTER_FILE);
         		fm = Utils.fromJson(g, FighterModel.class);
         		if(fm != null){        			
             		System.out.println(fm);

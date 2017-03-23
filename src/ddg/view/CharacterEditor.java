@@ -41,7 +41,6 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 	private JButton inventoryBtn = new JButton(" Inventory ");
 
 	private JButton helmetBtn = new JButton("  Helmet  ");
-	private JButton shoulderBtn = new JButton("  Shoulder  ");
 	private JButton beltBtn = new JButton("  Belt ");
 	private JButton ringBtn = new JButton("  Ring  ");
 	private JButton armorBtn = new JButton("  Armor  ");
@@ -84,8 +83,8 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 	private Fighter fighter = new Fighter();
 
 	/**
-	 * Constructor
-	 * @param ownerFrame
+	 * This method build frame of the Character Selection Window
+	 * @param ownerFrame the object object get from owner window
 	 */
 	public static void createAndShowGUI(CharacterSelection ownerFrame) {
 		owner = (CharacterSelection) ownerFrame;
@@ -100,10 +99,40 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 	}
 
 	/**
+	 * This method build frame of the Character Selection Window
+	 * @param fighter the Fighter object get from owner window
+	 */
+	public static void createAndShowGUI(Fighter fighter) {
+		CharacterEditor frame1 = new CharacterEditor(fighter);
+		frame1.setBounds(230, 230, 0, 0);
+		frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		frame1.pack();
+		frame1.setVisible(true);
+		
+	}
+	
+	/**
+	 * Constructor
+	 * @param fighter the Fighter object get from owner window
+	 */
+	public CharacterEditor(Fighter fighter) {
+    	super();
+		this.fighter = fighter;
+		initialization();
+	}
+
+	/**
 	 * Constructor
 	 */
-	CharacterEditor() {
-		super();
+	public CharacterEditor() {
+		super();		
+		initialization();
+	}
+
+	/**
+	 * This method builds the window.
+	 */
+	private void initialization() {
 		setTitle("Character Editor");
 		setModal(true);
 		setLayout(new BorderLayout());
@@ -190,9 +219,9 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 		attributesPanel.add(charismaTextF);
 		attributesPanel.add(charismaL);
 		attributesPanel.add(chaModiferL);
-		if (owner.isCreatingNew == false) {
-			nameTextF.setEditable(false);
-		}
+//		if (owner.isCreatingNew == false) {
+//			nameTextF.setEditable(false);
+//		}
 
 		buttonsPanel.add(new JLabel("    "));
 		buttonsPanel.add(new JLabel("    "));
@@ -214,11 +243,21 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 		typeList.addItem(Config.TANK);
 		typeList.addActionListener(this);
 		System.out.println(typeList.getSelectedItem());
-		getOwnerInformation();
+//		getOwnerInformation();
 		focusManage();
 		buttonsManage();
 
 		fighterExplorer.setBuilder(fb);
+		
+		if (fighter == null){			
+			helmetBtn.setEnabled(false);
+			beltBtn.setEnabled(false);
+			ringBtn.setEnabled(false);
+			armorBtn.setEnabled(false);
+			shieldBtn.setEnabled(false);
+			bootsBtn.setEnabled(false);
+			weaponBtn.setEnabled(false);
+		}
 
 	}
 
@@ -226,17 +265,17 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 	 * This method refresh the character's information who is selected in
 	 * Character Selection window.
 	 */
-	private void getOwnerInformation() {
-		if (owner == null) {
-			System.out.println("No owner===============");
-		}
-		if (owner.isCreatingNew == false) {
-			System.out.println(owner.toString());
-			updateAttributes(owner.fighter);
-			setEquipmentIcon(owner.fighter);
-
-		}
-	}
+//	private void getOwnerInformation() {
+//		if (owner == null) {
+//			System.out.println("No owner===============");
+//		}
+//		if (owner.isCreatingNew == false) {
+//			System.out.println(owner.toString());
+//			updateAttributes(owner.fighter);
+//			setEquipmentIcon(owner.fighter);
+//
+//		}
+//	}
 	
 	@Override
 	public void update(Observable arg0, Object arg1) {
@@ -361,7 +400,7 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 				break;
 			default:
 				System.out.println("Type error!");
-			}
+			}			
 		}
 
 	}
@@ -389,9 +428,18 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 				System.out.println(fighterExplorer.getFighter());
 				fighter = fighterExplorer.getFighter();
 				inventoryBtn.setEnabled(true);
+
+				helmetBtn.setEnabled(true);
+				beltBtn.setEnabled(true);
+				ringBtn.setEnabled(true);
+				armorBtn.setEnabled(true);
+				shieldBtn.setEnabled(true);
+				bootsBtn.setEnabled(true);
+				weaponBtn.setEnabled(true);
+				
 				updateAttributes(fighterExplorer.getFighter());
 				
-				System.out.println("I get the figher " + owner.fighterKeyName);
+//				System.out.println("I get the figher " + owner.fighterKeyName);
 			}
 		});
 
@@ -421,23 +469,18 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 							System.out.println("nametextF is not null ");
 							fighter1.setName(nameTextF.getText());
 							fighter1.setLevel(Integer.parseInt(levelTextF.getText()));
-							fighter1.setStrength(
-									Integer.parseInt(strengthTextF.getText()) - fighter1.getGainedStrength());
-							fighter1.setDexterity(
-									Integer.parseInt(dexterityTextF.getText()) - fighter1.getGainedDexterity());
-							fighter1.setConstitution(
-									Integer.parseInt(constitutionTextF.getText()) - fighter1.getGainedConstitution());
-							fighter1.setIntelligence(
-									Integer.parseInt(intelligenceTextF.getText()) - fighter1.getGainedIntelligence());
+							fighter1.setStrength(Integer.parseInt(strengthTextF.getText()) - fighter1.getGainedStrength());
+							fighter1.setDexterity(Integer.parseInt(dexterityTextF.getText()) - fighter1.getGainedDexterity());
+							fighter1.setConstitution(Integer.parseInt(constitutionTextF.getText()) - fighter1.getGainedConstitution());
+							fighter1.setIntelligence(Integer.parseInt(intelligenceTextF.getText()) - fighter1.getGainedIntelligence());
 							fighter1.setWisdom(Integer.parseInt(wisdomTextF.getText()) - fighter1.getGainedWisdom());
-							fighter1.setCharisma(
-									Integer.parseInt(charismaTextF.getText()) - fighter1.getGainedCharisma());
+							fighter1.setCharisma(Integer.parseInt(charismaTextF.getText()) - fighter1.getGainedCharisma());
 							if (fighter1.getHitPoints() == 0) {
 								fighter1.setHitpoints(fighter1.getLevel()
 										* (Dice.d10Roll() + fighter1.getModifier(fighter1.getTotalConstitution())));
 							}
 							FighterModel fm = new FighterModel();
-							String g = Utils.readFile(Config.CHARACTOR_FILE);
+							String g = Utils.readFile(Config.CHARACTER_FILE);
 							fm = Utils.fromJson(g, FighterModel.class);
 
 							HashMap<String, Fighter> hm1 = new HashMap<>();
@@ -453,6 +496,8 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 										while (it1.hasNext()) {
 											String keyName = it1.next();
 											if (keyName == fighter1.getName()) {
+												JOptionPane.showMessageDialog(null, "There already exists a character with this name, please change a name.", "Warning",
+														JOptionPane.WARNING_MESSAGE);												
 											}
 										}
 									}
@@ -464,7 +509,7 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 							fm.setFighters(hm1);
 
 							String gSave = Utils.toJson(fm);
-							Utils.save2File(Config.CHARACTOR_FILE, gSave);
+							Utils.save2File(Config.CHARACTER_FILE, gSave);
 
 							owner.hm1 = hm1;
 							dispose();
@@ -578,11 +623,12 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 			@Override
 			public void windowGainedFocus(WindowEvent e) {
 				System.out.println("The CE window is focused.");
+				System.out.println("fighter at " + fighter);
 
-//				if (fighter != null ) {
+				if (fighter != null ) {
 					updateView(fighter);					
 					Utils.displayFighterInfo(fighter);
-//				}
+				}
 				
 //				if (owner.fighter != null && owner.isCreatingNew == false) {
 //				}
@@ -599,8 +645,8 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 		this.addWindowListener(new WindowListener() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				owner.setEnabled(true);
-				owner.setVisible(true);
+//				owner.setEnabled(true);
+//				owner.setVisible(true);
 			}
 
 			@Override
@@ -662,5 +708,6 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 			g.drawImage(img, 0, 0, 230, 320, this);
 		}
 	}
+
 
 }

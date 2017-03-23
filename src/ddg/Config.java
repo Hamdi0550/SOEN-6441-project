@@ -38,7 +38,7 @@ public class Config {
 			  new Color(45,92,162),
 			  new Color(84,123,200));
 	
-	public static final String CHARACTOR_FILE = "./charactor.json";
+	public static final String CHARACTER_FILE = "./charactor.json";
 	
 	public static final String MAP_FILE = "./map.ser";
 

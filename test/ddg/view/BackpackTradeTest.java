@@ -37,7 +37,7 @@ public class BackpackTradeTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		String g = Utils.readFile(Config.CHARACTER_FILE);
 		fighterModel = Utils.fromJson(g, FighterModel.class);
 	}
 

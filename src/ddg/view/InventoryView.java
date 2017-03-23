@@ -28,7 +28,7 @@ import javax.swing.border.*;
  */
 public class InventoryView extends JPanel implements ActionListener, ListSelectionListener {
 
-    private final JButton backBtn = new JButton("    Back  ");
+	protected final JButton backBtn = new JButton("    Back  ");
     protected final JButton equipBtn = new JButton("    Equip   ");
     protected final JButton removeBtn = new JButton("   Take off  ");
 
@@ -40,31 +40,31 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
     protected final JButton bootsBtn = new JButton("    Boots  ");
     protected final JButton weaponBtn = new JButton("   Weapon  ");
     
-    private final DefaultListModel<String> backpackItemModel = new DefaultListModel<String>(); 
+    protected final DefaultListModel<String> backpackItemModel = new DefaultListModel<String>(); 
     protected final JList<String> backpackItemList = new JList<String>();
         
-    private JLabel nameTextF = new JLabel("   ");
-    private JLabel levelTextF = new JLabel("   ");
-    private JLabel typeTextF = new JLabel("   ");
-    private JLabel strengthTextF = new JLabel("   ");
-    private JLabel dexterityTextF = new JLabel("   ");
-    private JLabel constitutionTextF = new JLabel("   ");
-    private JLabel intelligenceTextF = new JLabel("   ");
-    private JLabel wisdomTextF = new JLabel("   ");
-    private JLabel charismaTextF = new JLabel("   ");
+    protected JLabel nameTextF = new JLabel("   ");
+    protected JLabel levelTextF = new JLabel("   ");
+    protected JLabel typeTextF = new JLabel("   ");
+    protected JLabel strengthTextF = new JLabel("   ");
+    protected JLabel dexterityTextF = new JLabel("   ");
+    protected JLabel constitutionTextF = new JLabel("   ");
+    protected JLabel intelligenceTextF = new JLabel("   ");
+    protected JLabel wisdomTextF = new JLabel("   ");
+    protected JLabel charismaTextF = new JLabel("   ");
     
-    private JLabel strengthModiferL = new JLabel("   ");
-    private JLabel dexModiferL = new JLabel("   ");
-    private JLabel conModiferL = new JLabel("   ");
-    private JLabel intelliModiferL = new JLabel("   ");
-    private JLabel wisModiferL = new JLabel("   ");
-    private JLabel chaModiferL = new JLabel("   ");
-    private JPanel backpackListPanel = new JPanel(new BorderLayout());
+    protected JLabel strengthModiferL = new JLabel("   ");
+    protected JLabel dexModiferL = new JLabel("   ");
+    protected JLabel conModiferL = new JLabel("   ");
+    protected JLabel intelliModiferL = new JLabel("   ");
+    protected JLabel wisModiferL = new JLabel("   ");
+    protected JLabel chaModiferL = new JLabel("   ");
+    protected JPanel backpackListPanel = new JPanel(new BorderLayout());
     static JDialog dialog;
     
-    private JLabel equipmentTypeL = new JLabel("   ");
-    private JLabel attributeL = new JLabel("   ");
-    private JLabel valueL = new JLabel("   ");
+    protected JLabel equipmentTypeL = new JLabel("   ");
+    protected JLabel attributeL = new JLabel("   ");
+    protected JLabel valueL = new JLabel("   ");
     
     public String selectedWorn = null;
     public BaseItem selectedBackPackItem = null;
@@ -108,13 +108,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         dialog.pack();
         dialog.setTitle("Inventory");
         dialog.setModal(true);
-        dialog.setVisible(true);
-        
-//    	InventoryView frame1 = new InventoryView(fighter); 
-//        frame1.setBounds(260, 260, 0, 0);
-////        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-////        frame1.pack();
-//        frame1.setVisible(true);
+        dialog.setVisible(true);        
 		
 	}    
 	InventoryView(Fighter fighter){

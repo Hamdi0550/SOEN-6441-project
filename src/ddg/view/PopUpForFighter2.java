@@ -82,7 +82,7 @@ public class PopUpForFighter2 extends JDialog implements ActionListener{
 
 	private void initData() {
 		// TODO Auto-generated method stub
-		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		String g = Utils.readFile(Config.CHARACTER_FILE);
 		this.fightersmodel = Utils.fromJson(g, FighterEditorModel.class);
 		if (this.fightersmodel == null) {
 			this.fightersmodel = new FighterEditorModel();

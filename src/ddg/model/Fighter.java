@@ -933,7 +933,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public static void saveFighter(Fighter fighter){
 		System.out.println("save fighter======1");
 		
-		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		String g = Utils.readFile(Config.CHARACTER_FILE);
 		FighterModel fm = Utils.fromJson(g, FighterModel.class);
 		if (fm == null) {
 			fm = new FighterModel();
@@ -943,7 +943,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		if(fm.getFighters().containsKey(fighter.name)){
 			fm.getFighters().put(fighter.name, fighter);
 			String gSave = Utils.toJson(fm);
-			Utils.save2File(Config.CHARACTOR_FILE, gSave);
+			Utils.save2File(Config.CHARACTER_FILE, gSave);
 			System.out.println("save fighter======success");
 		}
 		else{

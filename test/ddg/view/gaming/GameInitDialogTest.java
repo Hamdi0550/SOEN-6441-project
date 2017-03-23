@@ -35,7 +35,7 @@ public class GameInitDialogTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		String g = Utils.readFile(Config.CHARACTER_FILE);
 		fighterModel = Utils.fromJson(g, FighterModel.class);
 		fighter = fighterModel.getFighterByName("Tank3");
 		g = Utils.readFile(Config.CAMPAIGN_FILE);
@@ -66,7 +66,7 @@ public class GameInitDialogTest {
 	@Test
 	public void testSelectTheCharacter(){
 		FighterModel fighterModel = new FighterModel();
-		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		String g = Utils.readFile(Config.CHARACTER_FILE);
 		fighterModel = Utils.fromJson(g, FighterModel.class);
 		assertNotNull(fighterModel.getFighterList());
 	}
