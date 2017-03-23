@@ -6,7 +6,7 @@ import ddg.model.Fighter;
  * 
  * This class is to provide a tool to generate different types of characters.
  * @author Zhen Du, Fei Yu
- * @version 1.1
+ * @date Mar 10, 2017
  *
  */
 public class FighterExplorer {

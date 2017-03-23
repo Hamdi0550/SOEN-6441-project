@@ -68,11 +68,6 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 	public boolean isCreatingNew = true;
 	
 	private DDGameMain owner = null;
-
-//    public static void main(String[] args) 
-//    {
-//        createAndShowGUI();
-//    }
     
     /**
      * This method build frame of the Character Selection Window
@@ -203,11 +198,8 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     	createBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
     			isCreatingNew = true;
-//    			CharacterSelection rootframe = (CharacterSelection) SwingUtilities.getWindowAncestor(createBtn);
-//    			CharacterEditor.createAndShowGUI(rootframe);
     			fighter = null;
     			CharacterEditor.createAndShowGUI(fighter);
-//    			setEnabled(false);
             }
         });
     	
@@ -223,9 +215,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		public void actionPerformed(ActionEvent e){
     			if (!characterList.isSelectionEmpty()){
         			isCreatingNew = false;
-//					System.out.println(getThisFrame());
 	    			CharacterEditor.createAndShowGUI(fighter);
-//					setEnabled(false);
     	        }               
             }
         });
@@ -289,14 +279,6 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 		wisModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalWisdom())));
 		chaModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalCharisma())));		
 	}
-
-//	/**
-//	 * Return the object of this window
-//	 * @return
-//	 */
-//	public CharacterSelection getThisFrame(){
-//		return this;
-//	}
     
 	/**
 	 * This method manage the actions of the window focus

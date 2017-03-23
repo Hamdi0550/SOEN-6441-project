@@ -42,8 +42,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     private JLabel attributeLabel = new JLabel(" Attribute ");
     private JLabel bonusLabel = new JLabel(" Value ");
     
-    private JDialog errorMessageWindow= new JDialog(this, "Item selection error", true);
-//	private JButton okBtn = new JButton("   OK   ");
+//    private JDialog errorMessageWindow= new JDialog(this, "Item selection error", true);
 
 	ArrayList<BaseItem> al1 = new ArrayList<>();
 	public String fighterKeyName = "fighter111";
@@ -59,10 +58,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
      */
     public static void createAndShowGUI(Fighter fighter, String wearingType) 
     {
-
-//        owner = (CharacterEditor) currentFighter2;
-//    	currentFighter = fighter;
-        System.out.println("========"+owner);
     	ItemSelection frame1 = new ItemSelection(fighter, wearingType); 
         frame1.setBounds(260, 260, 0, 0);
         frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -168,54 +163,12 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 
         			if (fighter == null){
         				JOptionPane.showMessageDialog(null, "Null Fighter");
-//        				fighter = new Fighter();
         			}
         			
         			if (wearingType.equals(tempItem.getName())){
         				
         				fighter.equip(wearingType, tempItem);
-        				
-//            			fighter.setEquipOn(wearingType);            			
-//            			try{
-//                			for (BaseItem i: fighter.getWorn()){
-//                				if (i.getName().equals(wearingType)){
-//                					fighter.gainBonus(i.getIncrease(), i.getBonus(), "-");
-//                					fighter.getWorn().remove(i);
-//                				}
-//                			}
-//            			}
-//            			catch (ConcurrentModificationException e1) {        				
-//            			}        			
-//            			
-//    					fighter.gainBonus(tempItem.getIncrease(), tempItem.getBonus(), "+");
-//            			fighter.getWorn().add(tempItem);
-            			
-//            			if (wearingType.equals(BaseItem.HELMET)){
-//            				fighter.setHelmetOn(true);
-//            			}
-            			
-//            			if (owner.wearingType.equals(BaseItem.HELMET)){
-//            				owner.helmetBtn.setText("");
-//                			owner.helmetBtn.setIcon(Config.iconByType(owner.wearingType));
-//            			} else if (owner.wearingType.equals(BaseItem.ARMOR)){
-//                			owner.armorBtn.setText("");
-//                			owner.armorBtn.setIcon(Config.iconByType(owner.wearingType));
-//            			} else if (owner.wearingType.equals(BaseItem.BOOTS)){
-//                			owner.bootsBtn.setText("");
-//                			owner.bootsBtn.setIcon(Config.iconByType(owner.wearingType));
-//            			} else if (owner.wearingType.equals(BaseItem.RING)){
-//                			owner.ringBtn.setText("");
-//                			owner.ringBtn.setIcon(Config.iconByType(owner.wearingType));
-//            			} else if (owner.wearingType.equals(BaseItem.BELT)){
-//                			owner.beltBtn.setText("");
-//                			owner.beltBtn.setIcon(Config.iconByType(owner.wearingType));
-//            			} else if (owner.wearingType.equals(BaseItem.WEAPON)){
-//                			owner.weaponBtn.setText("");
-//                			owner.weaponBtn.setIcon(Config.iconByType(owner.wearingType));
-//            			} else if (owner.wearingType.equals(BaseItem.SHIELD)){
-//                			owner.shieldBtn.setText("");
-//                			owner.shieldBtn.setIcon(Config.iconByType(owner.wearingType));
-//            			}		
+	
         				System.out.println(fighter);
             			System.out.println(tempItem.getId() + " " + tempItem.getName() + " " + tempItem.getIncrease() + " " + tempItem.getBonus());
             			dispose();
@@ -259,7 +212,6 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 		if (e.getValueIsAdjusting() == false) {
 			int index = itemJList.getSelectedIndex();
 			if(index >= 0) {
-//				System.out.println("list select:"+index);
 				BaseItem item = itemListModel.getItemByIndex(index);
 				
 				nameLabel.setText(item.getId());

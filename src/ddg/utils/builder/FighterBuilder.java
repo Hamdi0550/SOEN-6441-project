@@ -10,7 +10,7 @@ import ddg.utils.Dice;
  * 
  * This class is to provide a pattern for building a character
  * @author Zhen Du, Fei Yu
- * @version 1.1
+ * @date Mar 10, 2017
  *
  */
 public abstract class FighterBuilder {

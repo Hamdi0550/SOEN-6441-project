@@ -86,17 +86,11 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         dialog.setTitle("Inventory");
         dialog.setModal(true);
         dialog.setVisible(true);
-//        
-//    	InventoryView frame1 = new InventoryView(); 
-//        frame1.setBounds(260, 260, 0, 0);
-//        frame1.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-//        frame1.pack();
-//        frame1.setVisible(true);
     }
 
     /**
-     * 
-     * @param fighter
+     * This method creates the window of inventory view
+     * @param fighter The character to be shown
      */
 	public static void createAndShowGUI(Fighter fighter) {
 
@@ -126,7 +120,6 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
     InventoryView()
     {
     	super();
-//    	this.fighter = owner.getOwner().fighter;
     	initialization();        
     }
     
@@ -134,18 +127,15 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
      * Initialize the inventory view window.
      */
     protected void initialization() {
-//        setTitle("Inventory");
-//        setModal(true);
         setLayout(new BorderLayout());
         JPanel backPanel= new JPanel(new BorderLayout());
         JPanel characterPanel= new JPanel(new BorderLayout());
         JPanel attributesPanel= new JPanel(new GridLayout(11,4,5,5));
         JPanel backpackPanel = new JPanel(new BorderLayout());
         JPanel buttonsPanel= new JPanel(new GridLayout(5,1,5,5));
-//        backpackListPanel = new JPanel(new BorderLayout());
-        ImageIcon icon = new ImageIcon("icon1.jpg");  
-        icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth(),  
-                icon.getIconHeight(), Image.SCALE_DEFAULT));         
+//        ImageIcon icon = new ImageIcon("icon1.jpg");  
+//        icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth(),  
+//                icon.getIconHeight(), Image.SCALE_DEFAULT));         
 
         JPanel characterLeftPanel= new JPanel(new GridLayout(5,1,5,5));
         JPanel characterRightPanel= new JPanel(new GridLayout(5,1,5,5));
@@ -162,7 +152,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
         characterPanel.add(characterRightPanel, BorderLayout.EAST);
         characterPanel.add(characterButtomPanel, BorderLayout.SOUTH);
         characterButtomPanel.add(removeBtn);
-        helmetBtn.setIcon(icon);
+//        helmetBtn.setIcon(icon);
         characterLeftPanel.add(helmetBtn);
         characterLeftPanel.add(armorBtn);
         characterLeftPanel.add(beltBtn);
@@ -359,7 +349,6 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 		backBtn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				System.out.println("cancel clicked");
-//				dispose();
 				if(dialog!=null)
 					dialog.dispose();
 	        }
@@ -479,27 +468,14 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 	        @Override  
 	        public void windowGainedFocus(WindowEvent e) { 
 	        	updateView();				
-	        	Utils.displayFighterInfo(fighter);
-	                        
-	            	
+	        	Utils.displayFighterInfo(fighter); 
 	        }
-
 	
 	        @Override  
 	        public void windowLostFocus(WindowEvent e) {
 	            System.out.println("The CS window is not focused.");  
 	        }                
-		});  
-		
-	}
-
-
-	/**
-	 * 
-	 * @return
-	 */
-	public InventoryView getThisFrame() {
-		return this;
+		});  		
 	}
 	
 	/**
@@ -524,8 +500,11 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 	 */
 	class EmbeddedPanel extends JPanel{
 
-	    private ImageIcon icon;  
 	    private Image img;  
+	    
+	    /**
+	     * Constructor
+	     */
 	    public EmbeddedPanel() {  
 	    	super();
 	    	setOpaque(true);
@@ -558,8 +537,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 				UtilityStorage.setItem(item);
 			}
 		}
-        System.out.println("value changed");
-		
+        System.out.println("value changed");		
 	}
 
 }

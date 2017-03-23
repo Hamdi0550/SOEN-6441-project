@@ -6,7 +6,7 @@ import ddg.Config;
  * 
  * This class is to build a character of Nimble type
  * @author Zhen Du, Fei Yu
- * @version 1.1
+ * @date Mar 10, 2017
  *
  */
 public class NimbleFighterBuilder extends FighterBuilder {

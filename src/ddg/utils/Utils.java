@@ -151,7 +151,6 @@ public class Utils {
 		fm = Utils.fromJson(g, FighterModel.class);
 		Boolean isInFile = false;
 		HashMap<String, Fighter> hm = new HashMap<>();
-//		if (fm != null) {
 			System.out.println(fm);
 			try {
 				System.out.println("2   " + fm);
@@ -186,7 +185,6 @@ public class Utils {
 			} catch (NullPointerException ex) {
 				System.out.println("there is a NullPointerException");
 			}
-//		}
 		
 	}
 
@@ -201,7 +199,6 @@ public class Utils {
         
 		String g = Utils.readFile(Config.CHARACTER_FILE);
 		fm = Utils.fromJson(g, FighterModel.class);
-//		if(fm != null){        			
     		System.out.println(fm);
     		try{
     			System.out.println("2"+fm);
@@ -218,8 +215,7 @@ public class Utils {
     		}
     		catch (NullPointerException ex){
     			System.out.println("there is a NullPointerException");
-    		}        			
-//		}
+    		}
 		return fighterHM;
 		
 	}
