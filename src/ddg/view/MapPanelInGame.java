@@ -460,11 +460,13 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 						Fighter.saveFighter(fighter);
 						
 						initMapData();
-						jspanel.removeAll();
-						jspanel.add(mapPanel);
-						mapPanel.repaint();
-						jspanel.doLayout();
-						jspanel.revalidate();
+						removeAll();
+						initcontent();
+//						jspanel.removeAll();
+//						jspanel.add(mapPanel);
+//						mapPanel.repaint();
+//						jspanel.doLayout();
+//						jspanel.revalidate();
 						break;
 					}
 				}
