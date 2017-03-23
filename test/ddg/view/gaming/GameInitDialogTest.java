@@ -62,4 +62,12 @@ public class GameInitDialogTest {
 		CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);
 		assertNotNull(campaignModel.getCampaignList());
 	}
+	
+	@Test
+	public void testSelectTheCharacter(){
+		FighterModel fighterModel = new FighterModel();
+		String g = Utils.readFile(Config.CHARACTOR_FILE);
+		fighterModel = Utils.fromJson(g, FighterModel.class);
+		assertNotNull(fighterModel.getFighterList());
+	}
 }
