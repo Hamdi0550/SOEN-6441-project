@@ -403,49 +403,49 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 	 */
 	private void setEquipmentIcon(Fighter fighter) {
 		
-		if (fighter.isHelmetOn){
+		if (fighter.isHelmetOn()){
 			helmetBtn.setText("");
 			helmetBtn.setIcon(Config.HELMET_ICON);
 		} else{
 			helmetBtn.setText("Helmet");
 			helmetBtn.setIcon(null);	    			
 		}
-		if (fighter.isArmorOn){
+		if (fighter.isArmorOn()){
 			armorBtn.setText("");
 			armorBtn.setIcon(Config.ARMOR_ICON);
 		} else{
 			armorBtn.setText("Armor");
 			armorBtn.setIcon(null);	    			
 		}
-		if (fighter.isBeltOn){
+		if (fighter.isBeltOn()){
 			beltBtn.setText("");
 			beltBtn.setIcon(Config.BELT_ICON);
 		} else{
 			beltBtn.setText("Belt");
 			beltBtn.setIcon(null);	    			
 		}
-		if (fighter.isBootsOn){
+		if (fighter.isBootsOn()){
 			bootsBtn.setText("");
 			bootsBtn.setIcon(Config.BOOTS_ICON);
 		} else{
 			bootsBtn.setText("Boots");
 			bootsBtn.setIcon(null);	    			
 		}
-		if (fighter.isRingOn){
+		if (fighter.isRingOn()){
 			ringBtn.setText("");
 			ringBtn.setIcon(Config.RING_ICON);
 		} else{
 			ringBtn.setText("Ring");
 			ringBtn.setIcon(null);	    			
 		}
-		if (fighter.isShieldOn){
+		if (fighter.isShieldOn()){
 			shieldBtn.setText("");
 			shieldBtn.setIcon(Config.SHIELD_ICON);
 		} else{
 			shieldBtn.setText("Shield");
 			shieldBtn.setIcon(null);	    			
 		}
-		if (fighter.isWeaponOn){
+		if (fighter.isWeaponOn()){
 			weaponBtn.setText("");
 			weaponBtn.setIcon(Config.WEAPON_ICON);
 		} else{
@@ -473,21 +473,21 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 	    		System.out.println(f2.getName());
 	    		System.out.println("backpack now  has " + f2.getBackpack().size());
 	    		System.out.println("worn now  has " +f2.getWorn().size());
-	    		System.out.print(f2.isHelmetOn);
+	    		System.out.print(f2.isHelmetOn());
 	    		System.out.print(" ");
-	    		System.out.print(f2.isArmorOn);
+	    		System.out.print(f2.isArmorOn());
 	    		System.out.print(" ");
-	    		System.out.print(f2.isBeltOn);
+	    		System.out.print(f2.isBeltOn());
 	    		System.out.print(" ");
-	    		System.out.print(f2.isRingOn); 
+	    		System.out.print(f2.isRingOn()); 
 	    		System.out.print(" ");
-	    		System.out.print(f2.isBootsOn);
+	    		System.out.print(f2.isBootsOn());
 	    		System.out.print(" ");
-	    		System.out.print(f2.isWeaponOn);
+	    		System.out.print(f2.isWeaponOn());
 	    		System.out.print(" ");
-	    		System.out.print(f2.isShieldOn);
+	    		System.out.print(f2.isShieldOn());
 	    		System.out.print(" ");
-	    		System.out.print(f2.isShieldOn);
+	    		System.out.print(f2.isShieldOn());
 	    		System.out.println(f2.getBackpack());
 	    		System.out.println(f2.getWorn());
 	    		System.out.println("===========================");

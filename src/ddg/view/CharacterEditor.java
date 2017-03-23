@@ -33,7 +33,7 @@ import javax.swing.border.*;
  * @author Fei Yu
  * @date Mar 3, 2017
  */
-public class CharacterEditor extends JDialog implements ActionListener {
+public class CharacterEditor extends JDialog implements ActionListener, Observer {
 
 	private final JButton saveBtn = new JButton("      Save      ");
 	private final JButton cancelBtn = new JButton("      Cancel      ");
@@ -81,10 +81,10 @@ public class CharacterEditor extends JDialog implements ActionListener {
 	public JDialog thisWindow = this;
 	private FighterExplorer fighterExplorer = new FighterExplorer();
 	private FighterBuilder fb = new BullyFighterBuilder();
-	private Fighter fighter = null;
+	private Fighter fighter = new Fighter();
 
 	/**
-	 * 
+	 * Constructor
 	 * @param ownerFrame
 	 */
 	public static void createAndShowGUI(CharacterSelection ownerFrame) {
@@ -100,7 +100,7 @@ public class CharacterEditor extends JDialog implements ActionListener {
 	}
 
 	/**
-	 * 
+	 * Constructor
 	 */
 	CharacterEditor() {
 		super();
@@ -232,24 +232,31 @@ public class CharacterEditor extends JDialog implements ActionListener {
 		}
 		if (owner.isCreatingNew == false) {
 			System.out.println(owner.toString());
-			setLabels(owner.fighter);
+			updateAttributes(owner.fighter);
 			setEquipmentIcon(owner.fighter);
 
 		}
 	}
-
-	/**
-	 * 
-	 * @param fighter
-	 */
-	private void setLabels(Fighter fighter) {
-		nameTextF.setText(fighter.getName());
-		levelTextF.setText(Integer.toString(fighter.getLevel()));
-		updateAttributes(fighter);
-
+	
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		updateView((Fighter)arg1);
+		
 	}
 
+	private void updateView(Fighter f) {
+		fighter = f;		
+		updateAttributes(fighter);		
+		setEquipmentIcon(fighter);
+	}
+
+	/**
+	 * This method update attribute values of the character when his attributes change.
+	 * @param fighter The character selected
+	 */
 	protected void updateAttributes(Fighter fighter) {
+		nameTextF.setText(fighter.getName());
+		levelTextF.setText(Integer.toString(fighter.getLevel()));
 
 		strengthTextF.setText(Integer.toString(fighter.getTotalStrength()));
 		dexterityTextF.setText(Integer.toString(fighter.getTotalDexterity()));
@@ -268,54 +275,54 @@ public class CharacterEditor extends JDialog implements ActionListener {
 	}
 
 	/**
-	 * 
-	 * @param fighter
+	 * This method update the icon of the worn equipments.
+	 * @param fighter The character selected
 	 */
 	private void setEquipmentIcon(Fighter fighter) {
 		
-		if (fighter.isHelmetOn){
+		if (fighter.isHelmetOn()){
 			helmetBtn.setText("");
 			helmetBtn.setIcon(Config.HELMET_ICON);
 		} else{
 			helmetBtn.setText("Helmet");
 			helmetBtn.setIcon(null);	    			
 		}
-		if (fighter.isArmorOn){
+		if (fighter.isArmorOn()){
 			armorBtn.setText("");
 			armorBtn.setIcon(Config.ARMOR_ICON);
 		} else{
 			armorBtn.setText("Armor");
 			armorBtn.setIcon(null);	    			
 		}
-		if (fighter.isBeltOn){
+		if (fighter.isBeltOn()){
 			beltBtn.setText("");
 			beltBtn.setIcon(Config.BELT_ICON);
 		} else{
 			beltBtn.setText("Belt");
 			beltBtn.setIcon(null);	    			
 		}
-		if (fighter.isBootsOn){
+		if (fighter.isBootsOn()){
 			bootsBtn.setText("");
 			bootsBtn.setIcon(Config.BOOTS_ICON);
 		} else{
 			bootsBtn.setText("Boots");
 			bootsBtn.setIcon(null);	    			
 		}
-		if (fighter.isRingOn){
+		if (fighter.isRingOn()){
 			ringBtn.setText("");
 			ringBtn.setIcon(Config.RING_ICON);
 		} else{
 			ringBtn.setText("Ring");
 			ringBtn.setIcon(null);	    			
 		}
-		if (fighter.isShieldOn){
+		if (fighter.isShieldOn()){
 			shieldBtn.setText("");
 			shieldBtn.setIcon(Config.SHIELD_ICON);
 		} else{
 			shieldBtn.setText("Shield");
 			shieldBtn.setIcon(null);	    			
 		}
-		if (fighter.isWeaponOn){
+		if (fighter.isWeaponOn()){
 			weaponBtn.setText("");
 			weaponBtn.setIcon(Config.WEAPON_ICON);
 		} else{
@@ -474,6 +481,7 @@ public class CharacterEditor extends JDialog implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				wearingType = BaseItem.HELMET;
 //				CharacterEditor rootFrame = (CharacterEditor) SwingUtilities.getWindowAncestor(helmetBtn);
+				System.out.println("============" + fighter);
 				ItemSelection.createAndShowGUI(fighter, wearingType);
 			}
 		});
@@ -539,13 +547,12 @@ public class CharacterEditor extends JDialog implements ActionListener {
 				}
 			}
 		});
-
 	}
 
 
 	/**
-	 * 
-	 * @return
+	 * This method return the object of this frame
+	 * @return This frame object
 	 */
 	public CharacterEditor getThisFrame() {
 		return this;
@@ -553,6 +560,7 @@ public class CharacterEditor extends JDialog implements ActionListener {
 
 	/**
 	 * Get the owner window
+	 * @return owner
 	 */
 	public CharacterSelection getOwner() {
 		return owner;
@@ -583,19 +591,19 @@ public class CharacterEditor extends JDialog implements ActionListener {
 					System.out.println(f2.getName());
 					System.out.println("backpack now  has " + f2.getBackpack().size());
 					System.out.println("worn now  has " + f2.getWorn().size());
-					System.out.print(f2.isHelmetOn);
+					System.out.print(f2.isHelmetOn());
 					System.out.print(" ");
-					System.out.print(f2.isArmorOn);
+					System.out.print(f2.isArmorOn());
 					System.out.print(" ");
-					System.out.print(f2.isBeltOn);
+					System.out.print(f2.isBeltOn());
 					System.out.print(" ");
-					System.out.print(f2.isRingOn);
+					System.out.print(f2.isRingOn());
 					System.out.print(" ");
-					System.out.print(f2.isBootsOn);
+					System.out.print(f2.isBootsOn());
 					System.out.print(" ");
-					System.out.print(f2.isWeaponOn);
+					System.out.print(f2.isWeaponOn());
 					System.out.print(" ");
-					System.out.print(f2.isShieldOn);
+					System.out.print(f2.isShieldOn());
 					System.out.println(f2.getBackpack());
 					System.out.println(f2.getWorn());
 					System.out.println("===========================");
@@ -651,7 +659,6 @@ public class CharacterEditor extends JDialog implements ActionListener {
 	}
 
 	/**
-	 * 
 	 * 
 	 * This internal class is to draw a background picture in the frame
 	 * 

@@ -305,19 +305,19 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
     		System.out.println(fighter.getName());
     		System.out.println("backpack now  has " + fighter.getBackpack().size());
     		System.out.println("worn now  has " +fighter.getWorn().size());
-    		System.out.print(fighter.isHelmetOn);
+    		System.out.print(fighter.isHelmetOn());
     		System.out.print(" ");
-    		System.out.print(fighter.isArmorOn);
+    		System.out.print(fighter.isArmorOn());
     		System.out.print(" ");
-    		System.out.print(fighter.isBeltOn);
+    		System.out.print(fighter.isBeltOn());
     		System.out.print(" ");
-    		System.out.print(fighter.isRingOn); 
+    		System.out.print(fighter.isRingOn()); 
     		System.out.print(" ");
-    		System.out.print(fighter.isBootsOn);
+    		System.out.print(fighter.isBootsOn());
     		System.out.print(" ");
-    		System.out.print(fighter.isWeaponOn);
+    		System.out.print(fighter.isWeaponOn());
     		System.out.print(" ");
-    		System.out.print(fighter.isShieldOn);
+    		System.out.print(fighter.isShieldOn());
     		System.out.println(fighter.getBackpack());
     		System.out.println(fighter.getWorn());
     		System.out.println("===========================");
@@ -367,7 +367,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
             		}        			
         		}
         		if (fighter != null){
-        			System.out.println(fighter.isHelmetOn + " " + fighter.getWorn().size() + " " + fighter.getWorn());
+        			System.out.println(fighter.isHelmetOn() + " " + fighter.getWorn().size() + " " + fighter.getWorn());
         		}
             }  
   

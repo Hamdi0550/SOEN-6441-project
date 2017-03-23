@@ -54,13 +54,13 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	private int hitPoints; 
 	private int attackBonus; 		
 	private int damageBonus; 	
-	public boolean isArmorOn = false;
-	public boolean isShieldOn = false;
-	public boolean isWeaponOn = false;
-	public boolean isBootsOn = false;
-	public boolean isRingOn = false;
-	public boolean isBeltOn = false;
-	public boolean isHelmetOn = false;
+	private boolean isArmorOn = false;
+	private boolean isShieldOn = false;
+	private boolean isWeaponOn = false;
+	private boolean isBootsOn = false;
+	private boolean isRingOn = false;
+	private boolean isBeltOn = false;
+	private boolean isHelmetOn = false;
 	private ArrayList<BaseItem> backpack = new ArrayList<>();
 	private ArrayList<BaseItem> wornItems = new ArrayList<>();
 	
@@ -385,6 +385,62 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	}
 	
 	/**
+	 * This method get the boolean value of isArmorOn
+	 * @return isArmorOn Ture means the character is wearing an armor
+	 */
+	public boolean isArmorOn() {
+		return isArmorOn;
+	}
+	
+	/**
+	 * This method get the boolean value of isShieldOn
+	 * @return isShieldOn Ture means the character is wearing a shield
+	 */
+	public boolean isShieldOn() {
+		return isShieldOn;
+	}
+	
+	/**
+	 * This method get the boolean value of isWeaponOn
+	 * @return isWeaponOn Ture means the character is wearing a weapon
+	 */
+	public boolean isWeaponOn() {
+		return isWeaponOn;
+	}
+	
+	/**
+	 * This method get the boolean value of isBootsOn
+	 * @return isBootsOn Ture means the character is wearing boots
+	 */
+	public boolean isBootsOn() {
+		return isBootsOn;
+	}
+	
+	/**
+	 * This method get the boolean value of isRingOn
+	 * @return isRingOn Ture means the character is wearing a ring
+	 */
+	public boolean isRingOn() {
+		return isRingOn;
+	}
+	
+	/**
+	 * This method get the boolean value of isBeltOn
+	 * @return isBeltOn Ture means the character is wearing a belt
+	 */
+	public boolean isBeltOn() {
+		return isBeltOn;
+	}
+	
+	/**
+	 * This method get the boolean value of isHelmetOn
+	 * @return isHelmetOn Ture means the character is wearing a helmet
+	 */
+	public boolean isHelmetOn() {
+		return isHelmetOn;
+	}
+	
+	/**
 	 * Set the name of the character
 	 * @param name
 	 */
@@ -536,6 +592,62 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public void setWorn(ArrayList<BaseItem> worn){
 		this.wornItems = worn;
 	}
+
+	/**
+	 * This method set the value of isArmorOn
+	 * @param isArmorOn the boolean value of isArmorOn
+	 */
+	public void setArmorOn(boolean isArmorOn) {
+		this.isArmorOn = isArmorOn;
+	}
+
+	/**
+	 * This method set the value of isShieldOn
+	 * @param isShieldOn the boolean value of isShieldOn
+	 */
+	public void setShieldOn(boolean isShieldOn) {
+		this.isShieldOn = isShieldOn;
+	}
+
+	/**
+	 * This method set the value of isWeaponOn
+	 * @param isWeaponOn the boolean value of isWeaponOn
+	 */
+	public void setWeaponOn(boolean isWeaponOn) {
+		this.isWeaponOn = isWeaponOn;
+	}
+
+	/**
+	 * This method set the value of isBootsOn
+	 * @param isBootsOn the boolean value of isBootsOn
+	 */
+	public void setBootsOn(boolean isBootsOn) {
+		this.isBootsOn = isBootsOn;
+	}
+
+	/**
+	 * This method set the value of isRingOn
+	 * @param isRingOn the boolean value of isRingOn
+	 */
+	public void setRingOn(boolean isRingOn) {
+		this.isRingOn = isRingOn;
+	}
+
+	/**
+	 * This method set the value of isBeltOn
+	 * @param isBeltOn the boolean value of isBeltOn
+	 */
+	public void setBeltOn(boolean isBeltOn) {
+		this.isBeltOn = isBeltOn;
+	}
+
+	/**
+	 * This method set the value of isHelmetOn
+	 * @param isHelmetOn the boolean value of isHelmetOn
+	 */
+	public void setHelmetOn(boolean isHelmetOn) {
+		this.isHelmetOn = isHelmetOn;
+	}
 	
 	/**
 	 * Set the character is wearing a type of equipment
@@ -546,15 +658,15 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 			isHelmetOn = true;
 		} else if (wearingType.equals(BaseItem.ARMOR)){
 			isArmorOn = true;
-		}else if (wearingType.equals(BaseItem.SHIELD)){
+		} else if (wearingType.equals(BaseItem.SHIELD)){
 			isShieldOn = true;
-		}else if (wearingType.equals(BaseItem.WEAPON)){
+		} else if (wearingType.equals(BaseItem.WEAPON)){
 			isWeaponOn = true;
-		}else if (wearingType.equals(BaseItem.BOOTS)){
+		} else if (wearingType.equals(BaseItem.BOOTS)){
 			isBootsOn = true;
-		}else if (wearingType.equals(BaseItem.RING)){
+		} else if (wearingType.equals(BaseItem.RING)){
 			isRingOn = true;
-		}else if (wearingType.equals(BaseItem.BELT)){
+		} else if (wearingType.equals(BaseItem.BELT)){
 			isBeltOn = true;
 		}
 	}
@@ -568,15 +680,15 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 			isHelmetOn = false;
 		} else if (wearingType.equals(BaseItem.ARMOR)){
 			isArmorOn = false;
-		}else if (wearingType.equals(BaseItem.SHIELD)){
+		} else if (wearingType.equals(BaseItem.SHIELD)){
 			isShieldOn = false;
-		}else if (wearingType.equals(BaseItem.WEAPON)){
+		} else if (wearingType.equals(BaseItem.WEAPON)){
 			isWeaponOn = false;
-		}else if (wearingType.equals(BaseItem.BOOTS)){
+		} else if (wearingType.equals(BaseItem.BOOTS)){
 			isBootsOn = false;
-		}else if (wearingType.equals(BaseItem.RING)){
+		} else if (wearingType.equals(BaseItem.RING)){
 			isRingOn = false;
-		}else if (wearingType.equals(BaseItem.BELT)){
+		} else if (wearingType.equals(BaseItem.BELT)){
 			isBeltOn = false;
 		}
 	}
@@ -587,7 +699,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @param bonus
 	 * @param string
 	 */
-	public void gainBonus(String increase, int bonus, String string) {
+	public void updateGainedAttribute(String increase, int bonus, String string) {
 		if (string.equals("+")){
 			if (increase.equals(Ability.STRENGTH)){
 				setGainedStrength(gainedStrength + bonus);
@@ -648,14 +760,14 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 
 		for (BaseItem item: this.getWorn()){
 			if (item.getName().equals(i.getName())){
-				this.gainBonus(item.getIncrease(), item.getBonus(), "-");
+				this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "-");
 				this.getBackpack().add(item);
 				this.getWorn().remove(item);
 				System.out.println("backpack=========" + getBackpack());
 				break;
 			}
 		}
-		this.gainBonus(i.getIncrease(), i.getBonus(), "+");
+		this.updateGainedAttribute(i.getIncrease(), i.getBonus(), "+");
 		this.getBackpack().remove(i);
 		this.getWorn().add(i);
 		this.setEquipOn(i.getName());
@@ -783,7 +895,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 				while (it.hasNext()) {
 					BaseItem i = it.next();
 					if (i.getName().equals(selectedWorn)){
-						this.gainBonus(i.getIncrease(), i.getBonus(), "-");
+						this.updateGainedAttribute(i.getIncrease(), i.getBonus(), "-");
 						this.getBackpack().add(i);
 						this.getWorn().remove(i);
 						this.setEquipOff(selectedWorn);
@@ -842,5 +954,24 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	private void observerNotify() {
 		setChanged();
 		notifyObservers(this);
+	}
+	public void equip(String wearingType, BaseItem tempItem) {    			
+		try{
+			for (BaseItem i: getWorn()){
+				if (i.getName().equals(wearingType)){
+					updateGainedAttribute(i.getIncrease(), i.getBonus(), "-");
+					wornItems.remove(i);
+				}
+			}
+		}		
+		catch (ConcurrentModificationException e1) {
+			System.out.println("ConcurrentModificationException");
+		}        			
+		
+		updateGainedAttribute(tempItem.getIncrease(), tempItem.getBonus(), "+");
+		wornItems.add(tempItem);
+		setEquipOn(wearingType);        
+		
+		observerNotify();
 	}
 }
