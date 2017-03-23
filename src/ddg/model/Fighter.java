@@ -1036,4 +1036,22 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		
 		observerNotify();
 	}
+	
+	/**
+	 * 
+	 * This method getWearItemByName
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public BaseItem getWearItemByName(String name) {
+		Iterator<BaseItem> it = this.getWorn().iterator();
+		while (it.hasNext()) {
+			BaseItem i = it.next();
+			if (i.getName().equals(name)){
+				return i;
+			}
+		}
+		return null;
+	}
 }
