@@ -22,7 +22,6 @@ import ddg.map.entity.Chest;
  */
 public class Fighter extends Observable implements Cloneable, Serializable{
 	private static final long serialVersionUID = 1L;
-	private int id;
 	private String name;
 	private int level = 1;
 	private boolean isalive = true;
@@ -42,6 +41,8 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	private int gainedWisdom ;
 	private int gainedCharisma ;
 	private int gainedArmorClass ;
+	private int gainedAttackBonus ;
+	private int gainedDamageBonus ;
 	
 	private int totalStrength;
 	private int totalDexterity;
@@ -50,6 +51,8 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	private int totalWisdom;
 	private int totalCharisma;
 	private int totalArmorClass;
+	private int totalAttackBonus ;
+	private int totalDamageBonus ;
 	
 	private int hitPoints; 
 	private int attackBonus; 		
@@ -85,11 +88,17 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		armorClass = this.dexterity + 0;
 	}
 	
+	/**
+	 * This method clear backpack list
+	 */
 	public void clearBackpack() {
 		backpack.clear();
 		observerNotify();
 	}
 	
+	/**
+	 * This method clear list of worn items
+	 */
 	public void clearWornItems() {
 		wornItems.clear();
 		isArmorOn = false;
@@ -250,6 +259,22 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	}
 	
 	/**
+	 * Get the gainedAttackBonus of the character
+	 * @return gainedAttackBonus
+	 */
+	public int getGainedAttackBonus(){
+		return gainedAttackBonus;
+	}
+	
+	/**
+	 * Get the gainedDamageBonus of the character
+	 * @return gainedDamageBonus
+	 */
+	public int getGaineDamageBonus(){
+		return gainedDamageBonus;
+	}
+	
+	/**
 	 * Return the total Strength of the character
 	 * @return totalStrength
 	 */
@@ -310,6 +335,24 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public int getTotalArmorClass(){
 		totalArmorClass = getArmorClass() + gainedArmorClass;
 		return totalArmorClass;
+	}
+	
+	/**
+	 * Return the total Attack Bonus of the character
+	 * @return totalAttackBonus
+	 */
+	public int getTotalAttackBonus() {
+		totalAttackBonus = getAttackBonus() + gainedAttackBonus;
+		return totalAttackBonus;
+	}
+	
+	/**
+	 * Return the total Damage Bonus of the character
+	 * @return totaldDamageBonus
+	 */
+	public int getTotaldDamageBonus() {
+		totalDamageBonus = getDamageBonus() + gainedDamageBonus;
+		return totalDamageBonus;
 	}
 	
 	/**
@@ -578,6 +621,22 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	}
 	
 	/**
+	 * Set the gainedAttackBonus of the character
+	 * @param gainedDamageBonus
+	 */
+	public void setGainedAttackBonus(int gainedAttackBonus){
+		this.gainedAttackBonus = gainedAttackBonus;
+	}	
+	
+	/**
+	 * Set the gainedDamageBonus of the character
+	 * @param gainedDamageBonus
+	 */
+	public void setGainedDamageBonus(int gainedDamageBonus){
+		this.gainedDamageBonus = gainedDamageBonus;
+	}
+	
+	/**
 	 * Set the backpack of the character
 	 * @param backpack
 	 */
@@ -749,26 +808,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 				setGainedArmorClass(bonus);
 			}	
 		}
-	}
-	
-//	public boolean wearItem(BaseItem i) {
-//		Iterator<BaseItem> iterator = getWorn().iterator();
-//		while(iterator.hasNext()) {
-//			BaseItem next = iterator.next();
-//			if(next.getName().equals(i.getName())) {
-//				gainBonus(next.getIncrease(), next.getBonus(), "-");
-//				iterator.remove();
-//			}
-//		}
-//
-//		gainBonus(i.getIncrease(), i.getBonus(), "+");
-//		getWorn().add(i);
-//		
-//		return true;
-//    }
+	}	
 	
 	/**
-	 * 
+	 * This method allows a character wear an item
 	 * @param i
 	 * @return
 	 */
@@ -778,7 +821,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	
 	/**
 	 * 
-	 * This method is wear Item
+	 * This method allows a character wear an item
 	 * 
 	 * @param i
 	 * @param show
@@ -804,6 +847,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		return true;
 	}
 	
+	/**
+	 * This method allows a character open a chest
+	 * @param chest Chest object
+	 */
 	public void openChest(Chest chest) {
 		if(this.backpack.size()<Config.BACKPACK_SIZE){
 			backpack.add(chest.getItem());
@@ -911,6 +958,11 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		
 	}
 	
+	/**
+	 * This method caculates the hit points and return it
+	 * @param times
+	 * @return sum
+	 */
 	private int d10RollAndTimes(int times){
 		int sum = 0;
 		while(times>0){
@@ -920,6 +972,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		return sum;
 	}
 	
+	/**
+	 * This method clones a Fighter object and return it
+	 * @return newfighter
+	 */
 	public Fighter clone(){
 		Fighter newfighter = null;
 		try{
@@ -931,6 +987,12 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		return newfighter;
 	}
 	
+	/**
+	 * This method allows a player trade with a npc
+	 * @param playeritem Player's item
+	 * @param npc NPC
+	 * @param npcitem NPC's item
+	 */
 	public void trade(BaseItem playeritem, Fighter npc, BaseItem npcitem) {
 		if (npc != null && npcitem != null && playeritem!=null){
 			npc.backpack.remove(npcitem);		
@@ -947,6 +1009,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		observerNotify();
 	}
 	
+	/**
+	 * This method allow the character move an item from worn to backpack
+	 * @param selectedWorn
+	 */
 	public void takeoffEquipment(String selectedWorn) {
 		if(this.getWorn().size()==0) {
 			JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -992,6 +1058,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		}
 	}
 	
+	/**
+	 * This method save a Fighter object to the file
+	 * @param fighter The character
+	 */
 	public static void saveFighter(Fighter fighter){
 		System.out.println("save fighter======1");
 		
@@ -1013,10 +1083,19 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		}
 	}
 	
+	/**
+	 * This method refer to observerNotify method of Observerable class.
+	 */
 	private void observerNotify() {
 		setChanged();
 		notifyObservers(this);
 	}
+	
+	/**
+	 * This method lets the fighter equip the selected item
+	 * @param wearingType Type of the item
+	 * @param tempItem SelectedItem
+	 */
 	public void equip(String wearingType, BaseItem tempItem) {    			
 		try{
 			for (BaseItem i: getWorn()){
@@ -1039,10 +1118,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	
 	/**
 	 * 
-	 * This method getWearItemByName
+	 * This method get the item by its type
 	 * 
-	 * @param name
-	 * @return
+	 * @param name type of the item
+	 * @return i the item
 	 */
 	public BaseItem getWearItemByName(String name) {
 		Iterator<BaseItem> it = this.getWorn().iterator();
