@@ -479,39 +479,42 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 								fighter1.setHitpoints(fighter1.getLevel()
 										* (Dice.d10Roll() + fighter1.getModifier(fighter1.getTotalConstitution())));
 							}
-							FighterModel fm = new FighterModel();
-							String g = Utils.readFile(Config.CHARACTER_FILE);
-							fm = Utils.fromJson(g, FighterModel.class);
+							
+							Utils.saveFighter(fighter1);
+							
+//							FighterModel fm = new FighterModel();
+//							String g = Utils.readFile(Config.CHARACTER_FILE);
+//							fm = Utils.fromJson(g, FighterModel.class);
+//
+//							HashMap<String, Fighter> hm1 = new HashMap<>();
+//							if (fm != null) {
+//								System.out.println(fm);
+//								try {
+//									System.out.println("2" + fm);
+//									if (null != fm.getFighters()) {
+//										hm1 = fm.getFighters();
+//										Set<String> keySet1 = hm1.keySet();
+//										Iterator<String> it1 = keySet1.iterator();
+//
+//										while (it1.hasNext()) {
+//											String keyName = it1.next();
+//											if (keyName == fighter1.getName()) {
+//												JOptionPane.showMessageDialog(null, "There already exists a character with this name, please change a name.", "Warning",
+//														JOptionPane.WARNING_MESSAGE);												
+//											}
+//										}
+//									}
+//								} catch (NullPointerException ex) {
+//									System.out.println("there is a NullPointerException");
+//								}
+//							}
+//							hm1.put(fighter1.getName(), fighter1);
+//							fm.setFighters(hm1);
+//
+//							String gSave = Utils.toJson(fm);
+//							Utils.save2File(Config.CHARACTER_FILE, gSave);
 
-							HashMap<String, Fighter> hm1 = new HashMap<>();
-							if (fm != null) {
-								System.out.println(fm);
-								try {
-									System.out.println("2" + fm);
-									if (null != fm.getFighters()) {
-										hm1 = fm.getFighters();
-										Set<String> keySet1 = hm1.keySet();
-										Iterator<String> it1 = keySet1.iterator();
-
-										while (it1.hasNext()) {
-											String keyName = it1.next();
-											if (keyName == fighter1.getName()) {
-												JOptionPane.showMessageDialog(null, "There already exists a character with this name, please change a name.", "Warning",
-														JOptionPane.WARNING_MESSAGE);												
-											}
-										}
-									}
-								} catch (NullPointerException ex) {
-									System.out.println("there is a NullPointerException");
-								}
-							}
-							hm1.put(fighter1.getName(), fighter1);
-							fm.setFighters(hm1);
-
-							String gSave = Utils.toJson(fm);
-							Utils.save2File(Config.CHARACTER_FILE, gSave);
-
-							owner.hm1 = hm1;
+//							owner.hm1 = hm1;
 							dispose();
 							owner.setEnabled(true);
 							owner.setVisible(true);

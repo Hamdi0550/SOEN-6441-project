@@ -6,11 +6,19 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 
+import ddg.Config;
 import ddg.model.Fighter;
+import ddg.model.FighterModel;
 /**
  * This class include some static method which often used
  * 
@@ -106,7 +114,7 @@ public class Utils {
 
 	/**
 	 * This method displays the character's equipment information
-	 * @param fighter
+	 * @param fighter The character
 	 */
 	public static void displayFighterInfo(Fighter fighter) {
 		System.out.println("===========================");
@@ -130,5 +138,81 @@ public class Utils {
 		System.out.println(fighter.getBackpack());
 		System.out.println(fighter.getWorn());
 		System.out.println("===========================");		
+	}
+
+	/**
+	 * This method is to save a Fighter object to the file. Put the object in to a hashmap, then put
+	 * the hashmap into a model object, then save the model to the file.
+	 * @param fighter the character
+	 */
+	public static void saveFighter(Fighter fighter) {
+		FighterModel fm = new FighterModel();
+		String g = Utils.readFile(Config.CHARACTER_FILE);
+		fm = Utils.fromJson(g, FighterModel.class);
+
+		HashMap<String, Fighter> hm1 = new HashMap<>();
+//		if (fm != null) {
+			System.out.println(fm);
+			try {
+				System.out.println("2   " + fm);
+				if (null != fm.getFighters()) {
+					hm1 = fm.getFighters();
+					Set<String> keySet1 = hm1.keySet();
+					Iterator<String> it1 = keySet1.iterator();
+
+					while (it1.hasNext()) {
+						String keyName = it1.next();
+						if (keyName == fighter.getName()) {
+							JOptionPane.showMessageDialog(null, "There already exists a character with this name, please change a name.", "Warning",
+									JOptionPane.WARNING_MESSAGE);												
+						}
+					}
+				} else {
+					hm1.put(fighter.getName(), fighter);
+					fm.setFighters(hm1);
+
+					String gSave = Utils.toJson(fm);
+					Utils.save2File(Config.CHARACTER_FILE, gSave);					
+				}
+				
+			} catch (NullPointerException ex) {
+				System.out.println("there is a NullPointerException");
+			}
+//		}
+		
+	}
+
+	/**
+	 * This method is to read Fighter objects from the file and put them to a hashmap structure
+	 * @param jlistModel
+	 * @param hm The HashMap of character list
+	 * @return hm The HashMap of character list
+	 */
+	public static HashMap<String, Fighter> updateFighterList(DefaultListModel<String> jlistModel, HashMap<String, Fighter> hm) {
+        FighterModel fm = new FighterModel();
+        
+		String g = Utils.readFile(Config.CHARACTER_FILE);
+		fm = Utils.fromJson(g, FighterModel.class);
+//		if(fm != null){        			
+    		System.out.println(fm);
+    		try{
+    			System.out.println("2"+fm);
+        		if( null!=fm.getFighters() ){
+                    hm = fm.getFighters();
+                    Set<String> keySet1 = hm.keySet();
+                    Iterator<String> it1 = keySet1.iterator();
+                    
+                    while(it1.hasNext()){
+                    	String keyName = it1.next();
+                        jlistModel.addElement(keyName);
+                    }
+        		}
+    		}
+    		catch (NullPointerException ex){
+    			System.out.println("there is a NullPointerException");
+    		}        			
+//		}
+		return hm;
+		
 	}
 }

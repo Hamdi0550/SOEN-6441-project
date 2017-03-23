@@ -228,7 +228,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
         			isCreatingNew = false;
 					System.out.println(getThisFrame());
 					CharacterEditor.createAndShowGUI(getThisFrame());
-					setEnabled(false);
+//					setEnabled(false);
     	        }               
             }
         });
@@ -304,8 +304,7 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
 		armorClassTextF.setText(Integer.toString(fighter.getTotalArmorClass()));
 		hitPointsTextF.setText(Integer.toString(fighter.getHitPoints()));
 		attackBonusTextF.setText(Integer.toString(fighter.getAttackBonus()));
-		damageBonusTextF.setText(Integer.toString(fighter.getDamageBonus()));
-		
+		damageBonusTextF.setText(Integer.toString(fighter.getDamageBonus()));		
 		
 		strengthModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalStrength())));
 		dexModiferL.setText(Integer.toString(fighter.getModifier(fighter.getTotalDexterity())));
@@ -332,29 +331,12 @@ public class CharacterSelection extends JDialog implements ActionListener, ListS
             public void windowGainedFocus(WindowEvent e) {  
             	jlistModel.clear();
                 System.out.println("The CS window is focused.");  
-                FighterModel fm = new FighterModel();
                 
-        		String g = Utils.readFile(Config.CHARACTER_FILE);
-        		fm = Utils.fromJson(g, FighterModel.class);
-        		if(fm != null){        			
-            		System.out.println(fm);
-            		try{
-            			System.out.println("2"+fm);
-                		if( null!=fm.getFighters() ){
-                            hm1 = fm.getFighters();
-                            Set<String> keySet1 = hm1.keySet();
-                            Iterator<String> it1 = keySet1.iterator();
-                            
-                            while(it1.hasNext()){
-                            	String keyName = it1.next();
-                                jlistModel.addElement(keyName);
-                            }
-                		}
-            		}
-            		catch (NullPointerException ex){
-            			System.out.println("there is a NullPointerException");
-            		}        			
-        		}
+                hm1 = Utils.updateFighterList(jlistModel, hm1);
+                
+                System.out.println("jm = " + jlistModel);
+                System.out.println("hm = " + hm1);
+
         		if (fighter != null){
         			System.out.println(fighter.isHelmetOn() + " " + fighter.getWorn().size() + " " + fighter.getWorn());
         		}
