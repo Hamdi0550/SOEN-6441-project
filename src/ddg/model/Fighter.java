@@ -843,7 +843,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	
 	/**
 	 * This method show a character being attacked
-	 * @param npc
+	 * @param npc the npc is attacked
 	 */
 	public void attackCaracter(Fighter npc) {
 //		int harm = ;
@@ -851,6 +851,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		npc.beAttacked(15);
 	}
 	
+	/**
+	 * call this function if the character is attacked
+	 * @param i harm values that this character will be hurt
+	 */
 	public void beAttacked(int i) {
 		this.hitPoints -= i;
 		if(this.hitPoints<=0){
@@ -861,16 +865,26 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		observerNotify();
 	}
 	
+	/**
+	 * @return true if this character is  alive, else return false
+	 */
 	public boolean isAlive() {
 		return isalive;
 	}
 	
+	/**
+	 * call this function if character's hit points down to 0
+	 */
 	public void die() {
 		this.isalive = false;
 	}
 	
+	/**
+	 * level up and add hit points
+	 */
 	public void levelUp() {
 		this.level++;
+		this.hitPoints = this.hitPoints + d10RollAndTimes(1);
 		observerNotify();
 	}
 	
@@ -880,19 +894,30 @@ public class Fighter extends Observable implements Cloneable, Serializable{
     */
 	// scores values have to be changed
 	public void updateLevel(int targetLevel){
-		int basehitpoint = this.hitPoints/this.level;
-		if(targetLevel != level){
-			this.level = targetLevel;
-			this.hitPoints = basehitpoint * this.level;
-		}
-		for(BaseItem item : this.backpack){
-			item.updateLevel(targetLevel);
-		}
 		
 		for(BaseItem item : this.wornItems){
 			item.updateLevel(targetLevel);
 			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "=");
 		}
+		
+		for(BaseItem item : this.backpack){
+			item.updateLevel(targetLevel);
+		}
+		
+		if(targetLevel != level){
+			this.hitPoints = this.hitPoints + d10RollAndTimes(targetLevel - this.level);
+			this.level = targetLevel;
+		}
+		
+	}
+	
+	private int d10RollAndTimes(int times){
+		int sum = 0;
+		while(times>0){
+			sum += Dice.d10Roll() + getModifier(getConstitution());
+			times--;
+		}
+		return sum;
 	}
 	
 	public Fighter clone(){
