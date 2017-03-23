@@ -757,7 +757,18 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @return
 	 */
 	public boolean wearItem(BaseItem i) {
-
+		return wearItem(i, true);
+    }
+	
+	/**
+	 * 
+	 * This method is wear Item
+	 * 
+	 * @param i
+	 * @param show
+	 * @return
+	 */
+	public boolean wearItem(BaseItem i, boolean show) {
 		for (BaseItem item: this.getWorn()){
 			if (item.getName().equals(i.getName())){
 				this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "-");
@@ -771,10 +782,11 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		this.getBackpack().remove(i);
 		this.getWorn().add(i);
 		this.setEquipOn(i.getName());
-		JOptionPane.showMessageDialog(null, "The item is worn.", "Message", JOptionPane.WARNING_MESSAGE); 
+		if(show)
+			JOptionPane.showMessageDialog(null, "The item is worn.", "Message", JOptionPane.WARNING_MESSAGE); 
 		observerNotify();
 		return true;
-    }
+	}
 	
 	public void openChest(Chest chest) {
 		if(this.backpack.size()<Config.BACKPACK_SIZE){

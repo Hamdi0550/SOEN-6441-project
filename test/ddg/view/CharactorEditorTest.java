@@ -62,7 +62,7 @@ public class CharactorEditorTest {
 		BaseItem i = new BaseItem(BaseItem.RING, 3, Ability.STRENGTH);
 		int init = fighter.getTotalStrength();
 
-		fighter.wearItem(i);
+		fighter.wearItem(i, false);
 		
 		int after = fighter.getTotalStrength();
 		assertTrue(after-init==3);
@@ -74,9 +74,9 @@ public class CharactorEditorTest {
 		BaseItem i = new BaseItem(BaseItem.RING, 3, Ability.STRENGTH);
 		i.setBonus(3);
 
-		fighter.wearItem(i);
-		fighter.wearItem(i);
-		fighter.wearItem(i);
+		fighter.wearItem(i, false);
+		fighter.wearItem(i, false);
+		fighter.wearItem(i, false);
 		assertTrue(fighter.getWorn().size()-n==1);
 	}
 	
