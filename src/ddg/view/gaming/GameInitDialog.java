@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 
 import ddg.Config;
 import ddg.campaign.entity.BaseCampaign;
-import ddg.map.entity.Map;
 import ddg.model.CampaignEditorModel;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;

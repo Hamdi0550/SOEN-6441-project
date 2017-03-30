@@ -11,12 +11,11 @@ import javax.swing.SwingUtilities;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.view.CampaignEditor;
-import ddg.view.CharacterEditor;
 import ddg.view.CharacterSelection;
-import ddg.view.OldCharactorEditor;
 import ddg.view.ItemEditor;
 import ddg.view.MainPage;
 import ddg.view.MapEditor;
+import ddg.view.OldCharactorEditor;
 /**
  * This is the DDGame Main page
  * 

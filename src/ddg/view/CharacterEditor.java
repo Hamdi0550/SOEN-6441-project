@@ -1,18 +1,34 @@
 package ddg.view;
 
-import java.util.*;
-import java.io.FileNotFoundException;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.awt.event.WindowListener;
+import java.util.Observable;
+import java.util.Observer;
 
-import javax.swing.*;
-
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.event.*;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import ddg.Config;
 import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
-import ddg.model.FighterModel;
 import ddg.utils.Dice;
 import ddg.utils.Utils;
 import ddg.utils.builder.BullyFighterBuilder;
@@ -20,10 +36,6 @@ import ddg.utils.builder.FighterBuilder;
 import ddg.utils.builder.FighterExplorer;
 import ddg.utils.builder.NimbleFighterBuilder;
 import ddg.utils.builder.TankFighterBuilder;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.border.*;
 
 /**
  * 

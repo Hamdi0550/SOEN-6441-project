@@ -1,15 +1,18 @@
 package ddg.model;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.Observable;
 
 import javax.swing.JOptionPane;
 
 import ddg.Config;
+import ddg.item.entity.Ability;
+import ddg.item.entity.BaseItem;
+import ddg.map.entity.Chest;
 import ddg.utils.Dice;
 import ddg.utils.Utils;
-import ddg.view.BackpackTrade;
-import ddg.item.entity.*;
-import ddg.map.entity.Chest;
 
 
 /**

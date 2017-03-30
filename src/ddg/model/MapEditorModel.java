@@ -2,11 +2,10 @@ package ddg.model;
 
 import java.util.ArrayList;
 
-import ddg.item.entity.BaseItem;
+import javax.swing.DefaultListModel;
+
 import ddg.item.entity.ListEntry;
 import ddg.map.entity.Map;
-
-import javax.swing.*;
 
 /**
  * @author Bo

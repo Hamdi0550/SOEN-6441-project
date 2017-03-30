@@ -1,24 +1,28 @@
 package ddg.view;
-import java.util.*;
-import java.io.FileNotFoundException;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import javax.rmi.CORBA.Util;
-import javax.swing.*;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-
-import ddg.Config;
 import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
-import ddg.model.FighterModel;
-import ddg.utils.UtilityStorage;
 import ddg.utils.Utils;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.border.*;
 /**
  * 
  * 

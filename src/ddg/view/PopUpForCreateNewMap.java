@@ -1,19 +1,23 @@
 package ddg.view;
 
-import ddg.Config;
-import ddg.map.entity.Map;
-import ddg.model.MapEditorModel;
-import ddg.view.component.DButton;
-import ddg.view.component.ListEntryCellRenderer;
-
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import ddg.view.component.DButton;
 
 /**
  * dialog for asking map's size when user create a new map

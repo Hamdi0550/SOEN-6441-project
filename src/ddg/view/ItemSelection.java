@@ -1,25 +1,34 @@
 package ddg.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.util.*;
+import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
-import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
-import ddg.model.FighterModel;
 import ddg.model.ItemEditorModel;
 import ddg.utils.UtilityStorage;
 import ddg.utils.Utils;
-import ddg.view.component.DComboBox;
 import ddg.view.component.ListEntryCellRenderer;
 /**
  * 
