@@ -62,15 +62,15 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
     private int yIndex = -1; 
 	protected boolean isCharacter = false;
     
-	ImageIcon floor = new ImageIcon("floor.png");
-	ImageIcon chest = new ImageIcon("chest.png");
-	ImageIcon emptychest = new ImageIcon("emptychest.png");
-	ImageIcon wall = new ImageIcon("wall.png");
-	ImageIcon indoor = new ImageIcon("indoor.png");
-	ImageIcon outdoor = new ImageIcon("outdoor.png");
-	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
-	ImageIcon mainplayer = new ImageIcon("Mainplayer.png");
-	ImageIcon deadnpc = new ImageIcon("deadnpc.png");
+	ImageIcon floor = new ImageIcon("res/floor.png");
+	ImageIcon chest = new ImageIcon("res/chest.png");
+	ImageIcon emptychest = new ImageIcon("res/emptychest.png");
+	ImageIcon wall = new ImageIcon("res/wall.png");
+	ImageIcon indoor = new ImageIcon("res/indoor.png");
+	ImageIcon outdoor = new ImageIcon("res/outdoor.png");
+	ImageIcon playcharacter = new ImageIcon("res/playcharacter.png");
+	ImageIcon mainplayer = new ImageIcon("res/Mainplayer.png");
+	ImageIcon deadnpc = new ImageIcon("res/deadnpc.png");
 	JTextArea log = new JTextArea();
 	
 	/**

@@ -59,12 +59,12 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	JPanel mapPanel;
 	JPanel mapiconPanel;
 	JComboBox<ImageIcon> optionsofelementoncell;
-	ImageIcon floor = new ImageIcon("floor.png");
-	ImageIcon chest = new ImageIcon("chest.png");
-	ImageIcon wall = new ImageIcon("wall.png");
-	ImageIcon indoor = new ImageIcon("indoor.png");
-	ImageIcon outdoor = new ImageIcon("outdoor.png");
-	ImageIcon playcharacter = new ImageIcon("playcharacter.png");
+	ImageIcon floor = new ImageIcon("res/floor.png");
+	ImageIcon chest = new ImageIcon("res/chest.png");
+	ImageIcon wall = new ImageIcon("res/wall.png");
+	ImageIcon indoor = new ImageIcon("res/indoor.png");
+	ImageIcon outdoor = new ImageIcon("res/outdoor.png");
+	ImageIcon playcharacter = new ImageIcon("res/playcharacter.png");
 	
 	public MapEditor(ActionListener a) {
 		this.listener = a;
