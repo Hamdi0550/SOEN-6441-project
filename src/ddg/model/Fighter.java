@@ -8,9 +8,9 @@ import java.util.Observable;
 import javax.swing.JOptionPane;
 
 import ddg.Config;
-import ddg.item.entity.Ability;
-import ddg.item.entity.BaseItem;
-import ddg.map.entity.Chest;
+import ddg.model.entity.Ability;
+import ddg.model.entity.BaseItem;
+import ddg.model.entity.Chest;
 import ddg.utils.Dice;
 import ddg.utils.Utils;
 

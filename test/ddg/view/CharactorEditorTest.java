@@ -13,11 +13,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ddg.Config;
-import ddg.item.entity.Ability;
-import ddg.item.entity.BaseItem;
-import ddg.map.entity.Chest;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
+import ddg.model.entity.Ability;
+import ddg.model.entity.BaseItem;
+import ddg.model.entity.Chest;
 import ddg.utils.Utils;
 
 /**

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 
-import ddg.item.entity.ListEntry;
-import ddg.map.entity.Map;
+import ddg.model.entity.ListEntry;
+import ddg.model.entity.Map;
 
 /**
  * @author Bo

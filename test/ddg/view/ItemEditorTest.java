@@ -3,15 +3,16 @@
  */
 package ddg.view;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ddg.Config;
-import ddg.item.entity.BaseItem;
 import ddg.model.ItemEditorModel;
+import ddg.model.entity.BaseItem;
 import ddg.utils.Utils;
 
 /**

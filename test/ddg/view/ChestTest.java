@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import ddg.item.entity.BaseItem;
-import ddg.map.entity.Chest;
+import ddg.model.entity.BaseItem;
+import ddg.model.entity.Chest;
 
 public class ChestTest {
 	Chest chestnotemp;

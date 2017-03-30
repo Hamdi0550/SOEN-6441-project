@@ -14,9 +14,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ddg.Config;
-import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
+import ddg.model.entity.BaseItem;
 import ddg.utils.Utils;
 
 /**

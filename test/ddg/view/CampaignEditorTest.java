@@ -3,13 +3,13 @@
  */
 package ddg.view;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ddg.campaign.entity.BaseCampaign;
 import ddg.model.CampaignEditorModel;
+import ddg.model.entity.BaseCampaign;
 
 /**
  * 

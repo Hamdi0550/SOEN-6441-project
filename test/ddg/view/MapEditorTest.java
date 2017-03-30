@@ -1,16 +1,18 @@
 package ddg.view;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import org.junit.Before;
+import org.junit.Test;
+
 import ddg.Config;
-import ddg.map.entity.Map;
 import ddg.model.MapEditorModel;
+import ddg.model.entity.Map;
 import ddg.utils.ValidationTool;
-import org.junit.*;
 /**
  * This class is test for MapEditor
  *

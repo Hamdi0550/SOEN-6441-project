@@ -1,7 +1,7 @@
 package ddg.utils;
 
-import ddg.item.entity.BaseItem;
 import ddg.model.Fighter;
+import ddg.model.entity.BaseItem;
 
 /**
  * 

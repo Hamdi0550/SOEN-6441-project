@@ -9,10 +9,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ddg.Config;
-import ddg.campaign.entity.BaseCampaign;
 import ddg.model.CampaignEditorModel;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
+import ddg.model.entity.BaseCampaign;
+import ddg.ui.view.MapPanelInGame;
 import ddg.utils.Utils;
 
 /**
