@@ -40,6 +40,7 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 	private DComboBox<String> typeComboBox;
 	private DComboBox<String> abilityComboBox;
 	private DComboBox<String> bonusComboBox;
+	private DComboBox<String> weaponTypeComboBox;
 	
 	/**
 	 * 
@@ -118,6 +119,12 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 	 */
 	private void addEditorView() {
 		JPanel contentPanel = new JPanel();
+
+		weaponTypeComboBox = new DComboBox<String>(BaseItem.WEAPON_TYPE);
+		weaponTypeComboBox.addItem(BaseItem.WEAPON_MELEE);
+		weaponTypeComboBox.addItem(BaseItem.WEAPON_RANGED);
+		weaponTypeComboBox.addDItemListener(this);
+		contentPanel.add(weaponTypeComboBox);
 		
 		abilityComboBox = new DComboBox<String>(BaseItem.ABILITY);
 		abilityComboBox.addDItemListener(this);
@@ -190,6 +197,8 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 					} else if(BaseItem.BONUS.equals(name)) {
 						i = bonusComboBox.getSelectedIndex();
 						item.setBonus(i+1);
+					} else if(BaseItem.WEAPON_TYPE.equals(name)) {
+						item.setWeaponType((String)weaponTypeComboBox.getSelectedItem());
 					}
 				}
 			}
@@ -203,7 +212,12 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 			if(index >= 0) {
 				System.out.println("list select:"+index);
 				BaseItem item = model.getItemByIndex(index);
-				
+				if(BaseItem.WEAPON.equals(item.getName())) {
+					weaponTypeComboBox.setVisible(true);
+					weaponTypeComboBox.setSelectedItem(item.getWeaponType());
+				} else {
+					weaponTypeComboBox.setVisible(false);
+				}
 				abilityComboBox.removeDItemListener(this);
 				abilityComboBox.removeAllItems();
 				

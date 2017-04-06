@@ -15,6 +15,7 @@ public class BaseItem implements Item, java.io.Serializable{
 	public static final String TYPE = "type";
 	public static final String ABILITY = "ability";
 	public static final String BONUS = "bonus";
+	public static final String WEAPON_TYPE = "weaponType";
 	
 	public static final String HELMET = "Helmet";
 	public static final String ARMOR = "Armor";
@@ -23,6 +24,8 @@ public class BaseItem implements Item, java.io.Serializable{
 	public static final String BELT = "Belt";
 	public static final String BOOTS = "Boots";
 	public static final String WEAPON = "Weapon";
+	public static final String WEAPON_MELEE = "Melee";
+	public static final String WEAPON_RANGED = "Ranged";
 	public static final String[] NAME = {HELMET, ARMOR, SHIELD, RING, BELT, BOOTS, WEAPON};
 	
 	@SerializedName(value = "id")
@@ -35,6 +38,19 @@ public class BaseItem implements Item, java.io.Serializable{
 	private String[] ability;
 	@SerializedName(value = "increase")
 	private String increase;
+	private String weaponType = WEAPON_MELEE;//0:Melee 1:Ranged
+	
+	public String getWeaponType() {
+		if(!WEAPON.equals(name))
+			return null;
+		return weaponType;
+	}
+
+	public void setWeaponType(String weaponType) {
+		if(!WEAPON.equals(name))
+			return;
+		this.weaponType = weaponType;
+	}
 	
 	private int level = 0;
 	public int getLevel() {
@@ -129,6 +145,19 @@ public class BaseItem implements Item, java.io.Serializable{
 	 * @return int bonus value
 	 */
 	public int getBonus() {
+		int weaponBonus = 0;
+		if(WEAPON.equals(name)) {
+			if(Ability.ATTACK_BONUS.equals(ability)) {
+				
+			} else if(Ability.DAMAGE_BONUS.equals(ability)) {
+				
+			}
+			if(WEAPON_MELEE.equals(weaponType)) {
+				
+			} else if(WEAPON_RANGED.equals(weaponType)) {
+				
+			}
+		}
 		return bonus + getBonusByLevel();
 	}
 
