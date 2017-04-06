@@ -11,6 +11,8 @@ import ddg.Config;
 import ddg.model.entity.Ability;
 import ddg.model.entity.BaseItem;
 import ddg.model.entity.Chest;
+import ddg.strategy.IStrategy;
+import ddg.strategy.IStrategy.TurnCallback;
 import ddg.utils.Dice;
 import ddg.utils.Utils;
 
@@ -70,7 +72,14 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	private ArrayList<BaseItem> backpack = new ArrayList<>();
 	private ArrayList<BaseItem> wornItems = new ArrayList<>();
 	
+	private IStrategy strategyList;
+	public void setStrategy(IStrategy strategy) {
+		strategyList = strategy;
+	}
 	
+	public void turn(TurnCallback cb) {
+		strategyList.turn(cb);
+	}
 	/**
 	 * Constructor
 	 */

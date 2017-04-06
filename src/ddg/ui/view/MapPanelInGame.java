@@ -35,6 +35,11 @@ import ddg.model.entity.BaseCampaign;
 import ddg.model.entity.BaseItem;
 import ddg.model.entity.Chest;
 import ddg.model.entity.Map;
+import ddg.strategy.AgressiveStrategy;
+import ddg.strategy.FriendlyStrategy;
+import ddg.strategy.HumanStrategy;
+import ddg.strategy.IStrategy.TurnCallback;
+import ddg.ui.TurnDriven;
 import ddg.ui.view.dialog.BackpackTrade;
 import ddg.ui.view.dialog.DDGaming;
 
@@ -72,7 +77,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	ImageIcon mainplayer = new ImageIcon("res/Mainplayer.png");
 	ImageIcon deadnpc = new ImageIcon("res/deadnpc.png");
 	JTextArea log = new JTextArea();
-	
+	private TurnDriven turnDriven;
+	private TurnCallback mCallBack;
 	/**
 	 * Constructor
 	 * @param fighter the play character who is chosen by user
@@ -81,12 +87,41 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	public MapPanelInGame(Fighter fighter, BaseCampaign campaign){
 		this.campaign = campaign;
 		this.fighter = fighter;
+		turnDriven = new TurnDriven();
 		setLayout(new BorderLayout());
 		setFocusable(true);
 		
 		initdata();
 		this.playingMap.addObserver(this);
 		initcontent();
+		initStrategy();
+	}
+
+	protected void initStrategy() {
+		this.fighter.setStrategy(new HumanStrategy() {
+
+			@Override
+			protected void moveCells(TurnCallback cb) {
+				mCallBack = cb;
+				System.out.println(fighter.getName() + " may moveCells, when finished, click again.");
+			}
+
+			@Override
+			protected void attack(TurnCallback cb) {
+				mCallBack = cb;
+				System.out.println(fighter.getName() + " may attack, when finished, click again.");
+			}
+
+			@Override
+			protected void interaction(TurnCallback cb) {
+				mCallBack = cb;
+				System.out.println(fighter.getName() + " may interaction, when finished, click again.");
+			}
+			
+		});
+		turnDriven.addFighter(this.fighter);
+		//should add the other fighter
+		turnDriven.startTurn();
 	}
 	
 	/**
@@ -310,6 +345,34 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		        	characterPanel.iconL.setIcon(Config.NPC_ICON);
 		        	inventoryPanel.updateView(selectedCharacter, false);
 		        	System.out.println(selectedCharacter.getName());
+		        	/********shoud move to init method**********/
+		        	boolean friendly = playingMap.getCellsinthemap()[yIndex][xIndex].getIsfriendly();
+		        	if(friendly) {
+		        		selectedCharacter.setStrategy(new FriendlyStrategy() {
+
+							@Override
+							protected void wander(TurnCallback cb) {
+								// TODO Auto-generated method stub
+								System.out.println(selectedCharacter.getName() + " may wander, when finished, callback.");
+								cb.finish();
+							}
+		        			
+		        		});
+			    		turnDriven.addFighter(selectedCharacter);
+		        	} else {
+		        		selectedCharacter.setStrategy(new AgressiveStrategy() {
+
+							@Override
+							protected void searchPlayer(TurnCallback cb) {
+								// TODO Auto-generated method stub
+								System.out.println(selectedCharacter.getName() + " may searchPlayer, when finished, callback.");
+								cb.finish();
+							}
+		        			
+		        		});
+			    		turnDriven.addFighter(selectedCharacter);
+		        	}
+		        	
 		        }
 				else if(xIndex == yofplayer && yIndex == xofplayer){
 		        	isCharacter = true;
@@ -488,6 +551,12 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().contains("Inventory")) {
 			System.out.println("OPEN Inventory");
+			//////TEMP
+			if(mCallBack!=null) {
+				mCallBack.finish();
+				return;
+			}
+			//////TEMP
 			if(inventoryPanel.isVisible()) {
 				inventoryPanel.setVisible(false);
 				requestFocus();

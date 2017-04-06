@@ -2,7 +2,7 @@ package ddg.utils;
 
 public class Dice {
 	
-	public int d20Roll(){
+	public static int d20Roll(){
 		int diceNumber = ((int) (Math.random()*100)) % 20;
 		return (diceNumber + 1);
 	}
