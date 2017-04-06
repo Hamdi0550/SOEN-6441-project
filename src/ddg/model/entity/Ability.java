@@ -17,4 +17,14 @@ public class Ability {
 	public static final String ARMOR_CLASS = "Armor class";
 	public static final String ATTACK_BONUS = "Attack bonus";
 	public static final String DAMAGE_BONUS = "Damage bonus";
+	
+	/**
+	 * Constructors
+	 * 
+	 */
+	public Ability() {
+		super();
+	}
+
+	String getName(){return "";}
 }

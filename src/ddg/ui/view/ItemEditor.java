@@ -17,8 +17,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
+import ddg.factory.MagicFactory;
 import ddg.model.ItemEditorModel;
 import ddg.model.entity.BaseItem;
+import ddg.model.entity.Item;
+import ddg.model.entity.MagicItem;
 import ddg.ui.view.component.DButton;
 import ddg.ui.view.component.DComboBox;
 import ddg.ui.view.component.ListEntryCellRenderer;
@@ -41,6 +44,9 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 	private DComboBox<String> abilityComboBox;
 	private DComboBox<String> bonusComboBox;
 	private DComboBox<String> weaponTypeComboBox;
+	private DComboBox<String> magicWeaponComboBox;
+	private JList magicList;
+	private JScrollPane listScrollPane;
 	
 	/**
 	 * 
@@ -120,12 +126,6 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 	private void addEditorView() {
 		JPanel contentPanel = new JPanel();
 
-		weaponTypeComboBox = new DComboBox<String>(BaseItem.WEAPON_TYPE);
-		weaponTypeComboBox.addItem(BaseItem.WEAPON_MELEE);
-		weaponTypeComboBox.addItem(BaseItem.WEAPON_RANGED);
-		weaponTypeComboBox.addDItemListener(this);
-		contentPanel.add(weaponTypeComboBox);
-		
 		abilityComboBox = new DComboBox<String>(BaseItem.ABILITY);
 		abilityComboBox.addDItemListener(this);
 		
@@ -136,8 +136,39 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 		bonusComboBox.addDItemListener(this);
 		contentPanel.add(abilityComboBox);
 		contentPanel.add(bonusComboBox);
-
-		add(contentPanel, BorderLayout.CENTER);
+		
+		weaponTypeComboBox = new DComboBox<String>(BaseItem.WEAPON_TYPE);
+		weaponTypeComboBox.addItem(BaseItem.WEAPON_MELEE);
+		weaponTypeComboBox.addItem(BaseItem.WEAPON_RANGED);
+		weaponTypeComboBox.addDItemListener(this);
+		contentPanel.add(weaponTypeComboBox);
+		//Add for weapon
+		magicWeaponComboBox = new DComboBox<String>(MagicItem.WEAPON_MAGIC_ABILITY);
+		magicWeaponComboBox.addItem("MAGIC");
+		for(String i : MagicItem.MAGIC) {
+			magicWeaponComboBox.addItem("  +  " + i);
+		}
+		magicWeaponComboBox.addDItemListener(this);
+		contentPanel.add(magicWeaponComboBox);
+	        
+	        
+		JPanel listPanel = new JPanel();
+		BorderLayout layout = new BorderLayout();
+		listPanel.setLayout(layout);
+		listPanel.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT - 5*Config.BTN_HEIGHT));
+		DefaultListModel l = new DefaultListModel();
+		magicList = new JList(l);
+		magicList.setCellRenderer(new ListEntryCellRenderer());
+		magicList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		magicList.addListSelectionListener(this);
+		magicList.setVisibleRowCount(10);
+        listScrollPane = new JScrollPane(magicList);
+        listScrollPane.setPreferredSize(new Dimension(Config.OPTION_WIDTH, Config.OPTION_HEIGHT - 5*Config.BTN_HEIGHT));
+       
+        listPanel.add(listScrollPane, BorderLayout.SOUTH);
+        listPanel.add(contentPanel, BorderLayout.CENTER);
+		
+        add(listPanel, BorderLayout.CENTER);
 	}
 
 	/**
@@ -187,6 +218,23 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 					list.ensureIndexIsVisible(l.size()-1);
 					typeComboBox.setSelectedIndex(0);
 				}
+			} if(MagicItem.WEAPON_MAGIC_ABILITY.equals(name)) {
+				int add = magicWeaponComboBox.getSelectedIndex();
+				if(add > 0) {
+					int index = list.getSelectedIndex();
+					if(index >= 0) {
+						BaseItem magic = model.getItemByIndex(index);
+//						if(item instanceof MagicItem) {
+//							MagicItem magic = (MagicItem)item;
+							magic.addAbility(MagicFactory.getMagic(MagicItem.MAGIC[add-1]));
+							DefaultListModel l = magic.getListModel();
+							magicList.setModel(l);
+							magicList.setSelectedIndex(l.size()-1);
+							magicList.ensureIndexIsVisible(l.size()-1);
+							magicWeaponComboBox.setSelectedIndex(0);
+//						}
+					}
+				}
 			} else {
 				int index = list.getSelectedIndex();
 				if(index >= 0) {
@@ -215,8 +263,12 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 				if(BaseItem.WEAPON.equals(item.getName())) {
 					weaponTypeComboBox.setVisible(true);
 					weaponTypeComboBox.setSelectedItem(item.getWeaponType());
+					magicWeaponComboBox.setVisible(true);
+					listScrollPane.setVisible(true);
 				} else {
 					weaponTypeComboBox.setVisible(false);
+					magicWeaponComboBox.setVisible(false);
+					listScrollPane.setVisible(false);
 				}
 				abilityComboBox.removeDItemListener(this);
 				abilityComboBox.removeAllItems();

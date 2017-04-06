@@ -10,6 +10,5 @@ public interface Item {
 	String getId();
 	String getName();
 	int getBonus();
-	String[] getAbility();
 	String getIncrease();
 }

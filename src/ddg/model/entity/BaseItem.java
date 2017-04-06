@@ -1,5 +1,9 @@
 package ddg.model.entity;
 
+import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -39,6 +43,20 @@ public class BaseItem implements Item, java.io.Serializable{
 	@SerializedName(value = "increase")
 	private String increase;
 	private String weaponType = WEAPON_MELEE;//0:Melee 1:Ranged
+	
+	public ArrayList<Ability> magic = new ArrayList<Ability>();
+	
+	public void addAbility(Ability a) {
+		magic.add(a);
+	}
+	
+	public DefaultListModel getListModel() {
+		DefaultListModel l = new DefaultListModel();
+		for(Ability i : magic) {
+			l.addElement(new ListEntry(i.getName()));
+		}
+		return l;
+	}
 	
 	public String getWeaponType() {
 		if(!WEAPON.equals(name))

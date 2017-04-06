@@ -64,10 +64,6 @@ public class AdapterItem implements Item, Serializable {
 		return this.item.getBonus();
 	}
 	@Override
-	public String[] getAbility() {
-		return this.item.getAbility();
-	}
-	@Override
 	public String getIncrease() {
 		return this.item.getIncrease();
 	}
