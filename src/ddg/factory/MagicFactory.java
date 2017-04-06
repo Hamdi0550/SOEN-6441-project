@@ -40,17 +40,18 @@ public class MagicFactory {
 	}
 
 	public static Ability getMagic(String magic) {
-		if(MagicItem.FREEZING.equals(magic)) {
-			return new Freezing();
-		} else if(MagicItem.BURNING.equals(magic)) {
-			return new Burning();
-		} else if(MagicItem.SLAYING.equals(magic)) {
-			return new Slaying();
-		} else if(MagicItem.FRIGHTENING.equals(magic)) {
-			return new Frightening();
-		} else if(MagicItem.PACIFYING.equals(magic)) {
-			return new Pacifying();
-		}
-		return null;
+		return new Ability(magic);
+//		if(MagicItem.FREEZING.equals(magic)) {
+//			return new Freezing();
+//		} else if(MagicItem.BURNING.equals(magic)) {
+//			return new Burning();
+//		} else if(MagicItem.SLAYING.equals(magic)) {
+//			return new Slaying();
+//		} else if(MagicItem.FRIGHTENING.equals(magic)) {
+//			return new Frightening();
+//		} else if(MagicItem.PACIFYING.equals(magic)) {
+//			return new Pacifying();
+//		}
+//		return null;
 	}
 }

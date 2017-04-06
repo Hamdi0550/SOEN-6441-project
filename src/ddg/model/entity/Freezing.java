@@ -27,8 +27,8 @@ public class Freezing extends Ability {
 	 * Constructors
 	 * 
 	 */
-	public Freezing() {
-		// TODO Auto-generated constructor stub
+	public Freezing(String name) {
+		super(name);
 	}
 
 	@Override

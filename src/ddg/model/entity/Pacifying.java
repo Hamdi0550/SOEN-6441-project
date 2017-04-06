@@ -27,8 +27,8 @@ public class Pacifying extends Ability {
 	 * Constructors
 	 * 
 	 */
-	public Pacifying() {
-		// TODO Auto-generated constructor stub
+	public Pacifying(String name) {
+		super(name);
 	}
 
 	@Override

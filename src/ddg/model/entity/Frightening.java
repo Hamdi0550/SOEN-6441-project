@@ -27,10 +27,10 @@ public class Frightening extends Ability {
 	 * Constructors
 	 * 
 	 */
-	public Frightening() {
-		// TODO Auto-generated constructor stub
+	public Frightening(String name) {
+		super(name);
 	}
-
+	
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub

@@ -18,13 +18,14 @@ public class Ability {
 	public static final String ATTACK_BONUS = "Attack bonus";
 	public static final String DAMAGE_BONUS = "Damage bonus";
 	
+	private String name;
 	/**
 	 * Constructors
 	 * 
 	 */
-	public Ability() {
-		super();
+	public Ability(String name) {
+		this.name = name;
 	}
 
-	String getName(){return "";}
+	String getName(){return name;}
 }

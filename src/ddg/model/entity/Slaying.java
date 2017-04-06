@@ -27,8 +27,8 @@ public class Slaying extends Ability {
 	 * Constructors
 	 * 
 	 */
-	public Slaying() {
-		// TODO Auto-generated constructor stub
+	public Slaying(String name) {
+		super(name);
 	}
 
 	@Override

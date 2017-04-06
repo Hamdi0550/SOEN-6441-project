@@ -27,8 +27,8 @@ public class Burning extends Ability {
 	 * Constructors
 	 * 
 	 */
-	public Burning() {
-		// TODO Auto-generated constructor stub
+	public Burning(String name) {
+		super(name);
 	}
 
 	@Override

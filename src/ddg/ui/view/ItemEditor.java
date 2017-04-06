@@ -265,6 +265,10 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 					weaponTypeComboBox.setSelectedItem(item.getWeaponType());
 					magicWeaponComboBox.setVisible(true);
 					listScrollPane.setVisible(true);
+						BaseItem magic = model.getItemByIndex(index);
+						DefaultListModel l = magic.getListModel();
+						magicList.setModel(l);
+						magicList.ensureIndexIsVisible(l.size()-1);
 				} else {
 					weaponTypeComboBox.setVisible(false);
 					magicWeaponComboBox.setVisible(false);
