@@ -1,5 +1,6 @@
 package ddg.model.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,8 @@ import java.util.ArrayList;
  * @author Hamzah Hamdi
  * @date Mar 2, 2017
  */
-public class BaseCampaign {
+public class BaseCampaign implements Serializable{
+	private static final long serialVersionUID = -1823704044235738333L;
 
 	public static final String NAME = "Campaign";
 

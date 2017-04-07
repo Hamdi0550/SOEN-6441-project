@@ -181,7 +181,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 				int y = e.getY()/50;
 				
 				ImageIcon icon = (ImageIcon)optionsofelementoncell.getSelectedItem();
-				char num = icon.toString().charAt(0);
+				char num = icon.toString().charAt(4);
 				System.out.println(x+"<>"+y);
 				System.out.println(num);
 				

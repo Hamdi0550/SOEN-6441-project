@@ -81,6 +81,11 @@ public class DDGameMain extends JFrame implements ActionListener {
 		dialog.popShow(this, "Gaming");
 	}
 	
+	private void continueGame(){
+		DDGaming dialog = new DDGaming();
+		dialog.resumeGame(this, "Gaming");
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println(e.getActionCommand());
@@ -100,6 +105,7 @@ public class DDGameMain extends JFrame implements ActionListener {
 			this.setTitle("Item Editor");
 		} else if(e.getActionCommand().equals("LOAD")) {
 			System.out.println("OPEN LOAD");
+			continueGame();
 		} else if(e.getActionCommand().equals("NEW")) {
 			System.out.println("OPEN NEW");
 			startGame();

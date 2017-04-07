@@ -72,7 +72,6 @@ public class MainPage extends JPanel implements ActionListener {
 	    DButton itemBtn = new DButton("ITEM", this);
 	    itemBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton continueBtn = new DButton("LOAD", this);
-	    continueBtn.setEnabled(false);
 	    continueBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));
 	    DButton startBtn = new DButton("NEW", this);
 	    startBtn.setPreferredSize(new Dimension(Config.BTN_WIDTH, Config.BTN_HEIGHT));

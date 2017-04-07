@@ -3,10 +3,17 @@ package ddg.ui.view.dialog;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.JDialog;
 
+import ddg.Config;
 import ddg.model.GameModel;
+import ddg.model.MapEditorModel;
+import ddg.model.entity.Game;
+import ddg.model.entity.Map;
 import ddg.ui.view.GamePanel;
 /**
  * 
@@ -47,6 +54,35 @@ public class DDGaming extends JDialog implements ActionListener {
 			setLocationRelativeTo(null);
 			setVisible(true);
 			
+		}
+	}
+	
+	public void resumeGame(Frame owner, String title){
+		try{
+			//read maps files import maps
+			FileInputStream fileIn = new FileInputStream(Config.GAME_FILE);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			Game game = (Game) in.readObject();
+			in.close();
+			fileIn.close();
+			
+			if (game == null) {
+				popShow(owner, title);
+			}
+			else{
+				GamePanel panel = new GamePanel(game);
+				setTitle(title);
+				getContentPane().add(panel);
+				pack();
+				setLocationRelativeTo(null);
+				setVisible(true);
+			}
+		}catch(IOException i){
+			i.printStackTrace();
+		}catch(ClassNotFoundException c){
+			c.printStackTrace();
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 

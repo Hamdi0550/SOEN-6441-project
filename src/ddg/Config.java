@@ -46,7 +46,7 @@ public class Config {
 	
 	public static final String ITEM_FILE = "./item.json";
 	
-	public static final String GAME_FILE = "./game.json";
+	public static final String GAME_FILE = "./game.ser";
 	
 	public static final ImageIcon HELMET_ICON = new ImageIcon("res/Helmet.jpg");  
 	public static final ImageIcon ARMOR_ICON = new ImageIcon("res/Armor.jpg");  

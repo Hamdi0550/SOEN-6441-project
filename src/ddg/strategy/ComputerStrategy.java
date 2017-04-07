@@ -7,6 +7,8 @@
  */
 package ddg.strategy;
 
+import java.io.Serializable;
+
 /**
  *
  * This class
@@ -21,7 +23,12 @@ package ddg.strategy;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public abstract class ComputerStrategy implements IStrategy {
+public abstract class ComputerStrategy implements IStrategy, Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructors

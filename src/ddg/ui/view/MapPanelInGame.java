@@ -12,11 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.ListIterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -30,16 +25,17 @@ import javax.swing.SwingUtilities;
 
 import ddg.Config;
 import ddg.model.Fighter;
-import ddg.model.MapEditorModel;
 import ddg.model.entity.BaseCampaign;
 import ddg.model.entity.BaseItem;
 import ddg.model.entity.Chest;
+import ddg.model.entity.Game;
 import ddg.model.entity.Map;
 import ddg.strategy.AgressiveStrategy;
 import ddg.strategy.FriendlyStrategy;
 import ddg.strategy.HumanStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
 import ddg.ui.TurnDriven;
+import ddg.ui.view.component.DButton;
 import ddg.ui.view.dialog.BackpackTrade;
 import ddg.ui.view.dialog.DDGaming;
 
@@ -53,13 +49,8 @@ import ddg.ui.view.dialog.DDGaming;
 public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener {
 	private JScrollPane jspanel;
 	private JPanel mapPanel;
-	private Map playingMap;
-	private BaseCampaign campaign;
-	private Fighter fighter;
+	private Game game;
 	private Fighter selectedCharacter;
-	private ListIterator<Map> mapsofcampaign;
-	private int xofplayer;
-	private int yofplayer;
 
 	private CharacterPanel characterPanel = new CharacterPanel(this);
 	private InventoryPanel inventoryPanel = new InventoryPanel();
@@ -85,128 +76,83 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	 * @param campaign the Campaign which user would like to play
 	 */
 	public MapPanelInGame(Fighter fighter, BaseCampaign campaign){
-		this.campaign = campaign;
-		this.fighter = fighter;
+		this.game = new Game(fighter,campaign);
 		turnDriven = new TurnDriven();
 		setLayout(new BorderLayout());
 		setFocusable(true);
 		
-		initdata();
-		this.playingMap.addObserver(this);
+		initMapData();
 		initcontent();
 		initStrategy();
 	}
 
+	public MapPanelInGame(Game game){
+		this.game = game;
+		turnDriven = new TurnDriven();
+		setLayout(new BorderLayout());
+		setFocusable(true);
+		
+		initMapData();
+		initcontent();
+		initStrategy();
+	}
 	protected void initStrategy() {
-		this.fighter.setStrategy(new HumanStrategy() {
+		this.game.getFighter().setStrategy(new HumanStrategy() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected void moveCells(TurnCallback cb) {
 				mCallBack = cb;
-				System.out.println(fighter.getName() + " may moveCells, when finished, click again.");
+				System.out.println(game.getFighter().getName() + " may moveCells, when finished, click again.");
 			}
 
 			@Override
 			protected void attack(TurnCallback cb) {
 				mCallBack = cb;
-				System.out.println(fighter.getName() + " may attack, when finished, click again.");
+				System.out.println(game.getFighter().getName() + " may attack, when finished, click again.");
 			}
 
 			@Override
 			protected void interaction(TurnCallback cb) {
 				mCallBack = cb;
-				System.out.println(fighter.getName() + " may interaction, when finished, click again.");
+				System.out.println(game.getFighter().getName() + " may interaction, when finished, click again.");
 			}
 			
 		});
-		turnDriven.addFighter(this.fighter);
+		turnDriven.addFighter(this.game.getFighter());
 		//should add the other fighter
 		turnDriven.startTurn();
 	}
 	
-	/**
-	 * read data from file, and initialize all data on the Panel
-	 */
-	private void initdata() {
-		
-		try{
-			//read maps files import maps
-			FileInputStream fileIn = new FileInputStream(Config.MAP_FILE);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			MapEditorModel mapsmodel = (MapEditorModel) in.readObject();
-			in.close();
-			fileIn.close();
-			
-			if (mapsmodel == null) {
-				mapsmodel = new MapEditorModel();
-				mapsmodel.add(new Map());
-			}
-			
-			// retrieval all map(name) in the campaign, then 
-			// -----------------------------this part may be produce something wrong-------------------------------------
-			ArrayList<Map> mapsofcampaignlist = new ArrayList<Map>();
-			for(String nameofmap : campaign.getMaps()){
-				for(Map map : mapsmodel.getMaps()){
-					if(map.getName().equals(nameofmap)){
-						mapsofcampaignlist.add(new Map(map));
-						break;
-					}
-				}
-			}
-			
-			this.mapsofcampaign = mapsofcampaignlist.listIterator();
-			initMapData();
-			
-		}catch(IOException i){
-			i.printStackTrace();
-		}catch(ClassNotFoundException c){
-			c.printStackTrace();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
-	}
+//	/**
+//	 * read data from file, and initialize all data on the Panel
+//	 */
+//	private void initdata() {
+//		
+//			
+//			
+//		
+//	}
 	
 	/**
 	 * initial data of playing map and do adaptedLevel() function
 	 */
 	private void initMapData(){
-		if(mapsofcampaign.hasNext()){
+		if(game.getPlayingmap()!=null){
 		    xIndex = -1;
-		    yIndex = -1;        
-		    if (xIndex != yofplayer || yIndex != xofplayer){
+		    yIndex = -1;
+		    game.getPlayingmap().addObserver(this);
+		    if (xIndex != game.getYofplayer() || yIndex != game.getXofplayer()){
 		    	isCharacter = false;
 		    }
 		    if (isCharacter == false){
 		    	characterPanel.setVisible(false);
 		    	inventoryPanel.setVisible(false);
 		    }
-			this.playingMap = this.mapsofcampaign.next();
-			this.playingMap.adaptedLevel(fighter.getLevel());
-			this.playingMap.addObserver(this);
-			
-			for(int i=0;i<playingMap.getRow();i++){
-				for(int j=0;j<playingMap.getColumn();j++){
-					if(playingMap.getLocation()[i][j] == 'i'){
-						if(i>0 && playingMap.getLocation()[i-1][j]=='f'){
-							 xofplayer = i-1;
-							 yofplayer = j;
-						}
-						else if(i<playingMap.getRow()-1 && playingMap.getLocation()[i+1][j]=='f'){
-							xofplayer = i+1;
-							yofplayer = j;
-						}
-						else if(j>0 && playingMap.getLocation()[i][j-1]=='f'){
-							xofplayer = i;
-							yofplayer = j-1;
-						}
-						else if(j<playingMap.getColumn()-1 && playingMap.getLocation()[i][j+1]=='f'){
-							xofplayer = i;
-							yofplayer = j+1;
-						}
-					}
-				}
-			}
+		    
+		    log.setText("Enter game, Welcome!\n");
+			log.append("Current Level:"+game.getFighter().getLevel()+"\n");
+			log.append("Current Map:"+game.getPlayingmap().getName()+"\n");
 		}
 		else{
 			log.append("You finish this Campaign, Congratulation!!!");
@@ -216,22 +162,21 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			DDGaming newddgamedialog = new DDGaming();
 			newddgamedialog.popShow(null, "Gaming");
 		}
-		log.setText("Enter game, Welcome!\n");
-		log.append("Current Level:"+fighter.getLevel()+"\n");
-		log.append("Current Map:"+mapsofcampaign.nextIndex()+"\n");
-		
+		System.out.println("initMapDataFinish!!");
 	}
 	
 	/**
 	 * initialize the view of this panel
 	 */
 	private void initcontent() {
+		Map playingMap = game.getPlayingmap();
 		mapPanel = new JPanel(){
 			private static final long serialVersionUID = -8627231216589776568L;
-
+			
 			@Override  
 	        public void paint(Graphics g) {
-	            super.paint(g);  
+				System.out.println(xIndex+"=============="+yIndex);
+	            super.paint(g);
 	            for(int i=0;i< playingMap.getRow();i++){
 	                for(int j=0;j< playingMap.getColumn();j++){
 	                	//draw background
@@ -265,7 +210,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	                    }
 	                }
 	            }
-	            g.drawImage(mainplayer.getImage(), yofplayer*50, xofplayer*50, null);
+	            g.drawImage(mainplayer.getImage(), game.getYofplayer()*50, game.getXofplayer()*50, null);
 	            g.setColor(Color.BLACK);
 	            for(int i=0; i<playingMap.getRow(); i++){
 	            	g.drawLine(0, i*50, playingMap.getColumn()*50, i*50);
@@ -280,6 +225,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		            g.drawRect(xIndex * 50 + 2, yIndex * 50 + 2, 46, 46);	            	
 	            } else {
 		            g.setColor(Color.ORANGE);
+		            System.out.println(xIndex+"1=============="+yIndex);
 		            g.drawRect(xIndex * 50 + 1, yIndex * 50 + 1, 48, 48);
 		            g.drawRect(xIndex * 50 + 2, yIndex * 50 + 2, 46, 46);	            	
 	            }
@@ -296,15 +242,23 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		JPanel emptyPanel = new JPanel();
 		emptyPanel.setLayout(new CardLayout());
 		emptyPanel.setPreferredSize(new Dimension(240, 505));
+		
+		JPanel logPanel = new JPanel(new BorderLayout());
+		logPanel.setPreferredSize(new Dimension(240, 505));
+		
+		add(logPanel,BorderLayout.WEST);
 		add(jspanel, BorderLayout.CENTER);
 		add(emptyPanel, BorderLayout.EAST);
-
+		
 		log.setDisabledTextColor(Color.BLACK);
 		log.setPreferredSize(new Dimension(240, 505));
 		log.setBorder(Config.border);
 		log.setEnabled(false);
+		DButton savebutton = new DButton("SAVE", this);
+		logPanel.add(log, BorderLayout.CENTER);
+		logPanel.add(savebutton, BorderLayout.SOUTH);
 		
-		emptyPanel.add(log);
+//		emptyPanel.add(log);
 		emptyPanel.add(characterPanel);
 		characterPanel.setPreferredSize(new Dimension(240, 505));
 		characterPanel.setVisible(false);
@@ -329,7 +283,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		        	isCharacter = true;
 		        	characterPanel.setVisible(true);
 		        	inventoryPanel.setVisible(true);
-		        	log.setVisible(false);
 		        	System.out.println("Character selected");
 		        	System.out.println(playingMap.getCellsinthemap()[yIndex][xIndex].getContent());
 		        	if(selectedCharacter!=null) {
@@ -349,6 +302,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		        	boolean friendly = playingMap.getCellsinthemap()[yIndex][xIndex].getIsfriendly();
 		        	if(friendly) {
 		        		selectedCharacter.setStrategy(new FriendlyStrategy() {
+							private static final long serialVersionUID = 1L;
 
 							@Override
 							protected void wander(TurnCallback cb) {
@@ -361,6 +315,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			    		turnDriven.addFighter(selectedCharacter);
 		        	} else {
 		        		selectedCharacter.setStrategy(new AgressiveStrategy() {
+							private static final long serialVersionUID = 1L;
 
 							@Override
 							protected void searchPlayer(TurnCallback cb) {
@@ -374,16 +329,15 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		        	}
 		        	
 		        }
-				else if(xIndex == yofplayer && yIndex == xofplayer){
+				else if(xIndex == game.getYofplayer() && yIndex == game.getXofplayer()){
 		        	isCharacter = true;
 		        	characterPanel.setVisible(true);
 		        	inventoryPanel.setVisible(true);
-		        	log.setVisible(false);
 		        	if(selectedCharacter!=null) {
 		        		selectedCharacter.deleteObserver(characterPanel);
 		        		selectedCharacter.deleteObserver(inventoryPanel);
 		        	}
-		        	selectedCharacter = fighter;
+		        	selectedCharacter = game.getFighter();
 		        	selectedCharacter.addObserver(characterPanel);
 		        	selectedCharacter.addObserver(inventoryPanel);
 		        	System.out.println("selectedCharacter = " + selectedCharacter);
@@ -392,7 +346,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		        	inventoryPanel.updateView(selectedCharacter, true);
 				}
 				else {
-
 		        	System.out.println(selectedCharacter);
 		        	isCharacter = false;
 		        	characterPanel.setVisible(false);
@@ -404,7 +357,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 				System.out.println("mapPanel repainted");
 			}
 		});
-		
 	}
 
 	@Override
@@ -421,52 +373,59 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+		System.out.println(e.getKeyCode());
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			if(xIndex == yofplayer && yIndex == xofplayer && isCharacter == true){
-				moveOnMap(xofplayer-1,yofplayer);
-				xIndex = yofplayer;
-				yIndex = xofplayer;
+			if(xIndex == game.getYofplayer() && yIndex == game.getXofplayer() && isCharacter == true){
+				moveOnMap(game.getXofplayer()-1,game.getYofplayer());
+				if(isCharacter){
+					xIndex = game.getYofplayer();
+					yIndex = game.getXofplayer();
+				}
 			} else {
-				moveOnMap(xofplayer-1,yofplayer);
+				moveOnMap(game.getXofplayer()-1,game.getYofplayer());
 			}
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			if(xIndex == yofplayer && yIndex == xofplayer && isCharacter == true){
-				moveOnMap(xofplayer+1,yofplayer);
-				xIndex = yofplayer;
-				yIndex = xofplayer;
+			if(xIndex == game.getYofplayer() && yIndex == game.getXofplayer() && isCharacter == true){
+				moveOnMap(game.getXofplayer()+1,game.getYofplayer());
+				if(isCharacter){
+					xIndex = game.getYofplayer();
+					yIndex = game.getXofplayer();
+				}
 			} else {
-				moveOnMap(xofplayer+1,yofplayer);
+				moveOnMap(game.getXofplayer()+1,game.getYofplayer());
 			}
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if(xIndex == yofplayer && yIndex == xofplayer && isCharacter == true){
-				moveOnMap(xofplayer,yofplayer-1);
-				xIndex = yofplayer;
-				yIndex = xofplayer;
+			if(xIndex == game.getYofplayer() && yIndex == game.getXofplayer() && isCharacter == true){
+				moveOnMap(game.getXofplayer(),game.getYofplayer()-1);
+				if(isCharacter){
+					xIndex = game.getYofplayer();
+					yIndex = game.getXofplayer();
+				}
 			} else {
-				moveOnMap(xofplayer,yofplayer-1);
+				moveOnMap(game.getXofplayer(),game.getYofplayer()-1);
 			}
 		}
 		
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if(xIndex == yofplayer && yIndex == xofplayer && isCharacter == true){
-				moveOnMap(xofplayer,yofplayer+1);
-				xIndex = yofplayer;
-				yIndex = xofplayer;
+			if(xIndex == game.getYofplayer() && yIndex == game.getXofplayer() && isCharacter == true){
+				moveOnMap(game.getXofplayer(),game.getYofplayer()+1);
+				if(isCharacter){
+					xIndex = game.getYofplayer();
+					yIndex = game.getXofplayer();
+				}
 			} else {
-				moveOnMap(xofplayer,yofplayer+1);
+				moveOnMap(game.getXofplayer(),game.getYofplayer()+1);
 			}			
 		}
 		if(e.getKeyCode() == KeyEvent.VK_SPACE){
-			if(playingMap.getLocation()[xofplayer][yofplayer]=='d'){
+			if(game.getPlayingmap().getLocation()[game.getXofplayer()][game.getYofplayer()]=='d'){
 				System.out.println("interact with corpse!!!\n");
-				Fighter corpse = (Fighter)playingMap.getCellsinthemap()[xofplayer][yofplayer].getContent();
-				this.fighter.lootCorpseItems(corpse);
+				Fighter corpse = (Fighter)game.getPlayingmap().getCellsinthemap()[game.getXofplayer()][game.getYofplayer()].getContent();
+				this.game.getFighter().lootCorpseItems(corpse);
 				System.out.println("loot finish!");
 			}
 		}
@@ -478,12 +437,14 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	 * @param y	the y-coordinate of the cell which player would like to move
 	 */
 	private void moveOnMap(int x, int y) {
+		Map playingMap = game.getPlayingmap();
+		Fighter fighter = game.getFighter();
 		if( x>=playingMap.getRow()|| x<0|| y >= playingMap.getColumn()|| y<0)
 			return;
 		char temp = playingMap.getLocation()[x][y];
 		if(temp =='f'||temp=='d'||temp=='o'||temp=='i'){
-			xofplayer=x;
-			yofplayer=y;
+			game.setXofplayer(x);
+			game.setYofplayer(y);
 			mapPanel.repaint();
 		}
 		else if (temp=='c') {
@@ -509,7 +470,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			}
 		}
 		
-		if(playingMap.getLocation()[xofplayer][yofplayer]=='o'){
+		if(playingMap.getLocation()[game.getXofplayer()][game.getYofplayer()]=='o'){
 			// check whether there is key on player's backpack, if so can interact with exit door, otherwise popup a warm message
 			Boolean containKey = false;
 			for(BaseItem item:fighter.getBackpack()){
@@ -522,9 +483,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 						fighter.levelUp();
 						fighter.deleteObservers();
 						Fighter.saveFighter(fighter);
-						
+						game.nextMap();
 						initMapData();
 						removeAll();
+						System.out.println(xIndex+"2=============="+yIndex);
 						initcontent();
 //						jspanel.removeAll();
 //						jspanel.add(mapPanel);
@@ -537,6 +499,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			}
 			if(!containKey){
 				JOptionPane.showMessageDialog(null, "Please find a exit door key!", "Need to Find Exit Door Key", JOptionPane.ERROR_MESSAGE);
+				repaint();
 			}
 		}
 	}
@@ -565,14 +528,40 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 				requestFocus();
 			}
 		}
+		if(e.getActionCommand().contains("SAVE")){
+			System.out.println("SAVE BUTTON");
+			
+			prepareForSaveGame();
+			System.out.println(game.getFighter().countObservers());
+			Game.saveGame(this.game);
+			JOptionPane.showMessageDialog(null, "Save Success!!", "Save Success!!", JOptionPane.INFORMATION_MESSAGE);
+			game.getPlayingmap().addObserver(this);
+			if(isCharacter&&selectedCharacter!=null){
+				selectedCharacter.addObserver(characterPanel);
+				selectedCharacter.addObserver(inventoryPanel);
+			}
+			requestFocus();
+			
+		}
 	}
 	
+	private void prepareForSaveGame() {
+		System.out.println(this.getKeyListeners());
+		game.getPlayingmap().deleteObservers();
+		if(isCharacter&&selectedCharacter!=null)
+			selectedCharacter.deleteObservers();
+		for (Fighter fighter : turnDriven.getFighters()) {
+			fighter.setStrategy(null);
+		}
+		System.out.println(this.getKeyListeners());
+	}
+
 	/**
 	 * using to gain play Character's location point
 	 * @return location point of play character
 	 */
 	public Point getPlayerLocation(){
-		return new Point(xofplayer,yofplayer);
+		return new Point(game.getXofplayer(),game.getYofplayer());
 	}
 }
 

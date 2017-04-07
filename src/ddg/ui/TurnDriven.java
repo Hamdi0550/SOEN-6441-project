@@ -16,11 +16,17 @@ import ddg.utils.Dice;
 public class TurnDriven {
 
 	private ArrayList<Fighter> fighters = new ArrayList<Fighter>();
+	
+
 	private boolean stop = false;
 	public TurnDriven() {
 		
 	}
 
+	public ArrayList<Fighter> getFighters() {
+		return fighters;
+	}
+	
 	public void addFighter(Fighter fighter) {
 		if(!this.fighters.contains(fighter)) {
 			this.fighters.add(fighter);
