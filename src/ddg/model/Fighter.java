@@ -58,6 +58,9 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	private int totalArmorClass;
 	private int totalAttackBonus ;
 	private int totalDamageBonus ;
+
+	private int dexModifier;
+	private int strModifier;
 	
 	private int hitPoints; 
 	private int attackBonus; 		
@@ -381,19 +384,32 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @return attackBonus
 	 */
 	public int getAttackBonus(){
-		int baseAttackBonus = 0;
-		if (level <= 5 && level >= 0){
-			baseAttackBonus = level;			
-		} else if (level <= 10 && level > 5){
-			baseAttackBonus = level * 2 - 5;
-		} else if (level <= 15 && level > 11){
-			baseAttackBonus = level * 3 - 15;
-		} else if (level <= 20 && level >= 15){
-			baseAttackBonus = level * 4 - 30;
-		} else if (level > 20){
-			baseAttackBonus = 50;
+		int attackBonus = 0;
+		boolean hasWeapon = false;
+		boolean isMelee = false;
+		boolean isRanged = false;
+		for (BaseItem wornItem : wornItems) {
+			if (wornItem.getName().equals("Weapon")){
+				hasWeapon = true;
+				if (wornItem.getWeaponType().equals("Melee")){
+					isMelee = true;
+				}else if(wornItem.getWeaponType().equals("Ranged")){
+					isRanged = true;
+				}
+			}
 		}
-		attackBonus = level + getDamageBonus();
+		if (hasWeapon){
+			System.out.println("This is a weapon");
+			if (isMelee){
+				System.out.println("this weanpon is melee weapon");
+				attackBonus = level +  getStrModifier();
+			}else if (isRanged){
+				System.out.println("this weanpon is ranged weapon");
+				attackBonus = level + getDexModifier();
+			}
+		}else {
+			attackBonus = level;
+		}
 		return attackBonus;
 	}
 	
@@ -402,7 +418,8 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @return damageBonus
 	 */
 	public int getDamageBonus(){
-		damageBonus = getModifier(getTotalStrength());
+		Dice dice = new Dice();
+		damageBonus = dice.d6Roll() + getStrModifier();
 		return damageBonus;
 	}
 	
@@ -411,7 +428,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @return armorClass
 	 */
 	public int getArmorClass(){
-		armorClass = getTotalDexterity() + 10;
+		armorClass = getDexModifier() + 10;
 		return armorClass;
 	}
 	
@@ -438,7 +455,39 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public ArrayList<BaseItem> getWorn(){
 		return wornItems;
 	}
-	
+
+	/**
+	 * get the dexModifier of the character
+	 * @return dexModifier
+	 */
+	public int getDexModifier() {
+		return getTotalDexterity()/2 - 5;
+	}
+
+	/**
+	 * set dexModifier
+	 * @param dexModifier
+	 */
+	public void setDexModifier(int dexModifier) {
+		this.dexModifier = dexModifier;
+	}
+
+	/**
+	 * get the strModifier of the character
+	 * @return strModifier
+	 */
+	public int getStrModifier() {
+		return getTotalStrength()/2 - 5;
+	}
+
+	/**
+	 * set StrModifier
+	 * @param strModifier
+	 */
+	public void setStrModifier(int strModifier) {
+		this.strModifier = strModifier;
+	}
+
 	/**
 	 * This method get the boolean value of isArmorOn
 	 * @return isArmorOn Ture means the character is wearing an armor
@@ -634,7 +683,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	
 	/**
 	 * Set the gainedAttackBonus of the character
-	 * @param gainedDamageBonus
+	 * @param gainedAttackBonus
 	 */
 	public void setGainedAttackBonus(int gainedAttackBonus){
 		this.gainedAttackBonus = gainedAttackBonus;
@@ -889,11 +938,16 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @param npc the npc is attacked
 	 */
 	public void attackCaracter(Fighter npc) {
-//		int harm = ;
-// here 15 should be the harm values for npc
-		npc.beAttacked(15);
+		Dice dice = new Dice();
+		int attackRoll =  dice.d20Roll() + this.getAttackBonus();
+		if(attackRoll >= npc.getArmorClass()){
+			System.out.println("Attack Success!");
+			npc.beAttacked(this.getDamageBonus());
+		}else{
+			System.out.println("Attack Fail!");
+		}
 	}
-	
+
 	/**
 	 * call this function if the character is attacked
 	 * @param i harm values that this character will be hurt
