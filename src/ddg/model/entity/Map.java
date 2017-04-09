@@ -206,4 +206,20 @@ public class Map extends Observable implements Cloneable, java.io.Serializable{
 			}
 		}
 	}
+
+	public boolean npcMove(int xofcharactor, int yofcharactor, int newx, int newy) {
+		if(newx>=getRow()||newx<0||newy>=getColumn()||newy<0)
+			return false;
+		char temp = getLocation()[newx][newy];
+		if(temp =='f'){
+			this.location[xofcharactor][yofcharactor]='f';
+			this.location[newx][newy]='p';
+			this.cellsinthemap[newx][newy]=this.cellsinthemap[xofcharactor][yofcharactor];
+			this.cellsinthemap[xofcharactor][yofcharactor]=null;
+			setChanged();
+			notifyObservers(this);
+			return true;
+		}
+		return false;
+	}
 }

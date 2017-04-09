@@ -31,7 +31,7 @@ public class CharacterPanel extends JPanel implements Observer {
 	private final JButton inventoryBtn = new JButton("Inventory");
 
 	public JLabel iconL = new JLabel();
-	private JLabel nameL = new JLabel();
+	public JLabel nameL = new JLabel();
 	private JLabel levelL = new JLabel();
 	private JLabel typeL = new JLabel();
 	private JLabel hitponitL = new JLabel();

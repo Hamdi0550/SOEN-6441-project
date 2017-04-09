@@ -97,6 +97,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		initStrategy();
 	}
 	protected void initStrategy() {
+		Map playingMap = game.getPlayingmap();
+		
 		this.game.getFighter().setStrategy(new HumanStrategy() {
 			private static final long serialVersionUID = 1L;
 
@@ -119,9 +121,47 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			}
 			
 		});
+		
 		turnDriven.addFighter(this.game.getFighter());
+
+		
+		for(int i=0;i< playingMap.getRow();i++){
+            for(int j=0;j< playingMap.getColumn();j++){
+            	if(playingMap.getLocation()[i][j]=='p'){
+            		if(playingMap.getCellsinthemap()[i][j].getIsfriendly()){
+            			Fighter fighter = (Fighter)playingMap.getCellsinthemap()[i][j].getContent();
+            			fighter.setStrategy(new FriendlyStrategy(game,i,j));
+            			turnDriven.addFighter(fighter);
+            		}
+//            		else{
+//            			((Fighter)playingMap.getCellsinthemap()[i][j].getContent()).setStrategy(new FriendlyStrategy(game,i,j));
+//            			turnDriven.addFighter(selectedCharacter);
+//            		}
+            	}
+            }
+		}
+		
+		
 		//should add the other fighter
-		turnDriven.startTurn();
+		
+//		boolean friendly = playingMap.getCellsinthemap()[yIndex][xIndex].getIsfriendly();
+//    	if(friendly) {
+//    	} else {
+//    		selectedCharacter.setStrategy(new AgressiveStrategy() {
+//				private static final long serialVersionUID = 1L;
+//
+//				@Override
+//				protected void searchPlayer(TurnCallback cb) {
+//					// TODO Auto-generated method stub
+//					System.out.println(selectedCharacter.getName() + " may searchPlayer, when finished, callback.");
+//					cb.finish();
+//				}
+//    			
+//    		});
+//    		turnDriven.addFighter(selectedCharacter);
+//    	}
+		
+//		turnDriven.startTurn();
 	}
 	
 //	/**
@@ -298,36 +338,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		        	characterPanel.iconL.setIcon(Config.NPC_ICON);
 		        	inventoryPanel.updateView(selectedCharacter, false);
 		        	System.out.println(selectedCharacter.getName());
-		        	/********shoud move to init method**********/
-		        	boolean friendly = playingMap.getCellsinthemap()[yIndex][xIndex].getIsfriendly();
-		        	if(friendly) {
-		        		selectedCharacter.setStrategy(new FriendlyStrategy() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							protected void wander(TurnCallback cb) {
-								// TODO Auto-generated method stub
-								System.out.println(selectedCharacter.getName() + " may wander, when finished, callback.");
-								cb.finish();
-							}
-		        			
-		        		});
-			    		turnDriven.addFighter(selectedCharacter);
-		        	} else {
-		        		selectedCharacter.setStrategy(new AgressiveStrategy() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							protected void searchPlayer(TurnCallback cb) {
-								// TODO Auto-generated method stub
-								System.out.println(selectedCharacter.getName() + " may searchPlayer, when finished, callback.");
-								cb.finish();
-							}
-		        			
-		        		});
-			    		turnDriven.addFighter(selectedCharacter);
-		        	}
-		        	
 		        }
 				else if(xIndex == game.getYofplayer() && yIndex == game.getXofplayer()){
 		        	isCharacter = true;
@@ -507,7 +517,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("Turn+++++++++++++++++++++++++++++++++"+turnDriven.getFighters().size());
+		for (Fighter fighter : turnDriven.getFighters()) {
+			fighter.turn(mCallBack);
+		}
 	}
 
 	@Override
@@ -533,8 +546,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			
 			prepareForSaveGame();
 			System.out.println(game.getFighter().countObservers());
-			Game.saveGame(this.game);
-			JOptionPane.showMessageDialog(null, "Save Success!!", "Save Success!!", JOptionPane.INFORMATION_MESSAGE);
+			if(Game.saveGame(this.game)){
+				JOptionPane.showMessageDialog(null, "Save Success!!", "Save Success!!", JOptionPane.INFORMATION_MESSAGE);
+			}
 			game.getPlayingmap().addObserver(this);
 			if(isCharacter&&selectedCharacter!=null){
 				selectedCharacter.addObserver(characterPanel);

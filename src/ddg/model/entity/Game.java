@@ -126,7 +126,7 @@ public class Game implements java.io.Serializable{
 		initData();
 	}
 	
-	public static void saveGame(Game game){
+	public static boolean saveGame(Game game){
 		try{
 			FileOutputStream fileOut =
 	        new FileOutputStream(Config.GAME_FILE);
@@ -135,6 +135,7 @@ public class Game implements java.io.Serializable{
 	        out.close();
 	        fileOut.close();
 	        System.out.printf("Serialized data is saved");
+	        return true;
 		}catch (IOException e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -142,5 +143,6 @@ public class Game implements java.io.Serializable{
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		return false;
 	}
 }
