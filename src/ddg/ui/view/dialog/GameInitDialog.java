@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
@@ -37,6 +38,7 @@ public class GameInitDialog extends JDialog implements ActionListener, DItemList
 	private CampaignEditorModel campaignModel;
 	private Fighter selectFighter;
 	private BaseCampaign selectCampaign;
+	private JCheckBox checkboxComputer;
 	
 	/**
 	 * 
@@ -81,6 +83,8 @@ public class GameInitDialog extends JDialog implements ActionListener, DItemList
 		JPanel panel = new JPanel();
 		JPanel selectPanel = new JPanel();
 		
+		checkboxComputer = new JCheckBox("Computer?");
+		
 		characterComboBox = new DComboBox<String>("Character");
 		characterComboBox.addDItemListener(this);
 		
@@ -88,6 +92,7 @@ public class GameInitDialog extends JDialog implements ActionListener, DItemList
 		campaignComboBox.addDItemListener(this);
 		selectPanel.add(characterComboBox);
 		selectPanel.add(campaignComboBox);
+		selectPanel.add(checkboxComputer);
 		panel.add(selectPanel);
 		
 		okBtn = new DButton("OK", this);
@@ -136,6 +141,7 @@ public class GameInitDialog extends JDialog implements ActionListener, DItemList
 			System.out.println("OK");
 			if(selectFighter!=null&&selectCampaign!=null) {
 				this.gameModel = mapLoading(selectFighter, selectCampaign);
+				this.gameModel.setComputer(checkboxComputer.isSelected());
 			}
 		} else if (e.getActionCommand().equals("CANCEL")) {
 		}

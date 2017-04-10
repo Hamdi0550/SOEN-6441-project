@@ -13,6 +13,7 @@ public class GameModel {
 
 	private Fighter fighter;
 	private BaseCampaign campaign;
+	private boolean isComputer= false;
 	
 	/**
 	 * 
@@ -26,6 +27,14 @@ public class GameModel {
 		this.campaign = campaign;
 	}
 
+	public void setComputer(boolean isComputer) {
+		this.isComputer = isComputer;
+	}
+	
+	boolean isComputer() {
+		return this.isComputer;
+	}
+	
 	/**
 	 * 
 	 * This method getFighter
