@@ -17,6 +17,7 @@ import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -46,7 +47,7 @@ import ddg.ui.view.dialog.DDGaming;
  * @date Mar 12, 2017
  * 
  */
-public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener {
+public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener, TurnCallback{
 	private JScrollPane jspanel;
 	private JPanel mapPanel;
 	private Game game;
@@ -122,21 +123,21 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			
 		});
 		
-		turnDriven.addFighter(this.game.getFighter());
+//		turnDriven.addFighter(this.game.getFighter());
 
 		
 		for(int i=0;i< playingMap.getRow();i++){
             for(int j=0;j< playingMap.getColumn();j++){
             	if(playingMap.getLocation()[i][j]=='p'){
+            		Fighter fighter = (Fighter)playingMap.getCellsinthemap()[i][j].getContent();
             		if(playingMap.getCellsinthemap()[i][j].getIsfriendly()){
-            			Fighter fighter = (Fighter)playingMap.getCellsinthemap()[i][j].getContent();
             			fighter.setStrategy(new FriendlyStrategy(game,i,j));
             			turnDriven.addFighter(fighter);
             		}
-//            		else{
-//            			((Fighter)playingMap.getCellsinthemap()[i][j].getContent()).setStrategy(new FriendlyStrategy(game,i,j));
-//            			turnDriven.addFighter(selectedCharacter);
-//            		}
+            		else{
+            			fighter.setStrategy(new AgressiveStrategy(game,i,j));
+            			turnDriven.addFighter(fighter);
+            		}
             	}
             }
 		}
@@ -242,7 +243,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 								g.drawImage(outdoor.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (playingMap.getLocation()[i][j] == 'p'){
-								g.drawImage(playcharacter.getImage(), j*50, i*50, 50, 50, null);
+								if(((Fighter)playingMap.getCellsinthemap()[i][j].getContent()).isAlive())
+									g.drawImage(playcharacter.getImage(), j*50, i*50, 50, 50, null);
+								else
+									g.drawImage(deadnpc.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (playingMap.getLocation()[i][j] == 'd'){
 								g.drawImage(deadnpc.getImage(), j*50, i*50, 50, 50, null);
@@ -452,7 +456,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		if( x>=playingMap.getRow()|| x<0|| y >= playingMap.getColumn()|| y<0)
 			return;
 		char temp = playingMap.getLocation()[x][y];
-		if(temp =='f'||temp=='d'||temp=='o'||temp=='i'){
+		if(temp =='f'||temp=='d'){
 			game.setXofplayer(x);
 			game.setYofplayer(y);
 			mapPanel.repaint();
@@ -480,7 +484,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			}
 		}
 		
-		if(playingMap.getLocation()[game.getXofplayer()][game.getYofplayer()]=='o'){
+		else if(temp=='o'){ //playingMap.getLocation()[game.getXofplayer()][game.getYofplayer()]=='o'
 			// check whether there is key on player's backpack, if so can interact with exit door, otherwise popup a warm message
 			Boolean containKey = false;
 			for(BaseItem item:fighter.getBackpack()){
@@ -495,6 +499,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 						Fighter.saveFighter(fighter);
 						game.nextMap();
 						initMapData();
+						initStrategy();
 						removeAll();
 						System.out.println(xIndex+"2=============="+yIndex);
 						initcontent();
@@ -519,7 +524,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		// TODO Auto-generated method stub
 		System.out.println("Turn+++++++++++++++++++++++++++++++++"+turnDriven.getFighters().size());
 		for (Fighter fighter : turnDriven.getFighters()) {
-			fighter.turn(mCallBack);
+			if(fighter.isAlive())
+				fighter.turn(this);
 		}
 	}
 
@@ -576,6 +582,12 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	 */
 	public Point getPlayerLocation(){
 		return new Point(game.getXofplayer(),game.getYofplayer());
+	}
+
+	@Override
+	public void finish() {
+		JDialog mapSizeFrame = (JDialog) SwingUtilities.getWindowAncestor(this);
+		mapSizeFrame.dispose();
 	}
 }
 

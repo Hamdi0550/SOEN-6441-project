@@ -27,7 +27,9 @@ import ddg.model.entity.Game;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class FriendlyStrategy implements IStrategy {
+public class FriendlyStrategy implements IStrategy, Serializable{
+	private static final long serialVersionUID = 1L;
+	
 	private Game game;
 	private int xofcharactor;
 	private int yofcharactor;
@@ -52,25 +54,29 @@ public class FriendlyStrategy implements IStrategy {
 			int num = ((int) (Math.random()*100)) % 4;
 			switch (num+1){
 				case 1 :
-					if(game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor-1,yofcharactor)){
+					if(!(xofcharactor-1==game.getXofplayer()&&yofcharactor==game.getYofplayer())
+							&&game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor-1,yofcharactor)){
 						xofcharactor = xofcharactor-1;
 						i--;
 					}
 					break;
 				case 2 :
-					if(game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor,yofcharactor-1)){
+					if(!(xofcharactor==game.getXofplayer()&&yofcharactor-1==game.getYofplayer())&&
+							game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor,yofcharactor-1)){
 						yofcharactor = yofcharactor-1;
 						i--;
 					}
 					break;
 				case 3 :
-					if(game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor+1,yofcharactor)){
+					if(!(xofcharactor+1==game.getXofplayer()&&yofcharactor==game.getYofplayer())&&
+							game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor+1,yofcharactor)){
 						xofcharactor = xofcharactor+1;
 						i--;
 					}
 					break;
 				case 4 :
-					if(game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor,yofcharactor+1)){
+					if(!(xofcharactor==game.getXofplayer()&&yofcharactor+1==game.getYofplayer())&&
+							game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor,yofcharactor+1)){
 						yofcharactor = yofcharactor+1;
 						i--;
 					}
@@ -87,18 +93,30 @@ public class FriendlyStrategy implements IStrategy {
 		if(xofcharactor-1>=0&&location[xofcharactor-1][yofcharactor]=='c'){
 			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor-1][yofcharactor].getContent();
 			fighter.openChest(chest);
+			if(chest.isEmpty()){
+				game.getPlayingmap().changeLocation(xofcharactor-1, yofcharactor, 'e');
+			}
 		}
 		else if(xofcharactor+1<game.getPlayingmap().getRow()&&location[xofcharactor+1][yofcharactor]=='c'){
 			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor+1][yofcharactor].getContent();
 			fighter.openChest(chest);
+			if(chest.isEmpty()){
+				game.getPlayingmap().changeLocation(xofcharactor+1, yofcharactor, 'e');
+			}
 		}
 		else if(yofcharactor-1>=0&&location[xofcharactor][yofcharactor-1]=='c'){
 			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor-1].getContent();
 			fighter.openChest(chest);
+			if(chest.isEmpty()){
+				game.getPlayingmap().changeLocation(xofcharactor, yofcharactor-1, 'e');
+			}
 		}
 		else if(yofcharactor+1<game.getPlayingmap().getColumn()&&location[xofcharactor][yofcharactor+1]=='c'){
 			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor+1].getContent();
 			fighter.openChest(chest);
+			if(chest.isEmpty()){
+				game.getPlayingmap().changeLocation(xofcharactor, yofcharactor+1, 'e');
+			}
 		}
 	}
 	
