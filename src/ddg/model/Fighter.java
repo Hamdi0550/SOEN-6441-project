@@ -898,10 +898,14 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 */
 	public void openChest(Chest chest) {
 		if(this.backpack.size()<Config.BACKPACK_SIZE){
-			backpack.add(chest.getItem());
-			System.out.println("get"+ chest.getItem().getLevel()+"------bouns--"+chest.getItem().getBonus());
-			chest.becameEmpty();
-			observerNotify();
+			if(!chest.isEmpty()){
+				backpack.add(chest.getItem());
+				System.out.println("get"+ chest.getItem().getLevel()+"------bouns--"+chest.getItem().getBonus());
+				chest.becameEmpty();
+				observerNotify();
+			}
+			else
+				return;
 		}
 		else{
 			// can add inform on Textarea
@@ -974,6 +978,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 */
 	public void die() {
 		this.isalive = false;
+		this.strategyList=null;
 	}
 	
 	/**
