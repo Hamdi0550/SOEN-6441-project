@@ -21,7 +21,7 @@ package ddg.model.entity;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class Slaying extends Enchantment {
+public class Slaying extends Magic {
 
 	private static final long serialVersionUID = -217973515946560710L;
 

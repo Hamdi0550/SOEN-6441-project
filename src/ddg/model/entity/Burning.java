@@ -21,7 +21,7 @@ package ddg.model.entity;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class Burning extends Enchantment {
+public class Burning extends Magic {
 
 	private static final long serialVersionUID = -6221328594501953658L;
 

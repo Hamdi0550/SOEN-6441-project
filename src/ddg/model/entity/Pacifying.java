@@ -21,7 +21,7 @@ package ddg.model.entity;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class Pacifying extends Enchantment {
+public class Pacifying extends Magic {
 
 	private static final long serialVersionUID = -7180171488475488152L;
 

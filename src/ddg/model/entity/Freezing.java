@@ -21,7 +21,7 @@ package ddg.model.entity;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class Freezing extends Enchantment {
+public class Freezing extends Magic {
 
 	private static final long serialVersionUID = -6387511701613860418L;
 

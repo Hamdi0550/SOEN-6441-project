@@ -11,6 +11,7 @@ import ddg.model.entity.Enchantment;
 import ddg.model.entity.Burning;
 import ddg.model.entity.Freezing;
 import ddg.model.entity.Frightening;
+import ddg.model.entity.Magic;
 import ddg.model.entity.MagicWeaponItem;
 import ddg.model.entity.Pacifying;
 import ddg.model.entity.Slaying;
@@ -39,7 +40,7 @@ public class MagicFactory {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static Enchantment getMagic(String magic) {
+	public static Magic getMagic(String magic) {
 //		return new Ability(magic);
 		if(MagicWeaponItem.FREEZING.equals(magic)) {
 			return new Freezing();

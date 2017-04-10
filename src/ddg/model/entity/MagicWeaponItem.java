@@ -37,7 +37,7 @@ public class MagicWeaponItem extends WeaponItem {
 	public static final String WEAPON_MAGIC_ABILITY = "weaponMagicAbility";
 	public static final String[] MAGIC = {FREEZING, BURNING, SLAYING, FRIGHTENING, PACIFYING};
 	
-	public ArrayList<Enchantment> magic = new ArrayList<Enchantment>();
+	public ArrayList<Magic> magic = new ArrayList<Magic>();
 	/**
 	 * Constructors
 	 * 
@@ -61,7 +61,7 @@ public class MagicWeaponItem extends WeaponItem {
 	public int getBonus() {
 		if(getOwner()!=null) {
 			int burn = 0;
-			for(Enchantment i : magic) {
+			for(Magic i : magic) {
 				if(i instanceof Burning) {
 					burn++;
 				}
@@ -78,17 +78,17 @@ public class MagicWeaponItem extends WeaponItem {
 		return super.getIncrease();
 	}
 	
-	public void addAbility(Enchantment a) {
+	public void addAbility(Magic a) {
 		magic.add(a);
 	}
 	
-	public ArrayList<Enchantment> getEnchantment() {
+	public ArrayList<Magic> getEnchantment() {
 		return magic;
 	}
 	
 	public DefaultListModel getListModel() {
 		DefaultListModel l = new DefaultListModel();
-		for(Enchantment i : magic) {
+		for(Magic i : magic) {
 			l.addElement(i.getName());
 		}
 		return l;

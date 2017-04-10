@@ -147,7 +147,7 @@ public class ItemEditor extends JPanel implements ActionListener, DItemListener,
 		contentPanel.add(weaponTypeComboBox);
 		//Add for weapon
 		magicWeaponComboBox = new DComboBox<String>(MagicWeaponItem.WEAPON_MAGIC_ABILITY);
-		magicWeaponComboBox.addItem("MAGIC");
+		magicWeaponComboBox.addItem("Magic");
 		for(String i : MagicWeaponItem.MAGIC) {
 			magicWeaponComboBox.addItem("  +  " + i);
 		}

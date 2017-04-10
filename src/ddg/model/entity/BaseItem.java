@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
  * @author Zhen Du
  * @date Feb 22, 2017
  */
-public class BaseItem implements Item, IOwner {
+public class BaseItem implements Item {
 	private static final long serialVersionUID = 1417331693668110660L;
 	
 	@SerializedName(value = "id")
@@ -209,10 +209,10 @@ public class BaseItem implements Item, IOwner {
 //	}
 	
 //	private int level = 0;
-	@Override
-	public int getLevel() {
-		return this.owner.getLevel();
-	}
+//	@Override
+//	public int getLevel() {
+//		return this.owner.getLevel();
+//	}
 	@Override
 	public void setOwner(IOwner owner) {
 		this.owner = owner;
