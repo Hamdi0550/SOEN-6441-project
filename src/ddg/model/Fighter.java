@@ -910,7 +910,9 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	public void openChest(Chest chest) {
 		if(this.backpack.size()<Config.BACKPACK_SIZE){
 			if(!chest.isEmpty()){
-				backpack.add(chest.getItem());
+				Item i = chest.getItem();
+				i.setOwner(this);
+				backpack.add(i);
 				System.out.println("get"+ chest.getItem().getOwner().getLevel()+"------bouns--"+chest.getItem().getBonus());
 				chest.becameEmpty();
 				observerNotify();
@@ -933,6 +935,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	public void lootCorpseItems(Fighter corpse){
 		if(corpse.backpack.size() > 0){
 			for(Item item: corpse.backpack){
+				item.setOwner(this);
 				this.backpack.add(item);
 				System.out.println(item.getOwner().getLevel()+"----get a item from corpse backpack items" + item.getName());
 			}
@@ -940,6 +943,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		}
 		if(corpse.wornItems.size() > 0){
 			for(Item item : corpse.wornItems){
+				item.setOwner(this);
 				this.backpack.add(item);
 				System.out.println(item.getOwner().getLevel()+"---get a item from corpse worn items" + item.getName() );
 			}
@@ -1030,13 +1034,13 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		for(Item item : this.wornItems){
 			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "-");
 //			item.updateLevel(targetLevel);
-			item.setOwner(owner);
+			item.setOwner(this);
 			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "+");
 		}
 		
 		for(Item item : this.backpack){
 //			item.updateLevel(targetLevel);
-			item.setOwner(owner);
+			item.setOwner(this);
 			System.out.println(item.getOwner().getLevel());
 		}
 		
@@ -1083,15 +1087,19 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 */
 	public void trade(Item playeritem, Fighter npc, Item npcitem) {
 		if (npc != null && npcitem != null && playeritem!=null){
-			npc.backpack.remove(npcitem);		
+			npc.backpack.remove(npcitem);
+			npcitem.setOwner(this);
 			this.backpack.add(npcitem);
 			this.backpack.remove(playeritem);
+			playeritem.setOwner(npc);
 			npc.backpack.add(playeritem);	
 		} else if (npc != null && npcitem == null && playeritem != null){
 			this.backpack.remove(playeritem);
+			playeritem.setOwner(npc);
 			npc.backpack.add(playeritem);
 		} else if (npc != null && npcitem != null && playeritem == null){
-			npc.backpack.remove(npcitem);			
+			npc.backpack.remove(npcitem);
+			npcitem.setOwner(this);
 			this.backpack.add(npcitem);
 		}
 		observerNotify();
