@@ -1,5 +1,6 @@
 package ddg.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,8 +14,9 @@ import java.util.Set;
  * @author Fei Yu
  * @date Feb 23, 2017
  */
-public class FighterModel {
+public class FighterModel implements Serializable {
 	
+	private static final long serialVersionUID = -8867154362135278354L;
 	public HashMap<String, Fighter> fightersHM;
 
 	/**

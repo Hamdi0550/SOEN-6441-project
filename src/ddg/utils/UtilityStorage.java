@@ -1,7 +1,7 @@
 package ddg.utils;
 
 import ddg.model.Fighter;
-import ddg.model.entity.BaseItem;
+import ddg.model.entity.Item;
 
 /**
  * 
@@ -13,7 +13,7 @@ import ddg.model.entity.BaseItem;
  */
 public class UtilityStorage {
 	private static Fighter fighter;
-	private static BaseItem item;
+	private static Item item;
 	
 	/**
 	 * Return the character object
@@ -27,7 +27,7 @@ public class UtilityStorage {
 	 * Return the item object
 	 * @return item
 	 */
-	public static BaseItem getItem(){
+	public static Item getItem(){
 		return item;
 	}
 	
@@ -43,7 +43,7 @@ public class UtilityStorage {
 	 * Store an item
 	 * @param newitem
 	 */
-	public static void setItem(BaseItem newitem){
+	public static void setItem(Item newitem){
 		item = newitem;
 	}
 

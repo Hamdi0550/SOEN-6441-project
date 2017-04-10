@@ -21,19 +21,20 @@ package ddg.model.entity;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class Pacifying extends Ability {
+public class Pacifying extends Enchantment {
+
+	private static final long serialVersionUID = -7180171488475488152L;
 
 	/**
 	 * Constructors
 	 * 
 	 */
-	public Pacifying(String name) {
-		super(name);
+	public Pacifying() {
+		super(MagicWeaponItem.PACIFYING);
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return MagicItem.PACIFYING;
+		return name;
 	}
 }

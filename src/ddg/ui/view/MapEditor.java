@@ -29,9 +29,9 @@ import javax.swing.event.ListSelectionListener;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
-import ddg.model.entity.BaseItem;
 import ddg.model.entity.Cell;
 import ddg.model.entity.Chest;
+import ddg.model.entity.Item;
 import ddg.model.entity.Map;
 import ddg.ui.view.component.DButton;
 import ddg.ui.view.component.ListEntryCellRenderer;
@@ -307,7 +307,7 @@ public class MapEditor extends JPanel implements ActionListener, ListSelectionLi
 	 * @param y the column-coordinate on the map, ensure the location of the cell
 	 * 
 	 */
-	public void addChestInCell(BaseItem item, int x, int y){
+	public void addChestInCell(Item item, int x, int y){
 		
 		selectedmap.changeCellsinthemap(x, y, new Cell<Chest>(new Chest(item)));
 	}

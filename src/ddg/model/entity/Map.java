@@ -19,7 +19,7 @@ import ddg.utils.ValidationTool;
  * model for Map
  *
  */
-public class Map extends Observable implements Cloneable, java.io.Serializable{
+public class Map extends Observable implements IOwner, Cloneable, java.io.Serializable{
 	private static final long serialVersionUID = -8908299320533978891L;
 	
 	// record the location of things in the map
@@ -28,7 +28,7 @@ public class Map extends Observable implements Cloneable, java.io.Serializable{
 	private Cell<?>[][] cellsinthemap;
 	private int row;
 	private int column;
-	
+	private IOwner owner;
 	
 	// recording the status of player.
 //	private Character player;
@@ -189,19 +189,33 @@ public class Map extends Observable implements Cloneable, java.io.Serializable{
 		return new ValidationTool(map).checkValidation();
 	}
 	
-	/**
-	 * adapting all item and non-player Characters and Items basing on level of player
-	 * @param level	level of player
-	 */
-	public void adaptedLevel(int level){
-		System.out.println("adaptedLevel()!!!!!" + level);
+//	/**
+//	 * adapting all item and non-player Characters and Items basing on level of player
+//	 * @param level	level of player
+//	 */
+//	public void adaptedLevel(int level){
+//		System.out.println("adaptedLevel()!!!!!" + level);
+//		for(int i=0; i<row ;i++){
+//			for(int j=0; j<column ;j++){
+//				if(location[i][j]=='p'){
+//				 ((Fighter)cellsinthemap[i][j].getContent()).updateLevel(level);
+//				}
+//				else if(location[i][j]=='c'){
+//					((Chest) cellsinthemap[i][j].getContent()).getItem().updateLevel(level);
+//				}
+//			}
+//		}
+//	}
+	
+	public void setOwner(IOwner l){
+		this.owner = l;
 		for(int i=0; i<row ;i++){
 			for(int j=0; j<column ;j++){
 				if(location[i][j]=='p'){
-				 ((Fighter)cellsinthemap[i][j].getContent()).updateLevel(level);
+					((Fighter)cellsinthemap[i][j].getContent()).setOwner(owner);
 				}
 				else if(location[i][j]=='c'){
-					((Chest) cellsinthemap[i][j].getContent()).getItem().updateLevel(level);
+					((Chest) cellsinthemap[i][j].getContent()).getItem().setOwner(owner);
 				}
 			}
 		}
@@ -221,5 +235,10 @@ public class Map extends Observable implements Cloneable, java.io.Serializable{
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int getLevel() {
+		return this.owner==null?0:this.owner.getLevel();
 	}
 }

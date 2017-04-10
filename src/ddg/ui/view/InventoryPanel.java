@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 
 import ddg.model.Fighter;
-import ddg.model.entity.BaseItem;
+import ddg.model.entity.Item;
 
 /**
  * 
@@ -191,7 +191,7 @@ public class InventoryPanel extends InventoryView implements Observer, ActionLis
 	 * 
 	 * @param item
 	 */
-	private void setItemAttribute(BaseItem item) {
+	private void setItemAttribute(Item item) {
 		if(item == null) {
 			attribute.setVisible(false);
 			return;

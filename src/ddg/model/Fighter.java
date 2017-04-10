@@ -8,9 +8,11 @@ import java.util.Observable;
 import javax.swing.JOptionPane;
 
 import ddg.Config;
-import ddg.model.entity.Ability;
+import ddg.model.entity.Enchantment;
 import ddg.model.entity.BaseItem;
 import ddg.model.entity.Chest;
+import ddg.model.entity.IOwner;
+import ddg.model.entity.Item;
 import ddg.strategy.IStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
 import ddg.utils.Dice;
@@ -25,8 +27,9 @@ import ddg.utils.Utils;
  * @author Fei Yu
  * @date Mar 3, 2017
  */
-public class Fighter extends Observable implements Cloneable, Serializable{
-	private static final long serialVersionUID = 1L;
+public class Fighter extends Observable implements IOwner, Cloneable, Serializable{
+
+	private static final long serialVersionUID = 7049746086056480628L;
 	private String name;
 	private int level = 1;
 	private boolean isalive = true;
@@ -72,8 +75,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	private boolean isRingOn = false;
 	private boolean isBeltOn = false;
 	private boolean isHelmetOn = false;
-	private ArrayList<BaseItem> backpack = new ArrayList<>();
-	private ArrayList<BaseItem> wornItems = new ArrayList<>();
+	private ArrayList<Item> backpack = new ArrayList<>();
+	private ArrayList<Item> wornItems = new ArrayList<>();
+	
+	private IOwner owner;
 	
 	private IStrategy strategyList;
 	public void setStrategy(IStrategy strategy) {
@@ -384,33 +389,39 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @return attackBonus
 	 */
 	public int getAttackBonus(){
-		int attackBonus = 0;
-		boolean hasWeapon = false;
-		boolean isMelee = false;
-		boolean isRanged = false;
-		for (BaseItem wornItem : wornItems) {
+		for (Item wornItem : wornItems) {
 			if (wornItem.getName().equals("Weapon")){
-				hasWeapon = true;
-				if (wornItem.getWeaponType().equals("Melee")){
-					isMelee = true;
-				}else if(wornItem.getWeaponType().equals("Ranged")){
-					isRanged = true;
-				}
+				return wornItem.getBonus();
 			}
 		}
-		if (hasWeapon){
-			System.out.println("This is a weapon");
-			if (isMelee){
-				System.out.println("this weanpon is melee weapon");
-				attackBonus = level +  getStrModifier();
-			}else if (isRanged){
-				System.out.println("this weanpon is ranged weapon");
-				attackBonus = level + getDexModifier();
-			}
-		}else {
-			attackBonus = level;
-		}
-		return attackBonus;
+		return level;
+//		int attackBonus = 0;
+//		boolean hasWeapon = false;
+//		boolean isMelee = false;
+//		boolean isRanged = false;
+//		for (BaseItem wornItem : wornItems) {
+//			if (wornItem.getName().equals("Weapon")){
+//				hasWeapon = true;
+//				if (wornItem.getWeaponType().equals("Melee")){
+//					isMelee = true;
+//				}else if(wornItem.getWeaponType().equals("Ranged")){
+//					isRanged = true;
+//				}
+//			}
+//		}
+//		if (hasWeapon){
+//			System.out.println("This is a weapon");
+//			if (isMelee){
+//				System.out.println("this weanpon is melee weapon");
+//				attackBonus = level +  getStrModifier();
+//			}else if (isRanged){
+//				System.out.println("this weanpon is ranged weapon");
+//				attackBonus = level + getDexModifier();
+//			}
+//		}else {
+//			attackBonus = level;
+//		}
+//		return attackBonus;
 	}
 	
 	/**
@@ -444,7 +455,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * Get the backpack of the character
 	 * @return backpack
 	 */
-	public ArrayList<BaseItem> getBackpack(){
+	public ArrayList<Item> getBackpack(){
 		return backpack;
 	}
 	
@@ -452,7 +463,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * Get the wornItems of the character
 	 * @return wornItems
 	 */
-	public ArrayList<BaseItem> getWorn(){
+	public ArrayList<Item> getWorn(){
 		return wornItems;
 	}
 
@@ -701,7 +712,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * Set the backpack of the character
 	 * @param backpack
 	 */
-	public void setBackpack(ArrayList<BaseItem> backpack){
+	public void setBackpack(ArrayList<Item> backpack){
 		this.backpack = backpack;
 	}
 	
@@ -709,7 +720,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * Set the wornItems of the character
 	 * @param worn
 	 */
-	public void setWorn(ArrayList<BaseItem> worn){
+	public void setWorn(ArrayList<Item> worn){
 		this.wornItems = worn;
 	}
 
@@ -821,35 +832,35 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 */
 	public void updateGainedAttribute(String increase, int bonus, String string) {
 		if (string.equals("+")){
-			if (increase.equals(Ability.STRENGTH)){
+			if (increase.equals(Enchantment.STRENGTH)){
 				setGainedStrength(gainedStrength + bonus);
-			} else if (increase.equals(Ability.DEXTERITY)){
+			} else if (increase.equals(Enchantment.DEXTERITY)){
 				setGainedDexterity(gainedDexterity + bonus);
-			} else if (increase.equals(Ability.CONSTITUTION)){
+			} else if (increase.equals(Enchantment.CONSTITUTION)){
 				setGainedConstitution(gainedConstitution + bonus);
-			} else if (increase.equals(Ability.INTELLIGENCE)){
+			} else if (increase.equals(Enchantment.INTELLIGENCE)){
 				setGainedIntelligence(gainedIntelligence + bonus);
-			} else if (increase.equals(Ability.WISDOM)){
+			} else if (increase.equals(Enchantment.WISDOM)){
 				setGainedWisdom(gainedWisdom + bonus);
-			} else if (increase.equals(Ability.CHARISMA)){
+			} else if (increase.equals(Enchantment.CHARISMA)){
 				setGainedCharisma(gainedCharisma + bonus);
-			} else if (increase.equals(Ability.ARMOR_CLASS)){
+			} else if (increase.equals(Enchantment.ARMOR_CLASS)){
 				setGainedArmorClass(gainedArmorClass + bonus);
 			}			
 		} else if (string.equals("-")){
-			if (increase.equals(Ability.STRENGTH)){
+			if (increase.equals(Enchantment.STRENGTH)){
 				setGainedStrength(gainedStrength - bonus);
-			} else if (increase.equals(Ability.DEXTERITY)){
+			} else if (increase.equals(Enchantment.DEXTERITY)){
 				setGainedDexterity(gainedDexterity - bonus);
-			} else if (increase.equals(Ability.CONSTITUTION)){
+			} else if (increase.equals(Enchantment.CONSTITUTION)){
 				setGainedConstitution(gainedConstitution - bonus);
-			} else if (increase.equals(Ability.INTELLIGENCE)){
+			} else if (increase.equals(Enchantment.INTELLIGENCE)){
 				setGainedIntelligence(gainedIntelligence - bonus);
-			} else if (increase.equals(Ability.WISDOM)){
+			} else if (increase.equals(Enchantment.WISDOM)){
 				setGainedWisdom(gainedWisdom - bonus);
-			} else if (increase.equals(Ability.CHARISMA)){
+			} else if (increase.equals(Enchantment.CHARISMA)){
 				setGainedCharisma(gainedCharisma - bonus);
-			} else if (increase.equals(Ability.ARMOR_CLASS)){
+			} else if (increase.equals(Enchantment.ARMOR_CLASS)){
 				setGainedArmorClass(gainedArmorClass - bonus);
 			}			
 		}
@@ -860,7 +871,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @param i
 	 * @return
 	 */
-	public boolean wearItem(BaseItem i) {
+	public boolean wearItem(Item i) {
 		return wearItem(i, true);
     }
 	
@@ -872,8 +883,8 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @param show
 	 * @return
 	 */
-	public boolean wearItem(BaseItem i, boolean show) {
-		for (BaseItem item: this.getWorn()){
+	public boolean wearItem(Item i, boolean show) {
+		for (Item item: this.getWorn()){
 			if (item.getName().equals(i.getName())){
 				this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "-");
 				this.getBackpack().add(item);
@@ -900,7 +911,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 		if(this.backpack.size()<Config.BACKPACK_SIZE){
 			if(!chest.isEmpty()){
 				backpack.add(chest.getItem());
-				System.out.println("get"+ chest.getItem().getLevel()+"------bouns--"+chest.getItem().getBonus());
+				System.out.println("get"+ chest.getItem().getOwner().getLevel()+"------bouns--"+chest.getItem().getBonus());
 				chest.becameEmpty();
 				observerNotify();
 			}
@@ -921,16 +932,16 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 */
 	public void lootCorpseItems(Fighter corpse){
 		if(corpse.backpack.size() > 0){
-			for(BaseItem item: corpse.backpack){
+			for(Item item: corpse.backpack){
 				this.backpack.add(item);
-				System.out.println(item.getLevel()+"----get a item from corpse backpack items" + item.getName());
+				System.out.println(item.getOwner().getLevel()+"----get a item from corpse backpack items" + item.getName());
 			}
 			corpse.clearBackpack();
 		}
 		if(corpse.wornItems.size() > 0){
-			for(BaseItem item : corpse.wornItems){
+			for(Item item : corpse.wornItems){
 				this.backpack.add(item);
-				System.out.println(item.getLevel()+"---get a item from corpse worn items" + item.getName() );
+				System.out.println(item.getOwner().getLevel()+"---get a item from corpse worn items" + item.getName() );
 			}
 			corpse.clearWornItems();
 		}
@@ -995,23 +1006,44 @@ public class Fighter extends Observable implements Cloneable, Serializable{
      * @param targetLevel
     */
 	// scores values have to be changed
-	public void updateLevel(int targetLevel){
-		
-		for(BaseItem item : this.wornItems){
+//	public void updateLevel(int targetLevel){
+//		
+//		for(BaseItem item : this.wornItems){
+//			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "-");
+//			item.updateLevel(targetLevel);
+//			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "+");
+//		}
+//		
+//		for(BaseItem item : this.backpack){
+//			item.updateLevel(targetLevel);
+//		}
+//		
+//		if(targetLevel != level){
+//			this.hitPoints = this.hitPoints + d10RollAndTimes(targetLevel - this.level);
+//			this.level = targetLevel;
+//		}
+//		
+//	}
+	
+	public void setOwner(IOwner owner) {
+		this.owner = owner;
+		for(Item item : this.wornItems){
 			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "-");
-			item.updateLevel(targetLevel);
+//			item.updateLevel(targetLevel);
+			item.setOwner(owner);
 			this.updateGainedAttribute(item.getIncrease(), item.getBonus(), "+");
 		}
 		
-		for(BaseItem item : this.backpack){
-			item.updateLevel(targetLevel);
+		for(Item item : this.backpack){
+//			item.updateLevel(targetLevel);
+			item.setOwner(owner);
+			System.out.println(item.getOwner().getLevel());
 		}
 		
-		if(targetLevel != level){
-			this.hitPoints = this.hitPoints + d10RollAndTimes(targetLevel - this.level);
-			this.level = targetLevel;
+		if(owner.getLevel() != level){
+			this.hitPoints = this.hitPoints + d10RollAndTimes(owner.getLevel() - this.level);
+			this.level = owner.getLevel();
 		}
-		
 	}
 	
 	/**
@@ -1049,7 +1081,7 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @param npc NPC
 	 * @param npcitem NPC's item
 	 */
-	public void trade(BaseItem playeritem, Fighter npc, BaseItem npcitem) {
+	public void trade(Item playeritem, Fighter npc, Item npcitem) {
 		if (npc != null && npcitem != null && playeritem!=null){
 			npc.backpack.remove(npcitem);		
 			this.backpack.add(npcitem);
@@ -1074,10 +1106,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 			JOptionPane.showMessageDialog(null, "The character is not wearing a " + selectedWorn.toLowerCase() + ".", "Warning", JOptionPane.WARNING_MESSAGE);
 		} else {
 			try{
-				Iterator<BaseItem> it = this.getWorn().iterator();
+				Iterator<Item> it = this.getWorn().iterator();
 				boolean wearing = false;
 				while (it.hasNext()) {
-					BaseItem i = it.next();
+					Item i = it.next();
 					if (i.getName().equals(selectedWorn)){
 						this.updateGainedAttribute(i.getIncrease(), i.getBonus(), "-");
 						this.getBackpack().add(i);
@@ -1121,8 +1153,9 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	public static void saveFighter(Fighter fighter){
 		System.out.println("save fighter======1");
 		
-		String g = Utils.readFile(Config.CHARACTER_FILE);
-		FighterModel fm = Utils.fromJson(g, FighterModel.class);
+//		String g = Utils.readFile(Config.CHARACTER_FILE);
+//		FighterModel fm = Utils.fromJson(g, FighterModel.class);
+		FighterModel fm = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
 		if (fm == null) {
 			fm = new FighterModel();
 		}
@@ -1130,8 +1163,9 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 			
 		if(fm.getFighters().containsKey(fighter.name)){
 			fm.getFighters().put(fighter.name, fighter);
-			String gSave = Utils.toJson(fm);
-			Utils.save2File(Config.CHARACTER_FILE, gSave);
+//			String gSave = Utils.toJson(fm);
+//			Utils.save2File(Config.CHARACTER_FILE, gSave);
+			Utils.saveObject(Config.CHARACTER_FILE, fm);
 			System.out.println("save fighter======success");
 		}
 		else{
@@ -1152,9 +1186,9 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @param wearingType Type of the item
 	 * @param tempItem SelectedItem
 	 */
-	public void equip(String wearingType, BaseItem tempItem) {    			
+	public void equip(String wearingType, Item tempItem) {    			
 		try{
-			for (BaseItem i: getWorn()){
+			for (Item i: getWorn()){
 				if (i.getName().equals(wearingType)){
 					updateGainedAttribute(i.getIncrease(), i.getBonus(), "-");
 					wornItems.remove(i);
@@ -1179,10 +1213,10 @@ public class Fighter extends Observable implements Cloneable, Serializable{
 	 * @param name type of the item
 	 * @return i the item
 	 */
-	public BaseItem getWearItemByName(String name) {
-		Iterator<BaseItem> it = this.getWorn().iterator();
+	public Item getWearItemByName(String name) {
+		Iterator<Item> it = this.getWorn().iterator();
 		while (it.hasNext()) {
-			BaseItem i = it.next();
+			Item i = it.next();
 			if (i.getName().equals(name)){
 				return i;
 			}

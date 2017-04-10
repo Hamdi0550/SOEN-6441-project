@@ -248,8 +248,9 @@ public class PopUpForFighter extends JDialog implements ActionListener, ListSele
                 System.out.println("The CS window is focused.");  
                 FighterModel fm = new FighterModel();
 
-        		String g = Utils.readFile(Config.CHARACTER_FILE);
-        		fm = Utils.fromJson(g, FighterModel.class);
+//        		String g = Utils.readFile(Config.CHARACTER_FILE);
+//        		fm = Utils.fromJson(g, FighterModel.class);
+        		fm = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
         		if(fm != null){
             		System.out.println(fm);
             		try{

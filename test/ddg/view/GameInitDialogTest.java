@@ -32,10 +32,12 @@ public class GameInitDialogTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		String g = Utils.readFile(Config.CHARACTER_FILE);
-		fighterModel = Utils.fromJson(g, FighterModel.class);
+//		String g = Utils.readFile(Config.CHARACTER_FILE);
+//		fighterModel = Utils.fromJson(g, FighterModel.class);
+		FighterModel fm = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
+		Utils.saveObject(Config.CHARACTER_FILE, fm);
 		fighter = fighterModel.getFighterByName("Tank3");
-		g = Utils.readFile(Config.CAMPAIGN_FILE);
+		String g = Utils.readFile(Config.CAMPAIGN_FILE);
 		campaignEditorModel = Utils.fromJson(g, CampaignEditorModel.class);
 		baseCampaign = campaignEditorModel.getItemByIndex(0);
 		test = new GameInitDialog(null, null);
@@ -62,9 +64,10 @@ public class GameInitDialogTest {
 	
 	@Test
 	public void testSelectTheCharacter(){
-		FighterModel fighterModel = new FighterModel();
-		String g = Utils.readFile(Config.CHARACTER_FILE);
-		fighterModel = Utils.fromJson(g, FighterModel.class);
+//		FighterModel fighterModel = new FighterModel();
+//		String g = Utils.readFile(Config.CHARACTER_FILE);
+//		fighterModel = Utils.fromJson(g, FighterModel.class);
+		FighterModel fighterModel = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
 		assertNotNull(fighterModel.getFighterList());
 	}
 }

@@ -25,8 +25,10 @@ import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.model.Fighter;
+import ddg.model.FighterModel;
 import ddg.model.ItemEditorModel;
 import ddg.model.entity.BaseItem;
+import ddg.model.entity.Item;
 import ddg.ui.view.component.ListEntryCellRenderer;
 import ddg.utils.UtilityStorage;
 import ddg.utils.Utils;
@@ -56,7 +58,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 	ArrayList<BaseItem> al1 = new ArrayList<>();
 	public String fighterKeyName = "fighter111";
     private static CharacterEditor owner;
-    public BaseItem selectedItem;
+    public Item selectedItem;
     private Fighter fighter;
 	private String wearingType;
     
@@ -93,8 +95,9 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
         setTitle("Select Item 2");
         setModal(true);
         
-		String g = Utils.readFile(Config.ITEM_FILE);
-		this.itemListModel = Utils.fromJson(g, ItemEditorModel.class);
+//		String g = Utils.readFile(Config.ITEM_FILE);
+//		this.itemListModel = Utils.fromJson(g, ItemEditorModel.class);
+		this.itemListModel = Utils.readObject(Config.ITEM_FILE, ItemEditorModel.class);
 		if (this.itemListModel == null) {
 			this.itemListModel = new ItemEditorModel();
 		}
@@ -164,7 +167,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
     	
     	selectBtn.addActionListener(new ActionListener(){ 
     		public void actionPerformed(ActionEvent e){
-    			BaseItem tempItem = selectedItem;
+    			Item tempItem = selectedItem;
     			if(tempItem == null){
     				
     			} else {
@@ -220,7 +223,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 		if (e.getValueIsAdjusting() == false) {
 			int index = itemJList.getSelectedIndex();
 			if(index >= 0) {
-				BaseItem item = itemListModel.getItemByIndex(index);
+				Item item = itemListModel.getItemByIndex(index);
 				
 				nameLabel.setText(item.getId());
 				typeLabel.setText(item.getName());

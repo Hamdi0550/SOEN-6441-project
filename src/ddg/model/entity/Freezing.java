@@ -21,19 +21,20 @@ package ddg.model.entity;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class Freezing extends Ability {
+public class Freezing extends Enchantment {
+
+	private static final long serialVersionUID = -6387511701613860418L;
 
 	/**
 	 * Constructors
 	 * 
 	 */
-	public Freezing(String name) {
-		super(name);
+	public Freezing() {
+		super(MagicWeaponItem.FREEZING);
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return MagicItem.FREEZING;
+		return name;
 	}
 }

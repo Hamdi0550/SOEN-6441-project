@@ -17,7 +17,6 @@ import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,9 +26,9 @@ import javax.swing.SwingUtilities;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.entity.BaseCampaign;
-import ddg.model.entity.BaseItem;
 import ddg.model.entity.Chest;
 import ddg.model.entity.Game;
+import ddg.model.entity.Item;
 import ddg.model.entity.Map;
 import ddg.strategy.AgressiveStrategy;
 import ddg.strategy.FriendlyStrategy;
@@ -487,7 +486,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		else if(temp=='o'){ //playingMap.getLocation()[game.getXofplayer()][game.getYofplayer()]=='o'
 			// check whether there is key on player's backpack, if so can interact with exit door, otherwise popup a warm message
 			Boolean containKey = false;
-			for(BaseItem item:fighter.getBackpack()){
+			for(Item item:fighter.getBackpack()){
 				if(item.getName().equals("key")){
 					containKey = true;
 					if(JOptionPane.showConfirmDialog(null, "Do you want to entry next map?", "Confirm", JOptionPane.YES_NO_OPTION)==0){

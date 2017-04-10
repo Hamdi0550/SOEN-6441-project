@@ -66,7 +66,8 @@ public class Game implements java.io.Serializable{
 	
 	private void initMapData() {
 		// TODO Auto-generated method stub
-		this.playingmap.adaptedLevel(fighter.getLevel());
+//		this.playingmap.adaptedLevel(fighter.getLevel());
+		this.playingmap.setOwner(fighter);
 		
 		for(int i=0;i<playingmap.getRow();i++){
 			for(int j=0;j<playingmap.getColumn();j++){

@@ -18,8 +18,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
+import ddg.model.FighterModel;
 import ddg.model.ItemEditorModel;
 import ddg.model.entity.BaseItem;
+import ddg.model.entity.Item;
 import ddg.ui.view.component.ListEntryCellRenderer;
 import ddg.utils.Utils;
 
@@ -33,7 +35,7 @@ public class PopUpForItem extends JDialog implements ActionListener{
 	private ItemEditorModel itemsmodel;
 	private JList itemslist;
 	private JTextArea detailofitem;
-	private BaseItem selecteditem;
+	private Item selecteditem;
 	
 	/**
      * @param owner	the owner frame of this dialog
@@ -49,8 +51,9 @@ public class PopUpForItem extends JDialog implements ActionListener{
 	}
 
 	private void initData() {
-		String g = Utils.readFile(Config.ITEM_FILE);
-		this.itemsmodel = Utils.fromJson(g, ItemEditorModel.class);
+//		String g = Utils.readFile(Config.ITEM_FILE);
+//		this.itemsmodel = Utils.fromJson(g, ItemEditorModel.class);
+		this.itemsmodel = Utils.readObject(Config.ITEM_FILE, ItemEditorModel.class);
 		if (this.itemsmodel == null) {
 			this.itemsmodel = new ItemEditorModel();
 		}
@@ -67,7 +70,7 @@ public class PopUpForItem extends JDialog implements ActionListener{
 				int index = itemslist.getSelectedIndex();
 				if(index >= 0) {
 					System.out.println("list select:"+index);
-					BaseItem item = itemsmodel.getItemByIndex(index);
+					Item item = itemsmodel.getItemByIndex(index);
 					detailofitem.setText(item.getId() + "\n\n +" + item.getBonus() +" "+item.getIncrease());
 				}
 			}
@@ -118,7 +121,7 @@ public class PopUpForItem extends JDialog implements ActionListener{
 	/**
 	 * @return the item which selected by user, then put into the chest
 	 */
-	public BaseItem getSelecteditem() {
+	public Item getSelecteditem() {
 		return selecteditem;
 	}
 	

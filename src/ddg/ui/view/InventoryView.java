@@ -29,6 +29,7 @@ import javax.swing.event.ListSelectionListener;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.entity.BaseItem;
+import ddg.model.entity.Item;
 import ddg.ui.view.dialog.CharacterEditor;
 import ddg.utils.UtilityStorage;
 import ddg.utils.Utils;
@@ -81,7 +82,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
     protected JLabel valueL = new JLabel("   ");
     
     public String selectedWorn = null;
-    public BaseItem selectedBackPackItem = null;
+    public Item selectedBackPackItem = null;
     public Fighter fighter = new Fighter();
     private static CharacterEditor owner;
    
@@ -266,7 +267,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 	}
 
 	protected void initMethod() {
-		for(BaseItem i: fighter.getBackpack()){
+		for(Item i: fighter.getBackpack()){
 			backpackItemModel.addElement(i.getId());
 		}      	
 		backpackItemList.addListSelectionListener(this);
@@ -384,7 +385,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 	protected void updateView(Fighter f) {
 		fighter = f;
 		backpackItemModel.clear();
-		for (BaseItem i: fighter.getBackpack()){
+		for (Item i: fighter.getBackpack()){
 			backpackItemModel.addElement(i.getId());
 		}		
 		updateAttributes(fighter);		
@@ -543,7 +544,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 			int index = backpackItemList.getSelectedIndex();
 			if(index >= 0) {
 				System.out.println("list select:"+index);
-				BaseItem item = fighter.getBackpack().get(index);
+				Item item = fighter.getBackpack().get(index);
 				
 				equipmentTypeL.setText(item.getName());
 				attributeL.setText(item.getIncrease());

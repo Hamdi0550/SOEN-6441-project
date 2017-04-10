@@ -35,16 +35,17 @@ public class MapPanelInGameTest {
 	 */
 	@Before
 	public void testBefore() throws Exception {
-		 FighterModel fighterModel = new FighterModel();
-		 String g = Utils.readFile(Config.CHARACTER_FILE);
-		 fighterModel = Utils.fromJson(g, FighterModel.class);
-		 player = fighterModel.getFighters().get("Tank3");
-		
-		 g = Utils.readFile(Config.CAMPAIGN_FILE);
-		 CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);
-		 campaign = campaignModel.getItemByIndex(0);
-		 
-		 mappanelingame = new MapPanelInGame(player,campaign);
+		// FighterModel fighterModel = new FighterModel();
+		// String g = Utils.readFile(Config.CHARACTER_FILE);
+		// fighterModel = Utils.fromJson(g, FighterModel.class);
+		FighterModel fighterModel = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
+		player = fighterModel.getFighters().get("Tank3");
+
+		String g = Utils.readFile(Config.CAMPAIGN_FILE);
+		CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);
+		campaign = campaignModel.getItemByIndex(0);
+
+		mappanelingame = new MapPanelInGame(player, campaign);
 	}
 	
 	/**

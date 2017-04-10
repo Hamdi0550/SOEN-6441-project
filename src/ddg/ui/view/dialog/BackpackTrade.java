@@ -22,6 +22,7 @@ import javax.swing.event.ListSelectionListener;
 
 import ddg.model.Fighter;
 import ddg.model.entity.BaseItem;
+import ddg.model.entity.Item;
 import ddg.utils.Utils;
 /**
  * 
@@ -36,11 +37,11 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
     private final JButton cancelBtn = new JButton("    Cancel  ");
     private final JButton tradeBtn = new JButton("   Trade  ");
     
-    private ArrayList<BaseItem> playerbackpack = new ArrayList<>();
+    private ArrayList<Item> playerbackpack = new ArrayList<>();
     private DefaultListModel<String> playerItemModel = new DefaultListModel<String>();
     private JList<String> playerItemList = new JList<String>();
     
-    private ArrayList<BaseItem> npcbackpack = new ArrayList<>();
+    private ArrayList<Item> npcbackpack = new ArrayList<>();
     private DefaultListModel<String> npcItemModel = new DefaultListModel<String>();
     private JList<String> npcItemList = new JList<String>();        
     
@@ -63,11 +64,11 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
     	npcItemModel.clear();
     	playerbackpack = player.getBackpack();
     	npcbackpack = npc.getBackpack();
-    	for(BaseItem playeritem : playerbackpack){
+    	for(Item playeritem : playerbackpack){
     		playerItemModel.addElement(playeritem.getId());
     	}
     	
-    	for(BaseItem npcitem : npcbackpack){
+    	for(Item npcitem : npcbackpack){
     		npcItemModel.addElement(npcitem.getId());
     	}
     	
@@ -180,7 +181,7 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
     			int indexplayer = playerItemList.getSelectedIndex();
     			int indexnpc = npcItemList.getSelectedIndex();
     			if(indexplayer>=0){
-    				BaseItem item = null;
+    				Item item = null;
     				if(indexnpc<0){
     					if(npcItemModel.size()!=0) {
     						indexnpc = Utils.getRadom(npcItemModel.size());
@@ -234,7 +235,7 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
 			int indexnpc = npcItemList.getSelectedIndex();
 			if(index >= 0) {
 				System.out.println("list select:"+index);
-				BaseItem item = playerbackpack.get(index);
+				Item item = playerbackpack.get(index);
 				nameL.setText(item.getId());
 				typeL.setText(item.getName());
 				attributeL.setText(item.getIncrease());
@@ -242,7 +243,7 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
 			}
 			if(indexnpc >= 0) {
 				System.out.println("list select:"+indexnpc);
-				BaseItem item = npcbackpack.get(indexnpc);
+				Item item = npcbackpack.get(indexnpc);
 				name2L.setText(item.getId());
 				type2L.setText(item.getName());
 				attribute2L.setText(item.getIncrease());

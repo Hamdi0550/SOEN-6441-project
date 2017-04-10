@@ -1,11 +1,12 @@
 package ddg.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
-import ddg.model.entity.BaseItem;
+import ddg.model.entity.Item;
 import ddg.model.entity.ListEntry;
 
 /**
@@ -15,9 +16,10 @@ import ddg.model.entity.ListEntry;
  * @author Zhen Du
  * @date Feb 22, 2017
  */
-public class ItemEditorModel {
+public class ItemEditorModel implements Serializable {
 	
-	private ArrayList<BaseItem> items;
+	private static final long serialVersionUID = -4459745326913400957L;
+	private ArrayList<Item> items;
 	/**
 	 * 
 	 * Constructors for ItemEditor Data
@@ -25,7 +27,7 @@ public class ItemEditorModel {
 	 */
 	public ItemEditorModel() {
 		super();
-		this.items = new ArrayList<BaseItem>();
+		this.items = new ArrayList<Item>();
 	}
 	
 	/**
@@ -34,7 +36,7 @@ public class ItemEditorModel {
 	 * 
 	 * @param items
 	 */
-	public ItemEditorModel(ArrayList<BaseItem> items) {
+	public ItemEditorModel(ArrayList<Item> items) {
 		super();
 		this.items = items;
 	}
@@ -45,7 +47,7 @@ public class ItemEditorModel {
 	 * 
 	 * @param item
 	 */
-	public void addItem(BaseItem item) {
+	public void addItem(Item item) {
 		int size = 0;
 		for(int i = 0; i < this.items.size(); i++) {
 			if(items.get(i).getName().equals(item.getName())) {
@@ -68,7 +70,7 @@ public class ItemEditorModel {
 	 */
 	public DefaultListModel getListModel() {
 		DefaultListModel l = new DefaultListModel();
-		for(BaseItem i : items) {
+		for(Item i : items) {
 			l.addElement(new ListEntry(i.getId(), new ImageIcon("res/"+i.getName()+".jpg")));
 		}
 		return l;
@@ -82,7 +84,7 @@ public class ItemEditorModel {
 	 */
 	public DefaultListModel getListModel(String type) {
 		DefaultListModel l = new DefaultListModel();
-		for(BaseItem i : items) {
+		for(Item i : items) {
 			if(i.getName().equals(type)) {
 				l.addElement(new ListEntry(i.getId(), new ImageIcon("res/"+i.getName()+".jpg")));
 			}
@@ -97,7 +99,7 @@ public class ItemEditorModel {
 	 * @param index
 	 * @return BaseItem the value on the index
 	 */
-	public BaseItem getItemByIndex(int index) {
+	public Item getItemByIndex(int index) {
 		if(index < 0 || index > items.size()-1)
 			return null;
 		return items.get(index);

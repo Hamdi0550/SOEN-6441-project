@@ -21,20 +21,21 @@ package ddg.model.entity;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class Burning extends Ability {
+public class Burning extends Enchantment {
+
+	private static final long serialVersionUID = -6221328594501953658L;
 
 	/**
 	 * Constructors
 	 * 
 	 */
-	public Burning(String name) {
-		super(name);
+	public Burning() {
+		super(MagicWeaponItem.BURNING);
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return MagicItem.BURNING;
+		return name;
 	}
 
 }

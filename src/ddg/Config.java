@@ -38,13 +38,13 @@ public class Config {
 			  new Color(45,92,162),
 			  new Color(84,123,200));
 	
-	public static final String CHARACTER_FILE = "./charactor.json";
+	public static final String CHARACTER_FILE = "./charactor.ser";
 	
 	public static final String MAP_FILE = "./map.ser";
 
 	public static final String CAMPAIGN_FILE = "./campaign.json";
 	
-	public static final String ITEM_FILE = "./item.json";
+	public static final String ITEM_FILE = "./item.ser";
 	
 	public static final String GAME_FILE = "./game.ser";
 	

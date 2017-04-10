@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ddg.Config;
+import ddg.model.FighterModel;
 import ddg.model.ItemEditorModel;
 import ddg.model.entity.BaseItem;
 import ddg.utils.Utils;
@@ -59,10 +60,12 @@ public class ItemEditorTest {
 	
 	@Test
 	public void testSaveLoad() {
-		String g = Utils.toJson(this.model);
-		Utils.save2File(Config.ITEM_FILE, g);
+//		String g = Utils.toJson(this.model);
+//		Utils.save2File(Config.ITEM_FILE, g);
+		Utils.saveObject(Config.ITEM_FILE, this.model);
 		
-		String s = Utils.readFile(Config.ITEM_FILE);
-		assertEquals(g, s);
+//		String s = Utils.readFile(Config.ITEM_FILE);
+		ItemEditorModel s = Utils.readObject(Config.CHARACTER_FILE, ItemEditorModel.class);
+		assertEquals(this.model, s);
 	}
 }

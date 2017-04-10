@@ -15,7 +15,7 @@ import org.junit.Test;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
-import ddg.model.entity.Ability;
+import ddg.model.entity.Enchantment;
 import ddg.model.entity.BaseItem;
 import ddg.model.entity.Chest;
 import ddg.utils.Utils;
@@ -36,8 +36,9 @@ public class CharactorEditorTest {
 	 */
 	@Before
 	public void setUpBefore() {
-		String g = Utils.readFile(Config.CHARACTER_FILE);
-		FighterModel fighterModel = Utils.fromJson(g, FighterModel.class);
+//		String g = Utils.readFile(Config.CHARACTER_FILE);
+//		FighterModel fighterModel = Utils.fromJson(g, FighterModel.class);
+		FighterModel fighterModel = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
 		if(fighterModel != null){        			
     		try{
         		if( null!=fighterModel.getFighters() ){
@@ -59,7 +60,7 @@ public class CharactorEditorTest {
 
 	@Test
 	public void testAbility() {
-		BaseItem i = new BaseItem(BaseItem.RING, 3, Ability.STRENGTH);
+		BaseItem i = new BaseItem(BaseItem.RING, 3, Enchantment.STRENGTH);
 		int init = fighter.getTotalStrength();
 
 		fighter.wearItem(i, false);
@@ -71,7 +72,7 @@ public class CharactorEditorTest {
 	@Test
 	public void testWearingItem() {
 		int n = fighter.getWorn().size();
-		BaseItem i = new BaseItem(BaseItem.RING, 3, Ability.STRENGTH);
+		BaseItem i = new BaseItem(BaseItem.RING, 3, Enchantment.STRENGTH);
 		i.setBonus(3);
 
 		fighter.wearItem(i, false);

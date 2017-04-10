@@ -1,5 +1,7 @@
 package ddg.model.entity;
 
+import java.io.Serializable;
+
 /**
  * 
  * This class define the name for increase
@@ -7,7 +9,8 @@ package ddg.model.entity;
  * @author Zhen Du
  * @date Feb 22, 2017
  */
-public class Ability {
+public class Enchantment implements Serializable {
+	private static final long serialVersionUID = -6350068786148679730L;
 	public static final String STRENGTH = "Strength";
 	public static final String DEXTERITY = "Dexterity";
 	public static final String CONSTITUTION = "Constitution";
@@ -18,12 +21,12 @@ public class Ability {
 	public static final String ATTACK_BONUS = "Attack bonus";
 	public static final String DAMAGE_BONUS = "Damage bonus";
 	
-	private String name;
+	protected String name;
 	/**
 	 * Constructors
 	 * 
 	 */
-	public Ability(String name) {
+	public Enchantment(String name) {
 		this.name = name;
 	}
 

@@ -9,7 +9,7 @@ package ddg.model.entity;
 public class Chest implements Cloneable, java.io.Serializable{
 	private static final long serialVersionUID = -28660141344286515L;
 	
-	private BaseItem item;
+	private Item item;
 	private boolean isempty;
 	
 	/**
@@ -24,7 +24,7 @@ public class Chest implements Cloneable, java.io.Serializable{
 	 * constructor create Chest by giving a item
 	 * @param item the item you would like to put into ths Chest
 	 */
-	public Chest(BaseItem item){
+	public Chest(Item item){
 		this.item = item;
 		this.isempty = false;
 	}
@@ -33,7 +33,7 @@ public class Chest implements Cloneable, java.io.Serializable{
 	 * return the item inside the Chest
 	 * @return item the item inside Chest
 	 */
-	public BaseItem getItem() {
+	public Item getItem() {
 		return item;
 	}
 

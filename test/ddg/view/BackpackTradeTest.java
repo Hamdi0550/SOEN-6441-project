@@ -16,7 +16,7 @@ import org.junit.Test;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
-import ddg.model.entity.BaseItem;
+import ddg.model.entity.Item;
 import ddg.utils.Utils;
 
 /**
@@ -37,8 +37,9 @@ public class BackpackTradeTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		String g = Utils.readFile(Config.CHARACTER_FILE);
-		fighterModel = Utils.fromJson(g, FighterModel.class);
+//		String g = Utils.readFile(Config.CHARACTER_FILE);
+//		fighterModel = Utils.fromJson(g, FighterModel.class);
+		fighterModel = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
 	}
 
 	/**
@@ -77,7 +78,7 @@ public class BackpackTradeTest {
 		assertFalse(size <= 0);
 		
 		int r = Utils.getRadom(npc.getBackpack().size());
-		BaseItem i = npc.getBackpack().get(r);
+		Item i = npc.getBackpack().get(r);
 		player.trade(player.getBackpack().get(0), npc, i);
 		
 		assertTrue(pSize == player.getBackpack().size());
@@ -93,7 +94,7 @@ public class BackpackTradeTest {
 		assertFalse(size <= 0);
 		
 		
-		BaseItem i = npc.getBackpack().get(0);
+		Item i = npc.getBackpack().get(0);
 		player.trade(player.getBackpack().get(0), npc, i);
 		
 		assertTrue(pSize == player.getBackpack().size());
@@ -121,7 +122,7 @@ public class BackpackTradeTest {
 		int size = npc.getBackpack().size();
 		assertFalse(size <= 0);
 		
-		BaseItem i = npc.getBackpack().get(0);
+		Item i = npc.getBackpack().get(0);
 		player.trade(null, npc, i);
 		
 		assertTrue(pSize+1 == player.getBackpack().size());

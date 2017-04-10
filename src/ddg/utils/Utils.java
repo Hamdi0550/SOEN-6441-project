@@ -3,9 +3,12 @@ package ddg.utils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
@@ -19,6 +22,7 @@ import com.google.gson.Gson;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
+import ddg.model.MapEditorModel;
 /**
  * This class include some static method which often used
  * 
@@ -69,6 +73,35 @@ public class Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void saveObject(String file, Object o) {
+		try {
+			FileOutputStream fileOut = new FileOutputStream(file);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(o);
+			out.close();
+			fileOut.close();
+			System.out.printf("Serialized data is saved");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static <T> T readObject(String file, Class<T> type) {
+		Object o = null;
+		try {
+			FileInputStream fileIn = new FileInputStream(file);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			o = in.readObject();
+			in.close();
+			fileIn.close();
+		} catch (IOException i) {
+			i.printStackTrace();
+		} catch (ClassNotFoundException c) {
+			c.printStackTrace();
+		}
+		return type.cast(o);
 	}
 	
 	/**
@@ -146,9 +179,18 @@ public class Utils {
 	 * @param fighter the character
 	 */
 	public static void saveFighter(Fighter fighter) {
-		FighterModel fm = new FighterModel();
-		String g = Utils.readFile(Config.CHARACTER_FILE);
-		fm = Utils.fromJson(g, FighterModel.class);
+//		FighterModel fm = new FighterModel();
+//		String g = Utils.readFile(Config.CHARACTER_FILE);
+//		fm = Utils.fromJson(g, FighterModel.class);
+		FighterModel fm = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
+		if(fm==null) {
+			fm = new FighterModel();
+			HashMap<String, Fighter> hm = new HashMap<>();
+			hm.put(fighter.getName(), fighter);
+			fm.setFighters(hm);
+			Utils.saveObject(Config.CHARACTER_FILE, fm);
+			return;
+		}
 		Boolean isInFile = false;
 		HashMap<String, Fighter> hm = new HashMap<>();
 			System.out.println(fm);
@@ -172,14 +214,16 @@ public class Utils {
 						fm.setFighters(hm);
 
 						String gSave = Utils.toJson(fm);
-						Utils.save2File(Config.CHARACTER_FILE, gSave);						
+//						Utils.save2File(Config.CHARACTER_FILE, gSave);		
+						Utils.saveObject(Config.CHARACTER_FILE, fm);
 					}
 				} else {
 					hm.put(fighter.getName(), fighter);
 					fm.setFighters(hm);
 
 					String gSave = Utils.toJson(fm);
-					Utils.save2File(Config.CHARACTER_FILE, gSave);					
+//					Utils.save2File(Config.CHARACTER_FILE, gSave);	
+					Utils.saveObject(Config.CHARACTER_FILE, fm);
 				}
 				
 			} catch (NullPointerException ex) {
@@ -197,8 +241,10 @@ public class Utils {
 	public static HashMap<String, Fighter> updateFighterList(DefaultListModel<String> jlistModel, HashMap<String, Fighter> fighterHM) {
         FighterModel fm = new FighterModel();
         
-		String g = Utils.readFile(Config.CHARACTER_FILE);
-		fm = Utils.fromJson(g, FighterModel.class);
+//		String g = Utils.readFile(Config.CHARACTER_FILE);
+//		fm = Utils.fromJson(g, FighterModel.class);
+		fm = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
+		if(fm==null)return fighterHM;
     		System.out.println(fm);
     		try{
     			System.out.println("2"+fm);
@@ -233,12 +279,14 @@ public class Utils {
         fighterHM.remove(key);
 		fm.setFighters(fighterHM);
 		
-		String gSave = Utils.toJson(fm);
-		Utils.save2File(Config.CHARACTER_FILE, gSave);
+//		String gSave = Utils.toJson(fm);
+//		Utils.save2File(Config.CHARACTER_FILE, gSave);
+		Utils.saveObject(Config.CHARACTER_FILE, fm);
 		
     	jlistModel.clear();
-		String g = Utils.readFile(Config.CHARACTER_FILE);
-		fm = Utils.fromJson(g, FighterModel.class);
+//		String g = Utils.readFile(Config.CHARACTER_FILE);
+//		fm = Utils.fromJson(g, FighterModel.class);
+		fm = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
 
 		if( null!=fm.getFighters() ){
             fighterHM = fm.getFighters();

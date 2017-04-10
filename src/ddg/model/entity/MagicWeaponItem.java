@@ -10,7 +10,6 @@ package ddg.model.entity;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -26,8 +25,9 @@ import javax.swing.ImageIcon;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class MagicItem extends DecoratorItem {
+public class MagicWeaponItem extends WeaponItem {
 
+	private static final long serialVersionUID = -4252729232240057434L;
 	public static final String FREEZING = "Freezing";
 	public static final String BURNING = "Burning";
 	public static final String SLAYING = "Slaying";
@@ -37,13 +37,13 @@ public class MagicItem extends DecoratorItem {
 	public static final String WEAPON_MAGIC_ABILITY = "weaponMagicAbility";
 	public static final String[] MAGIC = {FREEZING, BURNING, SLAYING, FRIGHTENING, PACIFYING};
 	
-	public ArrayList<Ability> ability = new ArrayList<Ability>();
+	public ArrayList<Enchantment> magic = new ArrayList<Enchantment>();
 	/**
 	 * Constructors
 	 * 
 	 * @param name
 	 */
-	public MagicItem(Item item) {
+	public MagicWeaponItem(Item item) {
 		super(item);
 	}
 
@@ -59,22 +59,37 @@ public class MagicItem extends DecoratorItem {
 
 	@Override
 	public int getBonus() {
+		if(getOwner()!=null) {
+			int burn = 0;
+			for(Enchantment i : magic) {
+				if(i instanceof Burning) {
+					burn++;
+				}
+			}
+			if(burn > 0) {
+				return 5*burn*super.getBonus();
+			}
+		}
 		return super.getBonus();
 	}
-
+	
 	@Override
 	public String getIncrease() {
 		return super.getIncrease();
 	}
 	
-	public void addAbility(Ability a) {
-		ability.add(a);
+	public void addAbility(Enchantment a) {
+		magic.add(a);
+	}
+	
+	public ArrayList<Enchantment> getEnchantment() {
+		return magic;
 	}
 	
 	public DefaultListModel getListModel() {
 		DefaultListModel l = new DefaultListModel();
-		for(Ability i : ability) {
-			l.addElement(i.getClass());
+		for(Enchantment i : magic) {
+			l.addElement(i.getName());
 		}
 		return l;
 	}

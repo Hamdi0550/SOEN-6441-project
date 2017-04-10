@@ -21,19 +21,20 @@ package ddg.model.entity;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class Frightening extends Ability {
+public class Frightening extends Enchantment {
+
+	private static final long serialVersionUID = 8920163609998420784L;
 
 	/**
 	 * Constructors
 	 * 
 	 */
-	public Frightening(String name) {
-		super(name);
+	public Frightening() {
+		super(MagicWeaponItem.FRIGHTENING);
 	}
 	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return MagicItem.FRIGHTENING;
+		return name;
 	}
 }

@@ -19,6 +19,7 @@ import ddg.model.Fighter;
 import ddg.model.entity.BaseItem;
 import ddg.model.entity.Chest;
 import ddg.model.entity.Game;
+import ddg.model.entity.Item;
 
 /**
  *
@@ -80,7 +81,7 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 
 	private boolean findEnemy(TurnCallback cb) {
 		Fighter fighter = (Fighter) game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor].getContent();
-		BaseItem weapon = fighter.getWearItemByName("Weapon");
+		Item weapon = fighter.getWearItemByName("Weapon");
 		int range = 2; //weapon.getRange();		// need to know the range
 		for(int i=1;i<=range;i++){
 			if(xofcharactor<=game.getPlayingmap().getRow()-1-i&&
