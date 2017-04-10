@@ -84,6 +84,7 @@ public class FriendlyStrategy implements IStrategy, Serializable{
 			}
 		}
 		findChest();
+		cb.finish();
 	}
 
 	private void findChest() {

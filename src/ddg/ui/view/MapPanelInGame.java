@@ -69,7 +69,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	ImageIcon deadnpc = new ImageIcon("res/deadnpc.png");
 	JTextArea log = new JTextArea();
 	private TurnDriven turnDriven;
-//	private TurnCallback mCallBack;
+	private TurnCallback mCallBack;
 	/**
 	 * Constructor
 	 * @param fighter the play character who is chosen by user
@@ -122,8 +122,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 //			
 //		});
 		
-//		turnDriven.addFighter(this.game.getFighter());
-
+		turnDriven.addFighter(this.game.getFighter());
 		
 		for(int i=0;i< playingMap.getRow();i++){
             for(int j=0;j< playingMap.getColumn();j++){
@@ -161,7 +160,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 //    		turnDriven.addFighter(selectedCharacter);
 //    	}
 		
-//		turnDriven.startTurn();
+		turnDriven.startTurn();
 	}
 	
 //	/**
@@ -521,11 +520,11 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Turn+++++++++++++++++++++++++++++++++"+turnDriven.getFighters().size());
-		for (Fighter fighter : turnDriven.getFighters()) {
-			if(fighter.isAlive())
-				fighter.turn(this);
-		}
+//		System.out.println("Turn+++++++++++++++++++++++++++++++++"+turnDriven.getFighters().size());
+//		for (Fighter fighter : turnDriven.getFighters()) {
+//			if(fighter.isAlive())
+//				fighter.turn(this);
+//		}
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public class Game implements java.io.Serializable{
 	public TurnCallback mCallBack;
 	
 	public Game(Fighter player, BaseCampaign campaign){
-		this.fighter = player;
+		this.fighter = player.clone();
 		this.campaign = campaign;
 		if(playingmap==null){
 			initData();
