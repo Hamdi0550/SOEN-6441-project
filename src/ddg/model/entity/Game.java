@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.MapEditorModel;
+import ddg.strategy.HumanStrategy;
+import ddg.strategy.IStrategy.TurnCallback;
 
 public class Game implements java.io.Serializable{
 	private static final long serialVersionUID = -1424213104639818704L;
@@ -18,6 +20,7 @@ public class Game implements java.io.Serializable{
 	private Fighter fighter;
 	private int xofplayer;
 	private int yofplayer;
+	public TurnCallback mCallBack;
 	
 	public Game(Fighter player, BaseCampaign campaign){
 		this.fighter = player;
@@ -25,6 +28,28 @@ public class Game implements java.io.Serializable{
 		if(playingmap==null){
 			initData();
 		}
+		this.fighter.setStrategy(new HumanStrategy() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected void moveCells(TurnCallback cb) {
+				mCallBack = cb;
+				System.out.println(fighter.getName() + " may moveCells, when finished, click again.");
+			}
+
+			@Override
+			protected void attack(TurnCallback cb) {
+				mCallBack = cb;
+				System.out.println(fighter.getName() + " may attack, when finished, click again.");
+			}
+
+			@Override
+			protected void interaction(TurnCallback cb) {
+				mCallBack = cb;
+				System.out.println(fighter.getName() + " may interaction, when finished, click again.");
+			}
+			
+		});
 	}
 	
 	private void initData(){

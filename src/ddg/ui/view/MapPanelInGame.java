@@ -69,7 +69,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	ImageIcon deadnpc = new ImageIcon("res/deadnpc.png");
 	JTextArea log = new JTextArea();
 	private TurnDriven turnDriven;
-	private TurnCallback mCallBack;
+//	private TurnCallback mCallBack;
 	/**
 	 * Constructor
 	 * @param fighter the play character who is chosen by user
@@ -99,28 +99,28 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	protected void initStrategy() {
 		Map playingMap = game.getPlayingmap();
 		
-		this.game.getFighter().setStrategy(new HumanStrategy() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void moveCells(TurnCallback cb) {
-				mCallBack = cb;
-				System.out.println(game.getFighter().getName() + " may moveCells, when finished, click again.");
-			}
-
-			@Override
-			protected void attack(TurnCallback cb) {
-				mCallBack = cb;
-				System.out.println(game.getFighter().getName() + " may attack, when finished, click again.");
-			}
-
-			@Override
-			protected void interaction(TurnCallback cb) {
-				mCallBack = cb;
-				System.out.println(game.getFighter().getName() + " may interaction, when finished, click again.");
-			}
-			
-		});
+//		this.game.getFighter().setStrategy(new HumanStrategy() {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			protected void moveCells(TurnCallback cb) {
+//				mCallBack = cb;
+//				System.out.println(game.getFighter().getName() + " may moveCells, when finished, click again.");
+//			}
+//
+//			@Override
+//			protected void attack(TurnCallback cb) {
+//				mCallBack = cb;
+//				System.out.println(game.getFighter().getName() + " may attack, when finished, click again.");
+//			}
+//
+//			@Override
+//			protected void interaction(TurnCallback cb) {
+//				mCallBack = cb;
+//				System.out.println(game.getFighter().getName() + " may interaction, when finished, click again.");
+//			}
+//			
+//		});
 		
 //		turnDriven.addFighter(this.game.getFighter());
 
@@ -533,8 +533,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		if(e.getActionCommand().contains("Inventory")) {
 			System.out.println("OPEN Inventory");
 			//////TEMP
-			if(mCallBack!=null) {
-				mCallBack.finish();
+			if(this.game.mCallBack!=null) {
+				this.game.mCallBack.finish();
 				return;
 			}
 			//////TEMP
@@ -570,7 +570,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		if(isCharacter&&selectedCharacter!=null)
 			selectedCharacter.deleteObservers();
 		for (Fighter fighter : turnDriven.getFighters()) {
-			fighter.setStrategy(null);
+//			fighter.setStrategy(null);
 		}
 		System.out.println(this.getKeyListeners());
 	}
