@@ -30,6 +30,8 @@ import ddg.model.Map;
 import ddg.model.entity.BaseCampaign;
 import ddg.model.entity.Chest;
 import ddg.model.item.Item;
+import ddg.model.item.MagicWeaponItem;
+import ddg.model.item.WeaponItem;
 import ddg.strategy.AgressiveStrategy;
 import ddg.strategy.FriendlyStrategy;
 import ddg.strategy.HumanStrategy;
@@ -47,7 +49,7 @@ import ddg.ui.view.dialog.DDGaming;
  * 
  */
 public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener {
-	private JScrollPane jspanel;
+	private JScrollPane jsPanel;
 	private JPanel mapPanel;
 	private Game game;
 	private Fighter selectedCharacter;
@@ -57,17 +59,17 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
     private int xIndex = -1;
     private int yIndex = -1; 
 	protected boolean isCharacter = false;
-	private Fighter characterthisturn = null;
+	private Fighter characterThisTurn = null;
     
 	ImageIcon floor = new ImageIcon("res/floor.png");
 	ImageIcon chest = new ImageIcon("res/chest.png");
-	ImageIcon emptychest = new ImageIcon("res/emptychest.png");
+	ImageIcon emptyChest = new ImageIcon("res/emptychest.png");
 	ImageIcon wall = new ImageIcon("res/wall.png");
 	ImageIcon indoor = new ImageIcon("res/indoor.png");
 	ImageIcon outdoor = new ImageIcon("res/outdoor.png");
-	ImageIcon playcharacter = new ImageIcon("res/playcharacter.png");
-	ImageIcon mainplayer = new ImageIcon("res/Mainplayer.png");
-	ImageIcon deadnpc = new ImageIcon("res/deadnpc.png");
+	ImageIcon playCharacter = new ImageIcon("res/playcharacter.png");
+	ImageIcon mainPlayer = new ImageIcon("res/Mainplayer.png");
+	ImageIcon deadNPC = new ImageIcon("res/deadnpc.png");
 	JTextArea log = new JTextArea();
 	private TurnDriven turnDriven;
 	/**
@@ -82,7 +84,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		setFocusable(true);
 		
 		initMapData();
-		initcontent();
+		initContent();
 		initStrategy();
 	}
 
@@ -93,7 +95,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		setFocusable(true);
 		
 		initMapData();
-		initcontent();
+		initContent();
 		initStrategy();
 	}
 	protected void initStrategy() {
@@ -207,7 +209,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	/**
 	 * initialize the view of this panel
 	 */
-	private void initcontent() {
+	private void initContent() {
 		Map playingMap = game.getPlayingmap();
 		mapPanel = new JPanel(){
 			private static final long serialVersionUID = -8627231216589776568L;
@@ -235,24 +237,24 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 								g.drawImage(chest.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (playingMap.getLocation()[i][j] == 'e'){
-								g.drawImage(emptychest.getImage(), j*50, i*50, 50, 50, null);
+								g.drawImage(emptyChest.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (playingMap.getLocation()[i][j] == 'o'){
 								g.drawImage(outdoor.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (playingMap.getLocation()[i][j] == 'p'){
 								if(((Fighter)playingMap.getCellsinthemap()[i][j].getContent()).isAlive())
-									g.drawImage(playcharacter.getImage(), j*50, i*50, 50, 50, null);
+									g.drawImage(playCharacter.getImage(), j*50, i*50, 50, 50, null);
 								else
-									g.drawImage(deadnpc.getImage(), j*50, i*50, 50, 50, null);
+									g.drawImage(deadNPC.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (playingMap.getLocation()[i][j] == 'd'){
-								g.drawImage(deadnpc.getImage(), j*50, i*50, 50, 50, null);
+								g.drawImage(deadNPC.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 	                    }
 	                }
 	            }
-	            g.drawImage(mainplayer.getImage(), game.getYofplayer()*50, game.getXofplayer()*50, null);
+	            g.drawImage(mainPlayer.getImage(), game.getYofplayer()*50, game.getXofplayer()*50, null);
 	            g.setColor(Color.BLACK);
 	            for(int i=0; i<playingMap.getRow(); i++){
 	            	g.drawLine(0, i*50, playingMap.getColumn()*50, i*50);
@@ -275,11 +277,11 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		};
 		mapPanel.setPreferredSize(new Dimension(50*playingMap.getColumn(), 50*playingMap.getRow()));
 		
-		jspanel = new JScrollPane(mapPanel);
-		jspanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); 
-		jspanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		jspanel.setPreferredSize(new Dimension(505, 505));
-		jspanel.setBorder(Config.border);
+		jsPanel = new JScrollPane(mapPanel);
+		jsPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); 
+		jsPanel.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		jsPanel.setPreferredSize(new Dimension(505, 505));
+		jsPanel.setBorder(Config.border);
 		
 		JPanel emptyPanel = new JPanel();
 		emptyPanel.setLayout(new CardLayout());
@@ -289,7 +291,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		logPanel.setPreferredSize(new Dimension(240, 505));
 		
 		add(logPanel,BorderLayout.WEST);
-		add(jspanel, BorderLayout.CENTER);
+		add(jsPanel, BorderLayout.CENTER);
 		add(emptyPanel, BorderLayout.EAST);
 		
 		log.setDisabledTextColor(Color.BLACK);
@@ -315,58 +317,84 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		mapPanel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
 				//TODO
-		        int x = e.getX();
-		        int y = e.getY();
-		        xIndex = x / 50;
-		        yIndex = y / 50;
-				
-		        System.out.println(playingMap.getLocation()[yIndex][xIndex]);
-		        if (playingMap.getLocation()[yIndex][xIndex] == 'p'){
-		        	isCharacter = true;
-		        	characterPanel.setVisible(true);
-		        	inventoryPanel.setVisible(true);
-		        	System.out.println("Character selected");
-		        	System.out.println(playingMap.getCellsinthemap()[yIndex][xIndex].getContent());
-		        	if(selectedCharacter!=null) {
-		        		selectedCharacter.deleteObserver(characterPanel);
-		        		selectedCharacter.deleteObserver(inventoryPanel);
-		        	}
-		        	selectedCharacter = (Fighter) playingMap.getCellsinthemap()[yIndex][xIndex].getContent();
-		        	selectedCharacter.addObserver(characterPanel);
-		        	selectedCharacter.addObserver(inventoryPanel);
-		        	
-		        	System.out.println("selectedCharacter = " + selectedCharacter);
-		        	characterPanel.updateAttributes(selectedCharacter);
-		        	characterPanel.iconL.setIcon(Config.NPC_ICON);
-		        	inventoryPanel.updateView(selectedCharacter, false);
-		        	System.out.println(selectedCharacter.getName());
-		        }
-				else if(xIndex == game.getYofplayer() && yIndex == game.getXofplayer()){
-		        	isCharacter = true;
-		        	characterPanel.setVisible(true);
-		        	inventoryPanel.setVisible(true);
-		        	if(selectedCharacter!=null) {
-		        		selectedCharacter.deleteObserver(characterPanel);
-		        		selectedCharacter.deleteObserver(inventoryPanel);
-		        	}
-		        	selectedCharacter = game.getFighter();
-		        	selectedCharacter.addObserver(characterPanel);
-		        	selectedCharacter.addObserver(inventoryPanel);
-		        	System.out.println("selectedCharacter = " + selectedCharacter);
-		        	characterPanel.updateAttributes(selectedCharacter);
-		        	characterPanel.iconL.setIcon(Config.PLAYER_ICON);
-		        	inventoryPanel.updateView(selectedCharacter, true);
+				if(e.getButton()==MouseEvent.BUTTON1){
+			        int x = e.getX();
+			        int y = e.getY();
+			        xIndex = x / 50;
+			        yIndex = y / 50;
+					
+			        System.out.println(playingMap.getLocation()[yIndex][xIndex]);
+			        if (playingMap.getLocation()[yIndex][xIndex] == 'p'){
+			        	isCharacter = true;
+			        	characterPanel.setVisible(true);
+			        	inventoryPanel.setVisible(true);
+			        	System.out.println("Character selected");
+			        	System.out.println(playingMap.getCellsinthemap()[yIndex][xIndex].getContent());
+			        	if(selectedCharacter!=null) {
+			        		selectedCharacter.deleteObserver(characterPanel);
+			        		selectedCharacter.deleteObserver(inventoryPanel);
+			        	}
+			        	selectedCharacter = (Fighter) playingMap.getCellsinthemap()[yIndex][xIndex].getContent();
+			        	selectedCharacter.addObserver(characterPanel);
+			        	selectedCharacter.addObserver(inventoryPanel);
+			        	
+			        	System.out.println("selectedCharacter = " + selectedCharacter);
+			        	characterPanel.updateAttributes(selectedCharacter);
+			        	characterPanel.iconL.setIcon(Config.NPC_ICON);
+			        	inventoryPanel.updateView(selectedCharacter, false);
+			        	System.out.println(selectedCharacter.getName());
+			        }
+					else if(xIndex == game.getYofplayer() && yIndex == game.getXofplayer()){
+			        	isCharacter = true;
+			        	characterPanel.setVisible(true);
+			        	inventoryPanel.setVisible(true);
+			        	if(selectedCharacter!=null) {
+			        		selectedCharacter.deleteObserver(characterPanel);
+			        		selectedCharacter.deleteObserver(inventoryPanel);
+			        	}
+			        	selectedCharacter = game.getFighter();
+			        	selectedCharacter.addObserver(characterPanel);
+			        	selectedCharacter.addObserver(inventoryPanel);
+			        	System.out.println("selectedCharacter = " + selectedCharacter);
+			        	characterPanel.updateAttributes(selectedCharacter);
+			        	characterPanel.iconL.setIcon(Config.PLAYER_ICON);
+			        	inventoryPanel.updateView(selectedCharacter, true);
+					}
+					else {
+			        	System.out.println(selectedCharacter);
+			        	isCharacter = false;
+			        	characterPanel.setVisible(false);
+			        	inventoryPanel.setVisible(false);
+			        	log.setVisible(true);
+					}
+			        
+					mapPanel.repaint();
+					System.out.println("mapPanel repainted");
 				}
-				else {
-		        	System.out.println(selectedCharacter);
-		        	isCharacter = false;
-		        	characterPanel.setVisible(false);
-		        	inventoryPanel.setVisible(false);
-		        	log.setVisible(true);
+				if(e.getButton()==MouseEvent.BUTTON3){
+					int x = e.getY()/50;
+					int y = e.getX()/50;
+			        int range = 1;
+			        if((MagicWeaponItem)game.getFighter().getWearItemByName("Weapon")!=null){
+			        	range = ((MagicWeaponItem)game.getFighter().getWearItemByName("Weapon")).getRange();
+			        }
+			        
+			        if(game.getPlayingmap().getLocation()[x][y]=='p'&&(!playingMap.getCellsinthemap()[x][y].getIsfriendly())&&
+			        		Math.abs(game.getXofplayer()-x)<=range&&Math.abs(game.getYofplayer()-y)<=range){
+			        	if(((HumanStrategy)game.getFighter().getBehaviorStrategy()).attack()){
+			        		attackNPC(x,y);
+			        	}
+			        }
 				}
-		        
-				mapPanel.repaint();
-				System.out.println("mapPanel repainted");
+			}
+
+			private void attackNPC(int x,int y) {
+				Fighter npc = (Fighter) playingMap.getCellsinthemap()[x][y].getContent();
+				System.out.println("-----------"+npc.getHitPoints());
+				game.getFighter().attackCaracter(npc);
+				if(!npc.isAlive()){
+					playingMap.changeLocation(x, y, 'd');
+				}
 			}
 		});
 	}
@@ -471,14 +499,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		}
 		else if(temp=='p'){
 			Fighter npc = (Fighter) playingMap.getCellsinthemap()[x][y].getContent();
-			if(!playingMap.getCellsinthemap()[x][y].getIsfriendly()){
-				System.out.println("-----------"+npc.getHitPoints());
-				fighter.attackCaracter(npc);
-				if(!npc.isAlive()){
-					playingMap.changeLocation(x, y, 'd');
-				}
-			}
-			else{
+			if(playingMap.getCellsinthemap()[x][y].getIsfriendly()){
 				BackpackTrade bpteade = new BackpackTrade(fighter,npc);
 				bpteade.setVisible(true);
 			}
@@ -503,7 +524,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 						initStrategy();
 						removeAll();
 						System.out.println(xIndex+"2=============="+yIndex);
-						initcontent();
+						initContent();
 //						jspanel.removeAll();
 //						jspanel.add(mapPanel);
 //						mapPanel.repaint();
@@ -540,7 +561,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		if(e.getActionCommand().contains("Next one")){
 			System.out.println("NEXT ONE@!!!");
 			if(turnDriven!=null) {
-				characterthisturn = turnDriven.next();
+				characterThisTurn = turnDriven.next();
 			}
 			requestFocus();
 			if(!game.getFighter().isAlive()){
@@ -585,6 +606,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	}
 
 	public void gameOver() {
+		JOptionPane.showMessageDialog(null, "You are dead, Game Over !!", "Game Over!!", JOptionPane.WARNING_MESSAGE);
 		JDialog mapSizeFrame = (JDialog) SwingUtilities.getWindowAncestor(this);
 		mapSizeFrame.dispose();
 	}

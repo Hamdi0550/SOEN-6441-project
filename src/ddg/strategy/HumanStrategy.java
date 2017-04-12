@@ -27,8 +27,8 @@ import javax.swing.JOptionPane;
  */
 public class HumanStrategy implements IStrategy {
 	private static final long serialVersionUID = 1L;
-	private int movetimes = 3;
-	private int attacktimes =1;
+	private int movetimes = 0;
+	private int attacktimes =0;
 	/**
 	 * Constructors
 	 * 
@@ -41,7 +41,7 @@ public class HumanStrategy implements IStrategy {
 	public void turn() {
 		JOptionPane.showMessageDialog(null, "Is your Turn!!", "Your Turn!", JOptionPane.INFORMATION_MESSAGE);
 		this.movetimes = 3;
-		this.attacktimes= 1;
+		this.attacktimes = 1;
 	}
 
 	 public boolean moveCells(){
@@ -52,7 +52,7 @@ public class HumanStrategy implements IStrategy {
 		return false;
 	}
 	public boolean attack(){
-		if(attacktimes>0){
+		if(attacktimes > 0){
 			attacktimes--;
 			return true;
 		}

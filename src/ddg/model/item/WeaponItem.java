@@ -9,11 +9,13 @@ public abstract class WeaponItem implements Item {
 	public static final String WEAPON_MELEE = "Melee";
 	public static final String WEAPON_RANGED = "Ranged";
 	private String weaponType = WEAPON_MELEE;
-	
+	private int range;
 	
 	private Item item;
 	public WeaponItem(Item item) {
 		this.item = item;
+		if(weaponType.equals(WEAPON_MELEE))
+			this.range = 1;
 	}
 	
 	public String getWeaponType() {
@@ -24,6 +26,9 @@ public abstract class WeaponItem implements Item {
 		this.weaponType = weaponType;
 	}
 	
+	public int getRange(){
+		return range;
+	}
 	@Override
 	public String getId() {
 		return item.getId();
