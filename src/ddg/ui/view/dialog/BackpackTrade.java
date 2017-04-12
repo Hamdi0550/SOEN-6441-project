@@ -213,15 +213,6 @@ public class BackpackTrade extends JDialog implements ActionListener, ListSelect
 	        }
 		});        
     }
-
-
-	/**
-	 * 
-	 * @return
-	 */
-	public BackpackTrade getThisFrame() {
-		return this;
-	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
