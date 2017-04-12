@@ -69,7 +69,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	ImageIcon deadnpc = new ImageIcon("res/deadnpc.png");
 	JTextArea log = new JTextArea();
 	private TurnDriven turnDriven;
-	private TurnCallback mCallBack;
 	/**
 	 * Constructor
 	 * @param fighter the play character who is chosen by user
@@ -531,12 +530,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().contains("Inventory")) {
 			System.out.println("OPEN Inventory");
-			//////TEMP
-			if(this.game.mCallBack!=null) {
-				this.game.mCallBack.finish();
-				return;
-			}
-			//////TEMP
 			if(inventoryPanel.isVisible()) {
 				inventoryPanel.setVisible(false);
 				requestFocus();
@@ -544,6 +537,13 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 				inventoryPanel.setVisible(true);
 				requestFocus();
 			}
+		}
+		if(e.getActionCommand().contains("Next one")){
+			System.out.println("NEXT ONE@!!!");
+			if(turnDriven!=null) {
+				turnDriven.next();
+			}
+			requestFocus();
 		}
 		if(e.getActionCommand().contains("SAVE")){
 			System.out.println("SAVE BUTTON");

@@ -64,11 +64,11 @@ public class FriendlyStrategy implements IStrategy {
 	}
 	
 	@Override
-	public void turn(TurnCallback cb) {
+	public void turn() {
 		System.out.println("this is friendly strategy, turn function!!!");
-		wander(cb);
+		wander();
 	}
-	protected void wander(TurnCallback cb) {
+	protected void wander() {
 		for(int i=3;i>0;){
 			findChest();
 			int num = ((int) (Math.random()*100)) % 4;
@@ -104,7 +104,6 @@ public class FriendlyStrategy implements IStrategy {
 			}
 		}
 		findChest();
-		cb.finish();
 	}
 
 	private void findChest() {

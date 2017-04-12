@@ -39,9 +39,9 @@ public abstract class ComputerStrategy implements IStrategy {
 	}
 
 	@Override
-	public void turn(TurnCallback cb) {
-		searchExit(cb);
+	public void turn() {
+		searchExit();
 	}
 
-	protected abstract void searchExit(TurnCallback cb);
+	protected abstract void searchExit();
 }

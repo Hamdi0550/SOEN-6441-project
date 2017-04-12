@@ -87,8 +87,11 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	public void setStrategy(IStrategy strategy) {
 		behaviorStrategy = strategy;
 	}
+	public IStrategy getBehaviorStrategy(){
+		return behaviorStrategy;
+	}
 	
-	public void turn(TurnCallback cb) {
+	public void turn() {
 		boolean contine = true;
 		for(IMagicStrategy s : magicStrategy) {
 			if(s!=null) {
@@ -100,7 +103,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 			}
 		}
 		if(contine) {
-			behaviorStrategy.turn(cb);
+			behaviorStrategy.turn();
 		}
 	}
 	

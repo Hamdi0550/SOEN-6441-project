@@ -20,7 +20,6 @@ public class Game implements IOwner, java.io.Serializable{
 	private Fighter fighter;
 	private int xofplayer;
 	private int yofplayer;
-	public TurnCallback mCallBack;
 	
 	public Game(Fighter player, BaseCampaign campaign){
 		this.fighter = player.clone();
@@ -32,20 +31,17 @@ public class Game implements IOwner, java.io.Serializable{
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected void moveCells(TurnCallback cb) {
-				mCallBack = cb;
+			protected void moveCells() {
 				System.out.println(fighter.getName() + " may moveCells, when finished, click again.");
 			}
 
 			@Override
-			protected void attack(TurnCallback cb) {
-				mCallBack = cb;
+			protected void attack() {
 				System.out.println(fighter.getName() + " may attack, when finished, click again.");
 			}
 
 			@Override
-			protected void interaction(TurnCallback cb) {
-				mCallBack = cb;
+			protected void interaction() {
 				System.out.println(fighter.getName() + " may interaction, when finished, click again.");
 			}
 			

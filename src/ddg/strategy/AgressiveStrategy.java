@@ -53,9 +53,9 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 	}
 
 	@Override
-	public void turn(TurnCallback cb) {
+	public void turn() {
 		System.out.println("Agressive !!!!");
-		ArrayList<Point> queue = searchWayAttactPlayer(cb);
+		ArrayList<Point> queue = searchWayAttactPlayer();
 		for (Point point : queue) {
 			System.out.print(point.x+","+point.y+"\t");
 		}
@@ -83,7 +83,6 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 			}
 			findChest();
 		}
-		cb.finish();
 	}
 
 	private boolean findEnemy() {
@@ -163,7 +162,7 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 		
 	}
 
-	protected ArrayList<Point> searchWayAttactPlayer(TurnCallback cb) {
+	protected ArrayList<Point> searchWayAttactPlayer() {
 		ArrayList<Point> queue = new ArrayList<>();
 		Map<String, Integer> map = new HashMap<>();
 		int x = xofcharactor, y= yofcharactor;

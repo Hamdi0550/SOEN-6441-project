@@ -27,5 +27,5 @@ public interface IStrategy extends Serializable {
 	public interface TurnCallback {
 		void finish();
 	}
-	void turn(TurnCallback cb);
+	void turn();
 }

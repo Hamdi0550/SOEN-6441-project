@@ -3,7 +3,10 @@ package ddg.ui;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JOptionPane;
+
 import ddg.model.Fighter;
+import ddg.strategy.HumanStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
 import ddg.utils.Dice;
 
@@ -17,8 +20,9 @@ import ddg.utils.Dice;
 public class TurnDriven {
 
 	private ArrayList<Fighter> fighters = new ArrayList<Fighter>();
+	ArrayList<Integer> maporderrecode;
 	ArrayList<Integer> orderarr;
-	private boolean stop = false;
+//	private boolean stop = false;
 	public TurnDriven() {
 		
 	}
@@ -34,15 +38,15 @@ public class TurnDriven {
 	}
 	
 	public void startTurn() {
-		this.orderarr = new ArrayList<>(this.fighters.size()); 
+		this.maporderrecode = new ArrayList<>(this.fighters.size()); 
 		System.out.println("TurnDriven start");
 		for(int i=0;i<this.fighters.size();i++){
-			orderarr.add((Integer)Dice.d20Roll());
+			maporderrecode.add((Integer)(Dice.d20Roll()+fighters.get(i).getDexModifier()));
 		}
-		
-		if(!stop){
-			next();
-		}
+		this.orderarr = (ArrayList<Integer>) maporderrecode.clone();
+//		if(!stop){
+//			next();
+//		}
 //		if(!stop) {
 //			int sum = this.fighters.size();
 //			if(sum == 0)
@@ -55,7 +59,7 @@ public class TurnDriven {
 //		}
 	}
 
-	private void next() {
+	public void next() {
 		
 //		Fighter f = null;
 //		boolean newTurn = false;
@@ -76,7 +80,6 @@ public class TurnDriven {
 //			}
 //		}
 		
-		
 		int maxloca = 0;
 		for(int i=1;i<this.fighters.size();i++){
 			if(orderarr.get(i)>orderarr.get(maxloca)){
@@ -85,18 +88,14 @@ public class TurnDriven {
 		}
 		
 		if(orderarr.get(maxloca)==-1) {
-			startTurn();
+			this.orderarr = (ArrayList<Integer>) maporderrecode.clone();
+			next();
 			return;
 		}
 		
 		if(fighters.get(maxloca).isAlive()) {
 			orderarr.set(maxloca, -1);
-			fighters.get(maxloca).turn(new TurnCallback() {
-				@Override
-				public void finish() {
-					next();
-				}
-			});
+			fighters.get(maxloca).turn();
 			
 		}
 		else{
@@ -107,9 +106,9 @@ public class TurnDriven {
 		
 		
 	}
-	
-	public void finishTurn() {
-		System.out.println("TurnDriven finish");
-		stop = true;
-	}
+//	
+//	public void finishTurn() {
+//		System.out.println("TurnDriven finish");
+//		stop = true;
+//	}
 }

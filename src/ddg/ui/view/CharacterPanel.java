@@ -29,6 +29,7 @@ import ddg.ui.view.dialog.CharacterSelection;
 public class CharacterPanel extends JPanel implements Observer {
 	
 	private final JButton inventoryBtn = new JButton("Inventory");
+	private final JButton nextBtn = new JButton("Next one");
 
 	public JLabel iconL = new JLabel();
 	public JLabel nameL = new JLabel();
@@ -82,7 +83,8 @@ public class CharacterPanel extends JPanel implements Observer {
 		backPanel.add(attributesPanel, BorderLayout.CENTER);
 		backPanel.add(iconPanel, BorderLayout.NORTH);
 		add(buttonsPanel, BorderLayout.SOUTH);
-		attributesPanel.setPreferredSize(new Dimension(270, 320));
+		buttonsPanel.setPreferredSize(new Dimension(270, 90));
+		attributesPanel.setPreferredSize(new Dimension(270, 310));
 
 		strengthModiferL.setBorder(new LineBorder(Color.BLACK));
 		dexModiferL.setBorder(new LineBorder(Color.BLACK));
@@ -138,6 +140,8 @@ public class CharacterPanel extends JPanel implements Observer {
 		attributesPanel.add(new JLabel("      "));
 		
 		inventoryBtn.setPreferredSize(new Dimension(240, 40));
+		nextBtn.setPreferredSize(new Dimension(240, 40));
+		buttonsPanel.add(nextBtn);
 		buttonsPanel.add(inventoryBtn);
 		buttonsManage();
 
@@ -174,6 +178,7 @@ public class CharacterPanel extends JPanel implements Observer {
 	 */
 	private void buttonsManage() {
 		inventoryBtn.addActionListener(owner1);
+		nextBtn.addActionListener(owner1);
 	}
 
 	@Override

@@ -9,6 +9,8 @@ package ddg.strategy;
 
 import java.io.Serializable;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * This class
@@ -34,25 +36,14 @@ public abstract class HumanStrategy implements IStrategy {
 	}
 
 	@Override
-	public void turn(TurnCallback cb) {
-		moveCells(new TurnCallback() {
-
-			@Override
-			public void finish() {
-				attack(new TurnCallback() {
-
-					@Override
-					public void finish() {
-						interaction(cb);
-					}
-					
-				});
-			}
-			
-		});
+	public void turn() {
+		JOptionPane.showMessageDialog(null, "Is your Turn!!", "Your Turn!", JOptionPane.INFORMATION_MESSAGE);
+		moveCells();
+		attack();
+		interaction();
 	}
 
-	protected abstract void moveCells(TurnCallback cb);
-	protected abstract void attack(TurnCallback cb);
-	protected abstract void interaction(TurnCallback cb);
+	protected abstract void moveCells();
+	protected abstract void attack();
+	protected abstract void interaction();
 }
