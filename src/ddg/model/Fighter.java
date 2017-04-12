@@ -85,6 +85,10 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	
 	private IMagicStrategy[] magicStrategy = new IMagicStrategy[3];
 	private IStrategy behaviorStrategy;
+	
+	private int xOfFighter = -1;
+	private int yOfFighter = -1;
+	
 	public void setStrategy(IStrategy strategy) {
 		behaviorStrategy = strategy;
 	}
@@ -500,13 +504,13 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		return getTotalDexterity()/2 - 5;
 	}
 
-	/**
-	 * set dexModifier
-	 * @param dexModifier
-	 */
-	public void setDexModifier(int dexModifier) {
-		this.dexModifier = dexModifier;
-	}
+//	/**
+//	 * set dexModifier
+//	 * @param dexModifier
+//	 */
+//	public void setDexModifier(int dexModifier) {
+//		this.dexModifier = dexModifier;
+//	}
 
 	/**
 	 * get the strModifier of the character
@@ -514,15 +518,15 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 */
 	public int getStrModifier() {
 		return getTotalStrength()/2 - 5;
-	}
+	}	
 
-	/**
-	 * set StrModifier
-	 * @param strModifier
-	 */
-	public void setStrModifier(int strModifier) {
-		this.strModifier = strModifier;
-	}
+//	/**
+//	 * set StrModifier
+//	 * @param strModifier
+//	 */
+//	public void setStrModifier(int strModifier) {
+//		this.strModifier = strModifier;
+//	}
 
 	/**
 	 * This method get the boolean value of isArmorOn
@@ -1000,6 +1004,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 			}
 		} else {
 			s = "Attack Roll: " + attackRoll + " < Armor Class " + npc.getArmorClass() + ", Attack Fail!";
+			MapPanelInGame.printLog(s);
 			System.out.println("Attack Fail!");
 		}
 	}
@@ -1273,5 +1278,37 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Get the X coordinate of the character
+	 * @return xOfFighter X coordinate of the character
+	 */
+	public int getXOfFighter() {
+		return xOfFighter;
+	}
+	
+	/**
+	 * Get the Y coordinate of the character
+	 * @return yOfFighter Y coordinate of the character
+	 */
+	public int getYOfFighter() {
+		return yOfFighter;
+	}
+	
+	/**
+	 * Set the X coordinate of the character
+	 * @param xOfFighter X coordinate of the character
+	 */
+	public void setXOfFighter(int xOfFighter) {
+		this.xOfFighter = xOfFighter;
+	}
+	
+	/**
+	 * Set the Y coordinate of the character
+	 * @param yOfFighter Y coordinate of the character
+	 */
+	public void setYOfFighter(int yOfFighter) {
+		this.yOfFighter = yOfFighter;
 	}
 }

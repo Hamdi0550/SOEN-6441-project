@@ -193,6 +193,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 
 		    log.setAutoscrolls(true);
 		    log.setLineWrap(true);
+		    log.setWrapStyleWord(true);
 		    log.setText("Enter game, Welcome!\n");
 			log.append("Current Level:"+game.getFighter().getLevel()+"\n");
 			log.append("Current Map:"+game.getPlayingmap().getName()+"\n");
@@ -274,6 +275,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		            System.out.println(xIndex+"1=============="+yIndex);
 		            g.drawRect(xIndex * 50 + 1, yIndex * 50 + 1, 48, 48);
 		            g.drawRect(xIndex * 50 + 2, yIndex * 50 + 2, 46, 46);	            	
+	            }
+	            
+	            if (characterThisTurn != null){
+	            	
 	            }
 			}
 		};
