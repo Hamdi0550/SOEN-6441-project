@@ -37,4 +37,8 @@ public class Frightening extends Magic {
 	public String getName() {
 		return name;
 	}
+	
+	public int getRunawayTurns() {
+		return weapon==null?0:weapon.getBonus();
+	}
 }

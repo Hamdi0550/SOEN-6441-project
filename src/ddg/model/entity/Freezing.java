@@ -37,4 +37,8 @@ public class Freezing extends Magic {
 	public String getName() {
 		return name;
 	}
+	
+	public int getFreezingTurns() {
+		return weapon==null?0:weapon.getBonus();
+	}
 }

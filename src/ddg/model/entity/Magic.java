@@ -9,9 +9,10 @@ import java.io.Serializable;
  * @author Zhen Du
  * @date Feb 22, 2017
  */
-public class Magic implements Serializable {
+public abstract class Magic implements Serializable {
 	private static final long serialVersionUID = -6350068786148679730L;
 	
+	protected MagicWeaponItem weapon;
 	protected String name;
 	/**
 	 * Constructors
@@ -22,4 +23,8 @@ public class Magic implements Serializable {
 	}
 
 	String getName(){return name;}
+	
+	public void setWeapon(MagicWeaponItem weapon) {
+		this.weapon = weapon;
+	}
 }

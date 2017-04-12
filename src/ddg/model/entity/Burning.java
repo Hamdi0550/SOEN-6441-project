@@ -38,4 +38,7 @@ public class Burning extends Magic {
 		return name;
 	}
 
+	public int getDamage() {
+		return weapon==null?0:5*weapon.getBonus();
+	}
 }

@@ -13,6 +13,7 @@ import ddg.model.entity.BaseItem;
 import ddg.model.entity.Chest;
 import ddg.model.entity.IOwner;
 import ddg.model.entity.Item;
+import ddg.model.entity.MagicWeaponItem;
 import ddg.strategy.IStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
 import ddg.utils.Dice;
@@ -389,39 +390,39 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 * @return attackBonus
 	 */
 	public int getAttackBonus(){
+//		for (Item wornItem : wornItems) {
+//			if (wornItem.getName().equals("Weapon")){
+//				return wornItem.getBonus();
+//			}
+//		}
+//		return level;
+		int attackBonus = 0;
+		boolean hasWeapon = false;
+		boolean isMelee = false;
+		boolean isRanged = false;
 		for (Item wornItem : wornItems) {
-			if (wornItem.getName().equals("Weapon")){
-				return wornItem.getBonus();
+			if (wornItem instanceof MagicWeaponItem){
+				hasWeapon = true;
+				if (((MagicWeaponItem)wornItem).getWeaponType().equals("Melee")){
+					isMelee = true;
+				}else if(((MagicWeaponItem)wornItem).getWeaponType().equals("Ranged")){
+					isRanged = true;
+				}
 			}
 		}
-		return level;
-//		int attackBonus = 0;
-//		boolean hasWeapon = false;
-//		boolean isMelee = false;
-//		boolean isRanged = false;
-//		for (BaseItem wornItem : wornItems) {
-//			if (wornItem.getName().equals("Weapon")){
-//				hasWeapon = true;
-//				if (wornItem.getWeaponType().equals("Melee")){
-//					isMelee = true;
-//				}else if(wornItem.getWeaponType().equals("Ranged")){
-//					isRanged = true;
-//				}
-//			}
-//		}
-//		if (hasWeapon){
-//			System.out.println("This is a weapon");
-//			if (isMelee){
-//				System.out.println("this weanpon is melee weapon");
-//				attackBonus = level +  getStrModifier();
-//			}else if (isRanged){
-//				System.out.println("this weanpon is ranged weapon");
-//				attackBonus = level + getDexModifier();
-//			}
-//		}else {
-//			attackBonus = level;
-//		}
-//		return attackBonus;
+		if (hasWeapon){
+			System.out.println("This is a weapon");
+			if (isMelee){
+				attackBonus = level +  getStrModifier();
+				System.out.println("this weanpon is melee weapon attackBonus: "+attackBonus);
+			}else if (isRanged){
+				attackBonus = level + getDexModifier();
+				System.out.println("this weanpon is ranged weapon attackBonus: "+attackBonus);
+			}
+		}else {
+			attackBonus = level;
+		}
+		return attackBonus;
 	}
 	
 	/**

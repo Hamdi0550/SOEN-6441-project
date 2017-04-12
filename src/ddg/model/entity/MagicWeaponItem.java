@@ -59,17 +59,17 @@ public class MagicWeaponItem extends WeaponItem {
 
 	@Override
 	public int getBonus() {
-		if(getOwner()!=null) {
-			int burn = 0;
-			for(Magic i : magic) {
-				if(i instanceof Burning) {
-					burn++;
-				}
-			}
-			if(burn > 0) {
-				return 5*burn*super.getBonus();
-			}
-		}
+//		if(getOwner()!=null) {
+//			int burn = 0;
+//			for(Magic i : magic) {
+//				if(i instanceof Burning) {
+//					burn++;
+//				}
+//			}
+//			if(burn > 0) {
+//				return 5*burn*super.getBonus();
+//			}
+//		}
 		return super.getBonus();
 	}
 	
@@ -79,6 +79,7 @@ public class MagicWeaponItem extends WeaponItem {
 	}
 	
 	public void addAbility(Magic a) {
+		a.setWeapon(this);
 		magic.add(a);
 	}
 	
