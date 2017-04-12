@@ -25,8 +25,10 @@ import javax.swing.JOptionPane;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public abstract class HumanStrategy implements IStrategy {
+public class HumanStrategy implements IStrategy {
 	private static final long serialVersionUID = 1L;
+	private int movetimes = 3;
+	private int attacktimes =1;
 	/**
 	 * Constructors
 	 * 
@@ -38,12 +40,22 @@ public abstract class HumanStrategy implements IStrategy {
 	@Override
 	public void turn() {
 		JOptionPane.showMessageDialog(null, "Is your Turn!!", "Your Turn!", JOptionPane.INFORMATION_MESSAGE);
-		moveCells();
-		attack();
-		interaction();
+		this.movetimes = 3;
+		this.attacktimes= 1;
 	}
 
-	protected abstract void moveCells();
-	protected abstract void attack();
-	protected abstract void interaction();
+	 public boolean moveCells(){
+		if(movetimes>0){
+			movetimes--;
+			return true;
+		}
+		return false;
+	}
+	public boolean attack(){
+		if(attacktimes>0){
+			attacktimes--;
+			return true;
+		}
+		return false;
+	}
 }

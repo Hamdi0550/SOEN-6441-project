@@ -27,25 +27,7 @@ public class Game implements IOwner, java.io.Serializable{
 		if(playingmap==null){
 			initData();
 		}
-		this.fighter.setStrategy(new HumanStrategy() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void moveCells() {
-				System.out.println(fighter.getName() + " may moveCells, when finished, click again.");
-			}
-
-			@Override
-			protected void attack() {
-				System.out.println(fighter.getName() + " may attack, when finished, click again.");
-			}
-
-			@Override
-			protected void interaction() {
-				System.out.println(fighter.getName() + " may interaction, when finished, click again.");
-			}
-			
-		});
+		this.fighter.setStrategy(new HumanStrategy());
 	}
 	
 	private void initData(){

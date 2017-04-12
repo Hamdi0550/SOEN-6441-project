@@ -59,7 +59,7 @@ public class TurnDriven {
 //		}
 	}
 
-	public void next() {
+	public Fighter next() {
 		
 //		Fighter f = null;
 //		boolean newTurn = false;
@@ -80,31 +80,31 @@ public class TurnDriven {
 //			}
 //		}
 		
-		int maxloca = 0;
+		int maxlocation = 0;
 		for(int i=1;i<this.fighters.size();i++){
-			if(orderarr.get(i)>orderarr.get(maxloca)){
-				maxloca = i;
+			if(orderarr.get(i)>orderarr.get(maxlocation)){
+				maxlocation = i;
 			}
 		}
 		
-		if(orderarr.get(maxloca)==-1) {
+		if(orderarr.get(maxlocation)==-1) {
 			this.orderarr = (ArrayList<Integer>) maporderrecode.clone();
-			next();
-			return;
+			
+			return next();
 		}
 		
-		if(fighters.get(maxloca).isAlive()) {
-			orderarr.set(maxloca, -1);
-			fighters.get(maxloca).turn();
+		if(fighters.get(maxlocation).isAlive()) {
+			orderarr.set(maxlocation, -1);
+			fighters.get(maxlocation).turn();
 			
 		}
 		else{
-			fighters.remove(maxloca);
-			orderarr.remove(maxloca);
-			next();
+			fighters.remove(maxlocation);
+			orderarr.remove(maxlocation);
+			return next();
 		}
 		
-		
+		return fighters.get(maxlocation);
 	}
 //	
 //	public void finishTurn() {

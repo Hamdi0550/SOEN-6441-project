@@ -46,7 +46,7 @@ import ddg.ui.view.dialog.DDGaming;
  * @date Mar 12, 2017
  * 
  */
-public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener, TurnCallback{
+public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener {
 	private JScrollPane jspanel;
 	private JPanel mapPanel;
 	private Game game;
@@ -57,6 +57,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
     private int xIndex = -1;
     private int yIndex = -1; 
 	protected boolean isCharacter = false;
+	private Fighter characterthisturn = null;
     
 	ImageIcon floor = new ImageIcon("res/floor.png");
 	ImageIcon chest = new ImageIcon("res/chest.png");
@@ -454,6 +455,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			return;
 		char temp = playingMap.getLocation()[x][y];
 		if(temp =='f'||temp=='d'){
+			if(!((HumanStrategy)game.getFighter().getBehaviorStrategy()).moveCells())
+				return;
 			game.setXofplayer(x);
 			game.setYofplayer(y);
 			mapPanel.repaint();
@@ -482,7 +485,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		}
 		
 		else if(temp=='o'){ //playingMap.getLocation()[game.getXofplayer()][game.getYofplayer()]=='o'
-			// check whether there is key on player's backpack, if so can interact with exit door, otherwise popup a warm message
+			if(!((HumanStrategy)game.getFighter().getBehaviorStrategy()).moveCells())
+				return;
 			Boolean containKey = false;
 			for(Item item:fighter.getBackpack()){
 				if(item.getName().equals("key")){
@@ -519,11 +523,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-//		System.out.println("Turn+++++++++++++++++++++++++++++++++"+turnDriven.getFighters().size());
-//		for (Fighter fighter : turnDriven.getFighters()) {
-//			if(fighter.isAlive())
-//				fighter.turn(this);
-//		}
 	}
 
 	@Override
@@ -541,9 +540,12 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		if(e.getActionCommand().contains("Next one")){
 			System.out.println("NEXT ONE@!!!");
 			if(turnDriven!=null) {
-				turnDriven.next();
+				characterthisturn = turnDriven.next();
 			}
 			requestFocus();
+			if(!game.getFighter().isAlive()){
+				gameOver();
+			}
 		}
 		if(e.getActionCommand().contains("SAVE")){
 			System.out.println("SAVE BUTTON");
@@ -582,8 +584,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		return new Point(game.getXofplayer(),game.getYofplayer());
 	}
 
-	@Override
-	public void finish() {
+	public void gameOver() {
 		JDialog mapSizeFrame = (JDialog) SwingUtilities.getWindowAncestor(this);
 		mapSizeFrame.dispose();
 	}
