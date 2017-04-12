@@ -13,9 +13,10 @@ import ddg.ui.view.component.DButton;
 /**
  * This class is show charactor editor view
  * 
- * @author 
+ * @author Zhen Du
  * @date Feb 5, 2017
  */
+@Deprecated
 public class OldCharactorEditor extends JPanel implements ActionListener {
 
 	private ActionListener listener;

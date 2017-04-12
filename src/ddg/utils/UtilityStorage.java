@@ -11,6 +11,7 @@ import ddg.model.item.Item;
  * @author Fei Yu
  * @date Mar 3, 2017
  */
+@Deprecated
 public class UtilityStorage {
 	private static Fighter fighter;
 	private static Item item;

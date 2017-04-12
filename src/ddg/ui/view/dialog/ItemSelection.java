@@ -230,7 +230,7 @@ public class ItemSelection extends JDialog implements ActionListener, ListSelect
 				attributeLabel.setText(item.getIncrease());
 				bonusLabel.setText(Integer.toString(item.getBonus()));
 				selectedItem = item;
-				UtilityStorage.setItem(item);
+//				UtilityStorage.setItem(item);
 		        selectBtn.setEnabled(true);
 			}
 		}

@@ -552,7 +552,7 @@ public class InventoryView extends JPanel implements ActionListener, ListSelecti
 				selectedWorn = item.getName();
 				selectedBackPackItem = item;
 				
-				UtilityStorage.setItem(item);
+//				UtilityStorage.setItem(item);
 			}
 		}
         System.out.println("value changed");		
