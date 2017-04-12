@@ -1,4 +1,4 @@
-package ddg.model.entity;
+package ddg;
 
 import java.io.Serializable;
 

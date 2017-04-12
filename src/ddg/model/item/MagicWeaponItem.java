@@ -5,7 +5,7 @@
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-package ddg.model.entity;
+package ddg.model.item;
 
 import java.util.ArrayList;
 

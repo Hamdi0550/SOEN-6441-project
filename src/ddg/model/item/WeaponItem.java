@@ -1,4 +1,6 @@
-package ddg.model.entity;
+package ddg.model.item;
+
+import ddg.IOwner;
 
 public abstract class WeaponItem implements Item {
 	

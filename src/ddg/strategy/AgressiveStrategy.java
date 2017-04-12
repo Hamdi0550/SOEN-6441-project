@@ -16,10 +16,10 @@ import java.util.Map;
 import java.util.Queue;
 
 import ddg.model.Fighter;
-import ddg.model.entity.BaseItem;
+import ddg.model.Game;
 import ddg.model.entity.Chest;
-import ddg.model.entity.Game;
-import ddg.model.entity.Item;
+import ddg.model.item.BaseItem;
+import ddg.model.item.Item;
 
 /**
  *

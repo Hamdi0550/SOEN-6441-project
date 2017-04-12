@@ -8,12 +8,12 @@ import java.util.Observable;
 import javax.swing.JOptionPane;
 
 import ddg.Config;
-import ddg.model.entity.Enchantment;
-import ddg.model.entity.BaseItem;
+import ddg.IOwner;
 import ddg.model.entity.Chest;
-import ddg.model.entity.IOwner;
-import ddg.model.entity.Item;
-import ddg.model.entity.MagicWeaponItem;
+import ddg.model.item.BaseItem;
+import ddg.model.item.Enchantment;
+import ddg.model.item.Item;
+import ddg.model.item.MagicWeaponItem;
 import ddg.strategy.IMagicStrategy;
 import ddg.strategy.IStrategy;
 import ddg.strategy.IStrategy.TurnCallback;

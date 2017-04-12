@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ddg.Config;
+import ddg.model.Map;
 import ddg.model.MapEditorModel;
-import ddg.model.entity.Map;
 import ddg.utils.ValidationTool;
 /**
  * This class is test for MapEditor

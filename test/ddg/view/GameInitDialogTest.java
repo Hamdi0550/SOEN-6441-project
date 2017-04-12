@@ -10,8 +10,8 @@ import ddg.model.CampaignEditorModel;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
 import ddg.model.GameModel;
+import ddg.model.Map;
 import ddg.model.entity.BaseCampaign;
-import ddg.model.entity.Map;
 import ddg.ui.view.dialog.GameInitDialog;
 import ddg.utils.Utils;
 

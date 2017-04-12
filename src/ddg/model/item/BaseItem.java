@@ -1,6 +1,8 @@
-package ddg.model.entity;
+package ddg.model.item;
 
 import com.google.gson.annotations.SerializedName;
+
+import ddg.IOwner;
 
 /**
  * 

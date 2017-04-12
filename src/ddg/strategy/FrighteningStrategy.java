@@ -1,7 +1,7 @@
 package ddg.strategy;
 
 import ddg.model.Fighter;
-import ddg.model.entity.Game;
+import ddg.model.Game;
 
 /**
  *

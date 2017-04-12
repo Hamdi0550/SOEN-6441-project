@@ -1,5 +1,7 @@
 package ddg.model.entity;
 
+import ddg.model.item.Item;
+
 /**
  * Chest Class
  * @author Bo

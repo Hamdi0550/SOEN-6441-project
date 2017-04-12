@@ -5,9 +5,11 @@
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-package ddg.model.entity;
+package ddg.model.item;
 
 import ddg.model.Fighter;
+import ddg.model.Game;
+import ddg.model.Map;
 import ddg.strategy.FrighteningStrategy;
 
 /**

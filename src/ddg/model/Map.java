@@ -1,4 +1,4 @@
-package ddg.model.entity;
+package ddg.model;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -6,8 +6,9 @@ import java.io.ObjectOutputStream;
 import java.util.Observable;
 
 import ddg.Config;
-import ddg.model.Fighter;
-import ddg.model.MapEditorModel;
+import ddg.IOwner;
+import ddg.model.entity.Cell;
+import ddg.model.entity.Chest;
 import ddg.utils.ValidationTool;
 
 

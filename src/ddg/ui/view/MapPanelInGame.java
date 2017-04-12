@@ -25,11 +25,11 @@ import javax.swing.SwingUtilities;
 
 import ddg.Config;
 import ddg.model.Fighter;
+import ddg.model.Game;
+import ddg.model.Map;
 import ddg.model.entity.BaseCampaign;
 import ddg.model.entity.Chest;
-import ddg.model.entity.Game;
-import ddg.model.entity.Item;
-import ddg.model.entity.Map;
+import ddg.model.item.Item;
 import ddg.strategy.AgressiveStrategy;
 import ddg.strategy.FriendlyStrategy;
 import ddg.strategy.HumanStrategy;

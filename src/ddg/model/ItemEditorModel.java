@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
-import ddg.model.entity.Item;
 import ddg.model.entity.ListEntry;
+import ddg.model.item.Item;
 
 /**
  * 

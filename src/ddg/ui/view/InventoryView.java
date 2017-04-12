@@ -28,8 +28,8 @@ import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.model.Fighter;
-import ddg.model.entity.BaseItem;
-import ddg.model.entity.Item;
+import ddg.model.item.BaseItem;
+import ddg.model.item.Item;
 import ddg.ui.view.dialog.CharacterEditor;
 import ddg.utils.UtilityStorage;
 import ddg.utils.Utils;

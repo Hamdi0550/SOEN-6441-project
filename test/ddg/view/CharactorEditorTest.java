@@ -15,9 +15,9 @@ import org.junit.Test;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
-import ddg.model.entity.Enchantment;
-import ddg.model.entity.BaseItem;
 import ddg.model.entity.Chest;
+import ddg.model.item.BaseItem;
+import ddg.model.item.Enchantment;
 import ddg.utils.Utils;
 
 /**

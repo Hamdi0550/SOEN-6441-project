@@ -10,9 +10,9 @@ package ddg.strategy;
 import java.io.Serializable;
 
 import ddg.model.Fighter;
+import ddg.model.Game;
+import ddg.model.Map;
 import ddg.model.entity.Chest;
-import ddg.model.entity.Game;
-import ddg.model.entity.Map;
 
 /**
  *

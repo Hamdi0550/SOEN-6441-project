@@ -13,7 +13,7 @@ import org.junit.Test;
 import ddg.Config;
 import ddg.model.FighterModel;
 import ddg.model.ItemEditorModel;
-import ddg.model.entity.BaseItem;
+import ddg.model.item.BaseItem;
 import ddg.utils.Utils;
 
 /**

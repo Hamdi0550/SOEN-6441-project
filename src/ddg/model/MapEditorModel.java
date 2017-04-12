@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 import ddg.model.entity.ListEntry;
-import ddg.model.entity.Map;
 
 /**
  * @author Bo

@@ -1,6 +1,8 @@
-package ddg.model.entity;
+package ddg.model.item;
 
 import java.io.Serializable;
+
+import ddg.IOwner;
 
 /**
  * This class

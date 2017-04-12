@@ -4,8 +4,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import ddg.model.Game;
 import ddg.model.GameModel;
-import ddg.model.entity.Game;
 /**
  * 
  * Gaming panel, design to extends MapEditor, maybe need to refactor

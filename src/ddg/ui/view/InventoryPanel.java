@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 
 import ddg.model.Fighter;
-import ddg.model.entity.Item;
+import ddg.model.item.Item;
 
 /**
  * 

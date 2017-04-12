@@ -1,4 +1,4 @@
-package ddg.model.entity;
+package ddg.model;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,8 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import ddg.Config;
-import ddg.model.Fighter;
-import ddg.model.MapEditorModel;
+import ddg.IOwner;
+import ddg.model.entity.BaseCampaign;
 import ddg.strategy.HumanStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
 

@@ -33,7 +33,7 @@ import ddg.builder.FighterExplorer;
 import ddg.builder.NimbleFighterBuilder;
 import ddg.builder.TankFighterBuilder;
 import ddg.model.Fighter;
-import ddg.model.entity.BaseItem;
+import ddg.model.item.BaseItem;
 import ddg.ui.view.InventoryView;
 import ddg.utils.Dice;
 import ddg.utils.Utils;

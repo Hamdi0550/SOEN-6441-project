@@ -20,8 +20,8 @@ import javax.swing.event.ListSelectionListener;
 import ddg.Config;
 import ddg.model.FighterModel;
 import ddg.model.ItemEditorModel;
-import ddg.model.entity.BaseItem;
-import ddg.model.entity.Item;
+import ddg.model.item.BaseItem;
+import ddg.model.item.Item;
 import ddg.ui.view.component.ListEntryCellRenderer;
 import ddg.utils.Utils;
 

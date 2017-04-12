@@ -3,8 +3,8 @@ package ddg.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ddg.model.Map;
 import ddg.model.entity.Chest;
-import ddg.model.entity.Map;
 
 /**
  * @author Bo

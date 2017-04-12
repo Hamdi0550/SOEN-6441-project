@@ -21,8 +21,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import ddg.model.Fighter;
-import ddg.model.entity.BaseItem;
-import ddg.model.entity.Item;
+import ddg.model.item.BaseItem;
+import ddg.model.item.Item;
 import ddg.utils.Utils;
 /**
  * 

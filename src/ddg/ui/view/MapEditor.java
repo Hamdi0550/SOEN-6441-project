@@ -28,11 +28,11 @@ import javax.swing.event.ListSelectionListener;
 
 import ddg.Config;
 import ddg.model.Fighter;
+import ddg.model.Map;
 import ddg.model.MapEditorModel;
 import ddg.model.entity.Cell;
 import ddg.model.entity.Chest;
-import ddg.model.entity.Item;
-import ddg.model.entity.Map;
+import ddg.model.item.Item;
 import ddg.ui.view.component.DButton;
 import ddg.ui.view.component.ListEntryCellRenderer;
 import ddg.ui.view.dialog.PopUpForCreateNewMap;

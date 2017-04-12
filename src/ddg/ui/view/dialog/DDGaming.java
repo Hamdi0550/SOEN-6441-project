@@ -10,10 +10,10 @@ import java.io.ObjectInputStream;
 import javax.swing.JDialog;
 
 import ddg.Config;
+import ddg.model.Game;
 import ddg.model.GameModel;
+import ddg.model.Map;
 import ddg.model.MapEditorModel;
-import ddg.model.entity.Game;
-import ddg.model.entity.Map;
 import ddg.ui.view.GamePanel;
 /**
  * 

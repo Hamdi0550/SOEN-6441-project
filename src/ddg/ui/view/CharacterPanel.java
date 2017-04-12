@@ -16,7 +16,7 @@ import javax.swing.border.LineBorder;
 
 import ddg.Config;
 import ddg.model.Fighter;
-import ddg.model.entity.BaseItem;
+import ddg.model.item.BaseItem;
 import ddg.ui.view.dialog.CharacterSelection;
 
 /**

@@ -16,7 +16,7 @@ import org.junit.Test;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
-import ddg.model.entity.Item;
+import ddg.model.item.Item;
 import ddg.utils.Utils;
 
 /**

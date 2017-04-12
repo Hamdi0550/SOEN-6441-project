@@ -7,14 +7,14 @@
  */
 package ddg.factory;
 
-import ddg.model.entity.Enchantment;
-import ddg.model.entity.Burning;
-import ddg.model.entity.Freezing;
-import ddg.model.entity.Frightening;
-import ddg.model.entity.Magic;
-import ddg.model.entity.MagicWeaponItem;
-import ddg.model.entity.Pacifying;
-import ddg.model.entity.Slaying;
+import ddg.model.item.Burning;
+import ddg.model.item.Enchantment;
+import ddg.model.item.Freezing;
+import ddg.model.item.Frightening;
+import ddg.model.item.Magic;
+import ddg.model.item.MagicWeaponItem;
+import ddg.model.item.Pacifying;
+import ddg.model.item.Slaying;
 
 /**
  *

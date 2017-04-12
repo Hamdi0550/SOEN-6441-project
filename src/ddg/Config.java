@@ -8,7 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
-import ddg.model.entity.BaseItem;
+import ddg.model.item.BaseItem;
 /**
  * This class include all the config data
  * 
