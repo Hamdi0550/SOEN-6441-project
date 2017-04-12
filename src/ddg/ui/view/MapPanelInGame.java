@@ -70,7 +70,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	ImageIcon playCharacter = new ImageIcon("res/playcharacter.png");
 	ImageIcon mainPlayer = new ImageIcon("res/Mainplayer.png");
 	ImageIcon deadNPC = new ImageIcon("res/deadnpc.png");
-	JTextArea log = new JTextArea();
+	private static JTextArea log = new JTextArea();
 	private TurnDriven turnDriven;
 	/**
 	 * Constructor
@@ -190,7 +190,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		    	characterPanel.setVisible(false);
 		    	inventoryPanel.setVisible(false);
 		    }
-		    
+
+		    log.setAutoscrolls(true);
+		    log.setLineWrap(true);
 		    log.setText("Enter game, Welcome!\n");
 			log.append("Current Level:"+game.getFighter().getLevel()+"\n");
 			log.append("Current Map:"+game.getPlayingmap().getName()+"\n");
@@ -609,6 +611,14 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		JOptionPane.showMessageDialog(null, "You are dead, Game Over !!", "Game Over!!", JOptionPane.WARNING_MESSAGE);
 		JDialog mapSizeFrame = (JDialog) SwingUtilities.getWindowAncestor(this);
 		mapSizeFrame.dispose();
+	}
+	
+	/**
+	 * This method is for displaying combat log information in the logging window
+	 * @param string The log information
+	 */
+	public static void printLog(String string) {
+		log.append(string + "\r\n");		
 	}
 }
 

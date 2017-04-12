@@ -17,6 +17,7 @@ import ddg.model.item.MagicWeaponItem;
 import ddg.strategy.IMagicStrategy;
 import ddg.strategy.IStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
+import ddg.ui.view.MapPanelInGame;
 import ddg.utils.Dice;
 import ddg.utils.Utils;
 
@@ -981,8 +982,13 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 * @param npc the npc is attacked
 	 */
 	public void attackCaracter(Fighter npc) {
-		int attackRoll =  Dice.d20Roll() + this.getAttackBonus();
+		int d20Roll = Dice.d20Roll();		
+		int attackRoll =  d20Roll + this.getAttackBonus();
+		String s = "Attack Roll = d20 roll: " + d20Roll + " + attack bonus of the character: " + this.getAttackBonus();		
+		MapPanelInGame.printLog(s);
 		if(attackRoll >= npc.getArmorClass()){
+			s = "Attack Roll: " + attackRoll + " >= Armor Class " + npc.getArmorClass() + ", Attack Success!";
+			MapPanelInGame.printLog(s);
 			System.out.println("Attack Success!");
 			if(npc.beAttacked(this.getDamageBonus())) {
 				for (Item wornItem : wornItems) {
@@ -992,7 +998,8 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 					}
 				}
 			}
-		}else{
+		} else {
+			s = "Attack Roll: " + attackRoll + " < Armor Class " + npc.getArmorClass() + ", Attack Fail!";
 			System.out.println("Attack Fail!");
 		}
 	}
