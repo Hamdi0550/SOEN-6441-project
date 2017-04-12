@@ -2,6 +2,8 @@ package ddg.model.entity;
 
 import java.io.Serializable;
 
+import ddg.model.Fighter;
+
 /**
  * 
  * This class define the name for increase
@@ -27,4 +29,6 @@ public abstract class Magic implements Serializable {
 	public void setWeapon(MagicWeaponItem weapon) {
 		this.weapon = weapon;
 	}
+	
+	public abstract void attack(Fighter npc);
 }

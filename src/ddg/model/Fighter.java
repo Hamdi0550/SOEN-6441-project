@@ -14,6 +14,7 @@ import ddg.model.entity.Chest;
 import ddg.model.entity.IOwner;
 import ddg.model.entity.Item;
 import ddg.model.entity.MagicWeaponItem;
+import ddg.strategy.IMagicStrategy;
 import ddg.strategy.IStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
 import ddg.utils.Dice;
@@ -81,13 +82,32 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	
 	private IOwner owner;
 	
-	private IStrategy strategyList;
+	private IMagicStrategy[] magicStrategy = new IMagicStrategy[3];
+	private IStrategy behaviorStrategy;
 	public void setStrategy(IStrategy strategy) {
-		strategyList = strategy;
+		behaviorStrategy = strategy;
 	}
 	
 	public void turn(TurnCallback cb) {
-		strategyList.turn(cb);
+		boolean contine = true;
+		for(IMagicStrategy s : magicStrategy) {
+			if(s!=null) {
+				if(s.getTurns()==0) {
+					s = null;
+				} else {
+					contine = s.enchantNext(this);
+				}
+			}
+		}
+		if(contine) {
+			behaviorStrategy.turn(cb);
+		}
+	}
+	
+	public void setMagicStrategy(IMagicStrategy strategy) {
+		if(strategy == null || strategy.getIndex() < 0 || strategy.getIndex() >= magicStrategy.length)
+			return;
+		magicStrategy[strategy.getIndex()] = strategy;
 	}
 	/**
 	 * Constructor
@@ -958,11 +978,17 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 * @param npc the npc is attacked
 	 */
 	public void attackCaracter(Fighter npc) {
-		Dice dice = new Dice();
-		int attackRoll =  dice.d20Roll() + this.getAttackBonus();
+		int attackRoll =  Dice.d20Roll() + this.getAttackBonus();
 		if(attackRoll >= npc.getArmorClass()){
 			System.out.println("Attack Success!");
-			npc.beAttacked(this.getDamageBonus());
+			if(npc.beAttacked(this.getDamageBonus())) {
+				for (Item wornItem : wornItems) {
+					if (wornItem instanceof MagicWeaponItem){
+						((MagicWeaponItem)wornItem).attack(npc);
+						break;
+					}
+				}
+			}
 		}else{
 			System.out.println("Attack Fail!");
 		}
@@ -972,14 +998,14 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 * call this function if the character is attacked
 	 * @param i harm values that this character will be hurt
 	 */
-	public void beAttacked(int i) {
+	public boolean beAttacked(int i) {
 		this.hitPoints -= i;
 		if(this.hitPoints<=0){
-			this.hitPoints=0;
 			System.out.println("going dead!!!!!");
 			die();
 		}
 		observerNotify();
+		return isAlive();
 	}
 	
 	/**
@@ -993,8 +1019,10 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 * call this function if character's hit points down to 0
 	 */
 	public void die() {
+		this.hitPoints=0;
 		this.isalive = false;
-		this.strategyList=null;
+		this.behaviorStrategy=null;
+		observerNotify();
 	}
 	
 	/**
@@ -1029,6 +1057,10 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 //		}
 //		
 //	}
+	
+	public IOwner getOwner() {
+		return this.owner;
+	}
 	
 	public void setOwner(IOwner owner) {
 		this.owner = owner;

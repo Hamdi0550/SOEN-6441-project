@@ -7,6 +7,9 @@
  */
 package ddg.model.entity;
 
+import ddg.model.Fighter;
+import ddg.strategy.IMagicStrategy;
+
 /**
  *
  * This class
@@ -40,5 +43,30 @@ public class Burning extends Magic {
 
 	public int getDamage() {
 		return weapon==null?0:5*weapon.getBonus();
+	}
+
+	@Override
+	public void attack(Fighter npc) {
+		int turns[] = {3};
+		npc.setMagicStrategy(new IMagicStrategy() {
+			private static final long serialVersionUID = 5208777579557355918L;
+
+			@Override
+			public int getTurns() {
+				return turns[0];
+			}
+
+			@Override
+			public boolean enchantNext(Fighter npc) {
+				turns[0]--;
+				return npc.beAttacked(getDamage());
+			}
+
+			@Override
+			public int getIndex() {
+				return 1;
+			}
+			
+		});
 	}
 }

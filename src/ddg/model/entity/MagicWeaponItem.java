@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 
+import ddg.model.Fighter;
+
 /**
  *
  * This class
@@ -93,5 +95,11 @@ public class MagicWeaponItem extends WeaponItem {
 			l.addElement(i.getName());
 		}
 		return l;
+	}
+	
+	public void attack(Fighter npc) {
+		for(Magic m : magic) {
+			m.attack(npc);
+		}
 	}
 }

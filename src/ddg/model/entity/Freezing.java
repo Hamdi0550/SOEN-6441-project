@@ -7,6 +7,9 @@
  */
 package ddg.model.entity;
 
+import ddg.model.Fighter;
+import ddg.strategy.IMagicStrategy;
+
 /**
  *
  * This class
@@ -40,5 +43,30 @@ public class Freezing extends Magic {
 	
 	public int getFreezingTurns() {
 		return weapon==null?0:weapon.getBonus();
+	}
+
+	@Override
+	public void attack(Fighter npc) {
+		int turns[] = {getFreezingTurns()};
+		npc.setMagicStrategy(new IMagicStrategy() {
+			private static final long serialVersionUID = -4587647564027450860L;
+
+			@Override
+			public int getTurns() {
+				return turns[0];
+			}
+
+			@Override
+			public boolean enchantNext(Fighter npc) {
+				turns[0]--;
+				return false;
+			}
+
+			@Override
+			public int getIndex() {
+				return 0;
+			}
+			
+		});
 	}
 }

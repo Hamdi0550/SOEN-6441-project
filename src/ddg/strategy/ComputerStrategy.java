@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public abstract class ComputerStrategy implements IStrategy, Serializable{
+public abstract class ComputerStrategy implements IStrategy {
 
 	/**
 	 * 

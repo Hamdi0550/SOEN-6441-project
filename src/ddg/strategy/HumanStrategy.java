@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public abstract class HumanStrategy implements IStrategy,Serializable {
+public abstract class HumanStrategy implements IStrategy {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Constructors

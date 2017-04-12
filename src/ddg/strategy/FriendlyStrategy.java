@@ -12,6 +12,7 @@ import java.io.Serializable;
 import ddg.model.Fighter;
 import ddg.model.entity.Chest;
 import ddg.model.entity.Game;
+import ddg.model.entity.Map;
 
 /**
  *
@@ -27,12 +28,12 @@ import ddg.model.entity.Game;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public class FriendlyStrategy implements IStrategy, Serializable{
+public class FriendlyStrategy implements IStrategy {
 	private static final long serialVersionUID = 1L;
 	
 	private Game game;
-	private int xofcharactor;
-	private int yofcharactor;
+	private int xofcharactor = -1;
+	private int yofcharactor = -1;
 	/**
 	 * Constructors
 	 * 
@@ -43,6 +44,25 @@ public class FriendlyStrategy implements IStrategy, Serializable{
 		this.yofcharactor = y;
 	}
 
+	public FriendlyStrategy(Game game, Fighter npc) {
+		this.game = game;
+		Map playingMap = game.getPlayingmap();
+		if(this.xofcharactor == -1 || this.yofcharactor == -1) {
+			for(int i=0;i< playingMap.getRow();i++){
+	            for(int j=0;j< playingMap.getColumn();j++){
+	            	if(playingMap.getLocation()[i][j]=='p'){
+	            		Fighter fighter = (Fighter)playingMap.getCellsinthemap()[i][j].getContent();
+	            		if(fighter.equals(npc)) {
+	            			this.xofcharactor = i;
+	            			this.yofcharactor = j;
+	            			return;
+	            		}
+	            	}
+	            }
+			}
+		}
+	}
+	
 	@Override
 	public void turn(TurnCallback cb) {
 		System.out.println("this is friendly strategy, turn function!!!");

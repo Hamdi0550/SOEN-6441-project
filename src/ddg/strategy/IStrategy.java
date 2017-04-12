@@ -7,6 +7,8 @@
  */
 package ddg.strategy;
 
+import java.io.Serializable;
+
 /**
  *
  * This class
@@ -21,7 +23,7 @@ package ddg.strategy;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-public interface IStrategy {
+public interface IStrategy extends Serializable {
 	public interface TurnCallback {
 		void finish();
 	}

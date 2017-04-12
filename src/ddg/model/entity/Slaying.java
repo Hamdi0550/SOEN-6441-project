@@ -7,6 +7,8 @@
  */
 package ddg.model.entity;
 
+import ddg.model.Fighter;
+
 /**
  *
  * This class
@@ -36,5 +38,10 @@ public class Slaying extends Magic {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public void attack(Fighter npc) {
+		npc.die();
 	}
 }

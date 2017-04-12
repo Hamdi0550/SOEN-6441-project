@@ -12,7 +12,7 @@ import ddg.model.MapEditorModel;
 import ddg.strategy.HumanStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
 
-public class Game implements java.io.Serializable{
+public class Game implements IOwner, java.io.Serializable{
 	private static final long serialVersionUID = -1424213104639818704L;
 	
 	private BaseCampaign campaign;
@@ -92,7 +92,7 @@ public class Game implements java.io.Serializable{
 	private void initMapData() {
 		// TODO Auto-generated method stub
 //		this.playingmap.adaptedLevel(fighter.getLevel());
-		this.playingmap.setOwner(fighter);
+		this.playingmap.setOwner(this);
 		
 		for(int i=0;i<playingmap.getRow();i++){
 			for(int j=0;j<playingmap.getColumn();j++){
@@ -170,5 +170,10 @@ public class Game implements java.io.Serializable{
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	@Override
+	public int getLevel() {
+		return fighter.getLevel();
 	}
 }

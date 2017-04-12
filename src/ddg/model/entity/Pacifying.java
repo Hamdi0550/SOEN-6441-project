@@ -7,6 +7,9 @@
  */
 package ddg.model.entity;
 
+import ddg.model.Fighter;
+import ddg.strategy.FriendlyStrategy;
+
 /**
  *
  * This class
@@ -36,5 +39,10 @@ public class Pacifying extends Magic {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public void attack(Fighter npc) {
+		npc.setStrategy(new FriendlyStrategy((Game)npc.getOwner(), npc));
 	}
 }
