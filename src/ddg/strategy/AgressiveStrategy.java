@@ -20,6 +20,7 @@ import ddg.model.Game;
 import ddg.model.entity.Chest;
 import ddg.model.item.BaseItem;
 import ddg.model.item.Item;
+import ddg.model.item.WeaponItem;
 
 /**
  *
@@ -39,8 +40,8 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Game game;
-	private int xofcharactor;
-	private int yofcharactor;
+	private int xOfCharacter;
+	private int yOfCharacter;
 
 	/**
 	 * Constructors
@@ -48,8 +49,8 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 	 */
 	public AgressiveStrategy(Game game, int x, int y) {
 		this.game = game;
-		this.xofcharactor = x;
-		this.yofcharactor = y;
+		this.xOfCharacter = x;
+		this.yOfCharacter = y;
 	}
 
 	@Override
@@ -71,9 +72,9 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 			if(queue.size()==0){
 				break;
 			}
-			game.getPlayingmap().npcMove(xofcharactor,yofcharactor,queue.get(0).x,queue.get(0).y);
-			xofcharactor = queue.get(0).x;
-			yofcharactor = queue.get(0).y;
+			game.getPlayingmap().npcMove(xOfCharacter,yOfCharacter,queue.get(0).x,queue.get(0).y);
+			xOfCharacter = queue.get(0).x;
+			yOfCharacter = queue.get(0).y;
 			queue.remove(0);
 			walktimes--;
 			if(attacktimes>0){
@@ -86,56 +87,56 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 	}
 
 	private boolean findEnemy() {
-		Fighter fighter = (Fighter) game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor].getContent();
-		Item weapon = fighter.getWearItemByName("Weapon");
-		int range = 2; //weapon.getRange();		// need to know the range
+		Fighter fighter = (Fighter) game.getPlayingmap().getCellsinthemap()[xOfCharacter][yOfCharacter].getContent();
+		WeaponItem weapon = (WeaponItem) fighter.getWearItemByName("Weapon");
+		int range = weapon.getRange();		// need to know the range
 		for(int i=1;i<=range;i++){
-			if(xofcharactor<=game.getPlayingmap().getRow()-1-i&&
-					((xofcharactor+i==game.getXofplayer()&&yofcharactor==game.getYofplayer())
-							||game.getPlayingmap().getLocation()[xofcharactor+i][yofcharactor]=='p')){
-				attackCharacter(xofcharactor+i,yofcharactor);
+			if(xOfCharacter<=game.getPlayingmap().getRow()-1-i&&
+					((xOfCharacter+i==game.getXofplayer()&&yOfCharacter==game.getYofplayer())
+							||game.getPlayingmap().getLocation()[xOfCharacter+i][yOfCharacter]=='p')){
+				attackCharacter(xOfCharacter+i,yOfCharacter);
 				return true;
 			}
-			else if(xofcharactor>=i&&
-					((xofcharactor-i==game.getXofplayer()&&yofcharactor==game.getYofplayer())
-							||game.getPlayingmap().getLocation()[xofcharactor-i][yofcharactor]=='p')){
-				attackCharacter(xofcharactor-i,yofcharactor);
+			else if(xOfCharacter>=i&&
+					((xOfCharacter-i==game.getXofplayer()&&yOfCharacter==game.getYofplayer())
+							||game.getPlayingmap().getLocation()[xOfCharacter-i][yOfCharacter]=='p')){
+				attackCharacter(xOfCharacter-i,yOfCharacter);
 				return true;
 			}
-			else if(yofcharactor<=game.getPlayingmap().getColumn()-1-i&&
-					((xofcharactor==game.getXofplayer()&&yofcharactor+i==game.getYofplayer())
-							||game.getPlayingmap().getLocation()[xofcharactor][yofcharactor+i]=='p')){
-				attackCharacter(xofcharactor,yofcharactor+i);
+			else if(yOfCharacter<=game.getPlayingmap().getColumn()-1-i&&
+					((xOfCharacter==game.getXofplayer()&&yOfCharacter+i==game.getYofplayer())
+							||game.getPlayingmap().getLocation()[xOfCharacter][yOfCharacter+i]=='p')){
+				attackCharacter(xOfCharacter,yOfCharacter+i);
 				return true;
 			}
-			else if(yofcharactor>=i&&
-					((xofcharactor==game.getXofplayer()&&yofcharactor-i==game.getYofplayer())
-							||game.getPlayingmap().getLocation()[xofcharactor][yofcharactor-i]=='p')){
-				attackCharacter(xofcharactor,yofcharactor-i);
+			else if(yOfCharacter>=i&&
+					((xOfCharacter==game.getXofplayer()&&yOfCharacter-i==game.getYofplayer())
+							||game.getPlayingmap().getLocation()[xOfCharacter][yOfCharacter-i]=='p')){
+				attackCharacter(xOfCharacter,yOfCharacter-i);
 				return true;
 			}
-			else if(xofcharactor>=i&&yofcharactor>=i&&
-					((xofcharactor-i==game.getXofplayer()&&yofcharactor-i==game.getYofplayer())
-							||game.getPlayingmap().getLocation()[xofcharactor-i][yofcharactor-i]=='p')){
-				attackCharacter(xofcharactor-i,yofcharactor-i);
+			else if(xOfCharacter>=i&&yOfCharacter>=i&&
+					((xOfCharacter-i==game.getXofplayer()&&yOfCharacter-i==game.getYofplayer())
+							||game.getPlayingmap().getLocation()[xOfCharacter-i][yOfCharacter-i]=='p')){
+				attackCharacter(xOfCharacter-i,yOfCharacter-i);
 				return true;
 			}
-			else if(xofcharactor<=game.getPlayingmap().getRow()-1-i&&yofcharactor<=game.getPlayingmap().getColumn()-1-i&&
-					((xofcharactor+i==game.getXofplayer()&&yofcharactor+i==game.getYofplayer())
-							||game.getPlayingmap().getLocation()[xofcharactor+i][yofcharactor+i]=='p')){
-				attackCharacter(xofcharactor+i,yofcharactor+i);
+			else if(xOfCharacter<=game.getPlayingmap().getRow()-1-i&&yOfCharacter<=game.getPlayingmap().getColumn()-1-i&&
+					((xOfCharacter+i==game.getXofplayer()&&yOfCharacter+i==game.getYofplayer())
+							||game.getPlayingmap().getLocation()[xOfCharacter+i][yOfCharacter+i]=='p')){
+				attackCharacter(xOfCharacter+i,yOfCharacter+i);
 				return true;
 			}
-			else if(xofcharactor>=i&&yofcharactor<=game.getPlayingmap().getColumn()-1-i&&
-					((xofcharactor-i==game.getXofplayer()&&yofcharactor+i==game.getYofplayer())
-							||game.getPlayingmap().getLocation()[xofcharactor-i][yofcharactor+i]=='p')){
-				attackCharacter(xofcharactor-i,yofcharactor+i);
+			else if(xOfCharacter>=i&&yOfCharacter<=game.getPlayingmap().getColumn()-1-i&&
+					((xOfCharacter-i==game.getXofplayer()&&yOfCharacter+i==game.getYofplayer())
+							||game.getPlayingmap().getLocation()[xOfCharacter-i][yOfCharacter+i]=='p')){
+				attackCharacter(xOfCharacter-i,yOfCharacter+i);
 				return true;
 			}
-			else if(xofcharactor<=game.getPlayingmap().getRow()-1-i&&yofcharactor>=i&&
-					((xofcharactor+i==game.getXofplayer()&&yofcharactor-i==game.getYofplayer())
-							||game.getPlayingmap().getLocation()[xofcharactor+i][yofcharactor-i]=='p')){
-				attackCharacter(xofcharactor+i,yofcharactor-i);
+			else if(xOfCharacter<=game.getPlayingmap().getRow()-1-i&&yOfCharacter>=i&&
+					((xOfCharacter+i==game.getXofplayer()&&yOfCharacter-i==game.getYofplayer())
+							||game.getPlayingmap().getLocation()[xOfCharacter+i][yOfCharacter-i]=='p')){
+				attackCharacter(xOfCharacter+i,yOfCharacter-i);
 				return true;
 			}
 		}
@@ -143,7 +144,7 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 	}
 
 	private void attackCharacter(int x, int y) {
-		Fighter attacter = (Fighter) game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor].getContent();
+		Fighter attacter = (Fighter) game.getPlayingmap().getCellsinthemap()[xOfCharacter][yOfCharacter].getContent();
 		if(x==game.getXofplayer()&&y==game.getYofplayer()){
 			Fighter attactee = game.getFighter();
 			attacter.attackCaracter(attactee);
@@ -163,61 +164,61 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 	}
 
 	protected ArrayList<Point> searchWayAttactPlayer() {
-		ArrayList<Point> queue = new ArrayList<>();
-		Map<String, Integer> map = new HashMap<>();
-		int x = xofcharactor, y= yofcharactor;
-		while(!map.containsKey(game.getXofplayer()+","+game.getYofplayer())){
-			if(queue.size()==3){
+		ArrayList<Point> queueOfPath = new ArrayList<>();
+		Map<String, Integer> locationAlreadySearch = new HashMap<>();
+		int x = xOfCharacter, y= yOfCharacter;
+		while(!locationAlreadySearch.containsKey(game.getXofplayer()+","+game.getYofplayer())){
+			if(queueOfPath.size()==3){
 				break;
 			}
 			int dist1,dist2,dist3,dist4;
-			if(!map.containsKey(x-1+","+y)){
+			if(!locationAlreadySearch.containsKey(x-1+","+y)){
 				dist1 = shortestDistance(x-1,y);
-				map.put(x-1+","+y, 0);
+				locationAlreadySearch.put(x-1+","+y, 0);
 			}
 			else
 				dist1 = 1000;
-			if(!map.containsKey(x+1+","+y)){
+			if(!locationAlreadySearch.containsKey(x+1+","+y)){
 				dist2 = shortestDistance(x+1,y);
-				map.put(x+1+","+y, 0);
+				locationAlreadySearch.put(x+1+","+y, 0);
 			}
 			else
 				dist2 = 1000;
-			if(!map.containsKey(x+","+(y-1))){
+			if(!locationAlreadySearch.containsKey(x+","+(y-1))){
 				dist3 = shortestDistance(x,y-1);
-				map.put(x+","+(y-1), 0);
+				locationAlreadySearch.put(x+","+(y-1), 0);
 			}
 			else
 				dist3 = 1000;
 			
-			if(!map.containsKey(x+","+(y+1))){
+			if(!locationAlreadySearch.containsKey(x+","+(y+1))){
 				dist4 = shortestDistance(x,y+1);
-				map.put(x+","+(y+1), 0);
+				locationAlreadySearch.put(x+","+(y+1), 0);
 			}
 			else
 				dist4 = 1000;
 			
 			if(dist1==0||dist2==0||dist3==0||dist4==0){
-				return queue;
+				return queueOfPath;
 			}
 			else if(dist1<=dist2&&dist1<=dist3&&dist1<=dist4){
 				x=x-1;
-				queue.add(new Point(x, y));
+				queueOfPath.add(new Point(x, y));
 			}
 			else if(dist2<=dist1&&dist2<=dist3&&dist2<=dist4){
 				x=x+1;
-				queue.add(new Point(x, y));
+				queueOfPath.add(new Point(x, y));
 			}
 			else if(dist3<=dist1&&dist3<=dist2&&dist3<=dist4){
 				y=y-1;
-				queue.add(new Point(x, y));
+				queueOfPath.add(new Point(x, y));
 			}
 			else if(dist4<=dist1&&dist4<=dist2&&dist4<=dist3){
 				y=y+1;
-				queue.add(new Point(x, y));
+				queueOfPath.add(new Point(x, y));
 			}
 		}
-		return queue;
+		return queueOfPath;
 	}
 	
 	public int shortestDistance(int x,int y){
@@ -255,34 +256,34 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 	
 	private void findChest() {
 		char[][] location = game.getPlayingmap().getLocation();
-		Fighter fighter = (Fighter)game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor].getContent();
+		Fighter fighter = (Fighter)game.getPlayingmap().getCellsinthemap()[xOfCharacter][yOfCharacter].getContent();
 
-		if(xofcharactor-1>=0&&location[xofcharactor-1][yofcharactor]=='c'){
-			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor-1][yofcharactor].getContent();
+		if(xOfCharacter-1>=0&&location[xOfCharacter-1][yOfCharacter]=='c'){
+			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xOfCharacter-1][yOfCharacter].getContent();
 			fighter.openChest(chest);
 			if(chest.isEmpty()){
-				game.getPlayingmap().changeLocation(xofcharactor-1, yofcharactor, 'e');
+				game.getPlayingmap().changeLocation(xOfCharacter-1, yOfCharacter, 'e');
 			}
 		}
-		else if(xofcharactor+1<game.getPlayingmap().getRow()&&location[xofcharactor+1][yofcharactor]=='c'){
-			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor+1][yofcharactor].getContent();
+		else if(xOfCharacter+1<game.getPlayingmap().getRow()&&location[xOfCharacter+1][yOfCharacter]=='c'){
+			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xOfCharacter+1][yOfCharacter].getContent();
 			fighter.openChest(chest);
 			if(chest.isEmpty()){
-				game.getPlayingmap().changeLocation(xofcharactor+1, yofcharactor, 'e');
+				game.getPlayingmap().changeLocation(xOfCharacter+1, yOfCharacter, 'e');
 			}
 		}
-		else if(yofcharactor-1>=0&&location[xofcharactor][yofcharactor-1]=='c'){
-			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor-1].getContent();
+		else if(yOfCharacter-1>=0&&location[xOfCharacter][yOfCharacter-1]=='c'){
+			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xOfCharacter][yOfCharacter-1].getContent();
 			fighter.openChest(chest);
 			if(chest.isEmpty()){
-				game.getPlayingmap().changeLocation(xofcharactor, yofcharactor-1, 'e');
+				game.getPlayingmap().changeLocation(xOfCharacter, yOfCharacter-1, 'e');
 			}
 		}
-		else if(yofcharactor+1<game.getPlayingmap().getColumn()&&location[xofcharactor][yofcharactor+1]=='c'){
-			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor+1].getContent();
+		else if(yOfCharacter+1<game.getPlayingmap().getColumn()&&location[xOfCharacter][yOfCharacter+1]=='c'){
+			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xOfCharacter][yOfCharacter+1].getContent();
 			fighter.openChest(chest);
 			if(chest.isEmpty()){
-				game.getPlayingmap().changeLocation(xofcharactor, yofcharactor+1, 'e');
+				game.getPlayingmap().changeLocation(xOfCharacter, yOfCharacter+1, 'e');
 			}
 		}
 	}

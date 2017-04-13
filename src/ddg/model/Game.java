@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import ddg.Config;
 import ddg.IOwner;
 import ddg.model.entity.BaseCampaign;
+import ddg.strategy.ComputerStrategy;
 import ddg.strategy.HumanStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
 
@@ -127,6 +128,9 @@ public class Game implements IOwner, java.io.Serializable{
 
 	public void nextMap() {
 		this.campaign.getMaps().remove(0);
+		if(fighter.getBehaviorStrategy() instanceof ComputerStrategy){
+			fighter.setStrategy(new ComputerStrategy(this));
+		}
 		initData();
 	}
 	

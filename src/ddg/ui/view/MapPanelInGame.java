@@ -31,11 +31,10 @@ import ddg.model.entity.BaseCampaign;
 import ddg.model.entity.Chest;
 import ddg.model.item.Item;
 import ddg.model.item.MagicWeaponItem;
-import ddg.model.item.WeaponItem;
 import ddg.strategy.AgressiveStrategy;
+import ddg.strategy.ComputerStrategy;
 import ddg.strategy.FriendlyStrategy;
 import ddg.strategy.HumanStrategy;
-import ddg.strategy.IStrategy.TurnCallback;
 import ddg.ui.TurnDriven;
 import ddg.ui.view.component.DButton;
 import ddg.ui.view.dialog.BackpackTrade;
@@ -141,39 +140,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
             	}
             }
 		}
-		
-		
-		//should add the other fighter
-		
-//		boolean friendly = playingMap.getCellsinthemap()[yIndex][xIndex].getIsfriendly();
-//    	if(friendly) {
-//    	} else {
-//    		selectedCharacter.setStrategy(new AgressiveStrategy() {
-//				private static final long serialVersionUID = 1L;
-//
-//				@Override
-//				protected void searchPlayer(TurnCallback cb) {
-//					// TODO Auto-generated method stub
-//					System.out.println(selectedCharacter.getName() + " may searchPlayer, when finished, callback.");
-//					cb.finish();
-//				}
-//    			
-//    		});
-//    		turnDriven.addFighter(selectedCharacter);
-//    	}
-		
 		turnDriven.startTurn();
 	}
-	
-//	/**
-//	 * read data from file, and initialize all data on the Panel
-//	 */
-//	private void initdata() {
-//		
-//			
-//			
-//		
-//	}
 	
 	/**
 	 * initial data of playing map and do adaptedLevel() function
@@ -379,6 +347,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 					System.out.println("mapPanel repainted");
 				}
 				if(e.getButton()==MouseEvent.BUTTON3){
+					if(game.getFighter().getBehaviorStrategy() instanceof ComputerStrategy){
+						return;
+					}
 					int x = e.getY()/50;
 					int y = e.getX()/50;
 			        int range = 1;
@@ -420,7 +391,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println(e.getKeyCode());
+		if(game.getFighter().getBehaviorStrategy() instanceof ComputerStrategy){
+			return;
+		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			if(xIndex == game.getYofplayer() && yIndex == game.getXofplayer() && isCharacter == true){
 				moveOnMap(game.getXofplayer()-1,game.getYofplayer());
@@ -613,7 +586,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	}
 
 	public void gameOver() {
-		JOptionPane.showMessageDialog(null, "You are dead, Game Over !!", "Game Over!!", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(null, "You are dead, Game Over !!", "Game Over!!", JOptionPane.ERROR_MESSAGE);
 		JDialog mapSizeFrame = (JDialog) SwingUtilities.getWindowAncestor(this);
 		mapSizeFrame.dispose();
 	}
