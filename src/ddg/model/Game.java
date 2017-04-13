@@ -35,7 +35,7 @@ public class Game implements IOwner, java.io.Serializable{
 		this.fighter = model.getFighter().clone();
 		this.campaign = model.getCampaign();
 		this.fighter.setOwner(this.fighter);
- 		if(playingmap==null){
+ 		if(playingMap==null){
  			initData();
  		}
  		else
