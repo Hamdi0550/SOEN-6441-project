@@ -26,6 +26,7 @@ import javax.swing.SwingUtilities;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.Game;
+import ddg.model.GameModel;
 import ddg.model.Map;
 import ddg.model.entity.BaseCampaign;
 import ddg.model.entity.Chest;
@@ -76,8 +77,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	 * @param fighter the play character who is chosen by user
 	 * @param campaign the Campaign which user would like to play
 	 */
-	public MapPanelInGame(Fighter fighter, BaseCampaign campaign){
-		this.game = new Game(fighter,campaign);
+	public MapPanelInGame(GameModel model){
+		this.game = new Game(model);
 		turnDriven = new TurnDriven();
 		setLayout(new BorderLayout());
 		setFocusable(true);
@@ -120,6 +121,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
             }
 		}
 		turnDriven.startTurn();
+		characterThisTurn = turnDriven.next();
 	}
 	
 	/**

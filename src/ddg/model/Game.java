@@ -20,15 +20,19 @@ public class Game implements IOwner, java.io.Serializable{
 	private Map playingmap;
 	private Fighter fighter;
 	
-	public Game(Fighter player, BaseCampaign campaign){
-		this.fighter = player.clone();
-		this.campaign = campaign;
+	public Game(GameModel model){
+		this.fighter = model.getFighter().clone();
+		this.campaign = model.getCampaign();
 		if(playingmap==null){
 			initData();
 		}
 		else
 			initMapData();
-		this.fighter.setStrategy(new HumanStrategy());
+		if(model.isComputer()) {
+			this.fighter.setStrategy(new ComputerStrategy(this));
+		} else {
+			this.fighter.setStrategy(new HumanStrategy());
+		}
 	}
 	
 	private void initData(){
