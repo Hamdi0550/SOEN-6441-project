@@ -110,12 +110,18 @@ public class ComputerStrategy implements IStrategy {
 		else if(NPCs.size()!=0){
 			queueOfPath = searchWayToAim(new Point(NPCs.get(0).xOfFighter,NPCs.get(0).yOfFighter));
 		}
+		else if(Corpse.size()!=0){
+			queueOfPath = searchWayToAim(new Point(Corpse.get(0).xOfFighter,Corpse.get(0).yOfFighter));
+			if(queueOfPath!=null && queueOfPath.size()!=0)
+				Corpse.remove(0);
+		}
 		for (Point point : queueOfPath) {
 			System.out.print(point.x+","+point.y+"\t");
 		}
 		int attacktimes = 1;
 		int walktimes = 3;
 		findChest();
+		lootCorpse();
 		findExit();
 		if(attacktimes>0){
 			if(findEnemy()){
@@ -136,12 +142,25 @@ public class ComputerStrategy implements IStrategy {
 				}
 			}
 			findChest();
+			lootCorpse();
 			findExit();
 		}
 		if(game.getPlayingmap()!=null)
 			game.getPlayingmap().notifyChange();
 	}
 	
+	/**
+	 * interact with dead NPC, loot the Corpse
+	 */
+	private void lootCorpse() {
+		int x = game.getXofplayer();
+		int y = game.getYofplayer();
+		if(game.getPlayingmap().getLocation()[x][y]=='d'){
+			Fighter corpse = (Fighter) game.getPlayingmap().getCellsinthemap()[x][y].getContent();
+			game.getFighter().lootCorpseItems(corpse);
+		}
+	}
+
 	/**
 	 * check if it has a out door around character
 	 */
@@ -203,8 +222,9 @@ public class ComputerStrategy implements IStrategy {
 			else
 				distance4 = 1000;
 			
-			if(distance1==0||distance2==0||distance3==0||distance4==0){
-				return queueOfPath;
+			if((distance1==0||distance2==0||distance3==0||distance4==0)
+					&&game.getPlayingmap().getLocation()[aim.x][aim.y]!='d'){
+					return queueOfPath;
 			}
 			else if(distance1<=distance2&&distance1<=distance3&&distance1<=distance4){
 				x=x-1;
