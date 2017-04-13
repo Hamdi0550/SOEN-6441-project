@@ -21,30 +21,40 @@ import ddg.utils.Dice;
 public class TurnDriven {
 
 	private ArrayList<Fighter> fighters = new ArrayList<Fighter>();
-	ArrayList<Integer> maporderrecode;
-	ArrayList<Integer> orderarr;
+	ArrayList<Integer> mapOrderRecode;
+	ArrayList<Integer> orderArr;
 //	private boolean stop = false;
 	public TurnDriven() {
 		
 	}
 
+	/**
+	 * @return fighters array list which recode all fighter in map
+	 */
 	public ArrayList<Fighter> getFighters() {
 		return fighters;
 	}
 	
+	/**
+	 * add fighter into array list 
+	 * @param fighter	fighter would like to join in
+	 */
 	public void addFighter(Fighter fighter) {
 		if(!this.fighters.contains(fighter)) {
 			this.fighters.add(fighter);
 		}
 	}
 	
+	/**
+	 * begin Turn, calculate running order
+	 */
 	public void startTurn() {
-		this.maporderrecode = new ArrayList<>(this.fighters.size()); 
+		this.mapOrderRecode = new ArrayList<>(this.fighters.size()); 
 		System.out.println("TurnDriven start");
 		for(int i=0;i<this.fighters.size();i++){
-			maporderrecode.add((Integer)(Dice.d20Roll()+fighters.get(i).getDexModifier()));
+			mapOrderRecode.add((Integer)(Dice.d20Roll()+fighters.get(i).getDexModifier()));
 		}
-		this.orderarr = (ArrayList<Integer>) maporderrecode.clone();
+		this.orderArr = (ArrayList<Integer>) mapOrderRecode.clone();
 //		if(!stop){
 //			next();
 //		}
@@ -60,6 +70,10 @@ public class TurnDriven {
 //		}
 	}
 
+	/**
+	 * find which fighter is next and run turn() function
+	 * @return	fighter who is the next
+	 */
 	public Fighter next() {
 		
 //		Fighter f = null;
@@ -83,26 +97,26 @@ public class TurnDriven {
 		
 		int maxlocation = 0;
 		for(int i=1;i<this.fighters.size();i++){
-			if(orderarr.get(i)>orderarr.get(maxlocation)){
+			if(orderArr.get(i)>orderArr.get(maxlocation)){
 				maxlocation = i;
 			}
 		}
 		
-		if(orderarr.get(maxlocation)==-1) {
-			this.orderarr = (ArrayList<Integer>) maporderrecode.clone();
+		if(orderArr.get(maxlocation)==-1) {
+			this.orderArr = (ArrayList<Integer>) mapOrderRecode.clone();
 
 			MapPanelInGame.printLog("\n");
 			return next();
 		}
 		
 		if(fighters.get(maxlocation).isAlive()) {
-			orderarr.set(maxlocation, -1);
+			orderArr.set(maxlocation, -1);
 			fighters.get(maxlocation).turn();
 			
 		}
 		else{
 			fighters.remove(maxlocation);
-			orderarr.remove(maxlocation);
+			orderArr.remove(maxlocation);
 			MapPanelInGame.printLog("\n");
 			return next();
 		}

@@ -26,7 +26,7 @@ import ddg.utils.Utils;
 public class MapPanelInGameTest {
 	Fighter player;
 	BaseCampaign campaign;
-	MapPanelInGame mappanelingame;
+	MapPanelInGame mapPanelInGame;
 	
 	
 	
@@ -46,7 +46,7 @@ public class MapPanelInGameTest {
 		CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);
 		campaign = campaignModel.getItemByIndex(0);
 
-		mappanelingame = new MapPanelInGame(new GameModel(player, campaign));
+		mapPanelInGame = new MapPanelInGame(new GameModel(player, campaign));
 	}
 	
 	/**
@@ -54,26 +54,26 @@ public class MapPanelInGameTest {
 	 */
 	@Test
 	public void testMoveOnMap(){
-		Point point = mappanelingame.getPlayerLocation();
-		mappanelingame.characterThisTurn = mappanelingame.getGame().getFighter();
-		mappanelingame.getGame().getFighter().turn();
-		mappanelingame.keyPressed(new KeyEvent(mappanelingame, 0, 0, 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED));
+		Point point = mapPanelInGame.getPlayerLocation();
+		mapPanelInGame.characterThisTurn = mapPanelInGame.getGame().getFighter();
+		mapPanelInGame.getGame().getFighter().turn();
+		mapPanelInGame.keyPressed(new KeyEvent(mapPanelInGame, 0, 0, 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED));
 		point.y++;
 		System.out.println(point);
-		assertEquals(point, mappanelingame.getPlayerLocation());
+		assertEquals(point, mapPanelInGame.getPlayerLocation());
 		
-		mappanelingame.keyPressed(new KeyEvent(mappanelingame, 0, 0, 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED));
+		mapPanelInGame.keyPressed(new KeyEvent(mapPanelInGame, 0, 0, 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED));
 		point.y--;
-		assertEquals(point, mappanelingame.getPlayerLocation());
+		assertEquals(point, mapPanelInGame.getPlayerLocation());
 		
-		mappanelingame.keyPressed(new KeyEvent(mappanelingame, 0, 0, 0, KeyEvent.VK_UP, KeyEvent.CHAR_UNDEFINED));
+		mapPanelInGame.keyPressed(new KeyEvent(mapPanelInGame, 0, 0, 0, KeyEvent.VK_UP, KeyEvent.CHAR_UNDEFINED));
 		point.x--;
-		assertEquals(point, mappanelingame.getPlayerLocation());
+		assertEquals(point, mapPanelInGame.getPlayerLocation());
 		
-		mappanelingame.getGame().getFighter().turn();
-		mappanelingame.keyPressed(new KeyEvent(mappanelingame, 0, 0, 0, KeyEvent.VK_DOWN, KeyEvent.CHAR_UNDEFINED));
+		mapPanelInGame.getGame().getFighter().turn();
+		mapPanelInGame.keyPressed(new KeyEvent(mapPanelInGame, 0, 0, 0, KeyEvent.VK_DOWN, KeyEvent.CHAR_UNDEFINED));
 		point.x++;
-		assertEquals(point, mappanelingame.getPlayerLocation());
+		assertEquals(point, mapPanelInGame.getPlayerLocation());
 		
 	}
 	

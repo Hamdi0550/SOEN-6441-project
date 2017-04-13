@@ -15,6 +15,10 @@ public class ValidationTool {
 		private Map map;
 		private ArrayList<Integer>[] vector;
 		
+		/**
+		 * Constructor
+		 * @param map
+		 */
 		public Graph(Map map) {
 			this.map = map;
 			vector = new ArrayList[map.getRow()*map.getColumn()];
@@ -24,6 +28,9 @@ public class ValidationTool {
 			buildGraph();
 		}
 
+		/**
+		 * build graph according the map
+		 */
 		private void buildGraph() {
 			for(int i=0;i<map.getRow();i++){
 				for(int j=0;j<map.getColumn();j++){
@@ -107,18 +114,43 @@ public class ValidationTool {
 			}
 		}
 		
+		/**
+		 * 
+		 * get index using this method 
+		 * @param i the x coordinate  it will times the column of map
+		 * @param j the y coordinate 
+		 * @return	which number is this location
+		 */
 		private int getIndex(int i, int j) {
 			return i*map.getColumn()+j;
 		}
 		
+		/**
+		 * get map content in char type according location
+		 * @param i x coordinate of location
+		 * @param j y coordinate of location
+		 * @return content in char type
+		 */
 		private char getMapChar(int i, int j) {
 			return this.map.getLocation()[i][j];
 		}
 		
+		/**
+		 * add edge into vector
+		 * @param v	the vector store index
+		 * @param w	x * y where wall is
+		 */
 		private void addEdge(int v, int w) {
 			vector[v].add(w);
 		}
 		
+		/**
+		 * search from a point in vector to end point
+		 * @param from	a index where the search start
+		 * @param to a index where the search end
+		 * @param visit	
+		 * @return
+		 */
 		private boolean search(int from, int to, boolean[] visit) {
 			visit[from] = true;
 			for(int i=0;i<vector[from].size();i++) {
@@ -138,6 +170,12 @@ public class ValidationTool {
 			return false;
 		}
 		
+		/**
+		 * check if it is connected from start poing to end point
+		 * @param from	staring point
+		 * @param to	ending point
+		 * @return
+		 */
 		public boolean isConnect(int from, int to) {
 			boolean[] visit = new boolean[map.getRow()*map.getColumn()];
 			for(int i=0;i<map.getRow()*map.getColumn();i++){
@@ -149,7 +187,7 @@ public class ValidationTool {
 		
 	}
 	private Map map;
-	private boolean hasvalidpath;
+	private boolean hasValidPath;
 	private java.util.Map<String, String> usedcell = new HashMap<>();
 	char maplocation[][];
 	/**
@@ -158,7 +196,7 @@ public class ValidationTool {
 	public ValidationTool(Map map) {
 		// TODO Auto-generated constructor stub
 		this.map = map;
-		hasvalidpath = false;
+		hasValidPath = false;
 		maplocation = map.getLocation();
 	}
 	
@@ -174,6 +212,12 @@ public class ValidationTool {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param from starting index
+	 * @param to 	ending index
+	 * @return	true if there is valid path, alse return false
+	 */
 	public boolean isValidPath(int from, int to) {
 		if(from < 0 || to < 0)
 			return false;
@@ -181,10 +225,15 @@ public class ValidationTool {
 		return g.isConnect(from, to);
 	}
 
+	/**
+	 * manage to find the valid path
+	 * @param i	the x coordinate would like to check
+	 * @param j	the y coordinate would like to check
+	 */
 	public void validPath(int i, int j) {
-		hasvalidpath = false;
+		hasValidPath = false;
 		if(maplocation[i][j] == 'o'){
-			hasvalidpath=true;
+			hasValidPath=true;
 			return;
 		} else {
 			int enter = -1;
@@ -206,16 +255,16 @@ public class ValidationTool {
 			}
 			if(map.getLocation()[i][j] == 'i') {
             	for(int m=0;m<to.size();m++) {
-            		hasvalidpath = isValidPath(enter, to.get(m));
-            		if(hasvalidpath)
+            		hasValidPath = isValidPath(enter, to.get(m));
+            		if(hasValidPath)
             			return;
             	}
             } else if(map.getLocation()[i][j] == 'c'){
 				 String name = ((Chest) map.getCellsinthemap()[i][j].getContent()).getItem().getName();
 				 if(name.equals("key")){
 					for(int m=0;m<to.size();m++) {
-						hasvalidpath = isValidPath(enter, key.get(m));
-						if(hasvalidpath)
+						hasValidPath = isValidPath(enter, key.get(m));
+						if(hasValidPath)
 	            			return;
 					}
 				 }
@@ -270,7 +319,7 @@ public class ValidationTool {
 	 * @return true when there is a indoor(Entry door) in the location of map 
 	 */
 	public boolean hasEntryDoor() {
-		hasvalidpath = false;
+		hasValidPath = false;
 		int indooraccount = 0;
 		for(int i=0;i<map.getRow();i++){
 			for(int j=0;j<map.getColumn();j++){
@@ -284,7 +333,7 @@ public class ValidationTool {
 		if(indooraccount!=1){
 			return false;
 		}
-		else if(hasvalidpath){
+		else if(hasValidPath){
 			return true;
 		}
 		return false;
@@ -294,7 +343,7 @@ public class ValidationTool {
 	 * @return true when there is key on the map, otherwise return false.
 	 */
 	public boolean hasKey() {
-		hasvalidpath = false;
+		hasValidPath = false;
 		
 		for(int i=0;i<map.getRow();i++){
 			for(int j=0;j<map.getColumn();j++){
@@ -303,7 +352,7 @@ public class ValidationTool {
 					 if(name.equals("key")){
 						usedcell.clear();
 						hasValidPath(i,j);
-						if(hasvalidpath)
+						if(hasValidPath)
 							return true;
 					 }
 				}
@@ -331,6 +380,6 @@ public class ValidationTool {
 	 * @return true if the map has valid
 	 */
 	public boolean isHasvalidpath() {
-		return hasvalidpath;
+		return hasValidPath;
 	}
 }
