@@ -213,7 +213,7 @@ public class Utils {
 						hm.put(fighter.getName(), fighter);
 						fm.setFighters(hm);
 
-						String gSave = Utils.toJson(fm);
+//						String gSave = Utils.toJson(fm);
 //						Utils.save2File(Config.CHARACTER_FILE, gSave);		
 						Utils.saveObject(Config.CHARACTER_FILE, fm);
 					}

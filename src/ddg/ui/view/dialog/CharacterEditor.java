@@ -708,7 +708,7 @@ public class CharacterEditor extends JDialog implements ActionListener, Observer
 		public EmbeddedPanel() {
 			super();
 			setOpaque(true);
-			img = Toolkit.getDefaultToolkit().getImage("example.jpg");
+			img = Toolkit.getDefaultToolkit().getImage("res/example.jpg");
 		}
 
 		/**

@@ -12,6 +12,7 @@ import ddg.Config;
 import ddg.model.CampaignEditorModel;
 import ddg.model.Fighter;
 import ddg.model.FighterModel;
+import ddg.model.GameModel;
 import ddg.model.entity.BaseCampaign;
 import ddg.ui.view.MapPanelInGame;
 import ddg.utils.Utils;
@@ -45,7 +46,7 @@ public class MapPanelInGameTest {
 		CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);
 		campaign = campaignModel.getItemByIndex(0);
 
-		mappanelingame = new MapPanelInGame(player, campaign);
+		mappanelingame = new MapPanelInGame(new GameModel(player, campaign));
 	}
 	
 	/**

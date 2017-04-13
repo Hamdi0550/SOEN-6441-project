@@ -25,7 +25,7 @@ public class GamePanel extends JPanel {
 	 */
 	public GamePanel(GameModel model, ActionListener a) {
 //		setPreferredSize(new Dimension(1000, 800));
-		mapPanel = new MapPanelInGame(model.getFighter(), model.getCampaign());
+		mapPanel = new MapPanelInGame(model);
 		mapPanel.addKeyListener(mapPanel);
 		add(mapPanel);
 	}
