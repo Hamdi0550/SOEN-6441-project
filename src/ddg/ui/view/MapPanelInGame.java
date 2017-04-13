@@ -137,7 +137,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		    	characterPanel.setVisible(false);
 		    	inventoryPanel.setVisible(false);
 		    }
-
 		    log.setAutoscrolls(true);
 		    log.setLineWrap(true);
 		    log.setWrapStyleWord(true);
