@@ -1116,7 +1116,8 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		}
 		
 		if(owner.getLevel() != level){
-			this.hitPoints = this.hitPoints + d10RollAndTimes(owner.getLevel() - this.level);
+//			this.hitPoints = this.hitPoints + d10RollAndTimes(owner.getLevel() - this.level<0?owner.getLevel():owner.getLevel() - this.level);
+			this.hitPoints = (Dice.d10Roll()+getModifier(getTotalConstitution()))*owner.getLevel();//d10RollAndTimes(owner.getLevel() - this.level<0?owner.getLevel():owner.getLevel() - this.level);
 			this.level = owner.getLevel();
 		}
 	}
