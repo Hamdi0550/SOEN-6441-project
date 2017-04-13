@@ -1073,10 +1073,18 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 //		
 //	}
 	
+	/**
+	 * Get the owner of the character
+	 * @return owner
+	 */
 	public IOwner getOwner() {
 		return this.owner;
 	}
 	
+	/**
+	 * Set the owner of the character
+	 * @param owner
+	 */
 	public void setOwner(IOwner owner) {
 		this.owner = owner;
 		for(Item item : this.wornItems){
@@ -1106,7 +1114,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	private int d10RollAndTimes(int times){
 		int sum = 0;
 		while(times>0){
-			sum += Dice.d10Roll() + getModifier(getConstitution());
+			sum += Dice.d10Roll() + getModifier(getTotalConstitution());
 			times--;
 		}
 		return sum;
