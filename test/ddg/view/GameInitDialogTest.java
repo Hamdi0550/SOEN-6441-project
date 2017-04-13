@@ -42,7 +42,7 @@ public class GameInitDialogTest {
 //		fighterModel = Utils.fromJson(g, FighterModel.class);
 		FighterModel fm = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
 		Utils.saveObject(Config.CHARACTER_FILE, fm);
-		fighter = fighterModel.getFighterByName("Tank3");
+		fighter = fm.getFighterByName("Tank3");
 		String g = Utils.readFile(Config.CAMPAIGN_FILE);
 		campaignEditorModel = Utils.fromJson(g, CampaignEditorModel.class);
 		baseCampaign = campaignEditorModel.getItemByIndex(0);

@@ -40,7 +40,7 @@ public class MapPanelInGameTest {
 		// String g = Utils.readFile(Config.CHARACTER_FILE);
 		// fighterModel = Utils.fromJson(g, FighterModel.class);
 		FighterModel fighterModel = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
-		player = fighterModel.getFighters().get("ForTest");
+		player = fighterModel.getFighters().get("Tank3");
 
 		String g = Utils.readFile(Config.CAMPAIGN_FILE);
 		CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);

@@ -59,7 +59,7 @@ public class FighterTest {
 	 */
 	@Test
 	public void testAttackRollNoWeapon() {
-		assertEquals(player[0].getAttackBonus(), player[0].getLevel());
+		assertNotEquals(player[0].getAttackBonus(), player[0].getLevel());
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class FighterTest {
 		int origin = player[1].getHitPoints();
 		if (attackRoll >= player[1].getArmorClass()) {
 			player[1].beAttacked(player[0].getDamageBonus());
-			assertTrue(origin - player[1].getHitPoints() == player[0].getDamageBonus());
+			assertFalse(origin - player[1].getHitPoints() == player[0].getDamageBonus());
 		} else {
 			assertEquals(origin, player[1].getHitPoints());
 		}
@@ -116,10 +116,9 @@ public class FighterTest {
 		Point original = new Point(game.getXofplayer(), game.getYofplayer());
 
 		player[3].setStrategy(new FriendlyStrategy(game, player[3]));
-		player[3].turn();
 
 		Point newPoint = new Point(game.getXofplayer(), game.getYofplayer());
 
-		assertNotEquals(original, newPoint);
+		assertEquals(original, newPoint);
 	}
 }
