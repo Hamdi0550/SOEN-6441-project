@@ -242,4 +242,9 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 	public int getLevel() {
 		return this.owner==null?0:this.owner.getLevel();
 	}
+	
+	public void notifyChange(){
+		setChanged();
+		notifyObservers(this);
+	}
 }

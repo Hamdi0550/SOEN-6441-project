@@ -369,7 +369,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			        }
 			        
 			        if(game.getPlayingmap().getLocation()[x][y]=='p'&&(!playingMap.getCellsinthemap()[x][y].getIsfriendly())&&
-			        		Math.abs(game.getXofplayer()-x)<=range&&Math.abs(game.getYofplayer()-y)<=range){
+			        		Math.abs(game.getXofplayer()-x)+Math.abs(game.getYofplayer()-y)<=range){
 			        	if(((HumanStrategy)game.getFighter().getBehaviorStrategy()).attack()){
 			        		attackNPC(x,y);
 			        	}
