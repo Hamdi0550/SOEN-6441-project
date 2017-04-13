@@ -23,6 +23,7 @@ public class Game implements IOwner, java.io.Serializable{
 	public Game(GameModel model, TurnCallback cb){
 		this.fighter = model.getFighter().clone();
 		this.campaign = model.getCampaign();
+		this.fighter.setOwner(this.fighter);
  		if(playingmap==null){
  			initData();
  		}
