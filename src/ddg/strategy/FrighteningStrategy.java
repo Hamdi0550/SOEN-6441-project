@@ -14,8 +14,8 @@ public abstract class FrighteningStrategy extends AgressiveStrategy implements I
 
 	private static final long serialVersionUID = -888475640284563800L;
 
-	public FrighteningStrategy(Game game, int x, int y) {
-		super(game,new Fighter());
+	public FrighteningStrategy(Game game, Fighter npc) {
+		super(game, npc);
 	}
 
 	@Override
