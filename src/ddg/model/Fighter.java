@@ -481,6 +481,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 */
 	public int getArmorClass(){
 		armorClass = getDexModifier() + 10;
+		MapPanelInGame.printLog("Dexterity modifier: " + getDexModifier() + " + 10 ");
 		return armorClass;
 	}
 	
