@@ -100,41 +100,20 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	protected void initStrategy() {
 		Map playingMap = game.getPlayingmap();
 		
-//		this.game.getFighter().setStrategy(new HumanStrategy() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			protected void moveCells(TurnCallback cb) {
-//				mCallBack = cb;
-//				System.out.println(game.getFighter().getName() + " may moveCells, when finished, click again.");
-//			}
-//
-//			@Override
-//			protected void attack(TurnCallback cb) {
-//				mCallBack = cb;
-//				System.out.println(game.getFighter().getName() + " may attack, when finished, click again.");
-//			}
-//
-//			@Override
-//			protected void interaction(TurnCallback cb) {
-//				mCallBack = cb;
-//				System.out.println(game.getFighter().getName() + " may interaction, when finished, click again.");
-//			}
-//			
-//		});
-		
 		turnDriven.addFighter(this.game.getFighter());
 		
 		for(int i=0;i< playingMap.getRow();i++){
             for(int j=0;j< playingMap.getColumn();j++){
             	if(playingMap.getLocation()[i][j]=='p'){
             		Fighter fighter = (Fighter)playingMap.getCellsinthemap()[i][j].getContent();
+            		fighter.setXOfFighter(i);
+        			fighter.setYOfFighter(j);
             		if(playingMap.getCellsinthemap()[i][j].getIsfriendly()){
-            			fighter.setStrategy(new FriendlyStrategy(game,i,j));
+            			fighter.setStrategy(new FriendlyStrategy(game,fighter));
             			turnDriven.addFighter(fighter);
             		}
             		else{
-            			fighter.setStrategy(new AgressiveStrategy(game,i,j));
+            			fighter.setStrategy(new AgressiveStrategy(game,fighter));
             			turnDriven.addFighter(fighter);
             		}
             	}

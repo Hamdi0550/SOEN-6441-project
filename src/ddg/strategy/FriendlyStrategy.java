@@ -32,35 +32,34 @@ public class FriendlyStrategy implements IStrategy {
 	private static final long serialVersionUID = 1L;
 	
 	private Game game;
-	private int xofcharactor = -1;
-	private int yofcharactor = -1;
+	private Fighter character;
 	/**
 	 * Constructors
 	 * 
 	 */
 	public FriendlyStrategy(Game game, int x, int y) {
 		this.game = game;
-		this.xofcharactor = x;
-		this.yofcharactor = y;
+		
 	}
 
 	public FriendlyStrategy(Game game, Fighter npc) {
 		this.game = game;
-		Map playingMap = game.getPlayingmap();
-		if(this.xofcharactor == -1 || this.yofcharactor == -1) {
-			for(int i=0;i< playingMap.getRow();i++){
-	            for(int j=0;j< playingMap.getColumn();j++){
-	            	if(playingMap.getLocation()[i][j]=='p'){
-	            		Fighter fighter = (Fighter)playingMap.getCellsinthemap()[i][j].getContent();
-	            		if(fighter.equals(npc)) {
-	            			this.xofcharactor = i;
-	            			this.yofcharactor = j;
-	            			return;
-	            		}
-	            	}
-	            }
-			}
-		}
+		this.character = npc;
+//		Map playingMap = game.getPlayingmap();
+//		if(this.xofcharactor == -1 || this.yofcharactor == -1) {
+//			for(int i=0;i< playingMap.getRow();i++){
+//	            for(int j=0;j< playingMap.getColumn();j++){
+//	            	if(playingMap.getLocation()[i][j]=='p'){
+//	            		Fighter fighter = (Fighter)playingMap.getCellsinthemap()[i][j].getContent();
+//	            		if(fighter.equals(npc)) {
+//	            			this.xofcharactor = i;
+//	            			this.yofcharactor = j;
+//	            			return;
+//	            		}
+//	            	}
+//	            }
+//			}
+//		}
 	}
 	
 	@Override
@@ -74,30 +73,30 @@ public class FriendlyStrategy implements IStrategy {
 			int num = ((int) (Math.random()*100)) % 4;
 			switch (num+1){
 				case 1 :
-					if(!(xofcharactor-1==game.getXofplayer()&&yofcharactor==game.getYofplayer())
-							&&game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor-1,yofcharactor)){
-						xofcharactor = xofcharactor-1;
+					if(!(character.xOfFighter-1==game.getXofplayer()&&character.yOfFighter==game.getYofplayer())
+							&&game.getPlayingmap().npcMove(character.xOfFighter,character.yOfFighter,character.xOfFighter-1,character.yOfFighter)){
+						character.xOfFighter = character.xOfFighter-1;
 						i--;
 					}
 					break;
 				case 2 :
-					if(!(xofcharactor==game.getXofplayer()&&yofcharactor-1==game.getYofplayer())&&
-							game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor,yofcharactor-1)){
-						yofcharactor = yofcharactor-1;
+					if(!(character.xOfFighter==game.getXofplayer()&&character.yOfFighter-1==game.getYofplayer())&&
+							game.getPlayingmap().npcMove(character.xOfFighter,character.yOfFighter,character.xOfFighter,character.yOfFighter-1)){
+						character.yOfFighter = character.yOfFighter-1;
 						i--;
 					}
 					break;
 				case 3 :
-					if(!(xofcharactor+1==game.getXofplayer()&&yofcharactor==game.getYofplayer())&&
-							game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor+1,yofcharactor)){
-						xofcharactor = xofcharactor+1;
+					if(!(character.xOfFighter+1==game.getXofplayer()&&character.yOfFighter==game.getYofplayer())&&
+							game.getPlayingmap().npcMove(character.xOfFighter,character.yOfFighter,character.xOfFighter+1,character.yOfFighter)){
+						character.xOfFighter = character.xOfFighter+1;
 						i--;
 					}
 					break;
 				case 4 :
-					if(!(xofcharactor==game.getXofplayer()&&yofcharactor+1==game.getYofplayer())&&
-							game.getPlayingmap().npcMove(xofcharactor,yofcharactor,xofcharactor,yofcharactor+1)){
-						yofcharactor = yofcharactor+1;
+					if(!(character.xOfFighter==game.getXofplayer()&&character.yOfFighter+1==game.getYofplayer())&&
+							game.getPlayingmap().npcMove(character.xOfFighter,character.yOfFighter,character.xOfFighter,character.yOfFighter+1)){
+						character.yOfFighter = character.yOfFighter+1;
 						i--;
 					}
 					break;
@@ -108,34 +107,34 @@ public class FriendlyStrategy implements IStrategy {
 
 	private void findChest() {
 		char[][] location = game.getPlayingmap().getLocation();
-		Fighter fighter = (Fighter)game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor].getContent();
+//		Fighter fighter = (Fighter)game.getPlayingmap().getCellsinthemap()[character.xOfFighter][character.yOfFighter].getContent();
 
-		if(xofcharactor-1>=0&&location[xofcharactor-1][yofcharactor]=='c'){
-			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor-1][yofcharactor].getContent();
-			fighter.openChest(chest);
+		if(character.xOfFighter-1>=0&&location[character.xOfFighter-1][character.yOfFighter]=='c'){
+			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[character.xOfFighter-1][character.yOfFighter].getContent();
+			character.openChest(chest);
 			if(chest.isEmpty()){
-				game.getPlayingmap().changeLocation(xofcharactor-1, yofcharactor, 'e');
+				game.getPlayingmap().changeLocation(character.xOfFighter-1, character.yOfFighter, 'e');
 			}
 		}
-		else if(xofcharactor+1<game.getPlayingmap().getRow()&&location[xofcharactor+1][yofcharactor]=='c'){
-			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor+1][yofcharactor].getContent();
-			fighter.openChest(chest);
+		else if(character.xOfFighter+1<game.getPlayingmap().getRow()&&location[character.xOfFighter+1][character.yOfFighter]=='c'){
+			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[character.xOfFighter+1][character.yOfFighter].getContent();
+			character.openChest(chest);
 			if(chest.isEmpty()){
-				game.getPlayingmap().changeLocation(xofcharactor+1, yofcharactor, 'e');
+				game.getPlayingmap().changeLocation(character.xOfFighter+1, character.yOfFighter, 'e');
 			}
 		}
-		else if(yofcharactor-1>=0&&location[xofcharactor][yofcharactor-1]=='c'){
-			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor-1].getContent();
-			fighter.openChest(chest);
+		else if(character.yOfFighter-1>=0&&location[character.xOfFighter][character.yOfFighter-1]=='c'){
+			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[character.xOfFighter][character.yOfFighter-1].getContent();
+			character.openChest(chest);
 			if(chest.isEmpty()){
-				game.getPlayingmap().changeLocation(xofcharactor, yofcharactor-1, 'e');
+				game.getPlayingmap().changeLocation(character.xOfFighter, character.yOfFighter-1, 'e');
 			}
 		}
-		else if(yofcharactor+1<game.getPlayingmap().getColumn()&&location[xofcharactor][yofcharactor+1]=='c'){
-			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[xofcharactor][yofcharactor+1].getContent();
-			fighter.openChest(chest);
+		else if(character.yOfFighter+1<game.getPlayingmap().getColumn()&&location[character.xOfFighter][character.yOfFighter+1]=='c'){
+			Chest chest = (Chest)game.getPlayingmap().getCellsinthemap()[character.xOfFighter][character.yOfFighter+1].getContent();
+			character.openChest(chest);
 			if(chest.isEmpty()){
-				game.getPlayingmap().changeLocation(xofcharactor, yofcharactor+1, 'e');
+				game.getPlayingmap().changeLocation(character.xOfFighter, character.yOfFighter+1, 'e');
 			}
 		}
 	}
