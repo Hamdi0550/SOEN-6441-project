@@ -459,7 +459,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 			}
 		} else {
 			attackBonus = getStrModifier();
-			MapPanelInGame.printLog(" attack bonus: level " + attackBonus);
+			MapPanelInGame.printLog(" attack bonus: Strength Modifier" + attackBonus);
 		}
 		return attackBonus;
 	}
