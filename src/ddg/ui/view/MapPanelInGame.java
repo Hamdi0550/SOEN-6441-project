@@ -51,6 +51,7 @@ import ddg.ui.view.dialog.DDGaming;
  */
 public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener ,TurnCallback{
 	private JScrollPane jsPanel;
+	private JScrollPane logJSPane;
 	private JPanel mapPanel;
 	private Game game;
 	private Fighter selectedCharacter;
@@ -287,14 +288,15 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		add(emptyPanel, BorderLayout.EAST);
 		
 		log.setDisabledTextColor(Color.BLACK);
-		log.setPreferredSize(new Dimension(240, 505));
+//		log.setPreferredSize(new Dimension(240, 505));
 		log.setBorder(Config.border);
 		log.setEnabled(false);
 		DButton savebutton = new DButton("SAVE", this);
 		if(!(game.getFighter().getBehaviorStrategy() instanceof HumanStrategy)){
 			savebutton.setEnabled(false);
 		}
-		logPanel.add(log, BorderLayout.CENTER);
+		logJSPane = new JScrollPane(log, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		logPanel.add(logJSPane, BorderLayout.CENTER);
 		logPanel.add(savebutton, BorderLayout.SOUTH);
 		
 //		emptyPanel.add(log);
