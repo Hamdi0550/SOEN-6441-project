@@ -456,7 +456,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 				System.out.println("this weanpon is ranged weapon attackBonus: "+attackBonus);
 			}
 		} else {
-			attackBonus = level;
+			attackBonus = getStrModifier();
 			MapPanelInGame.printLog(" attack bonus: level " + attackBonus);
 		}
 		return attackBonus;
