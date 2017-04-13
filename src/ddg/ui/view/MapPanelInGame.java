@@ -225,40 +225,35 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	            }
 
 	    		// TODO Auto-generated method stub
-            	int[][] range = getRange(xIndex, yIndex, game, 1);
-            	int arraySize = range.length / 2;
-            	
-            	for (int i = 0; i < range.length; i++){
-	            	for (int j = 0; j < range.length; j++){
-	            		System.out.print(range[i][j]);
+	            if(characterThisTurn!=null){
+	            	int weaponRange = 1;
+	            	if((MagicWeaponItem)characterThisTurn.getWearItemByName("Weapon")!=null){
+	            		weaponRange = ((MagicWeaponItem)characterThisTurn.getWearItemByName("Weapon")).getRange();
 	            	}
-	            	System.out.println();
-            	}
-	            
-            	System.out.println(xIndex + " xy " + yIndex);
-	            if (isCharacter == true){
-	            	for (int i = -arraySize; i <= arraySize; i++){
-		            	for (int j = -arraySize; j <= arraySize; j++){
-		            		if (range[i+arraySize][j+arraySize] == 0){
-					            g.setColor(Color.CYAN);
-					            g.drawRect((xIndex + j) * 50 + 1, (yIndex + i) * 50 + 1, 48, 48);
-					            g.drawRect((xIndex + j) * 50 + 2, (yIndex + i) * 50 + 2, 46, 46);		            			
-		            		} 
-		            	}	            		
-	            	}
-	            } else {
-	            	for (int i = -arraySize; i <= arraySize; i++){
-		            	for (int j = -arraySize; j <= arraySize; j++){
-		            		if (range[i+arraySize][j+arraySize] == 0){
-					            g.setColor(Color.ORANGE);
-					            g.drawRect((xIndex + j) * 50 + 1, (yIndex + i) * 50 + 1, 48, 48);
-					            g.drawRect((xIndex + j) * 50 + 2, (yIndex + i) * 50 + 2, 46, 46);		            			
-		            		} 
-		            	}	            		
+	            	int[][] attackRange = getRange(characterThisTurn.yOfFighter, characterThisTurn.xOfFighter, game, weaponRange);
+	            	int arraySize = attackRange.length / 2;
+	            	
+	            	for (int i = 0; i < attackRange.length; i++){
+	            		for (int j = 0; j < attackRange.length; j++){
+	            			System.out.print(attackRange[i][j]);
+	            		}
+	            		System.out.println();
 	            	}
 	            	
+	            	System.out.println(xIndex + " xy " + yIndex);
+	            	if (characterThisTurn!=null){
+	            		for (int i = -arraySize; i <= arraySize; i++){
+	            			for (int j = -arraySize; j <= arraySize; j++){
+	            				if (attackRange[i+arraySize][j+arraySize] == 0){
+	            					g.setColor(Color.CYAN);
+	            					g.drawRect((characterThisTurn.yOfFighter + j) * 50 + 1, (characterThisTurn.xOfFighter + i) * 50 + 1, 48, 48);
+	            					g.drawRect((characterThisTurn.yOfFighter + j) * 50 + 2, (characterThisTurn.xOfFighter + i) * 50 + 2, 46, 46);		            			
+	            				} 
+	            			}	            		
+	            		}
+	            	} 
+	            	
 	            }
-	            
 			}
 		};
 		mapPanel.setPreferredSize(new Dimension(50*playingMap.getColumn(), 50*playingMap.getRow()));
@@ -604,6 +599,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 						fighter.deleteObservers();
 						Fighter.saveFighter(fighter);
 						game.nextMap();
+						turnDriven = new TurnDriven();
+						characterThisTurn=null;
 						initMapData();
 						initStrategy();
 						removeAll();
@@ -646,10 +643,11 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			System.out.println("NEXT ONE@!!!");
 			if(turnDriven!=null) {
 				characterThisTurn = turnDriven.next();
-				xIndex = characterThisTurn.getXOfFighter();
-				yIndex = characterThisTurn.getYOfFighter();
+//				xIndex = characterThisTurn.getXOfFighter();
+//				yIndex = characterThisTurn.getYOfFighter();
 			}
 			requestFocus();
+			mapPanel.repaint();
 			if(!game.getFighter().isAlive()){
 				gameOver();
 			}
