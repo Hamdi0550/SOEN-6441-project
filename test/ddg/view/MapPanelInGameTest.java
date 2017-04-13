@@ -40,7 +40,7 @@ public class MapPanelInGameTest {
 		// String g = Utils.readFile(Config.CHARACTER_FILE);
 		// fighterModel = Utils.fromJson(g, FighterModel.class);
 		FighterModel fighterModel = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
-		player = fighterModel.getFighters().get("Tank3");
+		player = fighterModel.getFighters().get("ForTest");
 
 		String g = Utils.readFile(Config.CAMPAIGN_FILE);
 		CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);
@@ -55,8 +55,11 @@ public class MapPanelInGameTest {
 	@Test
 	public void testMoveOnMap(){
 		Point point = mappanelingame.getPlayerLocation();
+		mappanelingame.characterThisTurn = mappanelingame.getGame().getFighter();
+		mappanelingame.getGame().getFighter().turn();
 		mappanelingame.keyPressed(new KeyEvent(mappanelingame, 0, 0, 0, KeyEvent.VK_RIGHT, KeyEvent.CHAR_UNDEFINED));
 		point.y++;
+		System.out.println(point);
 		assertEquals(point, mappanelingame.getPlayerLocation());
 		
 		mappanelingame.keyPressed(new KeyEvent(mappanelingame, 0, 0, 0, KeyEvent.VK_LEFT, KeyEvent.CHAR_UNDEFINED));
@@ -67,6 +70,7 @@ public class MapPanelInGameTest {
 		point.x--;
 		assertEquals(point, mappanelingame.getPlayerLocation());
 		
+		mappanelingame.getGame().getFighter().turn();
 		mappanelingame.keyPressed(new KeyEvent(mappanelingame, 0, 0, 0, KeyEvent.VK_DOWN, KeyEvent.CHAR_UNDEFINED));
 		point.x++;
 		assertEquals(point, mappanelingame.getPlayerLocation());

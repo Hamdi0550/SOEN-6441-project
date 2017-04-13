@@ -60,7 +60,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
     private int xIndex = -1;
     private int yIndex = -1; 
 	protected boolean isCharacter = false;
-	private Fighter characterThisTurn = null;
+	public Fighter characterThisTurn = null;
     
 	ImageIcon floor = new ImageIcon("res/floor.png");
 	ImageIcon chest = new ImageIcon("res/chest.png");
@@ -720,6 +720,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	 */
 	public static void printLog(String string) {
 		log.append(string + "\r\n");		
+	}
+	
+	public Game getGame(){
+		return this.game;
 	}
 
 	@Override
