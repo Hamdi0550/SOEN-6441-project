@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import ddg.model.Fighter;
 import ddg.strategy.HumanStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
+import ddg.ui.view.MapPanelInGame;
 import ddg.utils.Dice;
 
 /**
@@ -89,7 +90,8 @@ public class TurnDriven {
 		
 		if(orderarr.get(maxlocation)==-1) {
 			this.orderarr = (ArrayList<Integer>) maporderrecode.clone();
-			
+
+			MapPanelInGame.printLog("\n");
 			return next();
 		}
 		
@@ -101,9 +103,11 @@ public class TurnDriven {
 		else{
 			fighters.remove(maxlocation);
 			orderarr.remove(maxlocation);
+			MapPanelInGame.printLog("\n");
 			return next();
 		}
-		
+
+		MapPanelInGame.printLog("\n");
 		return fighters.get(maxlocation);
 	}
 //	

@@ -13,8 +13,9 @@ import ddg.model.Game;
 public abstract class FrighteningStrategy extends AgressiveStrategy implements IMagicStrategy {
 	private Fighter npc;
 	private static final long serialVersionUID = -888475640284563800L;
-	public FrighteningStrategy(Game game, int x, int y) {
-		super(game,game.getFighter());
+
+	public FrighteningStrategy(Game game, Fighter npc) {
+		super(game, npc);
 	}
 
 	@Override

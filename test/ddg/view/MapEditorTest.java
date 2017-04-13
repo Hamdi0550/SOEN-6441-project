@@ -13,8 +13,9 @@ import ddg.Config;
 import ddg.model.Map;
 import ddg.model.MapEditorModel;
 import ddg.utils.ValidationTool;
+
 /**
- * This class is test for MapEditor
+ * This class is to test MapEditor
  *
  * @author Qin yi
  * @date Mar 1, 2017

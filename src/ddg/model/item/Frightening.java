@@ -61,14 +61,16 @@ public class Frightening extends Magic {
 					if (fighter.equals(npc)) {
 						xofcharactor = i;
 						yofcharactor = j;
-						npc.setMagicStrategy(new FrighteningStrategy((Game)npc.getOwner(), xofcharactor, yofcharactor){
-
-							@Override
-							public int getTurns() {
-								return turns[0];
-							}
-							
-						});
+						if(npc.getOwner() instanceof Game) {
+							npc.setMagicStrategy(new FrighteningStrategy((Game)npc.getOwner(), npc){
+								
+								@Override
+								public int getTurns() {
+									return turns[0];
+								}
+								
+							});
+						}
 						return;
 					}
 				}

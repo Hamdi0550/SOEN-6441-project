@@ -23,7 +23,7 @@ public class CampaignEditorTest {
 	public static String[] maps = new String[10];
 	/**
 	 * 
-	 * This method
+	 * This method setup the initial testing data
 	 * 
 	 * @throws java.lang.Exception
 	 */
@@ -34,6 +34,9 @@ public class CampaignEditorTest {
 		}
 	}
 
+	/**
+	 * This method tests the creation of campaign editor frame.
+	 */
 	@Test
 	public void testCreate() {
 		CampaignEditorModel model = new CampaignEditorModel();
@@ -45,6 +48,9 @@ public class CampaignEditorTest {
 		assertTrue(model.getItemByIndex(0).getMaps().size() == 10);
 	}
 
+	/**
+	 * This method tests campaign editing.
+	 */
 	@Test
 	public void testEdit() {
 		CampaignEditorModel model = new CampaignEditorModel();
