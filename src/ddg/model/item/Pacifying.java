@@ -44,6 +44,8 @@ public class Pacifying extends Magic {
 
 	@Override
 	public void attack(Fighter npc) {
-		npc.setStrategy(new FriendlyStrategy((Game)npc.getOwner(), npc));
+		if(npc.getOwner() instanceof Game) {
+			npc.setStrategy(new FriendlyStrategy((Game)npc.getOwner(), npc));
+		}
 	}
 }
