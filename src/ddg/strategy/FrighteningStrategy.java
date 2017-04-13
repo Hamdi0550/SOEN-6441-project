@@ -21,6 +21,8 @@ public abstract class FrighteningStrategy extends AgressiveStrategy implements I
 	@Override
 	public boolean enchantNext(Fighter npc) {
 		this.npc = npc;
+		int turns = getTurns();
+		turns--;
 		turn();
 		return false;
 	}

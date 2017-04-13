@@ -9,13 +9,16 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 
 import ddg.model.Fighter;
 import ddg.model.item.Item;
+import ddg.model.item.MagicWeaponItem;
 
 /**
  * 
@@ -28,6 +31,8 @@ public class InventoryPanel extends InventoryView implements Observer, ActionLis
 
 	private JPanel operation;
 	private JPanel attribute;
+	
+	protected JList<String> magicItemList;
 	/**
 	 * 
 	 * Constructors for InventoryPanel
@@ -68,7 +73,13 @@ public class InventoryPanel extends InventoryView implements Observer, ActionLis
 		attribute.add(new JLabel("  +"));
 		attribute.add(valueL);
 		embedPanel.add(attribute, BorderLayout.NORTH);
-		embedPanel.add(characterImagePanel, BorderLayout.CENTER);
+//		embedPanel.add(characterImagePanel, BorderLayout.CENTER);
+		DefaultListModel l = new DefaultListModel();
+		magicItemList = new JList(l);
+		JScrollPane magicListPane = new JScrollPane(magicItemList, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER); 
+		embedPanel.add(magicListPane, BorderLayout.CENTER);
+		embedPanel.setPreferredSize(new Dimension(180,180));
+		
         equipmentPanel.add(btnPanel, BorderLayout.WEST);
         equipmentPanel.add(embedPanel, BorderLayout.CENTER);
         equipmentPanel.add(operation, BorderLayout.EAST);
@@ -132,7 +143,7 @@ public class InventoryPanel extends InventoryView implements Observer, ActionLis
         backpackListPanel.add(itemListPane, BorderLayout.CENTER);
         backpackListPanel.setPreferredSize(new Dimension(240,180));
         add(backpackListPanel, BorderLayout.EAST);
-
+        
         initMethod();
 	}
 
@@ -194,11 +205,21 @@ public class InventoryPanel extends InventoryView implements Observer, ActionLis
 	private void setItemAttribute(Item item) {
 		if(item == null) {
 			attribute.setVisible(false);
+			magicItemList.setVisible(false);
 			return;
 		}
 		attribute.setVisible(true);
 		equipmentTypeL.setText(item.getName());
 		attributeL.setText(item.getIncrease());
 		valueL.setText(Integer.toString(item.getBonus()));
+		if(item instanceof MagicWeaponItem) {
+			magicItemList.setPreferredSize(new Dimension(180,180));
+			DefaultListModel l = ((MagicWeaponItem)item).getListModel();
+			magicItemList.setModel(l);
+			magicItemList.ensureIndexIsVisible(l.size()-1);
+			magicItemList.setVisible(true);
+		} else {
+			magicItemList.setVisible(false);
+		}
 	}
 }
