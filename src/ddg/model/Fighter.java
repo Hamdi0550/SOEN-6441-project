@@ -447,7 +447,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 				attackBonus = level + getDexModifier();
 				System.out.println("this weanpon is ranged weapon attackBonus: "+attackBonus);
 			}
-		}else {
+		} else {
 			attackBonus = level;
 		}
 		return attackBonus;
@@ -497,11 +497,11 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	}
 
 	/**
-	 * get the dexModifier of the character
+	 * Get the dexModifier of the character
 	 * @return dexModifier
 	 */
 	public int getDexModifier() {
-		return getTotalDexterity()/2 - 5;
+		return getTotalDexterity() / 2 - 5;
 	}
 
 //	/**
@@ -513,11 +513,11 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 //	}
 
 	/**
-	 * get the strModifier of the character
+	 * Get the strModifier of the character
 	 * @return strModifier
 	 */
 	public int getStrModifier() {
-		return getTotalStrength()/2 - 5;
+		return getTotalStrength() / 2 - 5;
 	}	
 
 //	/**
