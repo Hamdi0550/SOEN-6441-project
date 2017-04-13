@@ -71,7 +71,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	ImageIcon deadNPC = new ImageIcon("res/deadnpc.png");
 	private static JTextArea log = new JTextArea();
 	private TurnDriven turnDriven;
-	private final int RANGE_RADIUS = 3;
 	/**
 	 * Constructor
 	 * @param fighter the play character who is chosen by user
@@ -226,12 +225,21 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	            }
 
 	    		// TODO Auto-generated method stub
-            	int[][] range = getRange(xIndex, yIndex);
+            	int[][] range = getRange(xIndex, yIndex, game, 1);
+            	int arraySize = range.length / 2;
+            	
+            	for (int i = 0; i < range.length; i++){
+	            	for (int j = 0; j < range.length; j++){
+	            		System.out.print(range[i][j]);
+	            	}
+	            	System.out.println();
+            	}
+	            
             	System.out.println(xIndex + " xy " + yIndex);
 	            if (isCharacter == true){
-	            	for (int i = -RANGE_RADIUS; i <= RANGE_RADIUS; i++){
-		            	for (int j = -RANGE_RADIUS; j <= RANGE_RADIUS; j++){
-		            		if (range[i+RANGE_RADIUS][j+RANGE_RADIUS] == 0){
+	            	for (int i = -arraySize; i <= arraySize; i++){
+		            	for (int j = -arraySize; j <= arraySize; j++){
+		            		if (range[i+arraySize][j+arraySize] == 0){
 					            g.setColor(Color.CYAN);
 					            g.drawRect((xIndex + j) * 50 + 1, (yIndex + i) * 50 + 1, 48, 48);
 					            g.drawRect((xIndex + j) * 50 + 2, (yIndex + i) * 50 + 2, 46, 46);		            			
@@ -239,9 +247,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		            	}	            		
 	            	}
 	            } else {
-	            	for (int i = -RANGE_RADIUS; i <= RANGE_RADIUS; i++){
-		            	for (int j = -RANGE_RADIUS; j <= RANGE_RADIUS; j++){
-		            		if (range[i+RANGE_RADIUS][j+RANGE_RADIUS] == 0){
+	            	for (int i = -arraySize; i <= arraySize; i++){
+		            	for (int j = -arraySize; j <= arraySize; j++){
+		            		if (range[i+arraySize][j+arraySize] == 0){
 					            g.setColor(Color.ORANGE);
 					            g.drawRect((xIndex + j) * 50 + 1, (yIndex + i) * 50 + 1, 48, 48);
 					            g.drawRect((xIndex + j) * 50 + 2, (yIndex + i) * 50 + 2, 46, 46);		            			
@@ -380,68 +388,95 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		});
 	}
 
-	protected int[][] getRange(int xIndex, int yIndex) {
+	static int[][] getRange(int xIndex, int yIndex, Game game, int weaponType) {
 		// TODO Auto-generated method stub
 		Map playingMap = game.getPlayingmap();
-		int[][] range = new int[2 * RANGE_RADIUS + 1][2 * RANGE_RADIUS + 1];
+		int rangeRadius = 3;
+		if (weaponType == 3){
+			
+		int[][] range = new int[2 * rangeRadius + 1][2 * rangeRadius + 1];
 		
-    	for (int i = -RANGE_RADIUS; i <= RANGE_RADIUS; i++){
-        	for (int j = -RANGE_RADIUS; j <= RANGE_RADIUS; j++){        		
-    			range[i+RANGE_RADIUS][j+RANGE_RADIUS] = 0;        		
+    	for (int i = -rangeRadius; i <= rangeRadius; i++){
+        	for (int j = -rangeRadius; j <= rangeRadius; j++){        		
+    			range[i+rangeRadius][j+rangeRadius] = 0;        		
         	}
     	}
     	
-    	for (int i = -RANGE_RADIUS; i <= RANGE_RADIUS; i++){
-        	for (int j = -RANGE_RADIUS; j <= RANGE_RADIUS; j++){
+    	for (int i = -rangeRadius; i <= rangeRadius; i++){
+        	for (int j = -rangeRadius; j <= rangeRadius; j++){
         		if ((xIndex + j) >= 0 && (yIndex + i) >= 0 && (xIndex + j) < playingMap.getLocation().length && (yIndex + i) < playingMap.getLocation().length){
         			
             		if (playingMap.getLocation()[yIndex + i][xIndex + j] == 'w'){
-            			range[i+RANGE_RADIUS][j+RANGE_RADIUS] = 2;
+            			range[i+rangeRadius][j+rangeRadius] = 2;
             			if (i <= 0 && j <= 0){
-            		    	for (int row = -RANGE_RADIUS; row <= i; row++){
-            		        	for (int column = -RANGE_RADIUS; column <= j; column++){
-            	        			range[row+RANGE_RADIUS][column+RANGE_RADIUS] = 1;
+            		    	for (int row = -rangeRadius; row <= i; row++){
+            		        	for (int column = -rangeRadius; column <= j; column++){
+            	        			range[row+rangeRadius][column+rangeRadius] = 1;
             		        	}
             		    	}
             			} 
             			if (i <= 0 && j >= 0){
-            		    	for (int row = -RANGE_RADIUS; row <= i; row++){
-            		        	for (int column = j; column <= RANGE_RADIUS; column++){
-            	        			range[row+RANGE_RADIUS][column+RANGE_RADIUS] = 1;
+            		    	for (int row = -rangeRadius; row <= i; row++){
+            		        	for (int column = j; column <= rangeRadius; column++){
+            	        			range[row+rangeRadius][column+rangeRadius] = 1;
             		        	}
             		    	}        				
             			} 
             			if (i >= 0 && j <= 0){
-            		    	for (int row = i; row <= RANGE_RADIUS; row++){
-            		        	for (int column = -RANGE_RADIUS; column <= j; column++){
-            	        			range[row+RANGE_RADIUS][column+RANGE_RADIUS] = 1;
+            		    	for (int row = i; row <= rangeRadius; row++){
+            		        	for (int column = -rangeRadius; column <= j; column++){
+            	        			range[row+rangeRadius][column+rangeRadius] = 1;
             		        	}
             		    	}        				
             			} 
             			if (i >= 0 && j >= 0){
-            		    	for (int row = i; row <= RANGE_RADIUS; row++){
-            		        	for (int column = j; column <= RANGE_RADIUS; column++){
-            	        			range[row+RANGE_RADIUS][column+RANGE_RADIUS] = 1;
+            		    	for (int row = i; row <= rangeRadius; row++){
+            		        	for (int column = j; column <= rangeRadius; column++){
+            	        			range[row+rangeRadius][column+rangeRadius] = 1;
             		        	}
             		    	}        				
             			}        			
             		}
         			
+        		} else {
+        			range[i+rangeRadius][j+rangeRadius] = 2;
         		}
         		
         		
         	}
     	}
     	
-    	for (int i = -RANGE_RADIUS; i <= RANGE_RADIUS; i++){
-        	for (int j = -RANGE_RADIUS; j <= RANGE_RADIUS; j++){
-        		if ((Math.abs(i) + Math.abs(j)) > RANGE_RADIUS){
-        			range[i+RANGE_RADIUS][j+RANGE_RADIUS] = 1;        			
+    	for (int i = -rangeRadius; i <= rangeRadius; i++){
+        	for (int j = -rangeRadius; j <= rangeRadius; j++){
+        		if ((Math.abs(i) + Math.abs(j)) > rangeRadius){
+        			range[i+rangeRadius][j+rangeRadius] = 1;        			
         		}
         	}
-    	}
-    	
+    	}    	
 		return range;
+		
+		} else {
+			int[][] range = new int[3][3];
+	    	for (int i = -1; i <= 1; i++){
+	        	for (int j = -1; j <= 1; j++){        		
+	    			range[i+1][j+1] = 0;        		
+	        	}
+	    	}
+
+	    	for (int i = -1; i <= 1; i++){
+	        	for (int j = -1; j <= 1; j++){   
+	        		if ((xIndex + j) >= 0 && (yIndex + i) >= 0 && (xIndex + j) < playingMap.getLocation().length && (yIndex + i) < playingMap.getLocation().length){
+	        			
+	            		if (playingMap.getLocation()[yIndex + i][xIndex + j] == 'w'){
+	            			range[i+1][j+1] = 1;
+	            		}
+	        		} else {
+	        			range[i+1][j+1] = 2;   
+	        		}
+	        	}
+	    	}
+			return range;
+		}
 	}
 
 	@Override
