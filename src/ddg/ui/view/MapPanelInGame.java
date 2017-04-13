@@ -36,6 +36,7 @@ import ddg.strategy.AgressiveStrategy;
 import ddg.strategy.ComputerStrategy;
 import ddg.strategy.FriendlyStrategy;
 import ddg.strategy.HumanStrategy;
+import ddg.strategy.IStrategy.TurnCallback;
 import ddg.ui.TurnDriven;
 import ddg.ui.view.component.DButton;
 import ddg.ui.view.dialog.BackpackTrade;
@@ -48,7 +49,7 @@ import ddg.ui.view.dialog.DDGaming;
  * @date Mar 12, 2017
  * 
  */
-public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener {
+public class MapPanelInGame extends JPanel implements Observer, KeyListener, ActionListener ,TurnCallback{
 	private JScrollPane jsPanel;
 	private JPanel mapPanel;
 	private Game game;
@@ -78,7 +79,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	 * @param campaign the Campaign which user would like to play
 	 */
 	public MapPanelInGame(GameModel model){
-		this.game = new Game(model);
+		this.game = new Game(model, this);
 		turnDriven = new TurnDriven();
 		setLayout(new BorderLayout());
 		setFocusable(true);
@@ -599,7 +600,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 						fighter.levelUp();
 						fighter.deleteObservers();
 						Fighter.saveFighter(fighter);
-						game.nextMap();
+						game.nextMap(this);
 						turnDriven = new TurnDriven();
 						characterThisTurn=null;
 						initMapData();
@@ -607,11 +608,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 						removeAll();
 						System.out.println(xIndex+"2=============="+yIndex);
 						initContent();
-//						jspanel.removeAll();
-//						jspanel.add(mapPanel);
-//						mapPanel.repaint();
-//						jspanel.doLayout();
-//						jspanel.revalidate();
 						break;
 					}
 				}
@@ -622,7 +618,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			}
 		}
 	}
-
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -702,6 +698,36 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	 */
 	public static void printLog(String string) {
 		log.append(string + "\r\n");		
+	}
+
+	@Override
+	public void finish() {
+		Fighter fighter = game.getFighter();
+		Boolean containKey = false;
+		for(Item item:fighter.getBackpack()){
+			if(item.getName().equals("key")){
+				containKey = true;
+				
+				System.out.println(fighter.getLevel()+"\t\t\t\t\t");
+				fighter.getBackpack().remove(item);
+				fighter.levelUp();
+				fighter.deleteObservers();
+				Fighter.saveFighter(fighter);
+				game.nextMap(this);
+				turnDriven = new TurnDriven();
+				characterThisTurn=null;
+				initMapData();
+				initStrategy();
+				removeAll();
+				initContent();
+				break;
+				
+			}
+		}
+		if(!containKey){
+			printLog("Your do not have the Key, You cannot Go to Next Map!!!!!!!");
+			repaint();
+		}
 	}
 }
 

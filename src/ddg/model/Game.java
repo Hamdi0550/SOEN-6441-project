@@ -20,7 +20,7 @@ public class Game implements IOwner, java.io.Serializable{
 	private Map playingmap;
 	private Fighter fighter;
 	
-	public Game(GameModel model){
+	public Game(GameModel model, TurnCallback cb){
 		this.fighter = model.getFighter().clone();
 		this.campaign = model.getCampaign();
  		if(playingmap==null){
@@ -29,7 +29,7 @@ public class Game implements IOwner, java.io.Serializable{
  		else
  			initMapData();
 		if(model.isComputer()) {
-			this.fighter.setStrategy(new ComputerStrategy(this));
+			this.fighter.setStrategy(new ComputerStrategy(this,cb));
 		} else {
 			this.fighter.setStrategy(new HumanStrategy());
 		}
@@ -129,10 +129,10 @@ public class Game implements IOwner, java.io.Serializable{
 		return fighter;
 	}
 
-	public void nextMap() {
+	public void nextMap(TurnCallback cb) {
 		this.campaign.getMaps().remove(0);
 		if(fighter.getBehaviorStrategy() instanceof ComputerStrategy){
-			fighter.setStrategy(new ComputerStrategy(this));
+			fighter.setStrategy(new ComputerStrategy(this,cb));
 		}
 		initData();
 	}

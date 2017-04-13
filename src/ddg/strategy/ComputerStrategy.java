@@ -42,7 +42,7 @@ public class ComputerStrategy implements IStrategy {
 	private ArrayList<Fighter> NPCs = new ArrayList<>();
 	private ArrayList<Fighter> Corpse = new ArrayList<>();
 	private Point locationOfExit;
-
+	private TurnCallback turnCallBack;
 	/**
 	 * 
 	 */
@@ -52,10 +52,10 @@ public class ComputerStrategy implements IStrategy {
 	 * Constructors
 	 * 
 	 */
-	public ComputerStrategy(Game game) {
+	public ComputerStrategy(Game game, TurnCallback cb) {
 		this.game = game;
+		this.turnCallBack = cb;
 		initLocation();
-//		System.out.println("11111"+locationOfExit.x+","+locationOfExit.y);
 	}
 
 	private void initLocation() {
@@ -145,13 +145,16 @@ public class ComputerStrategy implements IStrategy {
 		Fighter fighter = game.getFighter();
 
 		if(fighter.xOfFighter-1>=0&&location[fighter.xOfFighter-1][fighter.yOfFighter]=='o'){
-			
+			turnCallBack.finish();
 		}
 		else if(fighter.xOfFighter+1<game.getPlayingmap().getRow()&&location[fighter.xOfFighter+1][fighter.yOfFighter]=='o'){
+			turnCallBack.finish();
 		}
 		else if(fighter.yOfFighter-1>=0&&location[fighter.xOfFighter][fighter.yOfFighter-1]=='o'){
+			turnCallBack.finish();
 		}
 		else if(fighter.yOfFighter+1<game.getPlayingmap().getColumn()&&location[fighter.xOfFighter][fighter.yOfFighter+1]=='o'){
+			turnCallBack.finish();
 		}
 	}
 
@@ -220,9 +223,7 @@ public class ComputerStrategy implements IStrategy {
 		}
 		else if(x<0||x>=game.getPlayingmap().getRow()||y<0||y>=game.getPlayingmap().getColumn()
 				||(game.getPlayingmap().getLocation()[x][y]!='f'
-				&&game.getPlayingmap().getLocation()[x][y]!='c'
-				&&game.getPlayingmap().getLocation()[x][y]!='p'
-				&&game.getPlayingmap().getLocation()[x][y]!='o')){
+				&&game.getPlayingmap().getLocation()[x][y]!='d')){
 			return 1000;
 		}
 		Map<String, Integer> map = new HashMap<>();
@@ -234,40 +235,47 @@ public class ComputerStrategy implements IStrategy {
 			if(map.containsKey(aim.x+","+aim.y)){
 				return map.get(aim.x+","+aim.y).intValue();
 			}
-			if(p.x>0&&(game.getPlayingmap().getLocation()[p.x-1][p.y]=='f'
-					||game.getPlayingmap().getLocation()[p.x-1][p.y]=='c'
-					||game.getPlayingmap().getLocation()[p.x-1][p.y]=='p'
-					||game.getPlayingmap().getLocation()[p.x-1][p.y]=='o')
-					&&!map.containsKey((p.x-1)+","+p.y)){
-				order.add(new Point(p.x-1,p.y));
-				map.put((p.x-1)+","+p.y, map.get(p.x+","+p.y).intValue()+1);
+			if(p.x>0&&!map.containsKey((p.x-1)+","+p.y)){
+				if(p.x-1==aim.x&&p.y==aim.y){
+					map.put((p.x-1)+","+p.y, map.get(p.x+","+p.y).intValue()+1);
+					continue;
+				}
+				else if(game.getPlayingmap().getLocation()[p.x-1][p.y]=='f'||game.getPlayingmap().getLocation()[p.x-1][p.y]=='d'){
+					order.add(new Point(p.x-1,p.y));
+					map.put((p.x-1)+","+p.y, map.get(p.x+","+p.y).intValue()+1);
+				}
 			}
-			if(p.x<game.getPlayingmap().getRow()-1
-					&&(game.getPlayingmap().getLocation()[p.x+1][p.y]=='f'
-					||game.getPlayingmap().getLocation()[p.x+1][p.y]=='c'
-					||game.getPlayingmap().getLocation()[p.x+1][p.y]=='p'
-					||game.getPlayingmap().getLocation()[p.x+1][p.y]=='o')
-					&&!map.containsKey((p.x+1)+","+p.y)){
-				order.add(new Point(p.x+1,p.y));
-				map.put((p.x+1)+","+p.y, map.get(p.x+","+p.y).intValue()+1);
+			if(p.x<game.getPlayingmap().getRow()-1&&!map.containsKey((p.x+1)+","+p.y)){
+				
+				if(p.x+1==aim.x&&p.y==aim.y){
+					map.put((p.x+1)+","+p.y, map.get(p.x+","+p.y).intValue()+1);
+					continue;
+				}
+				else if(game.getPlayingmap().getLocation()[p.x+1][p.y]=='f'||game.getPlayingmap().getLocation()[p.x+1][p.y]=='d'){
+					order.add(new Point(p.x+1,p.y));
+					map.put((p.x+1)+","+p.y, map.get(p.x+","+p.y).intValue()+1);
+				}
 			}
-			if(p.y>0
-					&&(game.getPlayingmap().getLocation()[p.x][p.y-1]=='f'
-					||game.getPlayingmap().getLocation()[p.x][p.y-1]=='c'
-					||game.getPlayingmap().getLocation()[p.x][p.y-1]=='p'
-					||game.getPlayingmap().getLocation()[p.x][p.y-1]=='o')
-					&&!map.containsKey(p.x+","+(p.y-1))){
-				order.add(new Point(p.x,p.y-1));
-				map.put(p.x+","+(p.y-1), map.get(p.x+","+p.y).intValue()+1);
+			if(p.y>0&&!map.containsKey(p.x+","+(p.y-1))){
+				if(p.x==aim.x&&p.y-1==aim.y){
+					map.put(p.x+","+(p.y-1), map.get(p.x+","+p.y).intValue()+1);
+					continue;
+				}
+				else if(game.getPlayingmap().getLocation()[p.x][p.y-1]=='f'||game.getPlayingmap().getLocation()[p.x][p.y-1]=='d'){
+					order.add(new Point(p.x,p.y-1));
+					map.put(p.x+","+(p.y-1), map.get(p.x+","+p.y).intValue()+1);
+				}
 			}
-			if(p.y<game.getPlayingmap().getColumn()-1
-					&&(game.getPlayingmap().getLocation()[p.x][p.y+1]=='f'
-					||game.getPlayingmap().getLocation()[p.x][p.y+1]=='c'
-					||game.getPlayingmap().getLocation()[p.x][p.y+1]=='p'
-					||game.getPlayingmap().getLocation()[p.x][p.y+1]=='o')
-					&&!map.containsKey(p.x+","+p.y+1)){
-				order.add(new Point(p.x,p.y+1));
-				map.put(p.x+","+(p.y+1), map.get(p.x+","+p.y).intValue()+1);
+			if(p.y<game.getPlayingmap().getColumn()-1&&!map.containsKey(p.x+","+p.y+1)){
+				
+				if(p.x==aim.x&&p.y+1==aim.y){
+					map.put(p.x+","+(p.y+1), map.get(p.x+","+p.y).intValue()+1);
+					continue;
+				}
+				else if(game.getPlayingmap().getLocation()[p.x][p.y+1]=='f'||game.getPlayingmap().getLocation()[p.x][p.y+1]=='d'){
+					order.add(new Point(p.x,p.y+1));
+					map.put(p.x+","+(p.y+1), map.get(p.x+","+p.y).intValue()+1);
+				}
 			}
 		}
 		return 1000;
