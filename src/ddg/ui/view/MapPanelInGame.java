@@ -554,7 +554,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	 * @param x	the x-coordinate of the cell which player would like to move
 	 * @param y	the y-coordinate of the cell which player would like to move
 	 */
-	private void moveOnMap(int x, int y) {
+	public void moveOnMap(int x, int y) {
 		Map playingMap = game.getPlayingmap();
 		Fighter fighter = game.getFighter();
 		if( x>=playingMap.getRow()|| x<0|| y >= playingMap.getColumn()|| y<0)
