@@ -441,14 +441,19 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		if (hasWeapon){
 			System.out.println("This is a weapon");
 			if (isMelee){
-				attackBonus = level +  getStrModifier();
+//				attackBonus = level +  getStrModifier();
+				attackBonus = getStrModifier();
+				MapPanelInGame.printLog(" attack bonus: Strength Modifier " + attackBonus);
 				System.out.println("this weanpon is melee weapon attackBonus: "+attackBonus);
 			}else if (isRanged){
-				attackBonus = level + getDexModifier();
+//				attackBonus = level + getDexModifier();
+				attackBonus = getDexModifier();
+				MapPanelInGame.printLog(" attack bonus: Dexterity Modifier " + attackBonus);
 				System.out.println("this weanpon is ranged weapon attackBonus: "+attackBonus);
 			}
 		} else {
 			attackBonus = level;
+			MapPanelInGame.printLog(" attack bonus: level " + attackBonus);
 		}
 		return attackBonus;
 	}
@@ -459,7 +464,10 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 */
 	public int getDamageBonus(){
 		Dice dice = new Dice();
-		damageBonus = dice.d6Roll() + getStrModifier();
+		int i = dice.d6Roll();
+		MapPanelInGame.printLog(" Damage Bonus = d6 roll: " + i + " ");
+		damageBonus = i + getStrModifier();
+		MapPanelInGame.printLog(" + Strength Modifier " + getStrModifier() + " ");
 		return damageBonus;
 	}
 	
@@ -1016,6 +1024,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	public boolean beAttacked(int i) {
 		this.hitPoints -= i;
 		if(this.hitPoints<=0){
+			MapPanelInGame.printLog(" HP <= 0, dead! ");
 			System.out.println("going dead!!!!!");
 			die();
 		}
@@ -1045,6 +1054,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 */
 	public void levelUp() {
 		this.level++;
+		MapPanelInGame.printLog(" current HP: " + this.hitPoints + " + ");
 		this.hitPoints = this.hitPoints + d10RollAndTimes(1);
 		observerNotify();
 	}
@@ -1114,7 +1124,9 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	private int d10RollAndTimes(int times){
 		int sum = 0;
 		while(times>0){
-			sum += Dice.d10Roll() + getModifier(getTotalConstitution());
+			int i = Dice.d10Roll();
+			sum += i + getModifier(getTotalConstitution());
+			MapPanelInGame.printLog(" a d10 roll: " + i + " + constitution modifier: " + getModifier(getTotalConstitution()));
 			times--;
 		}
 		return sum;
@@ -1217,8 +1229,6 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	public static void saveFighter(Fighter fighter){
 		System.out.println("save fighter======1");
 		
-//		String g = Utils.readFile(Config.CHARACTER_FILE);
-//		FighterModel fm = Utils.fromJson(g, FighterModel.class);
 		FighterModel fm = Utils.readObject(Config.CHARACTER_FILE, FighterModel.class);
 		if (fm == null) {
 			fm = new FighterModel();
@@ -1227,8 +1237,6 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 			
 		if(fm.getFighters().containsKey(fighter.name)){
 			fm.getFighters().put(fighter.name, fighter);
-//			String gSave = Utils.toJson(fm);
-//			Utils.save2File(Config.CHARACTER_FILE, gSave);
 			Utils.saveObject(Config.CHARACTER_FILE, fm);
 			System.out.println("save fighter======success");
 		}
