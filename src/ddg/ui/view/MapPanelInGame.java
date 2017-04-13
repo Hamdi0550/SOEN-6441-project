@@ -229,9 +229,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
             	int[][] range = getRange(xIndex, yIndex);
             	System.out.println(xIndex + " xy " + yIndex);
 	            if (isCharacter == true){
-	            	for (int i = -3; i <= 3; i++){
-		            	for (int j = -3; j <= 3; j++){
-		            		if (range[i+3][j+3] == 0){
+	            	for (int i = -RANGE_RADIUS; i <= RANGE_RADIUS; i++){
+		            	for (int j = -RANGE_RADIUS; j <= RANGE_RADIUS; j++){
+		            		if (range[i+RANGE_RADIUS][j+RANGE_RADIUS] == 0){
 					            g.setColor(Color.CYAN);
 					            g.drawRect((xIndex + j) * 50 + 1, (yIndex + i) * 50 + 1, 48, 48);
 					            g.drawRect((xIndex + j) * 50 + 2, (yIndex + i) * 50 + 2, 46, 46);		            			
@@ -239,9 +239,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		            	}	            		
 	            	}
 	            } else {
-	            	for (int i = -3; i <= 3; i++){
-		            	for (int j = -3; j <= 3; j++){
-		            		if (range[i+3][j+3] == 0){
+	            	for (int i = -RANGE_RADIUS; i <= RANGE_RADIUS; i++){
+		            	for (int j = -RANGE_RADIUS; j <= RANGE_RADIUS; j++){
+		            		if (range[i+RANGE_RADIUS][j+RANGE_RADIUS] == 0){
 					            g.setColor(Color.ORANGE);
 					            g.drawRect((xIndex + j) * 50 + 1, (yIndex + i) * 50 + 1, 48, 48);
 					            g.drawRect((xIndex + j) * 50 + 2, (yIndex + i) * 50 + 2, 46, 46);		            			
