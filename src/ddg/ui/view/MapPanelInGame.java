@@ -90,6 +90,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		initStrategy();
 	}
 
+	/**
+	 * Constructor
+	 * @param game the game which was read from file, then initial game data
+	 */
 	public MapPanelInGame(Game game){
 		this.game = game;
 		characterThisTurn = game.getFighter();
@@ -101,6 +105,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		initContent();
 		initStrategy();
 	}
+	/**
+	 * initial all fighter's Strategy
+	 */
 	protected void initStrategy() {
 		Map playingMap = game.getPlayingmap();
 		
@@ -197,10 +204,10 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 								g.drawImage(outdoor.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (playingMap.getLocation()[i][j] == 'p'){
-								if(((Fighter)playingMap.getCellsinthemap()[i][j].getContent()).isAlive())
+//								if(((Fighter)playingMap.getCellsinthemap()[i][j].getContent()).isAlive())
 									g.drawImage(playCharacter.getImage(), j*50, i*50, 50, 50, null);
-								else
-									g.drawImage(deadNPC.getImage(), j*50, i*50, 50, 50, null);
+//								else
+//									g.drawImage(deadNPC.getImage(), j*50, i*50, 50, 50, null);
 							    continue;}
 							if (playingMap.getLocation()[i][j] == 'd'){
 								g.drawImage(deadNPC.getImage(), j*50, i*50, 50, 50, null);
@@ -392,6 +399,15 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		});
 	}
 
+	/**
+	 * 
+	 * this function to get the range which character can attack
+	 * @param xIndex the x coordinate of the map where you character is
+	 * @param yIndex the y coordinate of the map where you character is
+	 * @param game	the game playing
+	 * @param weaponType the Type of weapon of the character
+	 * @return	int[][] show where you can attack
+	 */
 	public static int[][] getRange(int xIndex, int yIndex, Game game, int weaponType) {
 		// TODO Auto-generated method stub
 		Map playingMap = game.getPlayingmap();

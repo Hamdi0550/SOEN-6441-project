@@ -37,29 +37,9 @@ public class FriendlyStrategy implements IStrategy {
 	 * Constructors
 	 * 
 	 */
-	public FriendlyStrategy(Game game, int x, int y) {
-		this.game = game;
-		
-	}
-
 	public FriendlyStrategy(Game game, Fighter npc) {
 		this.game = game;
 		this.character = npc;
-//		Map playingMap = game.getPlayingmap();
-//		if(this.xofcharactor == -1 || this.yofcharactor == -1) {
-//			for(int i=0;i< playingMap.getRow();i++){
-//	            for(int j=0;j< playingMap.getColumn();j++){
-//	            	if(playingMap.getLocation()[i][j]=='p'){
-//	            		Fighter fighter = (Fighter)playingMap.getCellsinthemap()[i][j].getContent();
-//	            		if(fighter.equals(npc)) {
-//	            			this.xofcharactor = i;
-//	            			this.yofcharactor = j;
-//	            			return;
-//	            		}
-//	            	}
-//	            }
-//			}
-//		}
 	}
 	
 	@Override
@@ -67,6 +47,9 @@ public class FriendlyStrategy implements IStrategy {
 		System.out.println("this is friendly strategy, turn function!!!");
 		wander();
 	}
+	/**
+	 * this method realize random wander function
+	 */
 	protected void wander() {
 		for(int i=3;i>0;){
 			findChest();
@@ -105,6 +88,9 @@ public class FriendlyStrategy implements IStrategy {
 		findChest();
 	}
 
+	/**
+	 * check and interact with chest which is around character
+	 */
 	private void findChest() {
 		char[][] location = game.getPlayingmap().getLocation();
 //		Fighter fighter = (Fighter)game.getPlayingmap().getCellsinthemap()[character.xOfFighter][character.yOfFighter].getContent();
@@ -137,6 +123,13 @@ public class FriendlyStrategy implements IStrategy {
 				game.getPlayingmap().changeLocation(character.xOfFighter, character.yOfFighter+1, 'e');
 			}
 		}
+	}
+	
+	/**
+	 * @return return game from this strategy, use to change behavior Strategy into Agressive
+	 */
+	public Game getGame(){
+		return game;
 	}
 	
 }

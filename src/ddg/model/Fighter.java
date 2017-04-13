@@ -14,6 +14,8 @@ import ddg.model.item.BaseItem;
 import ddg.model.item.Enchantment;
 import ddg.model.item.Item;
 import ddg.model.item.MagicWeaponItem;
+import ddg.strategy.AgressiveStrategy;
+import ddg.strategy.FriendlyStrategy;
 import ddg.strategy.IMagicStrategy;
 import ddg.strategy.IStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
@@ -89,13 +91,23 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	public int xOfFighter = -1;
 	public int yOfFighter = -1;
 	
+	/**
+	 * set behavior strategy for fighter
+	 * @param strategy a kind of Strategy: aggressive, friendly , computer, or human
+	 */
 	public void setStrategy(IStrategy strategy) {
 		behaviorStrategy = strategy;
 	}
+	/**
+	 * @return behavior strategy of fighter
+	 */
 	public IStrategy getBehaviorStrategy(){
 		return behaviorStrategy;
 	}
 	
+	/**
+	 * turn function for driving  magic Strategy
+	 */
 	public void turn() {
 		boolean contine = true;
 		for(IMagicStrategy s : magicStrategy) {
@@ -112,6 +124,10 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		}
 	}
 	
+	/**
+	 * set magic strategy on fighter
+	 * @param strategy magic strategy
+	 */
 	public void setMagicStrategy(IMagicStrategy strategy) {
 		if(strategy == null || strategy.getIndex() < 0 || strategy.getIndex() >= magicStrategy.length)
 			return;
@@ -125,9 +141,9 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	}
 	/**
 	 * Constructor
-	 * @param level
-	 * @param strength
-	 * @param dexterity
+	 * @param level level of fighter
+	 * @param strength strength of fighter
+	 * @param dexterity dexterity of fighter
 	 */
 	public Fighter(int level, int strength, int dexterity){
 		this.level = level;
@@ -998,6 +1014,10 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		int attackRoll =  d20Roll + this.getAttackBonus();
 		String s = "Attack Roll = d20 roll: " + d20Roll + " + attack bonus of the character: " + this.getAttackBonus();		
 		MapPanelInGame.printLog(s);
+		if(npc.getBehaviorStrategy() instanceof FriendlyStrategy){
+			Game game = ((FriendlyStrategy) npc.getBehaviorStrategy()).getGame();
+			npc.setStrategy(new AgressiveStrategy(game, npc));
+		}
 		if(attackRoll >= npc.getArmorClass()){
 			s = "Attack Roll: " + attackRoll + " >= Armor Class " + npc.getArmorClass() + ", Attack Success!";
 			MapPanelInGame.printLog(s);
@@ -1023,6 +1043,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 */
 	public boolean beAttacked(int i) {
 		this.hitPoints -= i;
+		
 		if(this.hitPoints<=0){
 			MapPanelInGame.printLog(" HP <= 0, dead! ");
 			System.out.println("going dead!!!!!");

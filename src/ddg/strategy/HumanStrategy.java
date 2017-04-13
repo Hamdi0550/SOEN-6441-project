@@ -47,13 +47,21 @@ public class HumanStrategy implements IStrategy {
 		this.attacktimes = 1;
 	}
 
-	 public boolean moveCells(){
+	 /**
+	  * as counter to check if play can move the character on the map
+	 * @return true if it is possible to move on map, false if cannot
+	 */
+	public boolean moveCells(){
 		if(movetimes>0){
 			movetimes--;
 			return true;
 		}
 		return false;
 	}
+	/**
+	 * as counter to check if play can attack 
+	 * @return true if it is possible to attack others, false if cannot
+	 */
 	public boolean attack(){
 		if(attacktimes > 0){
 			attacktimes--;

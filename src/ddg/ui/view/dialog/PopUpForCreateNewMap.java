@@ -58,6 +58,9 @@ public class PopUpForCreateNewMap extends JDialog implements ActionListener,Chan
         initView();
     }
 
+    /**
+     * set some attribute of this pop up windows
+     */
     private void initView(){
         setSize(350, 250);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -67,6 +70,9 @@ public class PopUpForCreateNewMap extends JDialog implements ActionListener,Chan
         setVisible(true);
     }
 
+    /**
+     * add list view in this dialog
+     */
     private void addListView(){
     	getContentPane().setLayout(new FlowLayout());
     	// add information of the Dialog
