@@ -83,6 +83,10 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 		}
 	}
 
+	/**
+	 * check and attack enemies who are around NPC
+	 * @return
+	 */
 	private boolean findEnemy() {
 		int range = 1;
 		if((WeaponItem) character.getWearItemByName("Weapon")!=null)
@@ -106,6 +110,12 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 		return false;
 	}
 
+	/**
+	 * 
+	 * attack others who locate as blow location
+	 * @param x	x coordinate of attacked character
+	 * @param y y coordinate of attacked character
+	 */
 	private void attackCharacter(int x, int y) {
 		Fighter attacter = character;
 		if(x==game.getXofplayer()&&y==game.getYofplayer()){
@@ -123,6 +133,10 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 		
 	}
 
+	/**
+	 * find best way to touch player then attack him
+	 * @return
+	 */
 	protected ArrayList<Point> searchWayAttactPlayer() {
 		ArrayList<Point> queueOfPath = new ArrayList<>();
 		Map<String, Integer> locationAlreadySearch = new HashMap<>();
@@ -181,6 +195,12 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 		return queueOfPath;
 	}
 	
+	/**
+	 * find shortest distance of NPC and character
+	 * @param x	x coordinate of NPC
+	 * @param y y coordinate of NPC
+	 * @return	shortest distance from NPC and Character
+	 */
 	public int shortestDistance(int x,int y){
 		if(x<0||x>=game.getPlayingmap().getRow()||y<0||y>=game.getPlayingmap().getColumn()||game.getPlayingmap().getLocation()[x][y]!='f'){
 			return 1000;
@@ -214,6 +234,9 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 		return 1000;
 	}
 	
+	/**
+	 * check and interact with chests which are around NPC
+	 */
 	private void findChest() {
 		char[][] location = game.getPlayingmap().getLocation();
 
