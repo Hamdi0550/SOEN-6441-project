@@ -14,20 +14,32 @@ public class Log {
 	private static Log instance;
 	private JTextArea textView;
 	
+	/**
+	 * Constructor
+	 */
 	private Log() {
 	}
 
+	/**
+	 * This method is to get a single instance of Log class
+	 */
 	public static Log getInstance() {
 		if (instance == null) {
 			instance = new Log();
 		}
 		return instance;
 	}
-	
+
+	/**
+	 * This method is to set text area of the log
+	 */
 	public void setView(JTextArea v) {
 		textView = v;
 	}
-	
+
+	/**
+	 * This method is to print the log
+	 */
 	public void printLog(String log) {
 		if(textView!=null) {
 			textView.append(log+"\n");

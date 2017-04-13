@@ -23,13 +23,6 @@ import ddg.model.item.Slaying;
  * @author Zhen Du
  * @date Apr 6, 2017
  */
-/**
- *
- * This class
- * 
- * @author Zhen Du
- * @date Apr 6, 2017
- */
 public class MagicFactory {
 
 	/**
@@ -40,6 +33,9 @@ public class MagicFactory {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * This method is to get the enchantment instance.
+	 */
 	public static Magic getMagic(String magic) {
 //		return new Ability(magic);
 		if(MagicWeaponItem.FREEZING.equals(magic)) {

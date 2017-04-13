@@ -30,7 +30,10 @@ public class FighterExplorer {
 		fighterBuilder.assignScores();
 		fighterBuilder.clearScores();
 	}
-	
+
+	/**
+	 * This method construct a Fighter object according to the builder type. 
+	 */
 	public void constructFighter(Fighter fighter) {
 		fighterBuilder.generateScores();
 		fighterBuilder.assignScores();
