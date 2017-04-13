@@ -37,7 +37,7 @@ public class FighterModel implements Serializable {
 
 	/**
 	 * Return a hashmap table contains characters
-	 * @return
+	 * @return fightersHM
 	 */
 	public HashMap<String, Fighter> getFighters() {
 		return fightersHM;

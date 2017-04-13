@@ -33,6 +33,7 @@ public class FighterExplorer {
 
 	/**
 	 * This method construct a Fighter object according to the builder type. 
+	 * @param fighter
 	 */
 	public void constructFighter(Fighter fighter) {
 		fighterBuilder.generateScores();

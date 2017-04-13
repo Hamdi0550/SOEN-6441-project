@@ -35,6 +35,7 @@ public class MagicFactory {
 
 	/**
 	 * This method is to get the enchantment instance.
+	 * @param magic
 	 */
 	public static Magic getMagic(String magic) {
 //		return new Ability(magic);

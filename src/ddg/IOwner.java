@@ -9,7 +9,6 @@ import java.io.Serializable;
  * @date Apr 3, 2017
  *
  */
-
 public interface IOwner extends Serializable {
 	int getLevel();
 }
