@@ -60,7 +60,7 @@ public class CampaignEditorModel {
 	 * 
 	 * This method is to get List Model
 	 * 
-	 * @return
+	 * @return l
 	 */
 	public DefaultListModel getListModel() {
 		DefaultListModel l = new DefaultListModel();
@@ -74,7 +74,7 @@ public class CampaignEditorModel {
 	 * 
 	 * This method return list
 	 * 
-	 * @return
+	 * @return ids
 	 */
 	public ArrayList<String> getCampaignList() {
 		ArrayList<String> ids = new ArrayList<String>();
