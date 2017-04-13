@@ -35,7 +35,10 @@ public class ItemEditorTest {
 		items = new String[] {BaseItem.HELMET, BaseItem.ARMOR, BaseItem.SHIELD, BaseItem.RING,
 				BaseItem.BELT, BaseItem.BOOTS, BaseItem.WEAPON};
 	}
-	
+
+	/**
+	 * This method tests setup initial testing data.
+	 */
 	@Before
 	public void initItem() {
 		model = new ItemEditorModel();
@@ -44,11 +47,17 @@ public class ItemEditorTest {
 		}
 	}
 
+	/**
+	 * This method tests creating item editor
+	 */
 	@Test
 	public void testCreate() {
 		assertTrue(model.getListModel().getSize() == 10);
 	}
 
+	/**
+	 * This method tests editing item.
+	 */
 	@Test
 	public void testEdit() {
 		for(int i=0;i<10;i++) {
@@ -56,7 +65,10 @@ public class ItemEditorTest {
 		}
 		assertTrue(model.getListModel().getSize() == 20);
 	}
-	
+
+	/**
+	 * This method tests save and load an item
+	 */
 	@Test
 	public void testSaveLoad() {
 //		String g = Utils.toJson(this.model);

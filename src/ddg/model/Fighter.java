@@ -463,8 +463,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 * @return damageBonus
 	 */
 	public int getDamageBonus(){
-		Dice dice = new Dice();
-		int i = dice.d6Roll();
+		int i = Dice.d6Roll();
 		MapPanelInGame.printLog(" Damage Bonus = d6 roll: " + i + " ");
 		damageBonus = i + getStrModifier();
 		MapPanelInGame.printLog(" + Strength Modifier " + getStrModifier() + " ");

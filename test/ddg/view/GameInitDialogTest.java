@@ -15,6 +15,12 @@ import ddg.model.entity.BaseCampaign;
 import ddg.ui.view.dialog.GameInitDialog;
 import ddg.utils.Utils;
 
+/**
+ * This class is to test game choosing window.
+ * 
+ * @author Bo Li
+ * @date Mar 21, 2017
+ */
 public class GameInitDialogTest {
 	GameModel gameModel = null;
 	static FighterModel fighterModel = null;
@@ -42,26 +48,38 @@ public class GameInitDialogTest {
 		baseCampaign = campaignEditorModel.getItemByIndex(0);
 		test = new GameInitDialog(null, null);
 	}
-	
+
+	/**
+	 * This method tests loading a map.
+	 */
 	@Test
 	public void testMapLoading(){
 		gameModel = test.mapLoading(fighter, baseCampaign);
 		assertNotNull(gameModel.getCampaign().getMaps().size());
 	}
-	
+
+	/**
+	 * This method tests loading a character in a map
+	 */
 	@Test
 	public void testFighterLoading(){
 		gameModel = test.mapLoading(fighter, baseCampaign);
 		assertNotNull(gameModel.getFighter());
 	}
-	
+
+	/**
+	 * This method tests selecting a campaign
+	 */
 	@Test
 	public void testSelectTheCampaign(){
 		String g = Utils.readFile(Config.CAMPAIGN_FILE);
 		CampaignEditorModel campaignModel = Utils.fromJson(g, CampaignEditorModel.class);
 		assertNotNull(campaignModel.getCampaignList());
 	}
-	
+
+	/**
+	 * This method tests selecting a character
+	 */
 	@Test
 	public void testSelectTheCharacter(){
 //		FighterModel fighterModel = new FighterModel();
