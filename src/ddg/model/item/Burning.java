@@ -9,6 +9,7 @@ package ddg.model.item;
 
 import ddg.model.Fighter;
 import ddg.strategy.IMagicStrategy;
+import ddg.ui.view.MapPanelInGame;
 
 /**
  *
@@ -59,6 +60,7 @@ public class Burning extends Magic {
 			@Override
 			public boolean enchantNext(Fighter npc) {
 				turns[0]--;
+				MapPanelInGame.printLog(" " + npc.getName() + " is burning by: " + getDamage() + " this is round " + turns[0] + " ");
 				return npc.beAttacked(getDamage());
 			}
 

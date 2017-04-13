@@ -26,6 +26,15 @@ public class Dice {
 	public static int d6Roll(){
 		int diceNumber = ((int) (Math.random()*100)) % 6;
 		return (diceNumber + 1);
+	}	
+	
+	/**
+	 * Return a d6 roll number
+	 * @return d6 roll number
+	 */
+	public static int d8Roll(){
+		int diceNumber = ((int) (Math.random()*100)) % 8;
+		return (diceNumber + 1);
 	}
 	
 	/**

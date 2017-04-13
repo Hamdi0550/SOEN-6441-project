@@ -2,6 +2,7 @@ package ddg.strategy;
 
 import ddg.model.Fighter;
 import ddg.model.Game;
+import ddg.ui.view.MapPanelInGame;
 
 /**
  *
@@ -29,6 +30,7 @@ public abstract class FrighteningStrategy extends AgressiveStrategy implements I
 	
 	@Override
 	public void turn() {
+		MapPanelInGame.printLog(" " + npc.getName() + " is Frightened ");
 		int xOfNextforNpc = npc.xOfFighter;
 		int yOfNextforNpc = npc.yOfFighter;
 		for(int i=1;i<=3;i++){

@@ -387,6 +387,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 */
 	public int getTotalArmorClass(){
 		totalArmorClass = getArmorClass() + gainedArmorClass;
+		MapPanelInGame.printLog(" + gained Armor class " + gainedArmorClass);
 		return totalArmorClass;
 	}
 	
@@ -467,10 +468,9 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 * @return damageBonus
 	 */
 	public int getDamageBonus(){
-		Dice dice = new Dice();
-		int i = dice.d6Roll();
-		MapPanelInGame.printLog(" Damage Bonus = d6 roll: " + i + " ");
+		int i = Dice.d8Roll();
 		damageBonus = i + getStrModifier();
+		MapPanelInGame.printLog(" Damage " + damageBonus + "= d8 roll: " + i + " ");
 		MapPanelInGame.printLog(" + Strength Modifier " + getStrModifier() + " ");
 		return damageBonus;
 	}
@@ -481,6 +481,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 */
 	public int getArmorClass(){
 		armorClass = getDexModifier() + 10;
+		MapPanelInGame.printLog("Armor class = Dexterity modifier: " + getDexModifier() + " + 10 ");
 		return armorClass;
 	}
 	
@@ -1002,8 +1003,8 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		int attackRoll =  d20Roll + this.getAttackBonus();
 		String s = "Attack Roll = d20 roll: " + d20Roll + " + attack bonus of the character: " + this.getAttackBonus();		
 		MapPanelInGame.printLog(s);
-		if(attackRoll >= npc.getArmorClass()){
-			s = "Attack Roll: " + attackRoll + " >= Armor Class " + npc.getArmorClass() + ", Attack Success!";
+		if(attackRoll >= npc.getTotalArmorClass()){
+			s = "Attack Roll: " + attackRoll + " >= Armor Class " + npc.getTotalArmorClass() + ", Attack Success!";
 			MapPanelInGame.printLog(s);
 			System.out.println("Attack Success!");
 			if(npc.beAttacked(this.getDamageBonus())) {
@@ -1015,7 +1016,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 				}
 			}
 		} else {
-			s = "Attack Roll: " + attackRoll + " < Armor Class " + npc.getArmorClass() + ", Attack Fail!";
+			s = "Attack Roll: " + attackRoll + " < Armor Class " + npc.getTotalArmorClass() + ", Attack Fail!";
 			MapPanelInGame.printLog(s);
 			System.out.println("Attack Fail!");
 		}
