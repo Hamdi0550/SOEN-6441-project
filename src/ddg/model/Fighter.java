@@ -88,14 +88,25 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	
 	public int xOfFighter = -1;
 	public int yOfFighter = -1;
-	
+
+	/**
+	 * This method is to set the strategy for the character. 
+	 * @param strategy
+	 */
 	public void setStrategy(IStrategy strategy) {
 		behaviorStrategy = strategy;
 	}
+
+	/**
+	 * This method is to get the strategy of the character. 
+	 */
 	public IStrategy getBehaviorStrategy(){
 		return behaviorStrategy;
 	}
-	
+
+	/**
+	 * This method is to call the strategy of the character
+	 */
 	public void turn() {
 		boolean contine = true;
 		for(IMagicStrategy s : magicStrategy) {
@@ -111,18 +122,23 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 			behaviorStrategy.turn();
 		}
 	}
-	
+
+	/**
+	 * This method is to set the enchantment strategy for the character.
+	 */
 	public void setMagicStrategy(IMagicStrategy strategy) {
 		if(strategy == null || strategy.getIndex() < 0 || strategy.getIndex() >= magicStrategy.length)
 			return;
 		magicStrategy[strategy.getIndex()] = strategy;
 	}
+	
 	/**
 	 * Constructor
 	 */
 	public Fighter(){
 		
 	}
+	
 	/**
 	 * Constructor
 	 * @param level
