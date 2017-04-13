@@ -1,0 +1,13 @@
+Hp = (1d10 + constitutionModifier) * level
+Combat rule: 
+           1. Attack Roll(attacker): d20 + attackBonus
+           2. Armor Class(enemy) = 10 + Dexterity modifier
+           3. If Attack Roll > AC attack successful!
+                 else attack fail!
+           4. Damage score = 1d8 + damage bonus
+           5. enemy's Hp minus damage score step by step
+Attack bonus =   Strength Modifier (melee weapon)
+                 Dexterity Modifier (ranged weapon)
+Damage bonus =   Strength Modifier
+Ability Modifier =   [(Ability scores - 10)/2]
+Ability Score = Base ability scores(4d6) + gained ability score         
