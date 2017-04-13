@@ -43,7 +43,7 @@ public class BackpackTradeTest {
 	}
 
 	/**
-	 * This method
+	 * This method setup the initial testing data
 	 * 
 	 * @throws java.lang.Exception
 	 */
@@ -62,12 +62,18 @@ public class BackpackTradeTest {
 		}
 	}
 
+	/**
+	 * This method tests if the player and NPC are null
+	 */
 	@Test
 	public void testExitsPlayer() {
 		assertNotNull(player);
 		assertNotNull(npc);
 	}
 
+	/**
+	 * This method tests a trade picking random items from player's and npc's backpack
+	 */
 	@Test
 	public void testRandomTrade() {
 		testExitsPlayer();
@@ -84,6 +90,9 @@ public class BackpackTradeTest {
 		assertTrue(pSize == player.getBackpack().size());
 	}
 	
+	/**
+	 * This method tests a specific trade
+	 */
 	@Test
 	public void testSelectTrade() {
 		testExitsPlayer();
@@ -100,6 +109,9 @@ public class BackpackTradeTest {
 		assertTrue(pSize == player.getBackpack().size());
 	}
 	
+	/**
+	 * This method tests the trade if npc item is not chosen.
+	 */
 	@Test
 	public void testNpcNull() {
 		testExitsPlayer();
@@ -113,6 +125,9 @@ public class BackpackTradeTest {
 		assertTrue(pSize-1 == player.getBackpack().size());
 	}
 	
+	/**
+	 * This method tests the trade if player's item is not chosen.
+	 */
 	@Test
 	public void testPlayerNull() {
 		testExitsPlayer();

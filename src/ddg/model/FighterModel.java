@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-
 /**
  * 
  * This class
@@ -38,7 +37,7 @@ public class FighterModel implements Serializable {
 
 	/**
 	 * Return a hashmap table contains characters
-	 * @return
+	 * @return fightersHM
 	 */
 	public HashMap<String, Fighter> getFighters() {
 		return fightersHM;

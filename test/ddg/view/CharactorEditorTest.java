@@ -21,7 +21,7 @@ import ddg.model.item.Enchantment;
 import ddg.utils.Utils;
 
 /**
- * This class is test character edit
+ * This class is to test character editing 
  * 
  * @author Fei Yu
  * @author Zhen Du
@@ -58,6 +58,9 @@ public class CharactorEditorTest {
 		}
 	}
 
+	/**
+	 * This method tests if wearing a item can influence the character's ability correctly.
+	 */
 	@Test
 	public void testAbility() {
 		BaseItem i = new BaseItem(BaseItem.RING, 3, Enchantment.STRENGTH);
@@ -69,6 +72,9 @@ public class CharactorEditorTest {
 		assertTrue(after-init==3);
 	}
 
+	/**
+	 * This method tests if a character can only take one item for one type.
+	 */
 	@Test
 	public void testWearingItem() {
 		int n = fighter.getWorn().size();
@@ -80,7 +86,10 @@ public class CharactorEditorTest {
 		fighter.wearItem(i, false);
 		assertTrue(fighter.getWorn().size()-n ==1 || fighter.getWorn().size()-n == 0);
 	}
-	
+
+	/**
+	 * This method tests the character opening a chest
+	 */
 	@Test
 	public void testOpenChest(){
 		int n = fighter.getBackpack().size();
@@ -89,7 +98,10 @@ public class CharactorEditorTest {
 		fighter.openChest(chest);
 		assertTrue(fighter.getBackpack().size() == n+1);
 	}
-	
+
+	/**
+	 * This method tests the character looting a dead npc.
+	 */
 	@Test
 	public void testLootCorpseItem(){
 		int n = fighter.getBackpack().size();

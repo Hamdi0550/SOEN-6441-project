@@ -12,14 +12,14 @@ public class Chest implements Cloneable, java.io.Serializable{
 	private static final long serialVersionUID = -28660141344286515L;
 	
 	private Item item;
-	private boolean isempty;
+	private boolean isEmpty;
 	
 	/**
 	 * Constructor
 	 */
 	public Chest(){
 		item = null;
-		isempty = true;
+		isEmpty = true;
 	}
 	
 	/**
@@ -28,7 +28,7 @@ public class Chest implements Cloneable, java.io.Serializable{
 	 */
 	public Chest(Item item){
 		this.item = item;
-		this.isempty = false;
+		this.isEmpty = false;
 	}
 
 	/**
@@ -44,14 +44,14 @@ public class Chest implements Cloneable, java.io.Serializable{
 	 * @return when empty return true, else return false
 	 */
 	public boolean isEmpty() {
-		return isempty;
+		return isEmpty;
 	}
 	
 	/**
 	 * make the Chest to be empty
 	 */
 	public void becameEmpty(){
-		isempty = true;
+		isEmpty = true;
 //		item=null;
 	}
 	

@@ -237,6 +237,9 @@ public class PopUpForFighter extends JDialog implements ActionListener, ListSele
         System.out.println("value changed");
     }
 	
+    /**
+     * manage the focus of the windows
+     */
     public void focusManage() {
         // TODO Auto-generated constructor stub  
         this.addWindowFocusListener(new WindowFocusListener() {  

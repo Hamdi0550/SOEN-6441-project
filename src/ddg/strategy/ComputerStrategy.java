@@ -8,11 +8,9 @@
 package ddg.strategy;
 
 import java.awt.Point;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
 
@@ -58,6 +56,9 @@ public class ComputerStrategy implements IStrategy {
 		initLocation();
 	}
 
+	/**
+	 * traverse the map, recode all chest location, NPC location and exit door
+	 */
 	private void initLocation() {
 		for(int i=0;i<game.getPlayingmap().getRow();i++){
 			for(int j=0;j<game.getPlayingmap().getColumn();j++){
@@ -141,6 +142,9 @@ public class ComputerStrategy implements IStrategy {
 			game.getPlayingmap().notifyChange();
 	}
 	
+	/**
+	 * check if it has a out door around character
+	 */
 	private void findExit() {
 		char[][] location = game.getPlayingmap().getLocation();
 		Fighter fighter = game.getFighter();
@@ -159,6 +163,11 @@ public class ComputerStrategy implements IStrategy {
 		}
 	}
 
+	/**
+	 * 
+	 * @param aim Point location of a chest, NPC or Exit door
+	 * @return	return 3 Point type location which is best way to arrive aim
+	 */
 	protected ArrayList<Point> searchWayToAim(Point aim) {
 		ArrayList<Point> queueOfPath = new ArrayList<>();
 		Map<String, Integer> locationAlreadySearch = new HashMap<>();
@@ -167,49 +176,49 @@ public class ComputerStrategy implements IStrategy {
 			if(queueOfPath.size()==3){
 				break;
 			}
-			int dist1,dist2,dist3,dist4;
+			int distance1,distance2,distance3,distance4;
 			if(!locationAlreadySearch.containsKey(x-1+","+y)){
-				dist1 = shortestDistance(x-1,y,aim);
+				distance1 = shortestDistance(x-1,y,aim);
 				locationAlreadySearch.put(x-1+","+y, 0);
 			}
 			else
-				dist1 = 1000;
+				distance1 = 1000;
 			if(!locationAlreadySearch.containsKey(x+1+","+y)){
-				dist2 = shortestDistance(x+1,y,aim);
+				distance2 = shortestDistance(x+1,y,aim);
 				locationAlreadySearch.put(x+1+","+y, 0);
 			}
 			else
-				dist2 = 1000;
+				distance2 = 1000;
 			if(!locationAlreadySearch.containsKey(x+","+(y-1))){
-				dist3 = shortestDistance(x,y-1,aim);
+				distance3 = shortestDistance(x,y-1,aim);
 				locationAlreadySearch.put(x+","+(y-1), 0);
 			}
 			else
-				dist3 = 1000;
+				distance3 = 1000;
 			
 			if(!locationAlreadySearch.containsKey(x+","+(y+1))){
-				dist4 = shortestDistance(x,y+1,aim);
+				distance4 = shortestDistance(x,y+1,aim);
 				locationAlreadySearch.put(x+","+(y+1), 0);
 			}
 			else
-				dist4 = 1000;
+				distance4 = 1000;
 			
-			if(dist1==0||dist2==0||dist3==0||dist4==0){
+			if(distance1==0||distance2==0||distance3==0||distance4==0){
 				return queueOfPath;
 			}
-			else if(dist1<=dist2&&dist1<=dist3&&dist1<=dist4){
+			else if(distance1<=distance2&&distance1<=distance3&&distance1<=distance4){
 				x=x-1;
 				queueOfPath.add(new Point(x, y));
 			}
-			else if(dist2<=dist1&&dist2<=dist3&&dist2<=dist4){
+			else if(distance2<=distance1&&distance2<=distance3&&distance2<=distance4){
 				x=x+1;
 				queueOfPath.add(new Point(x, y));
 			}
-			else if(dist3<=dist1&&dist3<=dist2&&dist3<=dist4){
+			else if(distance3<=distance1&&distance3<=distance2&&distance3<=distance4){
 				y=y-1;
 				queueOfPath.add(new Point(x, y));
 			}
-			else if(dist4<=dist1&&dist4<=dist2&&dist4<=dist3){
+			else if(distance4<=distance1&&distance4<=distance2&&distance4<=distance3){
 				y=y+1;
 				queueOfPath.add(new Point(x, y));
 			}
@@ -217,6 +226,13 @@ public class ComputerStrategy implements IStrategy {
 		return queueOfPath;
 	}
 	
+	/**
+	 * find shortestDIstance from starting point to the aim
+	 * @param x x coordinate of starting point 
+	 * @param y y coordinate of starting point
+	 * @param aim	Point type of aim as ending point
+	 * @return shortestDistance for starting point to ending point
+	 */
 	public int shortestDistance(int x,int y, Point aim){
 		
 		if(x==aim.x&&y==aim.y){
@@ -282,6 +298,9 @@ public class ComputerStrategy implements IStrategy {
 		return 1000;
 	}
 	
+	/**
+	 * check and interact with chests which are around character
+	 */
 	private void findChest() {
 		char[][] location = game.getPlayingmap().getLocation();
 		Fighter fighter = game.getFighter();
@@ -316,6 +335,10 @@ public class ComputerStrategy implements IStrategy {
 		}
 	}
 	
+	/**
+	 * check if there are enemies in character attach range
+	 * @return true if launch a attack, or false nobody in attack range
+	 */
 	private boolean findEnemy() {
 		int range = 1;
 		Fighter fighter = game.getFighter();
@@ -374,6 +397,12 @@ public class ComputerStrategy implements IStrategy {
 		return false;
 	}
 
+	/**
+	 * 
+	 * attack the Character locate in map with below coordinate 
+	 * @param x	x coordinate of attactee
+	 * @param y y coordinate of attactee
+	 */
 	private void attackCharacter(int x, int y) {
 		Fighter attacter = game.getFighter();
 		Fighter attactee = (Fighter)game.getPlayingmap().getCellsinthemap()[x][y].getContent();

@@ -26,7 +26,7 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 	// record the location of things in the map
 	private String name;
 	private char[][] location;
-	private Cell<?>[][] cellsinthemap;
+	private Cell<?>[][] cellsInTheMap;
 	private int row;
 	private int column;
 	private IOwner owner;
@@ -36,12 +36,15 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 	// recording the status of all monsters
 //	private List<Charactor> monster;
 	
+	/**
+	 * Constructor
+	 */
 	public Map(){
 		this.name ="Map1";
 		this.row = 10;
 		this.column = 10;
 		this.location = new char[row][column];	// record the inform of location on the map
-		this.cellsinthemap = new Cell[row][column];
+		this.cellsInTheMap = new Cell[row][column];
 		
 		for(int i=0;i<row;i++){
 			for(int j=0;j<column;j++)
@@ -51,6 +54,7 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 	}
 
 	/**
+	 * Constructor
 	 * @param name	name of the map
 	 * @param row	the number of row of the map
 	 * @param column	the number of column of the map
@@ -60,7 +64,7 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 		this.row = row;
 		this.column = column;
 		this.location = new char[row][column];
-		this.cellsinthemap = new Cell[row][column];
+		this.cellsInTheMap = new Cell[row][column];
 		
 		for(int i=0;i<row;i++){
 			for(int j=0;j<column;j++)
@@ -78,19 +82,19 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 		this.row = map.getRow();
 		this.column = map.getColumn();
 		this.location = new char[row][column];
-		this.cellsinthemap = new Cell[row][column];
+		this.cellsInTheMap = new Cell[row][column];
 		
 		for(int i=0;i<row;i++){
 			for(int j=0;j<column;j++){
 				this.location[i][j] = map.getLocation()[i][j];
 				if(this.location[i][j] == 'c' || this.location[i][j] == 'e'){
-					this.cellsinthemap[i][j]=new Cell<>(((Chest)map.getCellsinthemap()[i][j].getContent()).clone());
+					this.cellsInTheMap[i][j]=new Cell<>(((Chest)map.getCellsinthemap()[i][j].getContent()).clone());
 				}
 				else if(this.location[i][j] == 'p' || this.location[i][j] == 'd'){
 					if(map.getCellsinthemap()[i][j].getIsfriendly())
-						this.cellsinthemap[i][j] = new Cell<>(((Fighter)map.getCellsinthemap()[i][j].getContent()).clone());
+						this.cellsInTheMap[i][j] = new Cell<>(((Fighter)map.getCellsinthemap()[i][j].getContent()).clone());
 					else
-						this.cellsinthemap[i][j] = new Cell<>(((Fighter)map.getCellsinthemap()[i][j].getContent()).clone(),false);
+						this.cellsInTheMap[i][j] = new Cell<>(((Fighter)map.getCellsinthemap()[i][j].getContent()).clone(),false);
 				}
 			}
 		}
@@ -167,7 +171,7 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 	 * @return all cells in this map
 	 */
 	public Cell<?>[][] getCellsinthemap() {
-		return cellsinthemap;
+		return cellsInTheMap;
 	}
 
 	/**
@@ -176,7 +180,7 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 	 * @param cell	the cell which you would like to put in the map
 	 */
 	public void changeCellsinthemap(int x,int y, Cell<?> cell){
-		this.cellsinthemap[x][y] = cell;
+		this.cellsInTheMap[x][y] = cell;
 		setChanged();
 		notifyObservers(this);
 	}
@@ -208,20 +212,32 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 //		}
 //	}
 	
+	/**
+	 * set a game to be the owner of map
+	 * @param l owner of this map
+	 */
 	public void setOwner(IOwner l){
 		this.owner = l;
 		for(int i=0; i<row ;i++){
 			for(int j=0; j<column ;j++){
 				if(location[i][j]=='p'){
-					((Fighter)cellsinthemap[i][j].getContent()).setOwner(owner);
+					((Fighter)cellsInTheMap[i][j].getContent()).setOwner(owner);
 				}
 				else if(location[i][j]=='c'){
-					((Chest) cellsinthemap[i][j].getContent()).getItem().setOwner(owner);
+					((Chest) cellsInTheMap[i][j].getContent()).getItem().setOwner(owner);
 				}
 			}
 		}
 	}
 
+	/**
+	 * use for realize NPC to move on the maps
+	 * @param xofcharactor old x coordinate of NPC
+	 * @param yofcharactor old y coordinate of NPC
+	 * @param newx	new x coordinate of NPC
+	 * @param newy	new y coordinate of NPC
+	 * @return	true if move successful, or false is fail
+	 */
 	public boolean npcMove(int xofcharactor, int yofcharactor, int newx, int newy) {
 		if(newx>=getRow()||newx<0||newy>=getColumn()||newy<0)
 			return false;
@@ -229,8 +245,8 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 		if(temp =='f'){
 			this.location[xofcharactor][yofcharactor]='f';
 			this.location[newx][newy]='p';
-			this.cellsinthemap[newx][newy]=this.cellsinthemap[xofcharactor][yofcharactor];
-			this.cellsinthemap[xofcharactor][yofcharactor]=null;
+			this.cellsInTheMap[newx][newy]=this.cellsInTheMap[xofcharactor][yofcharactor];
+			this.cellsInTheMap[xofcharactor][yofcharactor]=null;
 			setChanged();
 			notifyObservers(this);
 			return true;
@@ -243,6 +259,9 @@ public class Map extends Observable implements IOwner, Cloneable, java.io.Serial
 		return this.owner==null?0:this.owner.getLevel();
 	}
 	
+	/**
+	 * used for notify all observers 
+	 */
 	public void notifyChange(){
 		setChanged();
 		notifyObservers(this);

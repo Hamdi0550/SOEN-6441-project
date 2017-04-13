@@ -27,10 +27,18 @@ public class GameModel {
 		this.campaign = campaign;
 	}
 
+	/**
+	 * This method is to set the game as a computer run game
+	 * @param isComputer
+	 */
 	public void setComputer(boolean isComputer) {
 		this.isComputer = isComputer;
 	}
-	
+
+	/**
+	 * This method is to check if the game is a computer run game.
+	 * @return isComputer
+	 */
 	boolean isComputer() {
 		return this.isComputer;
 	}

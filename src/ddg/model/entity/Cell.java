@@ -9,7 +9,7 @@ public class Cell<T> implements java.io.Serializable{
 	private static final long serialVersionUID = -4203753997046674059L;
 	
 	private T content;	// content in the cell
-	private boolean isfriendly;	//show if the content is friendly to player, mainly used to describe character content
+	private boolean isFriendly;	//show if the content is friendly to player, mainly used to describe character content
 
 	
 	/**
@@ -17,7 +17,7 @@ public class Cell<T> implements java.io.Serializable{
 	 */
 	public Cell(T content){
 		this.content = content;
-		this.isfriendly = true;
+		this.isFriendly = true;
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class Cell<T> implements java.io.Serializable{
 	 */
 	public Cell(T content, boolean isfriendly){
 		this.content = content;
-		this.isfriendly = isfriendly;
+		this.isFriendly = isfriendly;
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class Cell<T> implements java.io.Serializable{
 	 * @return return whether the content of the Cell is friendly, if it is return true, else return false.
 	 */
 	public boolean getIsfriendly(){
-		return isfriendly;
+		return isFriendly;
 	}
 	
 }

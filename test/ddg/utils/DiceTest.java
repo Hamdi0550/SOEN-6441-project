@@ -17,19 +17,28 @@ import ddg.model.item.BaseItem;
  *
  */
 public class DiceTest {
-	
+
+	/**
+	 * This method tests if 4d6 rolls run correctly.
+	 */
 	@Test
 	public void testD46Roll(){
 		assertTrue(Dice.d46Roll() >= 3 && Dice.d46Roll() <= 18);
 		assertFalse(Dice.d46Roll() < 3 && Dice.d46Roll() > 18);
 	}
-	
+
+	/**
+	 * This method tests if d10 rolls run correctly.
+	 */
 	@Test
 	public void testD10Roll(){
 		assertTrue(Dice.d10Roll() >= 1 && Dice.d10Roll() <= 10);
 		assertFalse(Dice.d10Roll() < 1 && Dice.d10Roll() > 10);
 	}
-	
+
+	/**
+	 * This method tests if d20 rolls run correctly.
+	 */
 	@Test
 	public void testD20Roll(){
 		assertTrue(Dice.d20Roll() >= 1 && Dice.d20Roll() <= 20);
