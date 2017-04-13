@@ -28,7 +28,7 @@ public class Game implements IOwner, java.io.Serializable{
 		}
 		else
 			initMapData();
-		this.fighter.setStrategy(new ComputerStrategy(this));
+		this.fighter.setStrategy(new HumanStrategy());
 	}
 	
 	private void initData(){
