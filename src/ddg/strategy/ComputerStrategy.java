@@ -44,6 +44,7 @@ public class ComputerStrategy implements IStrategy {
 	public ComputerStrategy(Game game) {
 		this.game = game;
 		initLocation();
+		System.out.println("11111");
 	}
 
 	private void initLocation() {

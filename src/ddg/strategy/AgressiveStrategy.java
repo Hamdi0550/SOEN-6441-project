@@ -54,8 +54,8 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 	@Override
 	public void turn() {
 		System.out.println("Agressive !!!!");
-		ArrayList<Point> queue = searchWayAttactPlayer();
-		for (Point point : queue) {
+		ArrayList<Point> queueOfPath = searchWayAttactPlayer();
+		for (Point point : queueOfPath) {
 			System.out.print(point.x+","+point.y+"\t");
 		}
 		int attacktimes = 1;
@@ -67,13 +67,13 @@ public class AgressiveStrategy implements IStrategy, Serializable{
 			}
 		}
 		while(walktimes>0){
-			if(queue.size()==0){
+			if(queueOfPath.size()==0){
 				break;
 			}
-			game.getPlayingmap().npcMove(character.xOfFighter,character.yOfFighter,queue.get(0).x,queue.get(0).y);
-			character.xOfFighter = queue.get(0).x;
-			character.yOfFighter = queue.get(0).y;
-			queue.remove(0);
+			game.getPlayingmap().npcMove(character.xOfFighter,character.yOfFighter,queueOfPath.get(0).x,queueOfPath.get(0).y);
+			character.xOfFighter = queueOfPath.get(0).x;
+			character.yOfFighter = queueOfPath.get(0).y;
+			queueOfPath.remove(0);
 			walktimes--;
 			if(attacktimes>0){
 				if(findEnemy()){

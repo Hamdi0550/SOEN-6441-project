@@ -19,8 +19,6 @@ public class Game implements IOwner, java.io.Serializable{
 	private BaseCampaign campaign;
 	private Map playingmap;
 	private Fighter fighter;
-	private int xofplayer;
-	private int yofplayer;
 	
 	public Game(Fighter player, BaseCampaign campaign){
 		this.fighter = player.clone();
@@ -28,7 +26,9 @@ public class Game implements IOwner, java.io.Serializable{
 		if(playingmap==null){
 			initData();
 		}
-		this.fighter.setStrategy(new HumanStrategy());
+		else
+			initMapData();
+		this.fighter.setStrategy(new ComputerStrategy(this));
 	}
 	
 	private void initData(){
@@ -77,41 +77,40 @@ public class Game implements IOwner, java.io.Serializable{
 			for(int j=0;j<playingmap.getColumn();j++){
 				if(playingmap.getLocation()[i][j] == 'i'){
 					if(i>0 && playingmap.getLocation()[i-1][j]=='f'){
-						 xofplayer = i-1;
-						 yofplayer = j;
+						 fighter.xOfFighter = i-1;
+						 fighter.yOfFighter = j;
 					}
 					else if(i<playingmap.getRow()-1 && playingmap.getLocation()[i+1][j]=='f'){
-						xofplayer = i+1;
-						yofplayer = j;
+						fighter.xOfFighter = i+1;
+						fighter.yOfFighter = j;
 					}
 					else if(j>0 && playingmap.getLocation()[i][j-1]=='f'){
-						xofplayer = i;
-						yofplayer = j-1;
+						fighter.xOfFighter = i;
+						fighter.yOfFighter = j-1;
 					}
 					else if(j<playingmap.getColumn()-1 && playingmap.getLocation()[i][j+1]=='f'){
-						xofplayer = i;
-						yofplayer = j+1;
+						fighter.xOfFighter = i;
+						fighter.yOfFighter = j+1;
 					}
 				}
 			}
 		}
-		
 	}
 
 	public int getXofplayer() {
-		return xofplayer;
+		return fighter.xOfFighter;
 	}
 
 	public void setXofplayer(int xofplayer) {
-		this.xofplayer = xofplayer;
+		this.fighter.xOfFighter = xofplayer;
 	}
 
 	public int getYofplayer() {
-		return yofplayer;
+		return fighter.yOfFighter;
 	}
 
 	public void setYofplayer(int yofplayer) {
-		this.yofplayer = yofplayer;
+		this.fighter.yOfFighter = yofplayer;
 	}
 
 	public BaseCampaign getCampaign() {
