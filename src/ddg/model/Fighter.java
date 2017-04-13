@@ -96,6 +96,10 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		return behaviorStrategy;
 	}
 	
+	public IMagicStrategy[] getMagicStrategy(){
+		return magicStrategy;
+	}
+	
 	public void turn() {
 		boolean contine = true;
 		for(IMagicStrategy s : magicStrategy) {
