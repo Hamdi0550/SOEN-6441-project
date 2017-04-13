@@ -404,8 +404,9 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	 * Return the total Damage Bonus of the character
 	 * @return totaldDamageBonus
 	 */
-	public int getTotaldDamageBonus() {
+	public int getTotalDamageBonus() {
 		totalDamageBonus = getDamageBonus() + gainedDamageBonus;
+		MapPanelInGame.printLog(" + gained Damage bonus " + gainedDamageBonus);
 		return totalDamageBonus;
 	}
 	
@@ -1007,7 +1008,7 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 			s = "Attack Roll: " + attackRoll + " >= Armor Class " + npc.getTotalArmorClass() + ", Attack Success!";
 			MapPanelInGame.printLog(s);
 			System.out.println("Attack Success!");
-			if(npc.beAttacked(this.getDamageBonus())) {
+			if(npc.beAttacked(this.getTotalDamageBonus())) {
 				for (Item wornItem : wornItems) {
 					if (wornItem instanceof MagicWeaponItem){
 						((MagicWeaponItem)wornItem).attack(npc);
