@@ -14,6 +14,8 @@ import ddg.model.item.BaseItem;
 import ddg.model.item.Enchantment;
 import ddg.model.item.Item;
 import ddg.model.item.MagicWeaponItem;
+import ddg.strategy.AgressiveStrategy;
+import ddg.strategy.FriendlyStrategy;
 import ddg.strategy.IMagicStrategy;
 import ddg.strategy.IStrategy;
 import ddg.strategy.IStrategy.TurnCallback;
@@ -1003,6 +1005,10 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 		int attackRoll =  d20Roll + this.getAttackBonus();
 		String s = "Attack Roll = d20 roll: " + d20Roll + " + attack bonus of the character: " + this.getAttackBonus();		
 		MapPanelInGame.printLog(s);
+		if(npc.getBehaviorStrategy() instanceof FriendlyStrategy){
+			Game game = ((FriendlyStrategy)npc.getBehaviorStrategy()).getGame();
+			npc.setStrategy(new AgressiveStrategy(game, npc));
+		}
 		if(attackRoll >= npc.getArmorClass()){
 			s = "Attack Roll: " + attackRoll + " >= Armor Class " + npc.getArmorClass() + ", Attack Success!";
 			MapPanelInGame.printLog(s);

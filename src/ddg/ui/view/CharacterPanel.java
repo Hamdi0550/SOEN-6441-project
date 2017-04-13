@@ -17,6 +17,7 @@ import javax.swing.border.LineBorder;
 import ddg.Config;
 import ddg.model.Fighter;
 import ddg.model.item.BaseItem;
+import ddg.strategy.AgressiveStrategy;
 import ddg.ui.view.dialog.CharacterSelection;
 
 /**
@@ -155,7 +156,14 @@ public class CharacterPanel extends JPanel implements Observer {
 		nameL.setText(fighter.getName());
 		levelL.setText(Integer.toString(fighter.getLevel()));
 		hitponitL.setText(Integer.toString(fighter.getHitPoints()));
-
+		typeL.setText(fighter.getType());
+		if(fighter.getBehaviorStrategy() instanceof AgressiveStrategy){
+			nameL.setForeground(Color.red);
+		}
+		else{
+			nameL.setForeground(Color.black);
+		}
+		
 		strengthL.setText(Integer.toString(fighter.getTotalStrength()));
 		dexterityL.setText(Integer.toString(fighter.getTotalDexterity()));
 		constitutionL.setText(Integer.toString(fighter.getTotalConstitution()));
