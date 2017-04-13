@@ -131,10 +131,10 @@ public class Game implements IOwner, java.io.Serializable{
 
 	public void nextMap(TurnCallback cb) {
 		this.campaign.getMaps().remove(0);
-		if(fighter.getBehaviorStrategy() instanceof ComputerStrategy){
+		initData();
+		if(playingmap!=null && (fighter.getBehaviorStrategy() instanceof ComputerStrategy)){
 			fighter.setStrategy(new ComputerStrategy(this,cb));
 		}
-		initData();
 	}
 	
 	public static boolean saveGame(Game game){

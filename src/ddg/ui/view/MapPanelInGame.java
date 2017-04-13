@@ -80,6 +80,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 	 */
 	public MapPanelInGame(GameModel model){
 		this.game = new Game(model, this);
+		characterThisTurn = game.getFighter();
 		turnDriven = new TurnDriven();
 		setLayout(new BorderLayout());
 		setFocusable(true);
@@ -91,6 +92,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 
 	public MapPanelInGame(Game game){
 		this.game = game;
+		characterThisTurn = game.getFighter();
 		turnDriven = new TurnDriven();
 		setLayout(new BorderLayout());
 		setFocusable(true);
@@ -282,6 +284,9 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		log.setBorder(Config.border);
 		log.setEnabled(false);
 		DButton savebutton = new DButton("SAVE", this);
+		if(!(game.getFighter().getBehaviorStrategy() instanceof HumanStrategy)){
+			savebutton.setEnabled(false);
+		}
 		logPanel.add(log, BorderLayout.CENTER);
 		logPanel.add(savebutton, BorderLayout.SOUTH);
 		
@@ -604,6 +609,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 						turnDriven = new TurnDriven();
 						characterThisTurn=null;
 						initMapData();
+						if(game.getPlayingmap()==null)
+							return;
 						initStrategy();
 						removeAll();
 						System.out.println(xIndex+"2=============="+yIndex);
@@ -653,7 +660,6 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			System.out.println("SAVE BUTTON");
 			
 			prepareForSaveGame();
-			System.out.println(game.getFighter().countObservers());
 			if(Game.saveGame(this.game)){
 				JOptionPane.showMessageDialog(null, "Save Success!!", "Save Success!!", JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -712,11 +718,12 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 				fighter.getBackpack().remove(item);
 				fighter.levelUp();
 				fighter.deleteObservers();
-				Fighter.saveFighter(fighter);
 				game.nextMap(this);
 				turnDriven = new TurnDriven();
 				characterThisTurn=null;
 				initMapData();
+				if(game.getPlayingmap()==null)
+					return;
 				initStrategy();
 				removeAll();
 				initContent();

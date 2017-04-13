@@ -137,7 +137,8 @@ public class ComputerStrategy implements IStrategy {
 			findChest();
 			findExit();
 		}
-		game.getPlayingmap().notifyChange();
+		if(game.getPlayingmap()!=null)
+			game.getPlayingmap().notifyChange();
 	}
 	
 	private void findExit() {
