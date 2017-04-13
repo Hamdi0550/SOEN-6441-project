@@ -77,20 +77,20 @@ public class Game implements IOwner, java.io.Serializable{
 			for(int j=0;j<playingmap.getColumn();j++){
 				if(playingmap.getLocation()[i][j] == 'i'){
 					if(i>0 && playingmap.getLocation()[i-1][j]=='f'){
-						 fighter.xOfFighter = i-1;
-						 fighter.yOfFighter = j;
+						 fighter.setXOfFighter(i-1);
+						 fighter.setYOfFighter(j);
 					}
 					else if(i<playingmap.getRow()-1 && playingmap.getLocation()[i+1][j]=='f'){
-						fighter.xOfFighter = i+1;
-						fighter.yOfFighter = j;
+						fighter.setXOfFighter(i+1);
+						fighter.setYOfFighter(j);
 					}
 					else if(j>0 && playingmap.getLocation()[i][j-1]=='f'){
-						fighter.xOfFighter = i;
-						fighter.yOfFighter = j-1;
+						fighter.setXOfFighter(i);
+						fighter.setYOfFighter(j-1);
 					}
 					else if(j<playingmap.getColumn()-1 && playingmap.getLocation()[i][j+1]=='f'){
-						fighter.xOfFighter = i;
-						fighter.yOfFighter = j+1;
+						fighter.setXOfFighter(i);
+						fighter.setYOfFighter(j+1);
 					}
 				}
 			}
@@ -98,19 +98,19 @@ public class Game implements IOwner, java.io.Serializable{
 	}
 
 	public int getXofplayer() {
-		return fighter.xOfFighter;
+		return fighter.getXOfFighter();
 	}
 
 	public void setXofplayer(int xofplayer) {
-		this.fighter.xOfFighter = xofplayer;
+		this.fighter.setXOfFighter(xofplayer);
 	}
 
 	public int getYofplayer() {
-		return fighter.yOfFighter;
+		return fighter.getYOfFighter();
 	}
 
 	public void setYofplayer(int yofplayer) {
-		this.fighter.yOfFighter = yofplayer;
+		this.fighter.setYOfFighter(yofplayer);
 	}
 
 	public BaseCampaign getCampaign() {

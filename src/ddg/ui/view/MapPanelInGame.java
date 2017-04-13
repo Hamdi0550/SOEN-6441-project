@@ -609,6 +609,8 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			System.out.println("NEXT ONE@!!!");
 			if(turnDriven!=null) {
 				characterThisTurn = turnDriven.next();
+				xIndex = characterThisTurn.getXOfFighter();
+				yIndex = characterThisTurn.getYOfFighter();
 			}
 			requestFocus();
 			if(!game.getFighter().isAlive()){

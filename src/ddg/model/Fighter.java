@@ -86,8 +86,8 @@ public class Fighter extends Observable implements IOwner, Cloneable, Serializab
 	private IMagicStrategy[] magicStrategy = new IMagicStrategy[3];
 	private IStrategy behaviorStrategy;
 	
-	public int xOfFighter = -1;
-	public int yOfFighter = -1;
+	private int xOfFighter = -1;
+	private int yOfFighter = -1;
 	
 	public void setStrategy(IStrategy strategy) {
 		behaviorStrategy = strategy;
