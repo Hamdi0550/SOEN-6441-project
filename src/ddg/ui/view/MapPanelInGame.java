@@ -358,7 +358,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 					System.out.println("mapPanel repainted");
 				}
 				if(e.getButton()==MouseEvent.BUTTON3){
-					if(game.getFighter().getBehaviorStrategy() instanceof ComputerStrategy){
+					if(!characterThisTurn.equals(game.getFighter())||game.getFighter().getBehaviorStrategy() instanceof ComputerStrategy){
 						return;
 					}
 					int x = e.getY()/50;
@@ -368,9 +368,11 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 			        	range = ((MagicWeaponItem)game.getFighter().getWearItemByName("Weapon")).getRange();
 			        }
 			        
-			        if(game.getPlayingmap().getLocation()[x][y]=='p'&&(!playingMap.getCellsinthemap()[x][y].getIsfriendly())&&
-			        		Math.abs(game.getXofplayer()-x)+Math.abs(game.getYofplayer()-y)<=range){
-			        	if(((HumanStrategy)game.getFighter().getBehaviorStrategy()).attack()){
+			        if(game.getPlayingmap().getLocation()[x][y]=='p'){
+			        	int xOffset = Math.abs(game.getXofplayer()-x-range);
+			        	int yOffset = Math.abs(game.getYofplayer()-y-range);
+			        	int[][] attackrange = getRange(game.getYofplayer(), game.getXofplayer(), game, range);
+			        	if(attackrange[xOffset][yOffset]==0&&((HumanStrategy)game.getFighter().getBehaviorStrategy()).attack()){
 			        		attackNPC(x,y);
 			        	}
 			        }
@@ -388,7 +390,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 		});
 	}
 
-	static int[][] getRange(int xIndex, int yIndex, Game game, int weaponType) {
+	public static int[][] getRange(int xIndex, int yIndex, Game game, int weaponType) {
 		// TODO Auto-generated method stub
 		Map playingMap = game.getPlayingmap();
 		int rangeRadius = 3;
@@ -493,7 +495,7 @@ public class MapPanelInGame extends JPanel implements Observer, KeyListener, Act
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(game.getFighter().getBehaviorStrategy() instanceof ComputerStrategy){
+		if(!characterThisTurn.equals(game.getFighter())||game.getFighter().getBehaviorStrategy() instanceof ComputerStrategy){
 			return;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
